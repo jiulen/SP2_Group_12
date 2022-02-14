@@ -133,13 +133,6 @@ void Application::Run()
 	Scene* scene = scene1;
 	scene1->Init();
 
-	//Set cursor mode (do for scene switch also if cursor mode change)
-	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //do normal instead of disabled to restore normal cursor mode
-	if (glfwRawMouseMotionSupported()) {
-		glfwSetInputMode(m_window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
-	}
-	//
-
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
