@@ -19,8 +19,8 @@ public:
 	virtual void Init(const Vector3& pos, const Vector3& target, const Vector3& up);
 	virtual void Update(double dt);
 	virtual void Reset();
-	Vector3 CollisionCircleRect(float cx, float cy, float radius, float rx, float ry, float rw, float rh);
-	Vector3 PlayerCollision(unsigned count);
+	//Vector3 CollisionCircleRect(float cx, float cy, float radius, float rx, float ry, float rw, float rh);
+	//Vector3 PlayerCollision(unsigned count);
 };
 
 #endif

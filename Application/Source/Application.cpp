@@ -130,10 +130,8 @@ void Application::Run()
 {
 	//Main Loop
 	Scene* scene1 = new SceneGame();
-	Scene* scene2 = new SceneText();
 	Scene* scene = scene1;
 	scene1->Init();
-	scene2->Init();
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
@@ -152,9 +150,7 @@ void Application::Run()
 
 	} //Check if the ESC key had been pressed or if the window had been closed
 	scene1->Exit();
-	scene2->Exit();
 	delete scene1;
-	delete scene2;
 }
 
 void Application::Exit()
