@@ -44,18 +44,18 @@ void Camera3::Update(double dt)
 	{
 		Vector3 startPos = position;
 		position -= right * static_cast<float>(dt) * MOVE_SPEED;
-		if (position.x < -46.5) {
-			position.x = -46.5;
-		}
-		else if (position.x > 46.5) {
-			position.x = 46.5;
-		}
-		if (position.z < -46.5) {
-			position.z = -46.5;
-		}
-		else if (position.z > 46.5) {
-			position.z = 46.5;
-		}
+		//if (position.x < -46.5) {
+		//	position.x = -46.5;
+		//}
+		//else if (position.x > 46.5) {
+		//	position.x = 46.5;
+		//}
+		//if (position.z < -46.5) {
+		//	position.z = -46.5;
+		//}
+		//else if (position.z > 46.5) {
+		//	position.z = 46.5;
+		//}
 		int i = 0;
 		bool stop = false;
 		//for (int i = 0; i <= 21; ++i) {
@@ -70,18 +70,18 @@ void Camera3::Update(double dt)
 	{
 		Vector3 startPos = position;
 		position += right * static_cast<float>(dt) * MOVE_SPEED;
-		if (position.x < -46.5) {
-			position.x = -46.5;
-		}
-		else if (position.x > 46.5) {
-			position.x = 46.5;
-		}
-		if (position.z < -46.5) {
-			position.z = -46.5;
-		}
-		else if (position.z > 46.5) {
-			position.z = 46.5;
-		}
+		//if (position.x < -46.5) {
+		//	position.x = -46.5;
+		//}
+		//else if (position.x > 46.5) {
+		//	position.x = 46.5;
+		//}
+		//if (position.z < -46.5) {
+		//	position.z = -46.5;
+		//}
+		//else if (position.z > 46.5) {
+		//	position.z = 46.5;
+		//}
 		//for (int i = 0; i <= 21; ++i) {
 		//	Vector3 finalPos = PlayerCollision(i); //ignore y
 		//	position.x = finalPos.x;
@@ -94,18 +94,18 @@ void Camera3::Update(double dt)
 	{
 		Vector3 startPos = position;
 		position += view * static_cast<float>(dt) * MOVE_SPEED;
-		if (position.x < -46.5) {
-			position.x = -46.5;
-		}
-		else if (position.x > 46.5) {
-			position.x = 46.5;
-		}
-		if (position.z < -46.5) {
-			position.z = -46.5;
-		}
-		else if (position.z > 46.5) {
-			position.z = 46.5;
-		}
+		//if (position.x < -46.5) {
+		//	position.x = -46.5;
+		//}
+		//else if (position.x > 46.5) {
+		//	position.x = 46.5;
+		//}
+		//if (position.z < -46.5) {
+		//	position.z = -46.5;
+		//}
+		//else if (position.z > 46.5) {
+		//	position.z = 46.5;
+		//}
 		//for (int i = 0; i <= 21; ++i) {
 		//	Vector3 finalPos = PlayerCollision(i); //ignore y
 		//	position.x = finalPos.x;
@@ -118,18 +118,18 @@ void Camera3::Update(double dt)
 	{
 		Vector3 startPos = position;
 		position -= view * static_cast<float>(dt) * MOVE_SPEED;
-		if (position.x < -46.5) {
-			position.x = -46.5;
-		}
-		else if (position.x > 46.5) {
-			position.x = 46.5;
-		}
-		if (position.z < -46.5) {
-			position.z = -46.5;
-		}
-		else if (position.z > 46.5) {
-			position.z = 46.5;
-		}
+		//if (position.x < -46.5) {
+		//	position.x = -46.5;
+		//}
+		//else if (position.x > 46.5) {
+		//	position.x = 46.5;
+		//}
+		//if (position.z < -46.5) {
+		//	position.z = -46.5;
+		//}
+		//else if (position.z > 46.5) {
+		//	position.z = 46.5;
+		//}
 		//for (int i = 0; i <= 21; ++i) {
 		//	Vector3 finalPos = PlayerCollision(i); //ignore y
 		//	position.x = finalPos.x;
