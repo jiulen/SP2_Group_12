@@ -913,6 +913,8 @@ void SceneGame::Render()
 
 void SceneGame::RenderSkybox()
 {
+	modelStack.PushMatrix();
+	modelStack.Translate(camera.position.x, camera.position.y, camera.position.z);
 	int OFFSET = 499;
 	modelStack.PushMatrix();
 	modelStack.Translate(OFFSET, 0, 0);
@@ -950,6 +952,7 @@ void SceneGame::RenderSkybox()
 	modelStack.Rotate(180, 0, 0, 1);
 	modelStack.Scale(1000, 1000, 1000);
 	RenderMesh(meshList[GEO_BOTTOM], false);
+	modelStack.PopMatrix();
 	modelStack.PopMatrix();
 }
 
