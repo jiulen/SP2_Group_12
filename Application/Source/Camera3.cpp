@@ -88,6 +88,8 @@ void Camera3::Update(double dt)
 		else if (position.z > 97.5) {
 			position.z = 97.5;
 		}
+    int i = 0;
+		bool stop = false;
 		//for (int i = 0; i <= 21; ++i) {
 		//	Vector3 finalPos = PlayerCollision(i); //ignore y
 		//	position.x = finalPos.x;
@@ -112,6 +114,8 @@ void Camera3::Update(double dt)
 		else if (position.z > 97.5) {
 			position.z = 97.5;
 		}
+    int i = 0;
+		bool stop = false;
 		//for (int i = 0; i <= 21; ++i) {
 		//	Vector3 finalPos = PlayerCollision(i); //ignore y
 		//	position.x = finalPos.x;
@@ -136,6 +140,8 @@ void Camera3::Update(double dt)
 		else if (position.z > 97.5) {
 			position.z = 97.5;
 		}
+    int i = 0;
+		bool stop = false;
 		//for (int i = 0; i <= 21; ++i) {
 		//	Vector3 finalPos = PlayerCollision(i); //ignore y
 		//	position.x = finalPos.x;

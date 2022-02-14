@@ -1,5 +1,5 @@
-#ifndef SCENE_GAME_H
-#define SCENE_GAME_H
+#ifndef SCENE_MAINMENU_H
+#define SCENE_MAINMENU_H
 
 #include "Scene.h"
 #include "Camera.h"
@@ -10,17 +10,20 @@
 #include "Light.h"
 #include <fstream>
 
-class SceneGame : public Scene
+class SceneMainMenu : public Scene
 {
 	enum GEOMETRY_TYPE
 	{
 		//Shapes
-
+		
 		//TGAs
 		GEO_TEXT,
+		GEO_BACKGROUND,
+		GEO_TITLE,
+		GEO_PLAY,
 		//OBJs
 		GEO_LIGHT0, //ceiling light (can be turned off)
-
+		
 		//Skybox
 		GEO_LEFT,
 		GEO_RIGHT,
@@ -34,41 +37,6 @@ class SceneGame : public Scene
 
 		//Models
 		GEO_ENEMY1,
-		GEO_BIGHOUSE_A,
-		GEO_BIGHOUSE_B,
-		GEO_BIGHOUSE_C,
-		GEO_BIGHOUSE_D,
-		GEO_BIGHOUSE_E,
-		GEO_BIGHOUSE_F,
-		GEO_BIGHOUSE_G,
-		GEO_LOWHOUSE_A,
-		GEO_LOWHOUSE_B,
-		GEO_LOWHOUSE_C,
-		GEO_LOWHOUSE_D,
-		GEO_LOWHOUSE_E,
-		GEO_LOWHOUSE_F,
-		GEO_LOWHOUSE_G,
-		GEO_LOWHOUSE_H,
-		GEO_LOWHOUSE_I,
-		GEO_LOWHOUSE_J,
-		GEO_LOWHOUSE_K,
-		GEO_LOWHOUSE_L,
-		GEO_LOWHOUSE_M,
-		GEO_LOWHOUSE_N,
-		GEO_SKYSCRAPER_A,
-		GEO_SKYSCRAPER_B,
-		GEO_SKYSCRAPER_C,
-		GEO_SKYSCRAPER_D,
-		GEO_SKYSCRAPER_E,
-		GEO_SKYSCRAPER_F,
-		GEO_SMALLHOUSE_A,
-		GEO_SMALLHOUSE_B,
-		GEO_SMALLHOUSE_C,
-		GEO_SMALLHOUSE_D,
-		GEO_SMALLHOUSE_E,
-		GEO_SMALLHOUSE_F,
-
-
 
 		NUM_GEOMETRY,
 	};
@@ -167,8 +135,8 @@ private:
 		cyanTranslateX, cyanTranslateY, cyanTranslateZ,
 		orangeTranslateX, orangeTranslateY, orangeTranslateZ;
 public:
-	SceneGame();
-	~SceneGame();
+	SceneMainMenu();
+	~SceneMainMenu();
 
 	virtual void Init();
 	virtual void Update(double dt);

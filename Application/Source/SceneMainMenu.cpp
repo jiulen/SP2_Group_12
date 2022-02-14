@@ -1,4 +1,4 @@
-#include "SceneGame.h" 
+#include "SceneMainMenu.h" 
 #include "GL\glew.h"
 #include "Mtx44.h"
 #include "MyMath.h"
@@ -12,15 +12,15 @@
 #include <sstream>
 
 
-SceneGame::SceneGame()
+SceneMainMenu::SceneMainMenu()
 {
 }
 
-SceneGame::~SceneGame()
+SceneMainMenu::~SceneMainMenu()
 {
 }
 
-void SceneGame::Init()
+void SceneMainMenu::Init()
 {
 	// Init VBO here
 
@@ -30,8 +30,6 @@ void SceneGame::Init()
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	
 
 	m_programID = LoadShaders("Shader//Texture.vertexshader", "Shader//Text.fragmentshader");
 	m_parameters[U_NUMLIGHTS] = glGetUniformLocation(m_programID, "numLights");
@@ -143,47 +141,16 @@ void SceneGame::Init()
 	meshList[GEO_RIGHT]->textureID = LoadTGA("Image//tron_rt.tga");
 	meshList[GEO_BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
 	meshList[GEO_BOTTOM]->textureID = LoadTGA("Image//tron_dn.tga");
-	meshList[GEO_GROUND] = MeshBuilder::GenerateRepeatingQuad("bottom", Color(1, 1, 1), 20.f);
+	meshList[GEO_GROUND] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
 	meshList[GEO_GROUND]->textureID = LoadTGA("Image//mesh.tga");
 	meshList[GEO_ENEMY1] = MeshBuilder::GenerateOBJMTL("enemy1", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
 	meshList[GEO_ENEMY1]->textureID = LoadTGA("Image//skin_robot.tga");
-
-	meshList[GEO_BIGHOUSE_A] = MeshBuilder::GenerateOBJMTL("big house a", "OBJ//large_buildingA.obj", "OBJ//large_buildingA.mtl");
-	meshList[GEO_BIGHOUSE_B] = MeshBuilder::GenerateOBJMTL("big house b", "OBJ//large_buildingB.obj", "OBJ//large_buildingB.mtl");
-	meshList[GEO_BIGHOUSE_C] = MeshBuilder::GenerateOBJMTL("big house c", "OBJ//large_buildingC.obj", "OBJ//large_buildingC.mtl");
-	meshList[GEO_BIGHOUSE_D] = MeshBuilder::GenerateOBJMTL("big house d", "OBJ//large_buildingD.obj", "OBJ//large_buildingD.mtl");
-	meshList[GEO_BIGHOUSE_E] = MeshBuilder::GenerateOBJMTL("big house e", "OBJ//large_buildingE.obj", "OBJ//large_buildingE.mtl");
-	meshList[GEO_BIGHOUSE_F] = MeshBuilder::GenerateOBJMTL("big house f", "OBJ//large_buildingF.obj", "OBJ//large_buildingF.mtl");
-	meshList[GEO_BIGHOUSE_G] = MeshBuilder::GenerateOBJMTL("big house g", "OBJ//large_buildingG.obj", "OBJ//large_buildingG.mtl");
-	meshList[GEO_LOWHOUSE_A] = MeshBuilder::GenerateOBJMTL("small house a", "OBJ//low_buildingA.obj", "OBJ//low_buildingA.mtl");
-	meshList[GEO_LOWHOUSE_B] = MeshBuilder::GenerateOBJMTL("small house b", "OBJ//low_buildingB.obj", "OBJ//low_buildingB.mtl");
-	meshList[GEO_LOWHOUSE_C] = MeshBuilder::GenerateOBJMTL("small house c", "OBJ//low_buildingC.obj", "OBJ//low_buildingC.mtl");
-	meshList[GEO_LOWHOUSE_D] = MeshBuilder::GenerateOBJMTL("small house d", "OBJ//low_buildingD.obj", "OBJ//low_buildingD.mtl");
-	meshList[GEO_LOWHOUSE_E] = MeshBuilder::GenerateOBJMTL("small house e", "OBJ//low_buildingE.obj", "OBJ//low_buildingE.mtl");
-	meshList[GEO_LOWHOUSE_F] = MeshBuilder::GenerateOBJMTL("small house f", "OBJ//low_buildingF.obj", "OBJ//low_buildingF.mtl");
-	meshList[GEO_LOWHOUSE_G] = MeshBuilder::GenerateOBJMTL("small house g", "OBJ//low_buildingG.obj", "OBJ//low_buildingG.mtl");
-	meshList[GEO_LOWHOUSE_H] = MeshBuilder::GenerateOBJMTL("small house h", "OBJ//low_buildingH.obj", "OBJ//low_buildingH.mtl");
-	meshList[GEO_LOWHOUSE_I] = MeshBuilder::GenerateOBJMTL("small house i", "OBJ//low_buildingI.obj", "OBJ//low_buildingI.mtl");
-	meshList[GEO_LOWHOUSE_J] = MeshBuilder::GenerateOBJMTL("small house j", "OBJ//low_buildingJ.obj", "OBJ//low_buildingJ.mtl");
-	meshList[GEO_LOWHOUSE_K] = MeshBuilder::GenerateOBJMTL("small house k", "OBJ//low_buildingK.obj", "OBJ//low_buildingK.mtl");
-	meshList[GEO_LOWHOUSE_L] = MeshBuilder::GenerateOBJMTL("small house l", "OBJ//owl_buildingL.obj", "OBJ//low_buildingL.mtl");
-	meshList[GEO_LOWHOUSE_M] = MeshBuilder::GenerateOBJMTL("small house m", "OBJ//low_buildingM.obj", "OBJ//low_buildingM.mtl");
-	meshList[GEO_LOWHOUSE_N] = MeshBuilder::GenerateOBJMTL("small house n", "OBJ//low_buildingN.obj", "OBJ//low_buildingN.mtl");
-	meshList[GEO_SKYSCRAPER_A] = MeshBuilder::GenerateOBJMTL("skyscraper a", "OBJ//skyscraperA.obj", "OBJ//skyscraperA.mtl");
-	meshList[GEO_SKYSCRAPER_B] = MeshBuilder::GenerateOBJMTL("skyscraper b", "OBJ//skyscraperB.obj", "OBJ//skyscraperB.mtl");
-	meshList[GEO_SKYSCRAPER_C] = MeshBuilder::GenerateOBJMTL("skyscraper c", "OBJ//skyscraperC.obj", "OBJ//skyscraperC.mtl");
-	meshList[GEO_SKYSCRAPER_D] = MeshBuilder::GenerateOBJMTL("skyscraper d", "OBJ//skyscraperD.obj", "OBJ//skyscraperD.mtl");
-	meshList[GEO_SKYSCRAPER_E] = MeshBuilder::GenerateOBJMTL("skyscraper e", "OBJ//skyscraperE.obj", "OBJ//skyscraperE.mtl");
-	meshList[GEO_SKYSCRAPER_F] = MeshBuilder::GenerateOBJMTL("skyscraper f", "OBJ//skyscraperF.obj", "OBJ//skyscraperF.mtl");
-	meshList[GEO_SMALLHOUSE_A] = MeshBuilder::GenerateOBJMTL("small house a", "OBJ//small_buildingA.obj", "OBJ//small_buildingA.mtl");
-	meshList[GEO_SMALLHOUSE_B] = MeshBuilder::GenerateOBJMTL("small house b", "OBJ//small_buildingB.obj", "OBJ//small_buildingB.mtl");
-	meshList[GEO_SMALLHOUSE_C] = MeshBuilder::GenerateOBJMTL("small house c", "OBJ//small_buildingC.obj", "OBJ//small_buildingC.mtl");
-	meshList[GEO_SMALLHOUSE_D] = MeshBuilder::GenerateOBJMTL("small house d", "OBJ//small_buildingD.obj", "OBJ//small_buildingD.mtl");
-	meshList[GEO_SMALLHOUSE_E] = MeshBuilder::GenerateOBJMTL("small house E", "OBJ//small_buildingE.obj", "OBJ//small_buildingE.mtl");
-	meshList[GEO_SMALLHOUSE_F] = MeshBuilder::GenerateOBJMTL("small house F", "OBJ//small_buildingF.obj", "OBJ//small_buildingF.mtl");
-
-
-
+	meshList[GEO_BACKGROUND] = MeshBuilder::GenerateQuad("greenbackground", Color(1, 1, 1), 1.f, 1.f);
+	meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image//background.tga");
+	meshList[GEO_TITLE] = MeshBuilder::GenerateQuad("titleamogus", Color(1, 1, 1), 1.f, 1.f);
+	meshList[GEO_TITLE]->textureID = LoadTGA("Image//title.tga");
+	meshList[GEO_PLAY] = MeshBuilder::GenerateQuad("pvzstart", Color(1, 1, 1), 1.f, 1.f);
+	meshList[GEO_PLAY]->textureID = LoadTGA("Image//play.tga");
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//arial.tga");
@@ -276,7 +243,7 @@ void SceneGame::Init()
 	orangeTranslateX = 20.5f, orangeTranslateZ = 20.f;
 }
 
-void SceneGame::Update(double dt)
+void SceneMainMenu::Update(double dt)
 {
 	//mouse inputs
 	static bool bLButtonState = false;
@@ -644,7 +611,7 @@ void SceneGame::Update(double dt)
 		redRotateY = 0;
 	}
 }
-float SceneGame::DistBetweenPoints(float x1, float z1, float x2, float z2)
+float SceneMainMenu::DistBetweenPoints(float x1, float z1, float x2, float z2)
 {
 	float distX = x1 - x2;
 	float distZ = z1 - z2;
@@ -652,7 +619,7 @@ float SceneGame::DistBetweenPoints(float x1, float z1, float x2, float z2)
 	dist = sqrt((distX * distX) + (distZ * distZ));
 	return dist;
 }
-bool SceneGame::CollisionLineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
+bool SceneMainMenu::CollisionLineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
 {
 	// calculate the direction of the lines
 	float uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
@@ -662,7 +629,7 @@ bool SceneGame::CollisionLineLine(float x1, float y1, float x2, float y2, float 
 	if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) return true;
 	return false;
 }
-bool SceneGame::CollisionLineRect(float x1, float y1, float x2, float y2, float rx, float ry, float rw, float rh)
+bool SceneMainMenu::CollisionLineRect(float x1, float y1, float x2, float y2, float rx, float ry, float rw, float rh)
 {
 	// check if the line has hit any of the rectangle's sides
     // uses the Line/Line function below
@@ -677,7 +644,7 @@ bool SceneGame::CollisionLineRect(float x1, float y1, float x2, float y2, float 
 	return false;
 }
 
-bool SceneGame::CollisionPointCircle(float px, float py, float cx, float cy, float r)
+bool SceneMainMenu::CollisionPointCircle(float px, float py, float cx, float cy, float r)
 {
 	// get distance between the point and circle's center using the Pythagorean Theorem
 	float distX = px - cx;
@@ -689,7 +656,7 @@ bool SceneGame::CollisionPointCircle(float px, float py, float cx, float cy, flo
 	return false;
 }
 
-bool SceneGame::CollisionLinePoint(float x1, float y1, float x2, float y2, float px, float py)
+bool SceneMainMenu::CollisionLinePoint(float x1, float y1, float x2, float y2, float px, float py)
 {
 	// get distance from the point to the two ends of the line
 	float d1 = DistBetweenPoints(px, py, x1, y1);
@@ -707,7 +674,7 @@ bool SceneGame::CollisionLinePoint(float x1, float y1, float x2, float y2, float
 	return false;
 }
 
-bool SceneGame::CollisionLineCircle(float x1, float y1, float x2, float y2, float cx, float cy, float r)
+bool SceneMainMenu::CollisionLineCircle(float x1, float y1, float x2, float y2, float cx, float cy, float r)
 {
 	// if either end INSIDE the circle return true
 	bool inside1 = CollisionPointCircle(x1, y1, cx, cy, r);
@@ -735,7 +702,7 @@ bool SceneGame::CollisionLineCircle(float x1, float y1, float x2, float y2, floa
 	return false;
 }
 
-void SceneGame::RenderMesh(Mesh* mesh, bool enableLight)
+void SceneMainMenu::RenderMesh(Mesh* mesh, bool enableLight)
 {
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
 
@@ -773,7 +740,7 @@ void SceneGame::RenderMesh(Mesh* mesh, bool enableLight)
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }
-void SceneGame::RenderText(Mesh* mesh, std::string text, Color color)
+void SceneMainMenu::RenderText(Mesh* mesh, std::string text, Color color)
 {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 		return;
@@ -797,7 +764,7 @@ void SceneGame::RenderText(Mesh* mesh, std::string text, Color color)
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
 }
-void SceneGame::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y)
+void SceneMainMenu::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y)
 {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 		return;
@@ -836,7 +803,7 @@ void SceneGame::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, fl
 	modelStack.PopMatrix();
 	glEnable(GL_DEPTH_TEST); //uncomment for RenderTextOnScreen
 }
-void SceneGame::RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y)
+void SceneMainMenu::RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y)
 {
 	glDisable(GL_DEPTH_TEST);
 	Mtx44 ortho;
@@ -855,7 +822,7 @@ void SceneGame::RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float 
 	modelStack.PopMatrix();
 	glEnable(GL_DEPTH_TEST);
 }
-void SceneGame::Render()
+void SceneMainMenu::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -900,101 +867,40 @@ void SceneGame::Render()
 	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
 	modelStack.LoadIdentity();	
 
-	modelStack.PushMatrix();
+	/*modelStack.PushMatrix();
 	modelStack.Rotate(-90, 1, 0, 0);
-	modelStack.Scale(200, 200, 200);
+	modelStack.Scale(50, 50, 50);
 	RenderMesh(meshList[GEO_GROUND], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
 	modelStack.Scale(0.35, 0.35, 0.35);
 	RenderMesh(meshList[GEO_ENEMY1], true);
+	modelStack.PopMatrix();*/
+
+	modelStack.PushMatrix();
+	modelStack.Scale(50, 50, 50);
+	modelStack.Translate(50, 50, 52);
+	RenderMesh(meshList[GEO_BACKGROUND], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(-60, 0, -60);
-	modelStack.Scale(20, 20, 20);
-	RenderMesh(meshList[GEO_SKYSCRAPER_A], true);
+	modelStack.Scale(50, 50, 50);
+	modelStack.Translate(50, 50, 50);
+	RenderMesh(meshList[GEO_TITLE], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, -70);
-	modelStack.Scale(20, 20, 20);
-	RenderMesh(meshList[GEO_SMALLHOUSE_E], true);
+	modelStack.Scale(50, 50, 50);
+	modelStack.Translate(50, 50, 50);
+	RenderMesh(meshList[GEO_PLAY], false);
 	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(-60, 0, 0);
-	modelStack.Scale(20, 20, 20);
-	RenderMesh(meshList[GEO_SKYSCRAPER_F], true);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, -20);
-	modelStack.Scale(20, 20, 20);
-	RenderMesh(meshList[GEO_BIGHOUSE_A], true);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(60, 0, -65);
-	modelStack.Scale(20, 20, 20);
-	RenderMesh(meshList[GEO_BIGHOUSE_F], true);
-	modelStack.PopMatrix();
-	
-	modelStack.PushMatrix();
-	modelStack.Translate(60, 0, -15);
-	modelStack.Scale(20, 20, 20);
-	RenderMesh(meshList[GEO_BIGHOUSE_G], true);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(-10, 0, 80);
-	modelStack.Scale(20, 20, 20);
-	RenderMesh(meshList[GEO_SMALLHOUSE_D], true);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(-60, 0, 60);
-	modelStack.Scale(20, 20, 20);
-	RenderMesh(meshList[GEO_SMALLHOUSE_C], true);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(-40, 0, 60);
-	modelStack.Scale(20, 20, 20);
-	RenderMesh(meshList[GEO_SMALLHOUSE_F], true);
-	modelStack.PopMatrix();
-
-
-	modelStack.PushMatrix();
-	modelStack.Translate(10, 0, 80);
-	modelStack.Scale(20, 20, 20);
-	RenderMesh(meshList[GEO_SMALLHOUSE_D], true);
-	modelStack.PopMatrix();
-
-
-	modelStack.PushMatrix();
-	modelStack.Translate(60, 0, 60);
-	modelStack.Scale(20, 20, 20);
-	RenderMesh(meshList[GEO_SKYSCRAPER_E], true);
-	modelStack.PopMatrix();
-
-
-
-	//Render Bomb
-	modelStack.PushMatrix();
-	modelStack.Translate(60, 0, 15);
-	modelStack.Scale(5, 5, 5);
-	RenderMesh(meshList[GEO_LOWHOUSE_H], true);
-	modelStack.PopMatrix();
-
-
 
 	RenderSkybox();
 
 }
 
-void SceneGame::RenderSkybox()
+void SceneMainMenu::RenderSkybox()
 {
 	modelStack.PushMatrix();
 	modelStack.Translate(camera.position.x, camera.position.y, camera.position.z);
@@ -1039,7 +945,7 @@ void SceneGame::RenderSkybox()
 	modelStack.PopMatrix();
 }
 
-void SceneGame::Exit()
+void SceneMainMenu::Exit()
 {
 	// Cleanup VBO here
 	delete meshList[GEO_TEXT];
