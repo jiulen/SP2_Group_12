@@ -23,6 +23,10 @@ public:
 	virtual void Reset();
 	//Vector3 CollisionCircleRect(float cx, float cy, float radius, float rx, float ry, float rw, float rh);
 	//Vector3 PlayerCollision(unsigned count);
+private:
+	float lastX, lastY;
+	bool firstMouse;
+	void LookingAround();
 };
 
 #endif
