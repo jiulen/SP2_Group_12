@@ -14,10 +14,6 @@ Camera3::~Camera3()
 
 void Camera3::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 {
-	
-	lastX = Application::GetWindowWidth() * 0.5f;
-	lastY = Application::GetWindowHeight() * 0.5f;
-
     this->position = defaultPosition = pos;
     this->target = defaultTarget = target;
     Vector3 view = (target - position).Normalized();
@@ -31,11 +27,9 @@ void Camera3::Update(double dt)
 {
 	static const float ROTATE_SPEED = 90.f;
 	float MOVE_SPEED;
-	//looking around
-	LookingAround();
 	if (Application::IsKeyPressed(VK_SHIFT))
 	{
-		MOVE_SPEED = 40.f;
+		MOVE_SPEED=40.f;
 	}
 	else
 	{
@@ -50,18 +44,18 @@ void Camera3::Update(double dt)
 	{
 		Vector3 startPos = position;
 		position -= right * static_cast<float>(dt) * MOVE_SPEED;
-		if (position.x < -97.5) {
-			position.x = -97.5;
-		}
-		else if (position.x > 97.5) {
-			position.x = 97.5;
-		}
-		if (position.z < -97.5) {
-			position.z = -97.5;
-		}
-		else if (position.z > 97.5) {
-			position.z = 97.5;
-		}
+		//if (position.x < -46.5) {
+		//	position.x = -46.5;
+		//}
+		//else if (position.x > 46.5) {
+		//	position.x = 46.5;
+		//}
+		//if (position.z < -46.5) {
+		//	position.z = -46.5;
+		//}
+		//else if (position.z > 46.5) {
+		//	position.z = 46.5;
+		//}
 		int i = 0;
 		bool stop = false;
 		//for (int i = 0; i <= 21; ++i) {
@@ -76,20 +70,18 @@ void Camera3::Update(double dt)
 	{
 		Vector3 startPos = position;
 		position += right * static_cast<float>(dt) * MOVE_SPEED;
-		if (position.x < -97.5) {
-			position.x = -97.5;
-		}
-		else if (position.x > 97.5) {
-			position.x = 97.5;
-		}
-		if (position.z < -97.5) {
-			position.z = -97.5;
-		}
-		else if (position.z > 97.5) {
-			position.z = 97.5;
-		}
-    int i = 0;
-		bool stop = false;
+		//if (position.x < -46.5) {
+		//	position.x = -46.5;
+		//}
+		//else if (position.x > 46.5) {
+		//	position.x = 46.5;
+		//}
+		//if (position.z < -46.5) {
+		//	position.z = -46.5;
+		//}
+		//else if (position.z > 46.5) {
+		//	position.z = 46.5;
+		//}
 		//for (int i = 0; i <= 21; ++i) {
 		//	Vector3 finalPos = PlayerCollision(i); //ignore y
 		//	position.x = finalPos.x;
@@ -102,20 +94,18 @@ void Camera3::Update(double dt)
 	{
 		Vector3 startPos = position;
 		position += view * static_cast<float>(dt) * MOVE_SPEED;
-		if (position.x < -97.5) {
-			position.x = -97.5;
-		}
-		else if (position.x > 97.5) {
-			position.x = 97.5;
-		}
-		if (position.z < -97.5) {
-			position.z = -97.5;
-		}
-		else if (position.z > 97.5) {
-			position.z = 97.5;
-		}
-    int i = 0;
-		bool stop = false;
+		//if (position.x < -46.5) {
+		//	position.x = -46.5;
+		//}
+		//else if (position.x > 46.5) {
+		//	position.x = 46.5;
+		//}
+		//if (position.z < -46.5) {
+		//	position.z = -46.5;
+		//}
+		//else if (position.z > 46.5) {
+		//	position.z = 46.5;
+		//}
 		//for (int i = 0; i <= 21; ++i) {
 		//	Vector3 finalPos = PlayerCollision(i); //ignore y
 		//	position.x = finalPos.x;
@@ -128,20 +118,18 @@ void Camera3::Update(double dt)
 	{
 		Vector3 startPos = position;
 		position -= view * static_cast<float>(dt) * MOVE_SPEED;
-		if (position.x < -97.5) {
-			position.x = -97.5;
-		}
-		else if (position.x > 97.5) {
-			position.x = 97.5;
-		}
-		if (position.z < -97.5) {
-			position.z = -97.5;
-		}
-		else if (position.z > 97.5) {
-			position.z = 97.5;
-		}
-    int i = 0;
-		bool stop = false;
+		//if (position.x < -46.5) {
+		//	position.x = -46.5;
+		//}
+		//else if (position.x > 46.5) {
+		//	position.x = 46.5;
+		//}
+		//if (position.z < -46.5) {
+		//	position.z = -46.5;
+		//}
+		//else if (position.z > 46.5) {
+		//	position.z = 46.5;
+		//}
 		//for (int i = 0; i <= 21; ++i) {
 		//	Vector3 finalPos = PlayerCollision(i); //ignore y
 		//	position.x = finalPos.x;
@@ -150,7 +138,53 @@ void Camera3::Update(double dt)
 		position.y = startPos.y;
 		target = position + view;
 	}
-	if ((Application::IsKeyPressed(VK_SPACE)) && (jump==-1))
+	if (Application::IsKeyPressed(VK_RIGHT))
+	{
+		float yaw = -ROTATE_SPEED * static_cast<float>(dt);
+		Mtx44 rotation;
+		rotation.SetToRotation(yaw, 0, 1, 0);
+		up = rotation * up;
+		view = rotation * view;
+		target = position + view;
+	}
+	if (Application::IsKeyPressed(VK_LEFT))
+	{
+		float yaw = ROTATE_SPEED * static_cast<float>(dt);
+		Mtx44 rotation;
+		rotation.SetToRotation(yaw, 0, 1, 0);
+		up = rotation * up;
+		view = rotation * view;
+		target = position + view;
+	}
+	if (Application::IsKeyPressed(VK_DOWN)) //limit
+	{
+		float pitch = -ROTATE_SPEED * static_cast<float>(dt);
+		right.y = 0;
+		right.Normalize();
+		up = right.Cross(view).Normalized();
+		Mtx44 rotation;
+		rotation.SetToRotation(pitch, right.x, right.y, right.z);
+		view = rotation * view;
+		target = position + view;
+		if (target.y < position.y - 0.5) {
+			target.y = position.y - 0.5;
+		}
+	}
+	if (Application::IsKeyPressed(VK_UP)) //limit
+	{
+		float pitch = ROTATE_SPEED * static_cast<float>(dt);
+		right.y = 0;
+		right.Normalize();
+		up = right.Cross(view).Normalized();
+		Mtx44 rotation;
+		rotation.SetToRotation(pitch, right.x, right.y, right.z);
+		view = rotation * view;
+		target = position + view;
+		if (target.y > position.y + 0.5) {
+			target.y = position.y + 0.5;
+		}
+	}
+	if ((Application::IsKeyPressed(VK_SPACE))&&(jump==-1))
 	{
 		jump = 1;
 	}
@@ -164,13 +198,14 @@ void Camera3::Update(double dt)
 	if (jump == 0)
 	{
 		position.y -= static_cast<float>(dt) * JUMP_SPEED;
-		if (position.y <= defaultPosition.y)
+		if (position.y <= 4.5)
 		{
-			position.y = defaultPosition.y;
+			position.y = 4.5;
 			jump = -1;
 		}
 		target = position + view;
 	}
+	
 	if (Application::IsKeyPressed('R'))
 	{
 		Reset();
@@ -182,60 +217,6 @@ void Camera3::Reset()
     position = defaultPosition;
     target = defaultTarget;
     up = defaultUp;
-}
-
-void Camera3::LookingAround()
-{
-	//test
-	static float totalPitch = 0.f;
-	//
-
-	Vector3 view = (target - position).Normalized();
-	Vector3 right = view.Cross(up);
-	right.y = 0;
-	right.Normalize();
-
-	double x, y;
-	Application::GetCursorPos(&x, &y);
-	if (firstMouse) {
-		lastX = x;
-		lastY = y;
-		firstMouse = false;
-	}
-	float xoffset = x - lastX;
-	float yoffset = lastY - y;
-	lastX = x;
-	lastY = y;
-
-	float sensitivity = 0.05f;
-	xoffset *= -sensitivity;
-	yoffset *= sensitivity;
-
-	//limits pitch to 90 degrees both up and down
-	totalPitch += yoffset;
-	if (totalPitch > 90.f) {
-		yoffset -= totalPitch - 90.f;
-		totalPitch = 90.f;
-	}
-	else if (totalPitch < -90.f) {
-		yoffset -= totalPitch + 90.f;
-		totalPitch = -90.f;
-	}
-
-	//yaw
-	Mtx44 rotation;
-	rotation.SetToRotation(xoffset, up.x, up.y, up.z);
-	up = rotation * up;
-	view = rotation * view;
-	target = position + view;
-
-	//pitch
-	right.y = 0;
-	right.Normalize();
-	up = right.Cross(view).Normalized();
-	rotation.SetToRotation(yoffset, right.x, right.y, right.z);
-	view = rotation * view;
-	target = position + view;
 }
 
 //Vector3 Camera3::CollisionCircleRect(float cx, float cy, float radius, float rx, float ry, float rw, float rh) {
