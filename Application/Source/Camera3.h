@@ -14,6 +14,8 @@ public:
 	Vector3 defaultTarget;
 	Vector3 defaultUp;
 
+	int jump=-1;
+
 	Camera3();
 	~Camera3();
 	virtual void Init(const Vector3& pos, const Vector3& target, const Vector3& up);

@@ -27,6 +27,7 @@ void Camera3::Update(double dt)
 {
 	static const float ROTATE_SPEED = 90.f;
 	static const float MOVE_SPEED = 20.f;
+	static const float JUMP_SPEED = 35.f;
 	Vector3 view = (target - position).Normalized();
 	Vector3 right = view.Cross(up);
 	right.y = 0;
@@ -174,6 +175,27 @@ void Camera3::Update(double dt)
 		if (target.y > position.y + 0.5) {
 			target.y = position.y + 0.5;
 		}
+	}
+	if ((Application::IsKeyPressed(VK_SPACE))&&(jump==-1))
+	{
+		jump = 1;
+	}
+	if (jump == 1)
+	{
+		position.y += static_cast<float>(dt) * JUMP_SPEED;
+		if (position.y > 10)
+			jump = 0;
+		target = position + view;
+	}
+	if (jump == 0)
+	{
+		position.y -= static_cast<float>(dt) * JUMP_SPEED;
+		if (position.y <= 4.5)
+		{
+			position.y = 4.5;
+			jump = -1;
+		}
+		target = position + view;
 	}
 	if (Application::IsKeyPressed('R'))
 	{
