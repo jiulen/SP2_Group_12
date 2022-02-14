@@ -141,6 +141,10 @@ void SceneGame::Init()
 	meshList[GEO_RIGHT]->textureID = LoadTGA("Image//tron_rt.tga");
 	meshList[GEO_BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
 	meshList[GEO_BOTTOM]->textureID = LoadTGA("Image//tron_dn.tga");
+	meshList[GEO_GROUND] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
+	meshList[GEO_GROUND]->textureID = LoadTGA("Image//mesh.tga");
+	meshList[GEO_ENEMY1] = MeshBuilder::GenerateOBJMTL("enemy1", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
+	meshList[GEO_ENEMY1]->textureID = LoadTGA("Image//skin_robot.tga");
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//arial.tga");
@@ -692,56 +696,6 @@ bool SceneGame::CollisionLineCircle(float x1, float y1, float x2, float y2, floa
 	return false;
 }
 
-//void SceneGame::RenderSkybox() {
-//	const float OFFSET = 499;
-//	modelStack.PushMatrix(); 
-//	modelStack.Translate(camera.position.x, camera.position.y, camera.position.z);
-//
-//	modelStack.PushMatrix();
-//	modelStack.Translate(0, 0, -OFFSET);
-//	modelStack.Scale(1000, 1000, 1000);
-//	RenderMesh(meshList[GEO_FRONT], false);
-//	modelStack.PopMatrix();
-//
-//	modelStack.PushMatrix();
-//	modelStack.Translate(0, 0, OFFSET);
-//	modelStack.Rotate(180, 0, 1, 0);
-//	modelStack.Scale(1000, 1000, 1000);
-//	RenderMesh(meshList[GEO_BACK], false);
-//	modelStack.PopMatrix();
-//
-//	modelStack.PushMatrix();
-//	modelStack.Translate(-OFFSET, 0, 0);
-//	modelStack.Rotate(90, 0, 1, 0);
-//	modelStack.Scale(1000, 1000, 1000);
-//	RenderMesh(meshList[GEO_LEFT], false);
-//	modelStack.PopMatrix();
-//
-//	modelStack.PushMatrix();
-//	modelStack.Translate(OFFSET, 0, 0);
-//	modelStack.Rotate(-90, 0, 1, 0);
-//	modelStack.Scale(1000, 1000, 1000);
-//	RenderMesh(meshList[GEO_RIGHT], false);
-//	modelStack.PopMatrix();
-//
-//	modelStack.PushMatrix();
-//	modelStack.Translate(0, OFFSET, 0);
-//	modelStack.Rotate(90, 0, 1, 0);
-//	modelStack.Rotate(90, 1, 0, 0);
-//	modelStack.Scale(1000, 1000, 1000);
-//	RenderMesh(meshList[GEO_TOP], false);
-//	modelStack.PopMatrix();
-//
-//	modelStack.PushMatrix();
-//	modelStack.Translate(0, -OFFSET, 0);
-//	modelStack.Rotate(90, 0, 1, 0);
-//	modelStack.Rotate(-90, 1, 0, 0);
-//	modelStack.Scale(1000, 1000, 1000);
-//	RenderMesh(meshList[GEO_BOTTOM], false);
-//	modelStack.PopMatrix();
-//
-//	modelStack.PopMatrix();
-//}
 void SceneGame::RenderMesh(Mesh* mesh, bool enableLight)
 {
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
@@ -906,6 +860,17 @@ void SceneGame::Render()
 	viewStack.LoadIdentity();
 	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
 	modelStack.LoadIdentity();	
+
+	modelStack.PushMatrix();
+	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(50, 50, 50);
+	RenderMesh(meshList[GEO_GROUND], false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Scale(0.35, 0.35, 0.35);
+	RenderMesh(meshList[GEO_ENEMY1], true);
+	modelStack.PopMatrix();
 
 	RenderSkybox();
 

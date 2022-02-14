@@ -29,6 +29,12 @@ class SceneGame : public Scene
 		GEO_FRONT,
 		GEO_BACK,
 
+		//Ground
+		GEO_GROUND,
+
+		//Models
+		GEO_ENEMY1,
+
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
