@@ -19,6 +19,8 @@
 .vs/
 Debug/
 Release/
+Application/Debug
+Common/Debug
 
 # Executables
 *.exe
