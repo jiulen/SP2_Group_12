@@ -129,7 +129,18 @@ void SceneGame::Init()
 		meshList[i] = nullptr;
 	}
 
-	
+	meshList[GEO_FRONT] = MeshBuilder::GenerateQuad("front", Color(1, 1, 1), 1.f);
+	meshList[GEO_FRONT]->textureID = LoadTGA("Image//tron_ft.tga");
+	meshList[GEO_BACK] = MeshBuilder::GenerateQuad("back", Color(1, 1, 1), 1.f);
+	meshList[GEO_BACK]->textureID = LoadTGA("Image//tron_bk.tga");
+	meshList[GEO_TOP] = MeshBuilder::GenerateQuad("top", Color(1, 1, 1), 1.f);
+	meshList[GEO_TOP]->textureID = LoadTGA("Image//tron_up.tga");
+	meshList[GEO_LEFT] = MeshBuilder::GenerateQuad("left", Color(1, 1, 1), 1.f);
+	meshList[GEO_LEFT]->textureID = LoadTGA("Image//tron_lf.tga");
+	meshList[GEO_RIGHT] = MeshBuilder::GenerateQuad("right", Color(1, 1, 1), 1.f);
+	meshList[GEO_RIGHT]->textureID = LoadTGA("Image//tron_rt.tga");
+	meshList[GEO_BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
+	meshList[GEO_BOTTOM]->textureID = LoadTGA("Image//tron_dn.tga");
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//arial.tga");
@@ -896,9 +907,50 @@ void SceneGame::Render()
 	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
 	modelStack.LoadIdentity();	
 
-	//RenderSkybox();
+	RenderSkybox();
 
-		
+}
+
+void SceneGame::RenderSkybox()
+{
+	int OFFSET = 499;
+	modelStack.PushMatrix();
+	modelStack.Translate(OFFSET, 0, 0);
+	modelStack.Rotate(-90, 0, 1, 0);
+	modelStack.Scale(1000, 1000, 1000);
+	RenderMesh(meshList[GEO_BACK], false);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(-OFFSET, 0, 0);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(1000, 1000, 1000);
+	RenderMesh(meshList[GEO_FRONT], false);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, -OFFSET);
+	modelStack.Scale(1000, 1000, 1000);
+	RenderMesh(meshList[GEO_LEFT], false);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, OFFSET);
+	modelStack.Rotate(180, 0, 1, 0);
+	modelStack.Scale(1000, 1000, 1000);
+	RenderMesh(meshList[GEO_RIGHT], false);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0, OFFSET, 0);
+	modelStack.Rotate(90, 1, 0, 0);
+	modelStack.Rotate(180, 0, 0, 1);
+	modelStack.Scale(1000, 1000, 1000);
+	RenderMesh(meshList[GEO_TOP], false);
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+	modelStack.Translate(0, -OFFSET, 0);
+	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Rotate(180, 0, 0, 1);
+	modelStack.Scale(1000, 1000, 1000);
+	RenderMesh(meshList[GEO_BOTTOM], false);
+	modelStack.PopMatrix();
 }
 
 void SceneGame::Exit()
