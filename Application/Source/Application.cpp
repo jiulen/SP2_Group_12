@@ -138,10 +138,10 @@ void Application::Run()
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
-		if (IsKeyPressed(VK_F1))
+		/*if (IsKeyPressed(VK_F1))
 			scene = scene1;
 		else if (IsKeyPressed(VK_F2))
-			scene = scene2;
+			scene = scene2;*/
 		scene->Update(m_timer.getElapsedTime());
 		scene->Render();
 		//Swap buffers
