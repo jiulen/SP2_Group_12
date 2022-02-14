@@ -9,7 +9,7 @@
 //Include the standard C++ headers
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "SceneMainMenu.h"
 #include "SceneText.h"
 #include "SceneUI.h"
 #include "SceneGame.h"
@@ -129,17 +129,19 @@ void Application::Init()
 void Application::Run()
 {
 	//Main Loop
-	Scene* scene1 = new SceneGame();
+	Scene* scene1 = new SceneMainMenu();
+	Scene* scene2 = new SceneGame();
 	Scene* scene = scene1;
 	scene1->Init();
+	scene2->Init();
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
-		/*if (IsKeyPressed(VK_F1))
+		if (IsKeyPressed(VK_F1))
 			scene = scene1;
 		else if (IsKeyPressed(VK_F2))
-			scene = scene2;*/
+			scene = scene2;
 		scene->Update(m_timer.getElapsedTime());
 		scene->Render();
 		//Swap buffers
@@ -151,6 +153,8 @@ void Application::Run()
 	} //Check if the ESC key had been pressed or if the window had been closed
 	scene1->Exit();
 	delete scene1;
+	scene2->Exit();
+	delete scene2;
 }
 
 void Application::Exit()
