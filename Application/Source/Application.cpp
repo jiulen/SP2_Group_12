@@ -12,6 +12,7 @@
 
 #include "SceneText.h"
 #include "SceneUI.h"
+#include "SceneGame.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
@@ -128,8 +129,8 @@ void Application::Init()
 void Application::Run()
 {
 	//Main Loop
-	Scene *scene1 = new SceneUI();
-	Scene *scene2 = new SceneText();
+	Scene* scene1 = new SceneGame();
+	Scene* scene2 = new SceneText();
 	Scene* scene = scene1;
 	scene1->Init();
 	scene2->Init();
