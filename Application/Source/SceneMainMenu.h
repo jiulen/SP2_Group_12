@@ -21,6 +21,7 @@ class SceneMainMenu : public Scene
 		GEO_BACKGROUND,
 		GEO_TITLE,
 		GEO_PLAY,
+		GEO_OPTIONS,
 		//OBJs
 		GEO_LIGHT0, //ceiling light (can be turned off)
 		
@@ -134,6 +135,7 @@ private:
 		blackTranslateX, blackTranslateY, blackTranslateZ,
 		cyanTranslateX, cyanTranslateY, cyanTranslateZ,
 		orangeTranslateX, orangeTranslateY, orangeTranslateZ;
+	int nextscene = 1;
 public:
 	SceneMainMenu();
 	~SceneMainMenu();
@@ -142,5 +144,6 @@ public:
 	virtual void Update(double dt);
 	virtual void Render();
 	virtual void Exit();
+	virtual int NextScene();
 };
 #endif

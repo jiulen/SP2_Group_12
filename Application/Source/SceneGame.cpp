@@ -146,7 +146,7 @@ void SceneGame::Init()
 	meshList[GEO_BOTTOM] = MeshBuilder::GenerateQuad("bottom", Color(1, 1, 1), 1.f);
 	meshList[GEO_BOTTOM]->textureID = LoadTGA("Image//tron_dn.tga");
 	meshList[GEO_GROUND] = MeshBuilder::GenerateRepeatingQuad("bottom", Color(1, 1, 1), 20.f);
-	meshList[GEO_GROUND]->textureID = LoadTGA("Image//mesh.tga");
+	meshList[GEO_GROUND]->textureID = LoadTGA("Image//whitebrickfloor.tga");
 	meshList[GEO_ENEMY1] = MeshBuilder::GenerateOBJMTL("enemy1", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
 	meshList[GEO_ENEMY1]->textureID = LoadTGA("Image//skin_robot.tga");
 
@@ -168,7 +168,7 @@ void SceneGame::Init()
 	meshList[GEO_LOWHOUSE_I] = MeshBuilder::GenerateOBJMTL("small house i", "OBJ//low_buildingI.obj", "OBJ//low_buildingI.mtl");
 	meshList[GEO_LOWHOUSE_J] = MeshBuilder::GenerateOBJMTL("small house j", "OBJ//low_buildingJ.obj", "OBJ//low_buildingJ.mtl");
 	meshList[GEO_LOWHOUSE_K] = MeshBuilder::GenerateOBJMTL("small house k", "OBJ//low_buildingK.obj", "OBJ//low_buildingK.mtl");
-	meshList[GEO_LOWHOUSE_L] = MeshBuilder::GenerateOBJMTL("small house l", "OBJ//owl_buildingL.obj", "OBJ//low_buildingL.mtl");
+	meshList[GEO_LOWHOUSE_L] = MeshBuilder::GenerateOBJMTL("small house l", "OBJ//low_buildingL.obj", "OBJ//low_buildingL.mtl");
 	meshList[GEO_LOWHOUSE_M] = MeshBuilder::GenerateOBJMTL("small house m", "OBJ//low_buildingM.obj", "OBJ//low_buildingM.mtl");
 	meshList[GEO_LOWHOUSE_N] = MeshBuilder::GenerateOBJMTL("small house n", "OBJ//low_buildingN.obj", "OBJ//low_buildingN.mtl");
 	meshList[GEO_SKYSCRAPER_A] = MeshBuilder::GenerateOBJMTL("skyscraper a", "OBJ//skyscraperA.obj", "OBJ//skyscraperA.mtl");
@@ -1058,6 +1058,11 @@ void SceneGame::RenderSkybox()
 	RenderMesh(meshList[GEO_BOTTOM], false);
 	modelStack.PopMatrix();
 	modelStack.PopMatrix();
+}
+
+int SceneGame::NextScene()
+{
+	return nextscene;
 }
 
 void SceneGame::Exit()

@@ -165,6 +165,7 @@ private:
 		blackTranslateX, blackTranslateY, blackTranslateZ,
 		cyanTranslateX, cyanTranslateY, cyanTranslateZ,
 		orangeTranslateX, orangeTranslateY, orangeTranslateZ;
+	int nextscene = 3;
 public:
 	SceneGame();
 	~SceneGame();
@@ -173,5 +174,6 @@ public:
 	virtual void Update(double dt);
 	virtual void Render();
 	virtual void Exit();
+	virtual int NextScene();
 };
 #endif
