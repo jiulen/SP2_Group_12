@@ -10,8 +10,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "SceneMainMenu.h"
-#include "SceneText.h"
-#include "SceneUI.h"
 #include "SceneGame.h"
 
 GLFWwindow* m_window;
