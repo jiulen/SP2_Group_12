@@ -159,9 +159,9 @@
     <ClCompile Include="Source\MeshBuilder.cpp" />
     <ClCompile Include="Source\SceneGame.cpp" />
     <ClCompile Include="Source\SceneMainMenu.cpp" />
+    <ClCompile Include="Source\SceneNumbersGame.cpp" />
     <ClCompile Include="Source\SceneSettings.cpp" />
-    <ClCompile Include="Source\SceneText.cpp" />
-    <ClCompile Include="Source\SceneUI.cpp" />
+    <ClCompile Include="Source\SceneWiringGame.cpp" />
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
@@ -180,9 +180,9 @@
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneGame.h" />
     <ClInclude Include="Source\SceneMainMenu.h" />
+    <ClInclude Include="Source\SceneNumbersGame.h" />
     <ClInclude Include="Source\SceneSettings.h" />
-    <ClInclude Include="Source\SceneText.h" />
-    <ClInclude Include="Source\SceneUI.h" />
+    <ClInclude Include="Source\SceneWiringGame.h" />
     <ClInclude Include="Source\shader.hpp" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />

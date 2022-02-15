@@ -1,5 +1,5 @@
-#ifndef SCENE_TEXT_H
-#define SCENE_TEXT_H
+#ifndef SCENE_NUMBERS_H
+#define SCENE_NUMBERS_H
 
 #include "Scene.h"
 #include "Camera.h"
@@ -9,42 +9,21 @@
 #include "MatrixStack.h"
 #include "Light.h"
 #include <fstream>
-#include <vector>
 
-class SceneText : public Scene
+class SceneNumbersGame : public Scene
 {
 	enum GEOMETRY_TYPE
 	{
-		GEO_AXES,
-		GEO_QUAD,
-		GEO_CUBE,
-		GEO_CIRCLE,
-		GEO_RING,
-		GEO_SPHERE,
-		GEO_HEMISPHERE,
-		GEO_CYLINDER,
-		GEO_CONE,
-		GEO_TORUS,
-		GEO_LIGHTBALL,
-		GEO_LEFT,
-		GEO_RIGHT,
-		GEO_TOP,
-		GEO_BOTTOM,
-		GEO_FRONT,
-		GEO_BACK,
-		GEO_BLEND,
-		GEO_GROUND,
-		GEO_MODEL1,
-		GEO_MODEL2,
-		GEO_MODEL3,
-		GEO_MODEL4,
-		GEO_MODEL5,
-		GEO_MODEL6,
-		GEO_MODEL7,
-		GEO_MODEL8,
-		GEO_TABLE,
-		GEO_BENCH,
+		//Text
 		GEO_TEXT,
+
+		//Background
+		GEO_BACKGROUND,
+
+		//Game
+		GEO_NUMBERS,
+		GEO_TICK,
+
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -68,6 +47,17 @@ class SceneText : public Scene
 		U_LIGHT0_COSCUTOFF,
 		U_LIGHT0_COSINNER,
 		U_LIGHT0_EXPONENT,
+		U_LIGHT1_POSITION,
+		U_LIGHT1_COLOR,
+		U_LIGHT1_POWER,
+		U_LIGHT1_KC,
+		U_LIGHT1_KL,
+		U_LIGHT1_KQ,
+		U_LIGHT1_TYPE,
+		U_LIGHT1_SPOTDIRECTION,
+		U_LIGHT1_COSCUTOFF,
+		U_LIGHT1_COSINNER,
+		U_LIGHT1_EXPONENT,
 		U_NUMLIGHTS,
 		U_COLOR_TEXTURE_ENABLED,
 		U_COLOR_TEXTURE,
@@ -82,20 +72,37 @@ private:
 	Mesh* meshList[NUM_GEOMETRY];
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
-	Light light[1];
+	Light light[2];
 	bool bLightEnabled;
+	float DistBetweenPoints(float x1, float z1, float x2, float z2);
+	//Collision
+	bool CollisionLineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);
+	bool CollisionLineRect(float x1, float y1, float x2, float y2, float rx, float ry, float rw, float rh);
+	bool CollisionPointCircle(float px, float py, float cx, float cy, float r);
+	bool CollisionLinePoint(float x1, float y1, float x2, float y2, float px, float py);
+	bool CollisionLineCircle(float x1, float y1, float x2, float y2, float cx, float cy, float r);
+	//
 	void RenderSkybox();
+	void RenderNumbersGame();
 	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
+	void RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y, float rt);
+	float interactRange;
 	float FPS;
 	std::ifstream fileStream;
 	unsigned textMaxWidth;
 	unsigned textSpacing[256];
-public:
-	SceneText();
-	~SceneText();
 
+	//game
+	int prevno = 0;
+	int completed = 5;
+	double mouseX = 0;
+	double mouseY = 0;
+public:
+	SceneNumbersGame();
+	~SceneNumbersGame();
+	virtual int NextScene();
 	virtual void Init();
 	virtual void Update(double dt);
 	virtual void Render();

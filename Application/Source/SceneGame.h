@@ -15,11 +15,8 @@ class SceneGame : public Scene
 	enum GEOMETRY_TYPE
 	{
 		//Shapes
-
-		//TGAs
-		GEO_TEXT,
-		//OBJs
-		GEO_LIGHT0, //ceiling light (can be turned off)
+		GEO_CUBE, //for testing
+		
 
 		//Skybox
 		GEO_LEFT,
@@ -32,7 +29,10 @@ class SceneGame : public Scene
 		//Ground
 		GEO_GROUND,
 
-		//Models
+		//Other TGAs
+		GEO_TEXT,
+
+		//OBJs
 		GEO_ENEMY1,
 		GEO_BIGHOUSE_A,
 		GEO_BIGHOUSE_B,
@@ -67,8 +67,6 @@ class SceneGame : public Scene
 		GEO_SMALLHOUSE_D,
 		GEO_SMALLHOUSE_E,
 		GEO_SMALLHOUSE_F,
-
-
 
 		NUM_GEOMETRY,
 	};
@@ -133,6 +131,7 @@ private:
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 	void RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y);
+	std::vector<std::vector<float>> hitboxValues; //floats are pos x, y, z and size x, y, z
 	float interactRange;
 	float FPS;
 	std::string talk;
@@ -166,6 +165,8 @@ private:
 		blackTranslateX, blackTranslateY, blackTranslateZ,
 		cyanTranslateX, cyanTranslateY, cyanTranslateZ,
 		orangeTranslateX, orangeTranslateY, orangeTranslateZ;
+	int nextscene = 3;
+	float enemy1X, enemy1Z;
 public:
 	SceneGame();
 	~SceneGame();
@@ -174,5 +175,6 @@ public:
 	virtual void Update(double dt);
 	virtual void Render();
 	virtual void Exit();
+	virtual int NextScene();
 };
 #endif

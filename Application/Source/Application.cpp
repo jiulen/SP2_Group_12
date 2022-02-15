@@ -9,10 +9,10 @@
 //Include the standard C++ headers
 #include <stdio.h>
 #include <stdlib.h>
+#include "SceneWiringGame.h"
+#include "SceneNumbersGame.h"
 #include "SceneMainMenu.h"
 #include "SceneSettings.h"
-#include "SceneText.h"
-#include "SceneUI.h"
 #include "SceneGame.h"
 
 GLFWwindow* m_window;
@@ -133,27 +133,61 @@ void Application::Run()
 	Scene* scene1 = new SceneMainMenu();
 	Scene* scene2 = new SceneSettings();
 	Scene* scene3 = new SceneGame();
+	Scene* scene4 = new SceneWiringGame();
+	Scene* scene5 = new SceneNumbersGame();
 	Scene* scene = scene1;
 	scene1->Init();
 	scene2->Init();
 	scene3->Init();
+	scene4->Init();
+	scene5->Init();
 
 	//Set cursor mode (do for scene switch also if cursor mode change)
-	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //do normal instead of disabled to restore normal cursor mode
-	if (glfwRawMouseMotionSupported()) {
-		glfwSetInputMode(m_window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
-	}
+	
 	//
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
+		if ((scene == scene4) || (scene == scene5))
+			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		else
+			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //do normal instead of disabled to restore normal cursor mode
+		if (glfwRawMouseMotionSupported()) {
+			glfwSetInputMode(m_window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+		}
+		int sceneno = scene->NextScene();
 		if (IsKeyPressed(VK_F1))
-			scene = scene1;
+			sceneno = 1;
 		else if (IsKeyPressed(VK_F2))
-			scene = scene2;
+			sceneno = 2;
 		else if (IsKeyPressed(VK_F3))
+			sceneno = 3;
+		else if (IsKeyPressed(VK_F4))
+			sceneno = 4;
+		else if (IsKeyPressed(VK_F5))
+			sceneno = 5;
+		if (sceneno == 1)
+			scene = scene1;
+		else if (sceneno == 2)
+			scene = scene2;
+		else if (sceneno == 3)
 			scene = scene3;
+		else if (sceneno == 4)
+			scene = scene4;
+		else if (sceneno == 5)
+			scene = scene5;
+		else if ((sceneno == -1)||(sceneno==-2))
+		{
+			scene4->Exit();
+			delete scene4;
+			scene4 = new SceneWiringGame();
+			scene4->Init();
+			if (sceneno == -1)
+				scene = scene4;
+			else if (sceneno == -2)
+				scene = scene3;
+		}
 		scene->Update(m_timer.getElapsedTime());
 		scene->Render();
 		//Swap buffers
@@ -169,6 +203,10 @@ void Application::Run()
 	delete scene2;
 	scene3->Exit();
 	delete scene3;
+	scene4->Exit();
+	delete scene4;
+	scene5->Exit();
+	delete scene5;
 }
 
 void Application::Exit()

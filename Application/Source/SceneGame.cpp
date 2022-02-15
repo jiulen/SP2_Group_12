@@ -131,6 +131,8 @@ void SceneGame::Init()
 		meshList[i] = nullptr;
 	}
 
+	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", Color(1, 0, 0));
+
 	meshList[GEO_FRONT] = MeshBuilder::GenerateQuad("front", Color(1, 1, 1), 1.f);
 	meshList[GEO_FRONT]->textureID = LoadTGA("Image//tron_ft.tga");
 	meshList[GEO_BACK] = MeshBuilder::GenerateQuad("back", Color(1, 1, 1), 1.f);
@@ -241,6 +243,7 @@ void SceneGame::Init()
 		fileStream.close();
 	}
 	//changing
+	hitboxValues.clear();
 	voting = false, lightsOn = true, impostor = false;
 	voted = 0;
 	redVotes = 0, blackVotes = 0, cyanVotes = 0, orangeVotes = 0, noVotes = 0, mostVotes = 0;
@@ -274,6 +277,10 @@ void SceneGame::Init()
 	blackTranslateX = 0.f; blackTranslateZ = -25.5f;
 	cyanTranslateX = -20.5f, cyanTranslateZ = 20.f;
 	orangeTranslateX = 20.5f, orangeTranslateZ = 20.f;
+
+	//Enemies for Assignment 2
+	enemy1X = 60;
+	enemy1Z = 2;
 }
 
 void SceneGame::Update(double dt)
@@ -339,7 +346,7 @@ void SceneGame::Update(double dt)
 				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //default fill mode
 			if (Application::IsKeyPressed('4'))
 				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //wireframe mode
-			camera.Update(dt);
+			camera.Update(dt, hitboxValues);
 			static const float ROTATE_SPEED = 90.f;
 			if (Application::IsKeyPressed(VK_RIGHT))
 			{
@@ -607,6 +614,31 @@ void SceneGame::Update(double dt)
 		if (Application::IsKeyPressed(VK_RETURN) && voted == 3) {
 			voting = false;
 		}
+
+		if (CollisionPointCircle(camera.position.x, camera.position.z, enemy1X, enemy1Z, 5))// reach a certain point of distance
+		{
+			if (DistBetweenPoints(camera.position.x, camera.position.z, enemy1X, enemy1Z) > 5)//if enemy is out of range
+			{
+				if (camera.position.x < enemy1X)
+				{
+					enemy1X--;
+				}
+				else
+				{
+					enemy1X++;
+					
+				}
+				if (camera.position.z < enemy1Z)
+				{
+					enemy1Z--;
+				}
+				else
+				{
+					enemy1Z++;
+				}
+			}
+		}
+
 	}
 	// remove chat if too far away
 	if (talkTarget == "black") {
@@ -907,79 +939,95 @@ void SceneGame::Render()
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
+	modelStack.Translate(enemy1X, 0, enemy1Z);
 	modelStack.Scale(0.35, 0.35, 0.35);
 	RenderMesh(meshList[GEO_ENEMY1], true);
 	modelStack.PopMatrix();
+	hitboxValues.push_back({ 0, 2.8, 0, 2.7, 5.6, 1.4 });
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-60, 0, -60);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SKYSCRAPER_A], true);
 	modelStack.PopMatrix();
+	hitboxValues.push_back({ -60, 29, -60, 24, 58, 24 });
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, -70);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SMALLHOUSE_E], true);
 	modelStack.PopMatrix();
+	hitboxValues.push_back({ 0, 9, -70, 32, 18, 20 });
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-60, 0, 0);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SKYSCRAPER_F], true);
 	modelStack.PopMatrix();
+	hitboxValues.push_back({ -60, 40, 0, 24, 80, 24 });
+
+	
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, -20);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_BIGHOUSE_A], true);
 	modelStack.PopMatrix();
+	hitboxValues.push_back({ 0, 17, -20, 40, 34, 24 });
 
 	modelStack.PushMatrix();
 	modelStack.Translate(60, 0, -65);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_BIGHOUSE_F], true);
 	modelStack.PopMatrix();
+	hitboxValues.push_back({ 60, 12, -65, 40, 28, 16 });
 	
 	modelStack.PushMatrix();
 	modelStack.Translate(60, 0, -15);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_BIGHOUSE_G], true);
 	modelStack.PopMatrix();
+	hitboxValues.push_back({ 60, 20, -15, 32, 40, 32 });
+	hitboxValues.push_back({ 30.9, 4, -26.1, 0.6, 8, 0.6 });
+	hitboxValues.push_back({ 30.9, 4, -3.9, 0.6, 8, 0.6 });
+	hitboxValues.push_back({ 40, 9, -15, 20, 2, 24 });
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-10, 0, 80);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SMALLHOUSE_D], true);
 	modelStack.PopMatrix();
+	hitboxValues.push_back({ 0, 13, 78.5, 36, 26, 19 });
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-60, 0, 60);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SMALLHOUSE_C], true);
 	modelStack.PopMatrix();
+	hitboxValues.push_back({ -60, 13, 60, 16, 26, 16 });
+	hitboxValues.push_back({ -56, 13, 51, 8, 26, 2 });
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-40, 0, 60);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SMALLHOUSE_F], true);
 	modelStack.PopMatrix();
-
+	hitboxValues.push_back({ -40, 8, 60, 16, 16, 16 });
 
 	modelStack.PushMatrix();
 	modelStack.Translate(10, 0, 80);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SMALLHOUSE_D], true);
 	modelStack.PopMatrix();
-
+	hitboxValues.push_back({ 10, 12, 80, 16, 24, 16 });
+	hitboxValues.push_back({ 10, 4, 70.5, 16, 8, 3 });
 
 	modelStack.PushMatrix();
 	modelStack.Translate(60, 0, 60);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SKYSCRAPER_E], true);
 	modelStack.PopMatrix();
-
-
+	hitboxValues.push_back({ 60, 25, 60, 24, 50, 24 });
 
 	//Render Bomb
 	modelStack.PushMatrix();
@@ -988,10 +1036,13 @@ void SceneGame::Render()
 	RenderMesh(meshList[GEO_LOWHOUSE_H], true);
 	modelStack.PopMatrix();
 
-
-
 	RenderSkybox();
 
+	std::ostringstream ss;
+	ss.str("");
+	ss.precision(4);
+	ss << "FPS: " << FPS;
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 0, 0), 3, 0, 0); //FPS
 }
 
 void SceneGame::RenderSkybox()
@@ -1039,16 +1090,21 @@ void SceneGame::RenderSkybox()
 	modelStack.PopMatrix();
 }
 
+int SceneGame::NextScene()
+{
+	return nextscene;
+}
+
 void SceneGame::Exit()
 {
 	// Cleanup VBO here
 	delete meshList[GEO_TEXT];
-	/*delete meshList[GEO_LEFT];
+	delete meshList[GEO_LEFT];
 	delete meshList[GEO_RIGHT];
 	delete meshList[GEO_TOP];
 	delete meshList[GEO_BOTTOM];
 	delete meshList[GEO_FRONT];
-	delete meshList[GEO_BACK];*/
+	delete meshList[GEO_BACK];
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
 }

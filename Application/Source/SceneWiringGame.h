@@ -1,5 +1,5 @@
-#ifndef SCENE_UI_H
-#define SCENE_UI_H
+#ifndef SCENE_WIRINGGAME_H
+#define SCENE_WIRINGGAME_H
 
 #include "Scene.h"
 #include "Camera.h"
@@ -10,50 +10,22 @@
 #include "Light.h"
 #include <fstream>
 
-class SceneUI : public Scene
+class SceneWiringGame : public Scene
 {
 	enum GEOMETRY_TYPE
 	{
-		GEO_QUAD,
-		GEO_CUBE,
-		GEO_SPHERE,
-		GEO_HEMISPHERE,
-		GEO_CYLINDER,
-		//TGAs
-		GEO_TASKBOARD,
-		GEO_CROSSHAIR,
-		GEO_GLASS,
-		GEO_GROUND,
-		GEO_WALL,
-		GEO_CEILING,
-		GEO_STRIPES,
+		//Text
 		GEO_TEXT,
-		GEO_CHATICON,
-		GEO_CHATBOX,
-		GEO_DEADBOX,
-		GEO_SKIP,
-		GEO_USE,
-		GEO_SABOTAGE,
-		GEO_KILL,
-		GEO_RED,
-		GEO_BLACK,
-		GEO_CYAN,
-		GEO_ORANGE,
-		//OBJs
-		GEO_LIGHT0, //ceiling light (can be turned off)
-		GEO_LIGHT1, //floor light
-		GEO_TABLE,
-		GEO_BENCH,
-		GEO_KNIFE,
-		GEO_SWITCH,
-		GEO_SINK,
-		//Skybox
-		GEO_LEFT,
-		GEO_RIGHT,
-		GEO_TOP,
-		GEO_BOTTOM,
-		GEO_FRONT,
-		GEO_BACK,
+
+		//Background
+		GEO_BACKGROUND,
+
+		//Defuse
+		GEO_WIRING,
+		GEO_YWIRE,
+		GEO_BWIRE,
+		GEO_RWIRE,
+		GEO_PWIRE,
 
 		NUM_GEOMETRY,
 	};
@@ -114,47 +86,34 @@ private:
 	bool CollisionLineCircle(float x1, float y1, float x2, float y2, float cx, float cy, float r);
 	//
 	void RenderSkybox();
+	void RenderWiringGame();
 	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
-	void RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y);
+	void RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y, float rt);
 	float interactRange;
 	float FPS;
-	std::string talk;
-	std::string talkTarget;
 	std::ifstream fileStream;
 	unsigned textMaxWidth;
 	unsigned textSpacing[256];
-	bool redAlive, blackAlive, cyanAlive, orangeAlive;
-	bool voting, lightsOn, impostor;
-	bool turnLightOff;
-	int voted; //0: not voted, 1: bots voted, 2: player voted
-	int redVotes, blackVotes, cyanVotes, orangeVotes, noVotes;
-	int mostVotes; //0 means tie/no vote, others means that player got most votes
-	int gameOver; //0: not over, 1: win, 2: lose;
-	bool task1, task2, task3; //1 is talk, 2 is button, 3 is knife
-	bool iTask1, iTask2; //1 is turn off lights, 2 is kill
-	float lightCutoff, lightInner;
-	float
-		headBodyScaleX, headBodyScaleZ,
-		bodyScaleY,
-		bodyBottomScaleY,
-		headScaleY,
-		headTopScaleY,
-		visorScaleX, visorScaleY, visorScaleZ,
-		thighLegScaleX, thighLegScaleZ,
-		thighScaleY,
-		thighTopBottomScaleY,
-		legScaleY,
-		legTopScaleY,
-		redTranslateX, redTranslateY, redTranslateZ, redRotateX, redRotateY,
-		blackTranslateX, blackTranslateY, blackTranslateZ,
-		cyanTranslateX, cyanTranslateY, cyanTranslateZ,
-		orangeTranslateX, orangeTranslateY, orangeTranslateZ;
+	
+	//wiring
+	int completed = 4;
+	int yellow = 0;
+	int blue = 0;
+	int red = 0;
+	int pink = 0;
+	int correct = 0;
+	int yattached = 0;
+	int battached = 0;
+	int rattached = 0;
+	int pattached = 0;
+	double mouseX = 0;
+	double mouseY = 0;
 public:
-	SceneUI();
-	~SceneUI();
-
+	SceneWiringGame();
+	~SceneWiringGame();
+	virtual int NextScene();
 	virtual void Init();
 	virtual void Update(double dt);
 	virtual void Render();

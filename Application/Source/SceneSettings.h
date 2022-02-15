@@ -136,6 +136,7 @@ private:
 		blackTranslateX, blackTranslateY, blackTranslateZ,
 		cyanTranslateX, cyanTranslateY, cyanTranslateZ,
 		orangeTranslateX, orangeTranslateY, orangeTranslateZ;
+	int nextscene = 2;
 public:
 	SceneSettings();
 	~SceneSettings();
@@ -144,5 +145,6 @@ public:
 	virtual void Update(double dt);
 	virtual void Render();
 	virtual void Exit();
+	virtual int NextScene();
 };
 #endif
