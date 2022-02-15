@@ -1,4 +1,4 @@
-#include "SceneWiringGame.h" 
+#include "SceneNumbersGame.h" 
 #include "GL\glew.h"
 #include "Mtx44.h"
 #include "MyMath.h"
@@ -12,15 +12,15 @@
 #include <sstream>
 
 
-SceneWiringGame::SceneWiringGame()
+SceneNumbersGame::SceneNumbersGame()
 {
 }
 
-SceneWiringGame::~SceneWiringGame()
+SceneNumbersGame::~SceneNumbersGame()
 {
 }
 
-void SceneWiringGame::Init()
+void SceneNumbersGame::Init()
 {
 	// Init VBO here
 
@@ -130,12 +130,10 @@ void SceneWiringGame::Init()
 	}
 	meshList[GEO_BACKGROUND] = MeshBuilder::GenerateQuad("top", Color(1, 1, 1), 1.f);
 	meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image//tron_up.tga");
-	meshList[GEO_WIRING] = MeshBuilder::GenerateQuad("wiring", Color(1, 1, 1), 1.f);
-	meshList[GEO_WIRING]->textureID = LoadTGA("Image//wiring.tga");
-	meshList[GEO_YWIRE] = MeshBuilder::GenerateQuad("wire", Color(1, 1, 0.4), 1.f);
-	meshList[GEO_BWIRE] = MeshBuilder::GenerateQuad("wire", Color(0, 0.1, 0.9), 1.f);
-	meshList[GEO_RWIRE] = MeshBuilder::GenerateQuad("wire", Color(0.8, 0.1, 0.1), 1.f);
-	meshList[GEO_PWIRE] = MeshBuilder::GenerateQuad("wire", Color(0.8, 0.3, 1), 1.f);
+	meshList[GEO_NUMBERS] = MeshBuilder::GenerateQuad("numbers", Color(1, 1, 1), 1.f);
+	meshList[GEO_NUMBERS]->textureID = LoadTGA("Image//numbers.tga");
+	meshList[GEO_TICK] = MeshBuilder::GenerateQuad("tick", Color(1, 1, 1), 1.f);
+	meshList[GEO_TICK]->textureID = LoadTGA("Image//tick.tga");
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//arial.tga");
@@ -192,10 +190,10 @@ void SceneWiringGame::Init()
 		}
 		fileStream.close();
 	}
-	
+
 }
 
-void SceneWiringGame::Update(double dt)
+void SceneNumbersGame::Update(double dt)
 {
 	Application::GetCursorPos(&mouseX, &mouseY);
 	unsigned w = Application::GetWindowWidth();
@@ -215,106 +213,14 @@ void SceneWiringGame::Update(double dt)
 		float BUTTON_BOTTOM = 38;
 		float BUTTON_TOP = 55;
 
-		if ((mouseX > 18) && (mouseX < 21.5) && (mouseY > 44) && (mouseY < 46))
-			yellow = 1;
-		else if ((mouseX > 18) && (mouseX < 21.5) && (mouseY > 33.5) && (mouseY < 35.5))
-			blue = 1;
-		else if ((mouseX > 18) && (mouseX < 21.5) && (mouseY > 23.5) && (mouseY < 25.5))
-			red = 1;
-		else if ((mouseX > 18) && (mouseX < 21.5) && (mouseY > 13.1) && (mouseY < 15.1))
-			pink = 1;
+		
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
-		if ((yellow == 1) || (blue == 1) || (red == 1) || (pink == 1))
-		{
-			if ((mouseX > 57.6) && (mouseX < 64) && (mouseY > 23) && (mouseY < 26) && (yattached == 0))
-			{
-				if (yellow == 1)
-				{
-					correct++;
-					yellow = 2;
-				}
-				else if (blue == 1)
-					blue = 2;
-				else if (red == 1)
-					red = 2;
-				else if (pink == 1)
-					pink = 2;
-				yattached++;
-			}
-			else if ((mouseX > 57.6) && (mouseX < 64) && (mouseY > 33) && (mouseY < 36) && (battached == 0))
-			{
-				if (yellow == 1)
-					yellow = 2;
-				else if (blue == 1)
-				{
-					correct++;
-					blue = 2;
-				}
-				else if (red == 1)
-					red = 2;
-				else if (pink == 1)
-					pink = 2;
-				battached++;
-			}
-			else if ((mouseX > 57.6) && (mouseX < 64) && (mouseY > 43.5) && (mouseY < 46.5) && (rattached == 0))
-			{
-				if (yellow == 1)
-					yellow = 2;
-				else if (blue == 1)
-					blue = 2;
-				else if (red == 1)
-				{
-					correct++;
-					red = 2;
-				}
-				else if (pink == 1)
-					pink = 2;
-				rattached++;
-			}
-			else if ((mouseX > 57.6) && (mouseX < 64) && (mouseY > 12.5) && (mouseY < 15.5) && (pattached == 0))
-			{
-				if (yellow == 1)
-					yellow = 2;
-				else if (blue == 1)
-					blue = 2;
-				else if (red == 1)
-					red = 2;
-				else if (pink == 1)
-				{
-					correct++;
-					pink = 2;
-				}
-				pattached++;
-			}
-			else
-			{
-				if (yellow == 1)
-					yellow = 0;
-				else if (blue == 1)
-					blue = 0;
-				else if (red == 1)
-					red = 0;
-				else if (pink == 1)
-					pink = 0;
-			}
-		}
+	
 		bLButtonState = false;
 	}
-	if ((yattached == 1) && (rattached == 1) && (battached == 1) && (pattached == 1))
-	{
-		if (correct == 4)
-		{
-			yellow = blue = red = pink = correct = yattached = battached = rattached = pattached = 0;
-			completed = -2;
-		}
-		else
-		{
-			yellow = blue = red = pink = correct = yattached = battached = rattached = pattached = 0;
-			completed = -1;
-		}
-	}
+
 	static bool bRButtonState = false;
 	if (!bRButtonState && Application::IsMousePressed(1))
 	{
@@ -329,7 +235,7 @@ void SceneWiringGame::Update(double dt)
 
 	FPS = 1 / (float)dt;
 }
-float SceneWiringGame::DistBetweenPoints(float x1, float z1, float x2, float z2)
+float SceneNumbersGame::DistBetweenPoints(float x1, float z1, float x2, float z2)
 {
 	float distX = x1 - x2;
 	float distZ = z1 - z2;
@@ -337,7 +243,7 @@ float SceneWiringGame::DistBetweenPoints(float x1, float z1, float x2, float z2)
 	dist = sqrt((distX * distX) + (distZ * distZ));
 	return dist;
 }
-bool SceneWiringGame::CollisionLineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
+bool SceneNumbersGame::CollisionLineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
 {
 	// calculate the direction of the lines
 	float uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
@@ -347,7 +253,7 @@ bool SceneWiringGame::CollisionLineLine(float x1, float y1, float x2, float y2, 
 	if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) return true;
 	return false;
 }
-bool SceneWiringGame::CollisionLineRect(float x1, float y1, float x2, float y2, float rx, float ry, float rw, float rh)
+bool SceneNumbersGame::CollisionLineRect(float x1, float y1, float x2, float y2, float rx, float ry, float rw, float rh)
 {
 	// check if the line has hit any of the rectangle's sides
 	// uses the Line/Line function below
@@ -362,7 +268,7 @@ bool SceneWiringGame::CollisionLineRect(float x1, float y1, float x2, float y2, 
 	return false;
 }
 
-bool SceneWiringGame::CollisionPointCircle(float px, float py, float cx, float cy, float r)
+bool SceneNumbersGame::CollisionPointCircle(float px, float py, float cx, float cy, float r)
 {
 	// get distance between the point and circle's center using the Pythagorean Theorem
 	float distX = px - cx;
@@ -374,7 +280,7 @@ bool SceneWiringGame::CollisionPointCircle(float px, float py, float cx, float c
 	return false;
 }
 
-bool SceneWiringGame::CollisionLinePoint(float x1, float y1, float x2, float y2, float px, float py)
+bool SceneNumbersGame::CollisionLinePoint(float x1, float y1, float x2, float y2, float px, float py)
 {
 	// get distance from the point to the two ends of the line
 	float d1 = DistBetweenPoints(px, py, x1, y1);
@@ -392,7 +298,7 @@ bool SceneWiringGame::CollisionLinePoint(float x1, float y1, float x2, float y2,
 	return false;
 }
 
-bool SceneWiringGame::CollisionLineCircle(float x1, float y1, float x2, float y2, float cx, float cy, float r)
+bool SceneNumbersGame::CollisionLineCircle(float x1, float y1, float x2, float y2, float cx, float cy, float r)
 {
 	// if either end INSIDE the circle return true
 	bool inside1 = CollisionPointCircle(x1, y1, cx, cy, r);
@@ -420,7 +326,7 @@ bool SceneWiringGame::CollisionLineCircle(float x1, float y1, float x2, float y2
 	return false;
 }
 
-void SceneWiringGame::RenderMesh(Mesh* mesh, bool enableLight)
+void SceneNumbersGame::RenderMesh(Mesh* mesh, bool enableLight)
 {
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
 
@@ -458,7 +364,7 @@ void SceneWiringGame::RenderMesh(Mesh* mesh, bool enableLight)
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }
-void SceneWiringGame::RenderText(Mesh* mesh, std::string text, Color color)
+void SceneNumbersGame::RenderText(Mesh* mesh, std::string text, Color color)
 {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 		return;
@@ -482,7 +388,7 @@ void SceneWiringGame::RenderText(Mesh* mesh, std::string text, Color color)
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glUniform1i(m_parameters[U_TEXT_ENABLED], 0);
 }
-void SceneWiringGame::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y)
+void SceneNumbersGame::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y)
 {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
 		return;
@@ -521,7 +427,7 @@ void SceneWiringGame::RenderTextOnScreen(Mesh* mesh, std::string text, Color col
 	modelStack.PopMatrix();
 	glEnable(GL_DEPTH_TEST); //uncomment for RenderTextOnScreen
 }
-void SceneWiringGame::RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y, float rt)
+void SceneNumbersGame::RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y, float rt)
 {
 	glDisable(GL_DEPTH_TEST);
 	Mtx44 ortho;
@@ -541,7 +447,7 @@ void SceneWiringGame::RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, 
 	modelStack.PopMatrix();
 	glEnable(GL_DEPTH_TEST);
 }
-void SceneWiringGame::Render()
+void SceneNumbersGame::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -592,118 +498,43 @@ void SceneWiringGame::Render()
 	RenderMesh(meshList[GEO_BACKGROUND], false);
 	modelStack.PopMatrix();
 
-	RenderWiringGame();
+	RenderNumbersGame();
 }
 
-void SceneWiringGame::RenderWiringGame()
+void SceneNumbersGame::RenderNumbersGame()
 {
+	//x= 9.9, y=15.6
 	modelStack.PushMatrix();
 	modelStack.Scale(0.35, 0.35, 0.35);
-	RenderImageOnScreen(meshList[GEO_WIRING], Color(1, 1, 1), 50, 50, 40, 30, 0);
+	RenderImageOnScreen(meshList[GEO_NUMBERS], Color(1, 1, 1), 70, 50, 39.5, 30, 0);
 	modelStack.PopMatrix();
 
-	if (yellow != 0)
-	{
-		float opp = 46 - mouseY;
-		float adj = mouseX - 21.5;
-		float rotate = atan2(opp, adj) * (180 / 3.14159);
-		float length = sqrt(pow(opp, 2) + pow(adj, 2));
-		if (yellow == 1)
-		{
-			RenderImageOnScreen(meshList[GEO_YWIRE], Color(1, 1, 1), length, 1, (18 + mouseX / 2) - 8, (mouseY) / 2 + 22, rotate);
-		}
-		else if (yellow == 2)
-		{
-			static const float a = mouseX;
-			static const float b = mouseY;
-			static const float c = length;
-			static const float d = rotate;
-			RenderImageOnScreen(meshList[GEO_YWIRE], Color(1, 1, 1), c, 1, (18 + a / 2) - 8, (b) / 2 + 22, d);
-		}
-	}
-	if (blue != 0)
-	{
-		float opp = 35 - mouseY;
-		float adj = mouseX - 21.5;
-		float rotate = atan2(opp, adj) * (180 / 3.14159);
-		float length = sqrt(pow(opp, 2) + pow(adj, 2));
-		if (blue == 1)
-		{
-			RenderImageOnScreen(meshList[GEO_BWIRE], Color(1, 1, 1), length, 1, (18 + mouseX / 2) - 8, (mouseY) / 2 + 17, rotate);
-		}
-		else if (blue == 2)
-		{
-			static const float a = mouseX;
-			static const float b = mouseY;
-			static const float c = length;
-			static const float d = rotate;
-			RenderImageOnScreen(meshList[GEO_BWIRE], Color(1, 1, 1), c, 1, (18 + a / 2) - 8, (b) / 2 + 17, d);
-		}
-	}
-	if (red != 0)
-	{
-		float opp = 25 - mouseY;
-		float adj = mouseX - 21.5;
-		float rotate = atan2(opp, adj) * (180 / 3.14159);
-		float length = sqrt(pow(opp, 2) + pow(adj, 2));
-		if (red == 1)
-		{
-			RenderImageOnScreen(meshList[GEO_RWIRE], Color(1, 1, 1), length, 1, (18 + mouseX / 2) - 8, (mouseY) / 2 + 12, rotate);
-		}
-		else if (red == 2)
-		{
-			static const float a = mouseX;
-			static const float b = mouseY;
-			static const float c = length;
-			static const float d = rotate;
-			RenderImageOnScreen(meshList[GEO_RWIRE], Color(1, 1, 1), c, 1, (18 + a / 2) - 8, (b) / 2 + 12, d);
-		}
-	}
-	if (pink != 0)
-	{
-		float opp = 15 - mouseY;
-		float adj = mouseX - 21.5;
-		float rotate = atan2(opp, adj) * (180 / 3.14159);
-		float length = sqrt(pow(opp, 2) + pow(adj, 2));
-		if (pink == 1)
-		{
-			RenderImageOnScreen(meshList[GEO_PWIRE], Color(1, 1, 1), length, 1, (18 + mouseX / 2) - 8, (mouseY) / 2 + 6.5, rotate);
-		}
-		else if (pink == 2)
-		{
-			static const float a = mouseX;
-			static const float b = mouseY;
-			static const float c = length;
-			static const float d = rotate;
-			RenderImageOnScreen(meshList[GEO_PWIRE], Color(1, 1, 1), c, 1, (18 + a / 2) - 8, (b) / 2 + 6.5, d);
-		}
-	}
+	
+	std::ostringstream ss;
+	ss << "mouseX:" << mouseX << " mouseY:" << mouseY;
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 1, 1), 5, 1, 1);
 }
 
-int SceneWiringGame::NextScene()
+int SceneNumbersGame::NextScene()
 {
-	if (completed == -1)
+	if (completed == -3)
 	{
-		completed = 4;
-		return -1;
+		completed = 5;
+		return -3;
 	}
-	else if (completed == -2)
+	else if (completed == -4)
 	{
-		completed = 4;
-		return -2;
+		completed = 5;
+		return -4;
 	}
-	return 4;
+	return 5;
 }
 
-void SceneWiringGame::Exit()
+void SceneNumbersGame::Exit()
 {
 	// Cleanup VBO here
 	delete meshList[GEO_TEXT];
-	delete meshList[GEO_WIRING];
-	delete meshList[GEO_YWIRE];
-	delete meshList[GEO_BWIRE];
-	delete meshList[GEO_RWIRE];
-	delete meshList[GEO_PWIRE];
+	delete meshList[GEO_NUMBERS];
 
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
