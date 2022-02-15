@@ -255,10 +255,10 @@ void SceneMainMenu::Update(double dt)
 		std::cout << "LBUTTON DOWN" << std::endl;
 
 		//use tasklist as button
-		float BUTTON_LEFT = 0;
-		float BUTTON_RIGHT = 30;
-		float BUTTON_BOTTOM = 38;
-		float BUTTON_TOP = 55;
+		float BUTTON_LEFT = 10;
+		float BUTTON_RIGHT = 40;
+		float BUTTON_BOTTOM = 15;
+		float BUTTON_TOP = 26;
 
 		//Converting Viewport space to UI space
 		double x, y;
@@ -270,7 +270,7 @@ void SceneMainMenu::Update(double dt)
 		std::cout << "posX:" << posX << " , posY:" << posY << std::endl;
 		if (posX > BUTTON_LEFT && posX < BUTTON_RIGHT && posY > BUTTON_BOTTOM && posY < BUTTON_TOP)
 		{
-			std::cout << "Hit!" << std::endl;
+			std::cout << "Options!" << std::endl;
 		}
 		else
 		{
