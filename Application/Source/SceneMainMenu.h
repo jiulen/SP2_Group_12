@@ -21,6 +21,7 @@ class SceneMainMenu : public Scene
 		GEO_BACKGROUND,
 		GEO_TITLE,
 		GEO_PLAY,
+		GEO_OPTIONS,
 		//OBJs
 		GEO_LIGHT0, //ceiling light (can be turned off)
 		

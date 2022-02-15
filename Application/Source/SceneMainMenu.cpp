@@ -151,6 +151,8 @@ void SceneMainMenu::Init()
 	meshList[GEO_TITLE]->textureID = LoadTGA("Image//title.tga");
 	meshList[GEO_PLAY] = MeshBuilder::GenerateQuad("pvzstart", Color(1, 1, 1), 1.f, 1.f);
 	meshList[GEO_PLAY]->textureID = LoadTGA("Image//play.tga");
+	meshList[GEO_OPTIONS] = MeshBuilder::GenerateQuad("settings", Color(1, 1, 1), 1.f, 1.f);
+	meshList[GEO_OPTIONS]->textureID = LoadTGA("Image//settings.tga");
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//arial.tga");
@@ -878,7 +880,7 @@ void SceneMainMenu::Render()
 	RenderMesh(meshList[GEO_ENEMY1], true);
 	modelStack.PopMatrix();*/
 
-	modelStack.PushMatrix();
+	/*modelStack.PushMatrix();
 	modelStack.Scale(75, 75, 75);
 	modelStack.Translate(0, 0, -0.8f);
 	RenderMesh(meshList[GEO_BACKGROUND], false);
@@ -894,6 +896,15 @@ void SceneMainMenu::Render()
 	modelStack.Scale(3.7f, 3.7f, 3.7f);
 	modelStack.Translate(0, 0.9f, -0.7f);
 	RenderMesh(meshList[GEO_PLAY], false);
+	modelStack.PopMatrix();*/
+
+	modelStack.PushMatrix();
+	//modelStack.Scale(0, 0, 1);
+	//modelStack.Translate(0, 0, 0);
+	RenderImageOnScreen(meshList[GEO_BACKGROUND], Color(1, 1, 1), 80, 60, 40, 30);
+	RenderImageOnScreen(meshList[GEO_TITLE], Color(1, 1, 1), 40, 30, 40, 45);
+	RenderImageOnScreen(meshList[GEO_PLAY], Color(1, 1, 1), 40, 30, 25, 20);
+	RenderImageOnScreen(meshList[GEO_OPTIONS], Color(1, 1, 1), 80, 60, 60, 20);
 	modelStack.PopMatrix();
 
 	RenderSkybox();
