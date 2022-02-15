@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "SceneMainMenu.h"
+#include "SceneSettings.h"
 #include "SceneText.h"
 #include "SceneUI.h"
 #include "SceneGame.h"
@@ -130,10 +131,12 @@ void Application::Run()
 {
 	//Main Loop
 	Scene* scene1 = new SceneMainMenu();
-	Scene* scene2 = new SceneGame();
+	Scene* scene2 = new SceneSettings();
+	Scene* scene3 = new SceneGame();
 	Scene* scene = scene1;
 	scene1->Init();
 	scene2->Init();
+	scene3->Init();
 
 	//Set cursor mode (do for scene switch also if cursor mode change)
 	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //do normal instead of disabled to restore normal cursor mode
@@ -149,6 +152,8 @@ void Application::Run()
 			scene = scene1;
 		else if (IsKeyPressed(VK_F2))
 			scene = scene2;
+		else if (IsKeyPressed(VK_F3))
+			scene = scene3;
 		scene->Update(m_timer.getElapsedTime());
 		scene->Render();
 		//Swap buffers
@@ -162,6 +167,8 @@ void Application::Run()
 	delete scene1;
 	scene2->Exit();
 	delete scene2;
+	scene3->Exit();
+	delete scene3;
 }
 
 void Application::Exit()
