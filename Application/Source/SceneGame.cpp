@@ -987,7 +987,7 @@ void SceneGame::Render()
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_BIGHOUSE_G], true);
 	modelStack.PopMatrix();
-	hitboxValues.push_back({ 60, 12, -65, 40, 28, 16 });
+	hitboxValues.push_back({ 60, 20, -15, 32, 40, 32 });
 	hitboxValues.push_back({ 30.9, 4, -26.1, 0.6, 8, 0.6 });
 	hitboxValues.push_back({ 30.9, 4, -3.9, 0.6, 8, 0.6 });
 	hitboxValues.push_back({ 40, 9, -15, 20, 2, 24 });
