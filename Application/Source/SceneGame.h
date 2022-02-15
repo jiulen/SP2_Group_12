@@ -8,6 +8,7 @@
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
+#include "Structs.h"
 #include <fstream>
 
 class SceneGame : public Scene
@@ -131,40 +132,11 @@ private:
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 	void RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y);
-	std::vector<std::vector<float>> hitboxValues; //floats are pos x, y, z and size x, y, z
-	float interactRange;
+	std::vector<Hitbox> hitboxes; //floats are pos x, y, z and size x, y, z
 	float FPS;
-	std::string talk;
-	std::string talkTarget;
 	std::ifstream fileStream;
 	unsigned textMaxWidth;
 	unsigned textSpacing[256];
-	bool redAlive, blackAlive, cyanAlive, orangeAlive;
-	bool voting, lightsOn, impostor;
-	bool turnLightOff;
-	int voted; //0: not voted, 1: bots voted, 2: player voted
-	int redVotes, blackVotes, cyanVotes, orangeVotes, noVotes;
-	int mostVotes; //0 means tie/no vote, others means that player got most votes
-	int gameOver; //0: not over, 1: win, 2: lose;
-	bool task1, task2, task3; //1 is talk, 2 is button, 3 is knife
-	bool iTask1, iTask2; //1 is turn off lights, 2 is kill
-	float lightCutoff, lightInner;
-	float
-		headBodyScaleX, headBodyScaleZ,
-		bodyScaleY,
-		bodyBottomScaleY,
-		headScaleY,
-		headTopScaleY,
-		visorScaleX, visorScaleY, visorScaleZ,
-		thighLegScaleX, thighLegScaleZ,
-		thighScaleY,
-		thighTopBottomScaleY,
-		legScaleY,
-		legTopScaleY,
-		redTranslateX, redTranslateY, redTranslateZ, redRotateX, redRotateY,
-		blackTranslateX, blackTranslateY, blackTranslateZ,
-		cyanTranslateX, cyanTranslateY, cyanTranslateZ,
-		orangeTranslateX, orangeTranslateY, orangeTranslateZ;
 	int nextscene = 3;
 	float enemy1X, enemy1Z;
 public:
