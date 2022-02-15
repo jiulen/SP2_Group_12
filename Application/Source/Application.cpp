@@ -13,8 +13,6 @@
 #include "SceneNumbersGame.h"
 #include "SceneMainMenu.h"
 #include "SceneSettings.h"
-#include "SceneText.h"
-#include "SceneUI.h"
 #include "SceneGame.h"
 
 GLFWwindow* m_window;

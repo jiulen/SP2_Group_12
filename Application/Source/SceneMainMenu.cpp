@@ -308,7 +308,7 @@ void SceneMainMenu::Update(double dt)
 				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //default fill mode
 			if (Application::IsKeyPressed('4'))
 				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //wireframe mode
-			camera.Update(dt);
+			//camera.Update(dt);
 			static const float ROTATE_SPEED = 90.f;
 			if (Application::IsKeyPressed(VK_RIGHT))
 			{

@@ -17,6 +17,8 @@ void Camera3::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 	
 	lastX = Application::GetWindowWidth() * 0.5f;
 	lastY = Application::GetWindowHeight() * 0.5f;
+	totalPitch = 0.f;
+	firstMouse = true;
 
     this->position = defaultPosition = pos;
     this->target = defaultTarget = target;
@@ -27,7 +29,7 @@ void Camera3::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
     this->up = defaultUp = right.Cross(view).Normalized();
 }
 
-void Camera3::Update(double dt)
+void Camera3::Update(double dt, std::vector<std::vector<float>> hitboxes)
 {
 	static const float ROTATE_SPEED = 90.f;
 	float MOVE_SPEED;
@@ -62,13 +64,9 @@ void Camera3::Update(double dt)
 		else if (position.z > 97.5) {
 			position.z = 97.5;
 		}
-		int i = 0;
-		bool stop = false;
-		//for (int i = 0; i <= 21; ++i) {
-		//	Vector3 finalPos = PlayerCollision(i); //ignore y
-		//	position.x = finalPos.x;
-		//	position.z = finalPos.z;
-		//}
+		if (testCollision(hitboxes)) {
+			position = startPos;
+		}
 		position.y = startPos.y;
 		target = position + view;
 	}
@@ -88,13 +86,9 @@ void Camera3::Update(double dt)
 		else if (position.z > 97.5) {
 			position.z = 97.5;
 		}
-    int i = 0;
-		bool stop = false;
-		//for (int i = 0; i <= 21; ++i) {
-		//	Vector3 finalPos = PlayerCollision(i); //ignore y
-		//	position.x = finalPos.x;
-		//	position.z = finalPos.z;
-		//}
+		if (testCollision(hitboxes)) {
+			position = startPos;
+		}
 		position.y = startPos.y;
 		target = position + view;
 	}
@@ -114,13 +108,9 @@ void Camera3::Update(double dt)
 		else if (position.z > 97.5) {
 			position.z = 97.5;
 		}
-    int i = 0;
-		bool stop = false;
-		//for (int i = 0; i <= 21; ++i) {
-		//	Vector3 finalPos = PlayerCollision(i); //ignore y
-		//	position.x = finalPos.x;
-		//	position.z = finalPos.z;
-		//}
+		if (testCollision(hitboxes)) {
+			position = startPos;
+		}
 		position.y = startPos.y;
 		target = position + view;
 	}
@@ -140,13 +130,9 @@ void Camera3::Update(double dt)
 		else if (position.z > 97.5) {
 			position.z = 97.5;
 		}
-    int i = 0;
-		bool stop = false;
-		//for (int i = 0; i <= 21; ++i) {
-		//	Vector3 finalPos = PlayerCollision(i); //ignore y
-		//	position.x = finalPos.x;
-		//	position.z = finalPos.z;
-		//}
+		if (testCollision(hitboxes)) {
+			position = startPos;
+		}
 		position.y = startPos.y;
 		target = position + view;
 	}
@@ -184,12 +170,8 @@ void Camera3::Reset()
     up = defaultUp;
 }
 
-void Camera3::LookingAround()
+void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 {
-	//test
-	static float totalPitch = 0.f;
-	//
-
 	Vector3 view = (target - position).Normalized();
 	Vector3 right = view.Cross(up);
 	right.y = 0;
@@ -221,6 +203,8 @@ void Camera3::LookingAround()
 		yoffset -= totalPitch + 90.f;
 		totalPitch = -90.f;
 	}
+	//std::cout << yoffset << std::endl;
+	//std::cout << totalPitch << std::endl;
 
 	//yaw
 	Mtx44 rotation;
@@ -249,90 +233,30 @@ void Camera3::LookingAround()
 //	nearestPoint.z = Math::Clamp(cy, ry - 0.5f * rh, ry + 0.5f * rh);
 //	Vector3 rayToNearest = nearestPoint - endPos;
 //	float overlap = radius - rayToNearest.Length();
-//	if (std::isnan(overlap))
-//	{
-//		overlap = 0; //in case ray same pos as nearestPoint
-//	}
 //
-//	// If overlap is positive, then a collision has occurred, so we displace backwards by the overlap amount. 
-//	// The potential position is then tested against other tiles in the area therefore "statically" resolving the collision
+//	//If overlap is positive, then a collision has occurred, so we displace backwards by the overlap amount. 
+//	//The potential position is then tested against other tiles in the area therefore "statically" resolving the collision
 //	
 //	if (overlap > 0)
 //	{
-//		// Statically resolve the collision
+//		//Statically resolve the collision
 //		endPos = endPos - rayToNearest.Normalized() * overlap;
 //	}
 //	
 //	return endPos;
 //}
-//Vector3 Camera3::PlayerCollision(unsigned count) {
-//	if (count == 0) { //collision with middle table (table 1)
-//		return CollisionCircleRect(position.x, position.z, 1.5, 0, 0, 4, 4);
-//	}
-//	else if (count == 1) { //collision with table 1 up bench
-//		return CollisionCircleRect(position.x, position.z, 0.625, 0, -3.45, 3.4, 1.7);
-//	}
-//	else if (count == 2) { //collision with table 1 down bench
-//		return CollisionCircleRect(position.x, position.z, 0.625, 0, 3.45, 3.4, 1.7);
-//	}
-//	else if (count == 3) { //collision with table 1 left bench
-//		return CollisionCircleRect(position.x, position.z, 0.625, -3.45, 0, 1.7, 3.4);
-//	}
-//	else if (count == 4) { //collision with table 1 right bench
-//		return CollisionCircleRect(position.x, position.z, 0.625, 3.45, 0, 1.7, 3.4);
-//	}
-//	else if (count == 5) { //collision with top table (table 2)
-//		return CollisionCircleRect(position.x, position.z, 1.5, 0, -20, 4, 4);
-//	}
-//	else if (count == 6) { //collision with table 2 up bench
-//		return CollisionCircleRect(position.x, position.z, 0.625, 0, -23.45, 3.4, 1.7);
-//	}
-//	else if (count == 7) { //collision with table 2 down bench
-//		return CollisionCircleRect(position.x, position.z, 0.625, 0, -16.55, 3.4, 1.7);
-//	}
-//	else if (count == 8) { //collision with table 2 left bench
-//		return CollisionCircleRect(position.x, position.z, 0.625, -3.45, -20, 1.7, 3.4);
-//	}
-//	else if (count == 9) { //collision with table 2 right bench
-//		return CollisionCircleRect(position.x, position.z, 0.625, 3.45, -20, 1.7, 3.4);
-//	}
-//	else if (count == 10) { //collision with bottom left table (table 3)
-//		return CollisionCircleRect(position.x, position.z, 1.5, -15, 20, 4, 4);
-//	}
-//	else if (count == 11) { //collision with table 3 up bench
-//		return CollisionCircleRect(position.x, position.z, 0.625, -15, 16.55, 3.4, 1.7);
-//	}
-//	else if (count == 12) { //collision with table 3 down bench
-//		return CollisionCircleRect(position.x, position.z, 0.625, -15, 23.45, 3.4, 1.7);
-//	}
-//	else if (count == 13) { //collision with table 3 left bench
-//		return CollisionCircleRect(position.x, position.z, 0.625, -18.45, 20, 1.7, 3.4);
-//	}
-//	else if (count == 14) { //collision with table 3 right bench
-//		return CollisionCircleRect(position.x, position.z, 0.625, -11.55, 20, 1.7, 3.4);
-//	}
-//	else if (count == 15) { //collision with bottom right table (table 4)
-//		return CollisionCircleRect(position.x, position.z, 1.5, 15, 20, 4, 4);
-//	}
-//	else if (count == 16) { //collision with table 4 up bench
-//		return CollisionCircleRect(position.x, position.z, 0.625, 15, 16.55, 3.4, 1.7);
-//	}
-//	else if (count == 17) { //collision with table 4 down bench
-//		return CollisionCircleRect(position.x, position.z, 0.625, 15, 23.45, 3.4, 1.7);
-//	}
-//	else if (count == 18) { //collision with table 4 left bench
-//		return CollisionCircleRect(position.x, position.z, 0.625, 11.55, 20, 1.7, 3.4);
-//	}
-//	else if (count == 19) { //collision with table 4 right bench
-//		return CollisionCircleRect(position.x, position.z, 0.625, 18.45, 20, 1.7, 3.4);
-//	}
-//	else if (count == 20) { //collision with light1
-//		return CollisionCircleRect(position.x, position.z, 1.5, 46, 46, 1.3, 1.3);
-//	}
-//	else if (count == 21) { //collision with sinks
-//		return CollisionCircleRect(position.x, position.z, 1.5, 35.85, 46.8, 14.25, 4.5);
-//	}
-//	else {
-//		return Vector3(0, 0, 0); //wont trigger
-//	}
-//}
+
+bool Camera3::CollisionAABB(float r1x, float r1y, float r1z, float r1w, float r1h, float r1d, float r2x, float r2y, float r2z, float r2w, float r2h, float r2d)
+{
+	return	(r1x - r1w * 0.5f <= r2x + r2w * 0.5f && r1x + r1w * 0.5f >= r2x - r2w * 0.5f) &&
+			(r1y - r1h * 0.5f <= r2y + r2h * 0.5f && r1y + r1h * 0.5f >= r2y - r2h * 0.5f) &&
+			(r1z - r1d * 0.5f <= r2z + r2d * 0.5f && r1z + r1d * 0.5f >= r2z - r2d * 0.5f);
+}
+bool Camera3::testCollision(std::vector<std::vector<float>> hitboxes) { //for player with non-moving objects - for now camera is 1x4.5x1
+	for (int i = 0; i < hitboxes.size(); i++) {
+		if (CollisionAABB(position.x, position.y / 2.f, position.z, 1.f, defaultPosition.y, 1.f, (hitboxes[i])[0], (hitboxes[i])[1], (hitboxes[i])[2], (hitboxes[i])[3], (hitboxes[i])[4], (hitboxes[i])[5])) {
+			return true;
+		}
+	}
+	return false; //no collision
+}
