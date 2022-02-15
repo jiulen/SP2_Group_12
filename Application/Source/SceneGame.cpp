@@ -243,40 +243,10 @@ void SceneGame::Init()
 		fileStream.close();
 	}
 	//changing
-	hitboxValues.clear();
-	voting = false, lightsOn = true, impostor = false;
-	voted = 0;
-	redVotes = 0, blackVotes = 0, cyanVotes = 0, orangeVotes = 0, noVotes = 0, mostVotes = 0;
-	redAlive = true, blackAlive = true, cyanAlive = true, orangeAlive = true;
-	task1 = false, task2 = false, task3 = false, iTask1 = false, iTask2 = false;
+	hitboxes.clear();
 
 	FPS = 0;
-	talk = "";
-	talkTarget = "";
 	bLightEnabled = true;
-	lightCutoff = 90, lightInner = 60;
-	turnLightOff = false;
-	redRotateX = 0, redRotateY = 0;
-	//constant
-	interactRange = 10.f;
-
-	//All characters
-	headBodyScaleX = 3, headBodyScaleZ = 3;
-	bodyScaleY = 0.5;
-	bodyBottomScaleY = 1;
-	headScaleY = 1.5;
-	headTopScaleY = 3;
-	visorScaleX = 1, visorScaleY = 1, visorScaleZ = 2;
-	thighLegScaleX = 1.25f, thighLegScaleZ = 1.25f;
-	thighScaleY = 0.75f;
-	thighTopBottomScaleY = 1.25f;
-	legScaleY = 1.25f;
-	legTopScaleY = 1;
-
-	//For 3 npcs (wont change)
-	blackTranslateX = 0.f; blackTranslateZ = -25.5f;
-	cyanTranslateX = -20.5f, cyanTranslateZ = 20.f;
-	orangeTranslateX = 20.5f, orangeTranslateZ = 20.f;
 
 	//Enemies for Assignment 2
 	enemy1X = 60;
@@ -334,346 +304,19 @@ void SceneGame::Update(double dt)
 	}
 
 	FPS = 1 / (float)dt;
-	if (!redAlive) gameOver = 2;
-	else if (!blackAlive && !cyanAlive && !orangeAlive) gameOver = 1;
-	if (gameOver == 0) {
-		if (!voting) {
-			if (Application::IsKeyPressed('1'))
-				glEnable(GL_CULL_FACE);
-			if (Application::IsKeyPressed('2'))
-				glDisable(GL_CULL_FACE);
-			if (Application::IsKeyPressed('3'))
-				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //default fill mode
-			if (Application::IsKeyPressed('4'))
-				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //wireframe mode
-			camera.Update(dt, hitboxValues);
-			static const float ROTATE_SPEED = 90.f;
-			if (Application::IsKeyPressed(VK_RIGHT))
-			{
-				float yaw = -ROTATE_SPEED * static_cast<float>(dt);
-				redRotateY += yaw;
-			}
-			if (Application::IsKeyPressed(VK_LEFT))
-			{
-				float yaw = ROTATE_SPEED * static_cast<float>(dt);
-				redRotateY += yaw;
-			}
-			if (Application::IsKeyPressed('F')) { //interact
-				//talk with black
-				if (blackAlive && DistBetweenPoints(camera.position.x, camera.position.z, blackTranslateX, blackTranslateZ) <= 3 + interactRange) { //3 is radius of 2 characters
-					if (lightsOn) talk = "Black: r u the impoter?";
-					else talk = "Black: u cant see me";
-					talkTarget = "black";
-					if (!task1) task1 = true;
-				}
-				//talk with cyan
-				else if (cyanAlive && DistBetweenPoints(camera.position.x, camera.position.z, cyanTranslateX, cyanTranslateZ) <= 3 + interactRange) { //3 is radius of 2 characters
-					if (lightsOn) talk = "Cyan: u r sus";
-					else talk = "Cyan: SUS!!1!1!!";
-					talkTarget = "cyan";
-					if (!task1) task1 = true;
-				}
-				//talk with orange
-				else if (orangeAlive && DistBetweenPoints(camera.position.x, camera.position.z, orangeTranslateX, orangeTranslateZ) <= 3 + interactRange) { //3 is radius of 2 characters
-					if (lightsOn) talk = "Orange: i m not imposter";
-					else talk = "Orange: you r the imposter!!!";
-					talkTarget = "orange";
-					if (!task1) task1 = true;
-				}
-				//press emergency button
-				if (DistBetweenPoints(camera.position.x, camera.position.z, 0, 0) <= 0.1 + 1.5 + interactRange) {
-					if (lightsOn) {
-						voting = true;
-						voted = 0;
-						redVotes = 0, blackVotes = 0, cyanVotes = 0, orangeVotes = 0, noVotes = 0;
-						if (!task2) task2 = true;
-					}
-					else {
-						//Error message
-						talk = "Turn on the lights first.";
-					}
+	
+	if (Application::IsKeyPressed('1'))
+		glEnable(GL_CULL_FACE);
+	if (Application::IsKeyPressed('2'))
+		glDisable(GL_CULL_FACE);
+	if (Application::IsKeyPressed('3'))
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //default fill mode
+	if (Application::IsKeyPressed('4'))
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //wireframe mode
+	camera.Update(dt, hitboxes);
 
-				}
-				//near switch , if light off, turn on
-				if (!lightsOn && DistBetweenPoints(camera.position.x, camera.position.z, -47, -48.8) <= 1.5 + interactRange) {
-					lightsOn = true;
-					lightCutoff = 90.f;
-					lightInner = 60.f;
-					light[0].cosCutoff = cos(Math::DegreeToRadian(lightCutoff));
-					light[0].cosInner = cos(Math::DegreeToRadian(lightInner));
-					glUniform1f(m_parameters[U_LIGHT0_COSCUTOFF], light[0].cosCutoff);
-					glUniform1f(m_parameters[U_LIGHT0_COSINNER], light[0].cosInner);
-				}
-			}
-		}
-		//near knife, if impostor, drop knife, else, take knife
-		static bool FPressed = false; //wont keep triggering while held down
-		if (!FPressed && Application::IsKeyPressed('F')) {
-			if (DistBetweenPoints(camera.position.x, camera.position.z, 35.85, 46.8) <= 1.5 + interactRange) {
-				impostor = !impostor;
-				if (!task3) task3 = true;
-			}
-			FPressed = true;
-		}
-		else if (FPressed && !Application::IsKeyPressed('F')) {
-			FPressed = false;
-		}
-		if (Application::IsKeyPressed('E')) {
-			//turn light off
-			if (lightsOn && impostor && DistBetweenPoints(camera.position.x, camera.position.z, -47, -48.8) <= 1.5 + interactRange) {
-				turnLightOff = true;
-				lightsOn = false;
-				if (!iTask1) iTask1 = true;
-			}
-		}
-		if (turnLightOff && !lightsOn) {
-			if (lightCutoff > 0.f) {
-				//reduce light size
-				float const SPEED = 90.f;
-				lightCutoff -= SPEED * dt;
-				if (lightCutoff < 0.f) {
-					lightCutoff = 0.f;
-				}
-				lightInner -= SPEED * dt;
-				if (lightInner < 0.f) {
-					lightInner = 0.f;
-				}
-				light[0].cosCutoff = cos(Math::DegreeToRadian(lightCutoff));
-				light[0].cosInner = cos(Math::DegreeToRadian(lightInner));
-				glUniform1f(m_parameters[U_LIGHT0_COSCUTOFF], light[0].cosCutoff);
-				glUniform1f(m_parameters[U_LIGHT0_COSINNER], light[0].cosInner);
-			}
-			else {
-				turnLightOff = false;
-			}
-		}
-		static bool QPressed = false;
-		if (!QPressed && Application::IsKeyPressed('Q')) {
-			QPressed = true;
-			//kill (k) - only can activate when targeting body (legs not counted) (hitbox is cube)
-			if (impostor) {
-				float characterScaleY = 3.8f;
-				float characterPosY = 4.1f;
-				float killRange = 15.f;
-				Vector3 killTarget = camera.position + (camera.target - camera.position) * killRange;
-				//kill black
-				if (blackAlive) {
-					if (CollisionLineCircle(camera.position.x, camera.position.z, killTarget.x, killTarget.z, blackTranslateX, blackTranslateZ, 1.5)) { //circle collsion
-						if (CollisionLineRect(camera.position.y, camera.position.z, killTarget.y, killTarget.z, characterPosY, blackTranslateZ, characterScaleY, headBodyScaleZ)) { //rect collision
-							//teleports to black pos and kills him
-							float xChange = blackTranslateX - camera.position.x;
-							float zChange = blackTranslateZ - camera.position.z;
-							camera.target.x += xChange;
-							camera.target.z += zChange;
-							camera.position.x += xChange;
-							camera.position.z += zChange;
-							blackAlive = false;
-							if (!iTask2) iTask2 = true;
-						}
-					}
-				}
-				//kill cyan
-				if (cyanAlive) {
-					if (CollisionLineCircle(camera.position.x, camera.position.z, killTarget.x, killTarget.z, cyanTranslateX, cyanTranslateZ, 1.5)) { //circle collsion
-						if (CollisionLineRect(camera.position.y, camera.position.z, killTarget.y, killTarget.z, characterPosY, cyanTranslateZ, characterScaleY, headBodyScaleZ)) { //rect collision
-							//teleports to cyan pos and kills him
-							float xChange = cyanTranslateX - camera.position.x;
-							float zChange = cyanTranslateZ - camera.position.z;
-							camera.target.x += xChange;
-							camera.target.z += zChange;
-							camera.position.x += xChange;
-							camera.position.z += zChange;
-							cyanAlive = false;
-							if (!iTask2) iTask2 = true;
-						}
-					}
-				}
-				//kill orange
-				if (orangeAlive) {
-					if (CollisionLineCircle(camera.position.x, camera.position.z, killTarget.x, killTarget.z, orangeTranslateX, orangeTranslateZ, 1.5)) { //circle collsion
-						if (CollisionLineRect(camera.position.y, camera.position.z, killTarget.y, killTarget.z, characterPosY, orangeTranslateZ, characterScaleY, headBodyScaleZ)) { //rect collision
-							//teleports to orange pos and kills him
-							float xChange = orangeTranslateX - camera.position.x;
-							float zChange = orangeTranslateZ - camera.position.z;
-							camera.target.x += xChange;
-							camera.target.z += zChange;
-							camera.position.x += xChange;
-							camera.position.z += zChange;
-							orangeAlive = false;
-							if (!iTask2) iTask2 = true;
-						}
-					}
-				}
-			}
-		}
-		else if (QPressed && !Application::IsKeyPressed('Q')) {
-			QPressed = false;
-		}
-	}
-	if (voting) {
-		if (voted == 0) {
-			for (int i = 0; i < 3; ++i) {
-				int vote;
-				bool valid = false;
-				while (!valid) { //check no vote dead player
-					vote = Math::RandIntMinMax(1, 5);
-					if (vote == 1 || vote == 5) {
-						valid = true;
-					}
-					else {
-						switch (vote) {
-						case 2:
-							if (blackAlive) valid = true;
-							else valid = false;
-							break;
-						case 3:
-							if (cyanAlive) valid = true;
-							else valid = false;
-							break;
-						case 4:
-							if (orangeAlive) valid = true;
-							else valid = false;
-							break;
-						}
-					}
-				}
-				switch (vote) {
-				case 1:
-					redVotes++;
-					break;
-				case 2:
-					blackVotes++;
-					break;
-				case 3:
-					cyanVotes++;
-					break;
-				case 4:
-					orangeVotes++;
-					break;
-				case 5:
-					noVotes++;
-					break;
-				}
-			}
-			voted++;
-		}
-		if (voted == 1 && Application::IsKeyPressed('1')) {
-			voted++;
-			redVotes++;
-		}
-		if (voted == 1 && Application::IsKeyPressed('2')) {
-			if (blackAlive) {
-				voted++;
-				blackVotes++;
-			}
-		}
-		if (voted == 1 && Application::IsKeyPressed('3')) {
-			if (cyanAlive) {
-				voted++;
-				cyanVotes++;
-			}
-		}
-		if (voted == 1 && Application::IsKeyPressed('4')) {
-			if (orangeAlive) {
-				voted++;
-				orangeVotes++;
-			}
-		}
-		if (voted == 1 && Application::IsKeyPressed('5')) {
-			voted++;
-			noVotes++;
-		}
-		if (voted == 2) {
-			//determine who gets voted out
-			if (noVotes >= redVotes && noVotes >= blackVotes && noVotes >= cyanVotes && noVotes >= orangeVotes) mostVotes = 0;
-			else if (redVotes > blackVotes && redVotes > cyanVotes && redVotes > orangeVotes) mostVotes = 1;
-			else if (blackVotes > redVotes && blackVotes > cyanVotes && blackVotes > orangeVotes) mostVotes = 2;
-			else if (cyanVotes > redVotes && cyanVotes > blackVotes && cyanVotes > orangeVotes) mostVotes = 3;
-			else if (orangeVotes > redVotes && orangeVotes > blackVotes && orangeVotes > cyanVotes) mostVotes = 4;
-			else mostVotes = 0;
-
-			//kills most voted player
-			switch (mostVotes) {
-			case 0:
-				break; //nothing happens
-			case 1:
-				redAlive = false;
-				break;
-			case 2:
-				blackAlive = false;
-				break;
-			case 3:
-				cyanAlive = false;
-				break;
-			case 4:
-				orangeAlive = false;
-				break;
-			}
-			voted++;
-		}
-		if (Application::IsKeyPressed(VK_RETURN) && voted == 3) {
-			voting = false;
-		}
-
-		if (CollisionPointCircle(camera.position.x, camera.position.z, enemy1X, enemy1Z, 5))// reach a certain point of distance
-		{
-			if (DistBetweenPoints(camera.position.x, camera.position.z, enemy1X, enemy1Z) > 5)//if enemy is out of range
-			{
-				if (camera.position.x < enemy1X)
-				{
-					enemy1X--;
-				}
-				else
-				{
-					enemy1X++;
-					
-				}
-				if (camera.position.z < enemy1Z)
-				{
-					enemy1Z--;
-				}
-				else
-				{
-					enemy1Z++;
-				}
-			}
-		}
-
-	}
-	// remove chat if too far away
-	if (talkTarget == "black") {
-		if (DistBetweenPoints(camera.position.x, camera.position.z, blackTranslateX, blackTranslateZ) > 3 + interactRange) {
-			talk = "";
-			talkTarget = "";
-		}
-	}
-	if (talkTarget == "cyan") {
-		if (DistBetweenPoints(camera.position.x, camera.position.z, cyanTranslateX, cyanTranslateZ) > 3 + interactRange) {
-			talk = "";
-			talkTarget = "";
-		}
-	}
-	if (talkTarget == "orange") {
-		if (DistBetweenPoints(camera.position.x, camera.position.z, orangeTranslateX, orangeTranslateZ) > 3 + interactRange) {
-			talk = "";
-			talkTarget = "";
-		}
-	}
 	if (Application::IsKeyPressed('R')) {
-		gameOver = 0;
-		voting = false, lightsOn = true, impostor = false;
-		voted = 0;
-		redVotes = 0, blackVotes = 0, cyanVotes = 0, orangeVotes = 0, noVotes = 0, mostVotes = 0;
-		redAlive = true, blackAlive = true, cyanAlive = true, orangeAlive = true;
-		task1 = false, task2 = false, task3 = false, iTask1 = false, iTask2 = false;
-		FPS = 0;
-		talk = "";
-		talkTarget = "";
 		bLightEnabled = true;
-		lightCutoff = 90, lightInner = 60;
-		turnLightOff = false;
-		redRotateX = 0;
-		redRotateY = 0;
 	}
 }
 float SceneGame::DistBetweenPoints(float x1, float z1, float x2, float z2)
@@ -943,91 +586,89 @@ void SceneGame::Render()
 	modelStack.Scale(0.35, 0.35, 0.35);
 	RenderMesh(meshList[GEO_ENEMY1], true);
 	modelStack.PopMatrix();
-	hitboxValues.push_back({ 0, 2.8, 0, 2.7, 5.6, 1.4 });
+	hitboxes.push_back(Hitbox(0, 2.8, 0, 2.7, 5.6, 1.4));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-60, 0, -60);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SKYSCRAPER_A], true);
 	modelStack.PopMatrix();
-	hitboxValues.push_back({ -60, 29, -60, 24, 58, 24 });
+	hitboxes.push_back(Hitbox(-60, 29, -60, 24, 58, 24));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, -70);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SMALLHOUSE_E], true);
 	modelStack.PopMatrix();
-	hitboxValues.push_back({ 0, 9, -70, 32, 18, 20 });
+	hitboxes.push_back(Hitbox(0, 9, -70, 32, 18, 20));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-60, 0, 0);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SKYSCRAPER_F], true);
 	modelStack.PopMatrix();
-	hitboxValues.push_back({ -60, 40, 0, 24, 80, 24 });
-
-	
+	hitboxes.push_back(Hitbox(-60, 40, 0, 24, 80, 24));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, -20);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_BIGHOUSE_A], true);
 	modelStack.PopMatrix();
-	hitboxValues.push_back({ 0, 17, -20, 40, 34, 24 });
+	hitboxes.push_back(Hitbox(0, 17, -20, 40, 34, 24));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(60, 0, -65);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_BIGHOUSE_F], true);
 	modelStack.PopMatrix();
-	hitboxValues.push_back({ 60, 12, -65, 40, 28, 16 });
+	hitboxes.push_back(Hitbox(60, 12, -65, 40, 28, 16));
 	
 	modelStack.PushMatrix();
 	modelStack.Translate(60, 0, -15);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_BIGHOUSE_G], true);
 	modelStack.PopMatrix();
-	hitboxValues.push_back({ 60, 20, -15, 32, 40, 32 });
-	hitboxValues.push_back({ 30.9, 4, -26.1, 0.6, 8, 0.6 });
-	hitboxValues.push_back({ 30.9, 4, -3.9, 0.6, 8, 0.6 });
-	hitboxValues.push_back({ 40, 9, -15, 20, 2, 24 });
+	hitboxes.push_back(Hitbox(60, 20, -15, 32, 40, 32));
+	hitboxes.push_back(Hitbox(30.9, 4, -26.1, 0.6, 8, 0.6));
+	hitboxes.push_back(Hitbox(30.9, 4, -3.9, 0.6, 8, 0.6));
+	hitboxes.push_back(Hitbox(40, 9, -15, 20, 2, 24));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-10, 0, 80);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SMALLHOUSE_D], true);
 	modelStack.PopMatrix();
-	hitboxValues.push_back({ 0, 13, 78.5, 36, 26, 19 });
+	hitboxes.push_back(Hitbox(0, 13, 78.5, 36, 26, 19));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-60, 0, 60);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SMALLHOUSE_C], true);
 	modelStack.PopMatrix();
-	hitboxValues.push_back({ -60, 13, 60, 16, 26, 16 });
-	hitboxValues.push_back({ -56, 13, 51, 8, 26, 2 });
+	hitboxes.push_back(Hitbox(-60, 13, 60, 16, 26, 16));
+	hitboxes.push_back(Hitbox(-56, 13, 51, 8, 26, 2));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-40, 0, 60);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SMALLHOUSE_F], true);
 	modelStack.PopMatrix();
-	hitboxValues.push_back({ -40, 8, 60, 16, 16, 16 });
+	hitboxes.push_back(Hitbox(-40, 8, 60, 16, 16, 16));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(10, 0, 80);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SMALLHOUSE_D], true);
 	modelStack.PopMatrix();
-	hitboxValues.push_back({ 10, 12, 80, 16, 24, 16 });
-	hitboxValues.push_back({ 10, 4, 70.5, 16, 8, 3 });
+	hitboxes.push_back(Hitbox(10, 12, 80, 16, 24, 16));
+	hitboxes.push_back(Hitbox(10, 4, 70.5, 16, 8, 3));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(60, 0, 60);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SKYSCRAPER_E], true);
 	modelStack.PopMatrix();
-	hitboxValues.push_back({ 60, 25, 60, 24, 50, 24 });
+	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
 
 	//Render Bomb
 	modelStack.PushMatrix();
