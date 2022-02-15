@@ -274,6 +274,10 @@ void SceneGame::Init()
 	blackTranslateX = 0.f; blackTranslateZ = -25.5f;
 	cyanTranslateX = -20.5f, cyanTranslateZ = 20.f;
 	orangeTranslateX = 20.5f, orangeTranslateZ = 20.f;
+
+	//Enemies for Assignment 2
+	enemy1X = 60;
+	enemy1Z = 2;
 }
 
 void SceneGame::Update(double dt)
@@ -607,6 +611,31 @@ void SceneGame::Update(double dt)
 		if (Application::IsKeyPressed(VK_RETURN) && voted == 3) {
 			voting = false;
 		}
+
+		if (CollisionPointCircle(camera.position.x, camera.position.z, enemy1X, enemy1Z, 5))// reach a certain point of distance
+		{
+			if (DistBetweenPoints(camera.position.x, camera.position.z, enemy1X, enemy1Z) > 5)//if enemy is out of range
+			{
+				if (camera.position.x < enemy1X)
+				{
+					enemy1X--;
+				}
+				else
+				{
+					enemy1X++;
+					
+				}
+				if (camera.position.z < enemy1Z)
+				{
+					enemy1Z--;
+				}
+				else
+				{
+					enemy1Z++;
+				}
+			}
+		}
+
 	}
 	// remove chat if too far away
 	if (talkTarget == "black") {
@@ -907,6 +936,7 @@ void SceneGame::Render()
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
+	modelStack.Translate(enemy1X, 0, enemy1Z);
 	modelStack.Scale(0.35, 0.35, 0.35);
 	RenderMesh(meshList[GEO_ENEMY1], true);
 	modelStack.PopMatrix();

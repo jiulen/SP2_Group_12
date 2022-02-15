@@ -166,6 +166,7 @@ private:
 		blackTranslateX, blackTranslateY, blackTranslateZ,
 		cyanTranslateX, cyanTranslateY, cyanTranslateZ,
 		orangeTranslateX, orangeTranslateY, orangeTranslateZ;
+	float enemy1X, enemy1Z;
 public:
 	SceneGame();
 	~SceneGame();
