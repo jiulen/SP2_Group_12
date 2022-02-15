@@ -959,6 +959,11 @@ void SceneSettings::RenderSkybox()
 	modelStack.PopMatrix();*/
 }
 
+int SceneSettings::NextScene()
+{
+	return nextscene;
+}
+
 void SceneSettings::Exit()
 {
 	// Cleanup VBO here
