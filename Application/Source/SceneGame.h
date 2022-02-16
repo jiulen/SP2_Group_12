@@ -69,6 +69,7 @@ class SceneGame : public Scene
 		GEO_SMALLHOUSE_D,
 		GEO_SMALLHOUSE_E,
 		GEO_SMALLHOUSE_F,
+		GEO_BOMB,
 
 		NUM_GEOMETRY,
 	};
@@ -129,6 +130,7 @@ private:
 	bool CollisionLineCircle(float x1, float y1, float x2, float y2, float cx, float cy, float r);
 	//
 	void RenderSkybox();
+	void RenderBomb(int a);
 	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
@@ -139,6 +141,10 @@ private:
 	unsigned textMaxWidth;
 	unsigned textSpacing[256];
 	int nextscene = 3;
+	int bombrand1 = 0;
+	int bombrand2 = 0;
+	int bombrand3 = 0;
+	int bomb, bomb2, bomb3;
 	float enemy1X, enemy1Z;
 	bool chase;
 	float characterFacing;

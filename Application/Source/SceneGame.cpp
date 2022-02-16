@@ -149,7 +149,7 @@ void SceneGame::Init()
 	meshList[GEO_GROUND]->textureID = LoadTGA("Image//whitebrickfloor.tga");
 	meshList[GEO_ENEMY1] = MeshBuilder::GenerateOBJMTL("enemy1", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
 	meshList[GEO_ENEMY1]->textureID = LoadTGA("Image//skin_robot.tga");
-
+	meshList[GEO_BOMB] = MeshBuilder::GenerateOBJMTL("bomb", "OBJ//clipA.obj", "OBJ//clipA.mtl");
 	meshList[GEO_BIGHOUSE_A] = MeshBuilder::GenerateOBJMTL("big house a", "OBJ//large_buildingA.obj", "OBJ//large_buildingA.mtl");
 	meshList[GEO_BIGHOUSE_B] = MeshBuilder::GenerateOBJMTL("big house b", "OBJ//large_buildingB.obj", "OBJ//large_buildingB.mtl");
 	meshList[GEO_BIGHOUSE_C] = MeshBuilder::GenerateOBJMTL("big house c", "OBJ//large_buildingC.obj", "OBJ//large_buildingC.mtl");
@@ -729,11 +729,7 @@ void SceneGame::Render()
 	//hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
 
 	//Render Bomb
-	modelStack.PushMatrix();
-	modelStack.Translate(60, 0, 15);
-	modelStack.Scale(5, 5, 5);
-	RenderMesh(meshList[GEO_LOWHOUSE_H], true);
-	modelStack.PopMatrix();
+	RenderBomb(0);
 
 	//test floor collision
 	modelStack.PushMatrix();
@@ -751,6 +747,108 @@ void SceneGame::Render()
 	//ss << "FPS: " << FPS;
 	ss << "direction: " << characterFacing;
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 0, 0), 3, 0, 0); //FPS
+}
+
+void SceneGame::RenderBomb(int a)
+{
+	if (bombrand1 == 0)
+	{
+		bomb = rand() % 9 + 1;
+		bombrand1++;
+	}
+	if (bombrand2 == 0)
+	{
+		bomb2 = rand() % 9 + 1;
+		if (bomb2==bomb)
+			bomb2 = rand() % 9 + 1;
+		else 
+			bombrand2++;
+	}
+	if (bombrand3 == 0)
+	{
+		bomb3 = rand() % 9 + 1;
+		if ((bomb3 == bomb)||(bomb3==bomb2))
+			bomb3 = rand() % 9 + 1;
+		else
+			bombrand3++;
+	}
+
+	if ((bomb == 1)||(bomb2==1)||(bomb3==1))
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(76.1, 3, -11);
+		modelStack.Scale(5, 5, 5);
+		RenderMesh(meshList[GEO_BOMB], true);
+		modelStack.PopMatrix();
+	}
+	if ((bomb == 2) || (bomb2 == 2) || (bomb3 == 2))
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(62, 3, -56.9);
+		modelStack.Rotate(90, 0, 1, 0);
+		modelStack.Scale(5, 5, 5);
+		RenderMesh(meshList[GEO_BOMB], true);
+		modelStack.PopMatrix();
+	}
+	if ((bomb == 3) || (bomb2 == 3) || (bomb3 == 3))
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(-16.1, 3, -67);
+		modelStack.Scale(5, 5, 5);
+		RenderMesh(meshList[GEO_BOMB], true);
+		modelStack.PopMatrix();
+	}
+	if ((bomb == 4) || (bomb2 == 4) || (bomb3 == 4))
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(-72.1, 3, -64);
+		modelStack.Scale(5, 5, 5);
+		RenderMesh(meshList[GEO_BOMB], true);
+		modelStack.PopMatrix();
+	}
+	if ((bomb == 5) || (bomb2 == 5) || (bomb3 == 5))
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(-53, 3, 12.1);
+		modelStack.Rotate(90, 0, 1, 0);
+		modelStack.Scale(5, 5, 5);
+		RenderMesh(meshList[GEO_BOMB], true);
+		modelStack.PopMatrix();
+	}
+	if ((bomb == 6) || (bomb2 == 6) || (bomb3 == 6))
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(-31.9, 3, 60);
+		modelStack.Scale(5, 5, 5);
+		RenderMesh(meshList[GEO_BOMB], true);
+		modelStack.PopMatrix();
+	}
+	if ((bomb == 7) || (bomb2 == 7) || (bomb3 == 7))
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(7, 3, 88.1);
+		modelStack.Rotate(90, 0, 1, 0);
+		modelStack.Scale(5, 5, 5);
+		RenderMesh(meshList[GEO_BOMB], true);
+		modelStack.PopMatrix();
+	}
+	if ((bomb == 8) || (bomb2 == 8) || (bomb3 == 8))
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(56, 3, 47.9);
+		modelStack.Rotate(90, 0, 1, 0);
+		modelStack.Scale(5, 5, 5);
+		RenderMesh(meshList[GEO_BOMB], true);
+		modelStack.PopMatrix();
+	}
+	if ((bomb == 9) || (bomb2 == 9) || (bomb3 == 9))
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(20.1, 3, -15);
+		modelStack.Scale(5, 5, 5);
+		RenderMesh(meshList[GEO_BOMB], true);
+		modelStack.PopMatrix();
+	}
 }
 
 void SceneGame::RenderSkybox()
@@ -813,6 +911,7 @@ void SceneGame::Exit()
 	delete meshList[GEO_BOTTOM];
 	delete meshList[GEO_FRONT];
 	delete meshList[GEO_BACK];
+	delete meshList[GEO_BOMB];
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
 }

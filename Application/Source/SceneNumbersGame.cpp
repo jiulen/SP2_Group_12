@@ -509,6 +509,7 @@ void SceneNumbersGame::Exit()
 	// Cleanup VBO here
 	delete meshList[GEO_TEXT];
 	delete meshList[GEO_NUMBERS];
+	delete meshList[GEO_TICK];
 
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
