@@ -2,9 +2,6 @@
 #define SCENE_NUMBERS_H
 
 #include "Scene.h"
-#include "Camera.h"
-#include "Camera2.h"
-#include "Camera3.h"
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
@@ -66,7 +63,6 @@ class SceneNumbersGame : public Scene
 		U_TOTAL,
 	};
 	MS modelStack, viewStack, projectionStack;
-	Camera3 camera;
 private:
 	unsigned m_vertexArrayID;
 	Mesh* meshList[NUM_GEOMETRY];
@@ -74,15 +70,8 @@ private:
 	unsigned m_parameters[U_TOTAL];
 	Light light[2];
 	bool bLightEnabled;
-	float DistBetweenPoints(float x1, float z1, float x2, float z2);
-	//Collision
-	bool CollisionLineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);
-	bool CollisionLineRect(float x1, float y1, float x2, float y2, float rx, float ry, float rw, float rh);
-	bool CollisionPointCircle(float px, float py, float cx, float cy, float r);
-	bool CollisionLinePoint(float x1, float y1, float x2, float y2, float px, float py);
-	bool CollisionLineCircle(float x1, float y1, float x2, float y2, float cx, float cy, float r);
+
 	//
-	void RenderSkybox();
 	void RenderNumbersGame();
 	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderText(Mesh* mesh, std::string text, Color color);
@@ -95,8 +84,10 @@ private:
 	unsigned textSpacing[256];
 
 	//game
+	int ticks[10] = { 0,0,0,0,0,0,0,0,0,0 };
+	int clicked = 0;
 	int prevno = 0;
-	int completed = 5;
+	int currentno = 0;
 	double mouseX = 0;
 	double mouseY = 0;
 public:

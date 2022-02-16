@@ -2,9 +2,6 @@
 #define SCENE_WIRINGGAME_H
 
 #include "Scene.h"
-#include "Camera.h"
-#include "Camera2.h"
-#include "Camera3.h"
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
@@ -69,7 +66,6 @@ class SceneWiringGame : public Scene
 		U_TOTAL,
 	};
 	MS modelStack, viewStack, projectionStack;
-	Camera3 camera;
 private:
 	unsigned m_vertexArrayID;
 	Mesh* meshList[NUM_GEOMETRY];
