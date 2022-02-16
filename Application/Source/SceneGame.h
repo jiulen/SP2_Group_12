@@ -70,6 +70,7 @@ class SceneGame : public Scene
 		GEO_SMALLHOUSE_E,
 		GEO_SMALLHOUSE_F,
 		GEO_BOMB,
+		GEO_GUN,
 
 		NUM_GEOMETRY,
 	};

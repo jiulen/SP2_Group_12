@@ -150,6 +150,7 @@ void SceneGame::Init()
 	meshList[GEO_ENEMY1] = MeshBuilder::GenerateOBJMTL("enemy1", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
 	meshList[GEO_ENEMY1]->textureID = LoadTGA("Image//skin_robot.tga");
 	meshList[GEO_BOMB] = MeshBuilder::GenerateOBJMTL("bomb", "OBJ//clipA.obj", "OBJ//clipA.mtl");
+	meshList[GEO_GUN] = MeshBuilder::GenerateOBJ("gun", "OBJ//TT_gun.obj");
 	meshList[GEO_BIGHOUSE_A] = MeshBuilder::GenerateOBJMTL("big house a", "OBJ//large_buildingA.obj", "OBJ//large_buildingA.mtl");
 	meshList[GEO_BIGHOUSE_B] = MeshBuilder::GenerateOBJMTL("big house b", "OBJ//large_buildingB.obj", "OBJ//large_buildingB.mtl");
 	meshList[GEO_BIGHOUSE_C] = MeshBuilder::GenerateOBJMTL("big house c", "OBJ//large_buildingC.obj", "OBJ//large_buildingC.mtl");
