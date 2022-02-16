@@ -122,8 +122,6 @@ void SceneWiringGame::Init()
 	glBindVertexArray(m_vertexArrayID);
 
 
-	camera.Init(Vector3(0, 4.5, 5.5), Vector3(0, 4.5, 4.5), Vector3(0, 1, 0)); //facing -x (1.0 diff in z)
-
 	for (int i = 0; i < NUM_GEOMETRY; i++)
 	{
 		meshList[i] = nullptr;
@@ -583,14 +581,9 @@ void SceneWiringGame::Render()
 	}
 
 	viewStack.LoadIdentity();
-	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
 	modelStack.LoadIdentity();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 5, 0);
-	modelStack.Scale(15, 15, 15);
-	RenderMesh(meshList[GEO_BACKGROUND], false);
-	modelStack.PopMatrix();
+	RenderImageOnScreen(meshList[GEO_BACKGROUND], Color(1, 1, 1), 100, 100, 40, 30, 0);
 
 	RenderWiringGame();
 }

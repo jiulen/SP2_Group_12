@@ -2,9 +2,6 @@
 #define SCENE_NUMBERS_H
 
 #include "Scene.h"
-#include "Camera.h"
-#include "Camera2.h"
-#include "Camera3.h"
 #include "Mesh.h"
 #include "MatrixStack.h"
 #include "Light.h"
@@ -66,7 +63,6 @@ class SceneNumbersGame : public Scene
 		U_TOTAL,
 	};
 	MS modelStack, viewStack, projectionStack;
-	Camera3 camera;
 private:
 	unsigned m_vertexArrayID;
 	Mesh* meshList[NUM_GEOMETRY];
@@ -95,7 +91,9 @@ private:
 	unsigned textSpacing[256];
 
 	//game
+	int ticks[10] = { 0,0,0,0,0,0,0,0,0,0 };
 	int prevno = 0;
+	int currentno = 0;
 	int completed = 5;
 	double mouseX = 0;
 	double mouseY = 0;

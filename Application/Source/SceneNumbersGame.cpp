@@ -121,9 +121,6 @@ void SceneNumbersGame::Init()
 	glGenVertexArrays(1, &m_vertexArrayID);
 	glBindVertexArray(m_vertexArrayID);
 
-
-	camera.Init(Vector3(0, 4.5, 5.5), Vector3(0, 4.5, 4.5), Vector3(0, 1, 0)); //facing -x (1.0 diff in z)
-
 	for (int i = 0; i < NUM_GEOMETRY; i++)
 	{
 		meshList[i] = nullptr;
@@ -205,19 +202,23 @@ void SceneNumbersGame::Update(double dt)
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
-		std::cout << "LBUTTON DOWN" << std::endl;
-
-		//use tasklist as button
-		float BUTTON_LEFT = 0;
-		float BUTTON_RIGHT = 30;
-		float BUTTON_BOTTOM = 38;
-		float BUTTON_TOP = 55;
-
-		
+		if ((mouseX > 35) && (mouseX < 44.9) && (mouseY > 13.5) && (mouseY < 29.1)&&(ticks[0]==0))
+			currentno = 1;
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
-	
+		if (currentno == prevno + 1)
+		{
+			ticks[prevno] = 1;
+			prevno++;
+		}
+		else
+		{
+			prevno = 0;
+			currentno = 0;
+			for (int i = 0; i < 10; i++)
+				ticks[i] = 0;
+		}
 		bLButtonState = false;
 	}
 
@@ -489,14 +490,10 @@ void SceneNumbersGame::Render()
 	}
 
 	viewStack.LoadIdentity();
-	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
+	
 	modelStack.LoadIdentity();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 5, 0);
-	modelStack.Scale(15, 15, 15);
-	RenderMesh(meshList[GEO_BACKGROUND], false);
-	modelStack.PopMatrix();
+	RenderImageOnScreen(meshList[GEO_BACKGROUND], Color(1, 1, 1), 100, 100, 40, 30, 0);
 
 	RenderNumbersGame();
 }
@@ -508,7 +505,8 @@ void SceneNumbersGame::RenderNumbersGame()
 	modelStack.Scale(0.35, 0.35, 0.35);
 	RenderImageOnScreen(meshList[GEO_NUMBERS], Color(1, 1, 1), 70, 50, 39.5, 30, 0);
 	modelStack.PopMatrix();
-
+	if (ticks[0] == 1)
+		RenderImageOnScreen(meshList[GEO_TICK], Color(1, 1, 1), 10, 13, 39.5, 21, 0);
 	
 	std::ostringstream ss;
 	ss << "mouseX:" << mouseX << " mouseY:" << mouseY;
