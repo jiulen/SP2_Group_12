@@ -139,8 +139,14 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		position.y += static_cast<float>(dt) * JUMP_SPEED;
 		bool collide = false;
 		playerCeilingCollision(hitboxes, collide);
-		if (position.y > 10 || collide)
+		if (collide) {
 			jump = 0;
+		}
+		if (position.y >= 10)
+		{
+			position.y = 10;
+			jump = 0;
+		}	
 		target = position + view;
 	}
 	if (jump == 0)
@@ -280,7 +286,6 @@ void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes, bool& collide
 			{
 				//Statically resolve the collision
 				position.y -= overlap;
-				target.y -= overlap;
 				collide = true;
 			}
 			//
