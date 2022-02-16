@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include "SceneWiringGame.h"
 #include "SceneNumbersGame.h"
+#include "SceneCopyGame.h"
 #include "SceneMainMenu.h"
 #include "SceneSettings.h"
 #include "SceneGame.h"
@@ -135,12 +136,14 @@ void Application::Run()
 	Scene* scene3 = new SceneGame();
 	Scene* scene4 = new SceneWiringGame();
 	Scene* scene5 = new SceneNumbersGame();
+	Scene* scene6 = new SceneCopyGame();
 	Scene* scene = scene1;
 	scene1->Init();
 	scene2->Init();
 	scene3->Init();
 	scene4->Init();
 	scene5->Init();
+	scene6->Init();
 
 	//Set cursor mode (do for scene switch also if cursor mode change)
 	
@@ -167,6 +170,8 @@ void Application::Run()
 			sceneno = 4;
 		else if (IsKeyPressed(VK_F5))
 			sceneno = 5;
+		else if (IsKeyPressed(VK_F6))
+			sceneno = 6;
 		if (sceneno == 1)
 			scene = scene1;
 		else if (sceneno == 2)
@@ -177,6 +182,8 @@ void Application::Run()
 			scene = scene4;
 		else if (sceneno == 5)
 			scene = scene5;
+		else if (sceneno == 6)
+			scene = scene6;
 		scene->Update(m_timer.getElapsedTime());
 		scene->Render();
 		//Swap buffers
