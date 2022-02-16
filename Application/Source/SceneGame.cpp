@@ -251,6 +251,7 @@ void SceneGame::Init()
 	//Enemies for Assignment 2
 	enemy1X = 60;
 	enemy1Z = 2;
+	chase = false;
 }
 
 void SceneGame::Update(double dt)
@@ -319,12 +320,15 @@ void SceneGame::Update(double dt)
 		bLightEnabled = true;
 	}
 
-		if (DistBetweenPoints(camera.position.x, camera.position.z, enemy1X, enemy1Z) > 10)//if enemy is out of range
+	if (CollisionPointCircle(camera.position.x, camera.position.z, enemy1X, enemy1Z, 20) == true)
+	{
+		chase = true;
+	}
+
+	if (chase == true)
+	{
+		if (DistBetweenPoints(camera.position.x, camera.position.z, enemy1X, enemy1Z) > 20)//if enemy is out of range
 		{
-			//int xDistance = enemy1X - camera.position.x;
-			//int zDistance = enemy1Z - camera.position.z;
-			//enemy1X = enemy1X += (float)((1000 * dt) + xDistance) / 2;
-			//enemy1Z = enemy1Z += (float)((1000 * dt) + zDistance) / 2;
 			if (enemy1X < camera.position.x)
 			{
 				enemy1X += (float)(10 * dt);
@@ -342,6 +346,7 @@ void SceneGame::Update(double dt)
 				enemy1Z -= (float)(10 * dt);
 			}
 		}
+	}
 
 }
 float SceneGame::DistBetweenPoints(float x1, float z1, float x2, float z2)

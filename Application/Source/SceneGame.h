@@ -139,6 +139,7 @@ private:
 	unsigned textSpacing[256];
 	int nextscene = 3;
 	float enemy1X, enemy1Z;
+	bool chase;
 public:
 	SceneGame();
 	~SceneGame();
