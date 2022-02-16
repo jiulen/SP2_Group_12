@@ -540,9 +540,6 @@ void SceneNumbersGame::RenderNumbersGame()
 		RenderImageOnScreen(meshList[GEO_TICK], Color(1, 1, 1), 10, 13, 51.4, 21, 0);
 	if (ticks[3] == 1)
 		RenderImageOnScreen(meshList[GEO_TICK], Color(1, 1, 1), 10, 13, 51.4, 38.5, 0);
-	std::ostringstream ss;
-	ss << "mouseX:" << mouseX << " mouseY:" << mouseY;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 1, 1), 5, 1, 1);
 }
 
 int SceneNumbersGame::NextScene()
