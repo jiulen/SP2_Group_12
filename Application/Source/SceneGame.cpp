@@ -251,6 +251,25 @@ void SceneGame::Init()
 	//Enemies for Assignment 2
 	enemy1X = 60;
 	enemy1Z = 2;
+	//Building hitboxes
+	hitboxes.push_back(Hitbox(-60, 29, -60, 24, 58, 24));
+	hitboxes.push_back(Hitbox(0, 9, -70, 32, 18, 20));
+	hitboxes.push_back(Hitbox(-60, 40, 0, 24, 80, 24));
+	hitboxes.push_back(Hitbox(0, 17, -20, 40, 34, 24));
+	hitboxes.push_back(Hitbox(60, 12, -65, 40, 28, 16));
+	hitboxes.push_back(Hitbox(60, 20, -15, 32, 40, 32));
+	hitboxes.push_back(Hitbox(30.9, 4, -26.1, 0.6, 8, 0.6));
+	hitboxes.push_back(Hitbox(30.9, 4, -3.9, 0.6, 8, 0.6));
+	hitboxes.push_back(Hitbox(40, 9, -15, 20, 2, 24));
+	hitboxes.push_back(Hitbox(0, 13, 78.5, 36, 26, 19));
+	hitboxes.push_back(Hitbox(-60, 13, 60, 16, 26, 16));
+	hitboxes.push_back(Hitbox(-56, 13, 51, 8, 26, 2));
+	hitboxes.push_back(Hitbox(-40, 8, 60, 16, 16, 16));
+	hitboxes.push_back(Hitbox(10, 12, 80, 16, 24, 16));
+	hitboxes.push_back(Hitbox(10, 4, 70.5, 16, 8, 3));
+	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
+	//test hitbox
+	hitboxes.push_back(Hitbox(5, 1, 5, 5, 2, 5));
 	chase = false;
 	characterFacing = 0;
 	enemyVector = (0, 0, 1);
@@ -625,89 +644,88 @@ void SceneGame::Render()
 	modelStack.Scale(0.35, 0.35, 0.35);
 	RenderMesh(meshList[GEO_ENEMY1], true);
 	modelStack.PopMatrix();
-	hitboxes.push_back(Hitbox(0, 2.8, 0, 2.7, 5.6, 1.4));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-60, 0, -60);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SKYSCRAPER_A], true);
 	modelStack.PopMatrix();
-	hitboxes.push_back(Hitbox(-60, 29, -60, 24, 58, 24));
+	//hitboxes.push_back(Hitbox(-60, 29, -60, 24, 58, 24));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, -70);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SMALLHOUSE_E], true);
 	modelStack.PopMatrix();
-	hitboxes.push_back(Hitbox(0, 9, -70, 32, 18, 20));
+	//hitboxes.push_back(Hitbox(0, 9, -70, 32, 18, 20));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-60, 0, 0);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SKYSCRAPER_F], true);
 	modelStack.PopMatrix();
-	hitboxes.push_back(Hitbox(-60, 40, 0, 24, 80, 24));
+	//hitboxes.push_back(Hitbox(-60, 40, 0, 24, 80, 24));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, -20);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_BIGHOUSE_A], true);
 	modelStack.PopMatrix();
-	hitboxes.push_back(Hitbox(0, 17, -20, 40, 34, 24));
+	//hitboxes.push_back(Hitbox(0, 17, -20, 40, 34, 24));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(60, 0, -65);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_BIGHOUSE_F], true);
 	modelStack.PopMatrix();
-	hitboxes.push_back(Hitbox(60, 12, -65, 40, 28, 16));
+	//hitboxes.push_back(Hitbox(60, 12, -65, 40, 28, 16));
 	
 	modelStack.PushMatrix();
 	modelStack.Translate(60, 0, -15);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_BIGHOUSE_G], true);
 	modelStack.PopMatrix();
-	hitboxes.push_back(Hitbox(60, 20, -15, 32, 40, 32));
-	hitboxes.push_back(Hitbox(30.9, 4, -26.1, 0.6, 8, 0.6));
-	hitboxes.push_back(Hitbox(30.9, 4, -3.9, 0.6, 8, 0.6));
-	hitboxes.push_back(Hitbox(40, 9, -15, 20, 2, 24));
+	//hitboxes.push_back(Hitbox(60, 20, -15, 32, 40, 32));
+	//hitboxes.push_back(Hitbox(30.9, 4, -26.1, 0.6, 8, 0.6));
+	//hitboxes.push_back(Hitbox(30.9, 4, -3.9, 0.6, 8, 0.6));
+	//hitboxes.push_back(Hitbox(40, 9, -15, 20, 2, 24));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-10, 0, 80);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SMALLHOUSE_D], true);
 	modelStack.PopMatrix();
-	hitboxes.push_back(Hitbox(0, 13, 78.5, 36, 26, 19));
+	//hitboxes.push_back(Hitbox(0, 13, 78.5, 36, 26, 19));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-60, 0, 60);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SMALLHOUSE_C], true);
 	modelStack.PopMatrix();
-	hitboxes.push_back(Hitbox(-60, 13, 60, 16, 26, 16));
-	hitboxes.push_back(Hitbox(-56, 13, 51, 8, 26, 2));
+	//hitboxes.push_back(Hitbox(-60, 13, 60, 16, 26, 16));
+	//hitboxes.push_back(Hitbox(-56, 13, 51, 8, 26, 2));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-40, 0, 60);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SMALLHOUSE_F], true);
 	modelStack.PopMatrix();
-	hitboxes.push_back(Hitbox(-40, 8, 60, 16, 16, 16));
+	//hitboxes.push_back(Hitbox(-40, 8, 60, 16, 16, 16));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(10, 0, 80);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SMALLHOUSE_D], true);
 	modelStack.PopMatrix();
-	hitboxes.push_back(Hitbox(10, 12, 80, 16, 24, 16));
-	hitboxes.push_back(Hitbox(10, 4, 70.5, 16, 8, 3));
+	//hitboxes.push_back(Hitbox(10, 12, 80, 16, 24, 16));
+	//hitboxes.push_back(Hitbox(10, 4, 70.5, 16, 8, 3));
 
 	modelStack.PushMatrix();
 	modelStack.Translate(60, 0, 60);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SKYSCRAPER_E], true);
 	modelStack.PopMatrix();
-	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
+	//hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
 
 	//Render Bomb
 	modelStack.PushMatrix();
@@ -715,6 +733,14 @@ void SceneGame::Render()
 	modelStack.Scale(5, 5, 5);
 	RenderMesh(meshList[GEO_LOWHOUSE_H], true);
 	modelStack.PopMatrix();
+
+	//test floor collision
+	modelStack.PushMatrix();
+	modelStack.Translate(5, 1, 5);
+	modelStack.Scale(5, 2, 5);
+	RenderMesh(meshList[GEO_CUBE], false);
+	modelStack.PopMatrix();
+	//hitboxes.push_back(Hitbox(5, 1, 5, 5, 2, 5));
 
 	RenderSkybox();
 
