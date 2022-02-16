@@ -206,99 +206,9 @@ void SceneCopyGame::Update(double dt)
 	if (!bLButtonState && Application::IsMousePressed(0))
 	{
 		bLButtonState = true;
-		if ((mouseY >= 13.5) && (mouseY <= 29.1))
-		{
-			if ((mouseX >= 34) && (mouseX <= 44.7) && (ticks[7] == 0))
-			{
-				currentno = pos[7];
-				currentpos = 7;
-				clicked = 1;
-			}
-			else if ((mouseX >= 22.3) && (mouseX <= 33) && (ticks[6] == 0))
-			{
-				currentno = pos[6];
-				currentpos = 6;
-				clicked = 1;
-			}
-			else if ((mouseX >= 57.4) && (mouseX <= 68.1) && (ticks[9] == 0))
-			{
-				currentno = pos[9];
-				currentpos = 9;
-				clicked = 1;
-			}
-			else if ((mouseX >= 10.3) && (mouseX <= 21) && (ticks[5] == 0))
-			{
-				currentno = pos[5];
-				currentpos = 5;
-				clicked = 1;
-			}
-			else if ((mouseX >= 45.7) && (mouseX <= 56.4) && (ticks[8] == 0))
-			{
-				currentno = pos[8];
-				currentpos = 8;
-				clicked = 1;
-			}
-		}
-		else if ((mouseY >= 31) && (mouseY <= 46.6))
-		{
-			if ((mouseX >= 10.3) && (mouseX <= 21) && (ticks[0] == 0))
-			{
-				currentno = pos[0];
-				currentpos = 0;
-				clicked = 1;
-			}
-			else if ((mouseX >= 34) && (mouseX <= 44.7) && (ticks[2] == 0))
-			{
-				currentno = pos[2];
-				currentpos = 2;
-				clicked = 1;
-			}
-			else if ((mouseX >= 22.3) && (mouseX <= 33) && (ticks[1] == 0))
-			{
-				currentno = pos[1];
-				currentpos = 1;
-				clicked = 1;
-			}
-			else if ((mouseX >= 57.4) && (mouseX <= 68.1) && (ticks[4] == 0))
-			{
-				currentno = pos[4];
-				currentpos = 4;
-				clicked = 1;
-			}
-			else if ((mouseX >= 45.7) && (mouseX <= 56.4) && (ticks[3] == 0))
-			{
-				currentno = pos[3];
-				currentpos = 3;
-				clicked = 1;
-			}
-		}
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
-		if (clicked == 1)
-		{
-			if (currentno == prevno + 1)
-			{
-				ticks[currentpos] = 1;
-				prevno++;
-			}
-			else
-			{
-				set = 0;
-				currentpos = -1;
-				for (int i = 0; i < 10; i++)
-				{
-					pos[i] = 0;
-					ticks[i] = 0;
-				}
-				prevno = 0;
-				currentno = 0;
-				for (int i = 0; i < 10; i++)
-					ticks[i] = 0;
-			}
-			currentpos = -1;
-			clicked = 0;
-		}
 		bLButtonState = false;
 	}
 
@@ -481,69 +391,15 @@ void SceneCopyGame::RenderCopyGame()
 {
 	if (set == 0)
 	{
-		for (int i = 0; i < 10; i++)
-		{
-			pos[i] = rand() % 10 + 1;
-			for (int l = 0; l < 10; l++)
-			{
-				if (i != l)
-				{
-					if (pos[i] == pos[l])
-					{
-						i--;
-						l = 10;
-					}
-				}
-			}
-		}
+		for (int i = 0; i < 5; i++)
+			tocopy[i] = rand() % 9 + 1;
 		set++;
 	}
-	//x= 10.7, y=15.6 xbar=1, ybar=1.9
+
 	modelStack.PushMatrix();
 	modelStack.Scale(0.35, 0.35, 0.35);
 	RenderImageOnScreen(meshList[GEO_PAD], Color(1, 1, 1), 70, 50, 39.5, 30, 0);
 	modelStack.PopMatrix();
-	for (int i = 0; i < 10; i++)
-	{
-		int a, b;
-		if (i < 5)
-		{
-			a = 13.8 + (10.85 * i) + (1 * i);
-			b = 33;
-		}
-		else
-		{
-			a = 13.8 + (10.85 * (i - 5)) + (1 * (i - 5));
-			b = 15.5;
-		}
-		std::ostringstream ss;
-		ss.str("");
-		ss.precision(4);
-		ss << pos[i];
-		if (pos[i] == 10)
-			a -= 3;
-		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0.7), 10, a, b);
-	}
-	if (ticks[7] == 1)
-		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 10, 13, 39.5, 21, 0);
-	if (ticks[0] == 1)
-		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 10, 13, 15.6, 38.5, 0);
-	if (ticks[6] == 1)
-		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 10, 13, 27.6, 21, 0);
-	if (ticks[2] == 1)
-		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 10, 13, 39.5, 38.5, 0);
-	if (ticks[1] == 1)
-		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 10, 13, 27.6, 38.5, 0);
-	if (ticks[9] == 1)
-		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 10, 13, 63.4, 21, 0);
-	if (ticks[4] == 1)
-		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 10, 13, 63.4, 38.5, 0);
-	if (ticks[5] == 1)
-		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 10, 13, 15.6, 21, 0);
-	if (ticks[8] == 1)
-		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 10, 13, 51.4, 21, 0);
-	if (ticks[3] == 1)
-		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 10, 13, 51.4, 38.5, 0);
 }
 
 int SceneCopyGame::NextScene()

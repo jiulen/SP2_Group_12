@@ -87,12 +87,9 @@ private:
 
 	//game
 	int set = 0;
-	int currentpos = -1;
-	int pos[10] = { 0,0,0,0,0,0,0,0,0,0 };
-	int ticks[10] = { 0,0,0,0,0,0,0,0,0,0 };
+	int tocopy[5] = { 0,0,0,0,0 };
+	int pressed[5] = { 0,0,0,0,0 };
 	int clicked = 0;
-	int prevno = 0;
-	int currentno = 0;
 	double mouseX = 0;
 	double mouseY = 0;
 public:
