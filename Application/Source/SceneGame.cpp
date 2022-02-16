@@ -8,6 +8,8 @@
 #include "Utility.h"
 #include "LoadTGA.h"
 #include "LoadOBJ.h"
+#include "Entity.h"
+#include "Enemy.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
