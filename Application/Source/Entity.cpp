@@ -1,11 +1,19 @@
 #include "Entity.h"
-Entity::Entity(int a, int b)
+Entity::Entity()
 {
-	maxhealth = a;
-	currenthealth = a;
-	damage = b;
+	maxhealth = 10;
+	currenthealth = maxhealth;
+	damage = 1;
+	entityPos = Vector3(0,0,0);
+	velocity = 1.0f;
 }
 Entity::~Entity()
+{
+}
+void Entity::move(Vector3, float)
+{
+}
+void Entity::attack()
 {
 }
 void Entity::takedamage(int a)
@@ -35,4 +43,14 @@ int Entity::getcurrenthealth()
 int Entity::getmaxhealth()
 {
 	return maxhealth;
+}
+
+void Entity::updatePosition(Vector3 pos)
+{
+	entityPos = pos;
+}
+
+Vector3 Entity::getPosition()
+{
+	return entityPos;
 }
