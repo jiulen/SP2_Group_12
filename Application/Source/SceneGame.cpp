@@ -10,7 +10,7 @@
 #include "LoadOBJ.h"
 #include <fstream>
 #include <sstream>
-
+#include <iostream>
 
 SceneGame::SceneGame()
 {
@@ -318,6 +318,35 @@ void SceneGame::Update(double dt)
 	if (Application::IsKeyPressed('R')) {
 		bLightEnabled = true;
 	}
+
+	if (PlayerCollision(camera.position.x, camera.position.z, enemy1X, enemy1Z, 10, 10))// reach a certain point of distance
+	{
+		if (DistBetweenPoints(camera.position.x, camera.position.z, enemy1X, enemy1Z) > 10)//if enemy is out of range
+		{
+			//int xDistance = enemy1X - camera.position.x;
+			//int zDistance = enemy1Z - camera.position.z;
+			//enemy1X = enemy1X += (float)((1000 * dt) + xDistance) / 2;
+			//enemy1Z = enemy1Z += (float)((1000 * dt) + zDistance) / 2;
+			if (enemy1X < camera.position.x)
+			{
+				enemy1X += (float)(10 * dt);
+			}
+			if (enemy1X > camera.position.x)
+			{
+				enemy1X -= (float)(10 * dt);
+			}
+			if (enemy1Z < camera.position.z)
+			{
+				enemy1Z += (float)(10 * dt);
+			}
+			if (enemy1Z > camera.position.z)
+			{
+				enemy1Z -= (float)(10 * dt);
+			}
+		}
+	}
+	std::cout << "x: " << enemy1X << "z: " << enemy1Z;
+
 }
 float SceneGame::DistBetweenPoints(float x1, float z1, float x2, float z2)
 {
@@ -684,6 +713,32 @@ void SceneGame::Render()
 	ss.precision(4);
 	ss << "FPS: " << FPS;
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 0, 0), 3, 0, 0); //FPS
+}
+
+bool SceneGame::PlayerCollision(int playerX, int playerZ, int objectX, int objectZ, int sizeX, int sizeZ)
+{
+	for (int i = 0; i <= sizeX; i++) 
+	{
+		for (int j = 0; j <= sizeZ; j++) {
+			if (playerX == objectX + i and playerZ == objectZ + j) 
+			{
+				return true;
+			}
+			if (playerX == objectX - i and playerZ == objectZ - j) 
+			{
+				return true;
+			}
+			if (playerX == objectX + i and playerZ == objectZ - j) 
+			{
+				return true;
+			}
+			if (playerX == objectX - i and playerZ == objectZ + j) 
+			{
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 void SceneGame::RenderSkybox()

@@ -143,6 +143,7 @@ public:
 	SceneGame();
 	~SceneGame();
 
+	bool PlayerCollision(int playerX, int playerZ, int objectX, int objectZ, int sizeX, int sizeZ);
 	virtual void Init();
 	virtual void Update(double dt);
 	virtual void Render();
