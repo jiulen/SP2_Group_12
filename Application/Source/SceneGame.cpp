@@ -275,6 +275,7 @@ void SceneGame::Init()
 	characterFacing = 0;
 	enemyVector = Vector3(0, 0, 1);
 	targetVector = Vector3(0, 0, 1);
+	velocityOfEnemy = 20;
 }
 
 void SceneGame::Update(double dt)
@@ -352,22 +353,11 @@ void SceneGame::Update(double dt)
 	{
 		if (DistBetweenPoints(camera.position.x, camera.position.z, enemy1X, enemy1Z) > 20)//if enemy is out of range
 		{
-			if (enemy1X < camera.position.x)
-			{
-				enemy1X += (float)(10 * dt);
-			}
-			if (enemy1X > camera.position.x)
-			{
-				enemy1X -= (float)(10 * dt);
-			}
-			if (enemy1Z < camera.position.z)
-			{
-				enemy1Z += (float)(10 * dt);
-			}
-			if (enemy1Z > camera.position.z)
-			{
-				enemy1Z -= (float)(10 * dt);
-			}
+			targetVector = Vector3(camera.position.x, 0, camera.position.z) - Vector3(enemy1X, 0, enemy1Z);
+			targetVector = targetVector.Normalized();
+			Vector3 newVector = targetVector * velocityOfEnemy * dt;
+			enemy1X += newVector.x;
+			enemy1Z += newVector.z;
 		}
 		targetVector = Vector3(camera.position.x, 0, camera.position.z) - Vector3(enemy1X, 0, enemy1Z);
 		targetVector = targetVector.Normalized();

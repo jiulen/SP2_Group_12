@@ -149,6 +149,7 @@ private:
 	bool chase;
 	float characterFacing;
 	Vector3 targetVector, enemyVector;
+	float velocityOfEnemy;
 public:
 	SceneGame();
 	~SceneGame();
