@@ -265,8 +265,8 @@ void SceneGame::Init()
 	hitboxes.push_back(Hitbox(10, 12, 80, 16, 24, 16));
 	hitboxes.push_back(Hitbox(10, 4, 70.5, 16, 8, 3));
 	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
-	//test hitbox
-	hitboxes.push_back(Hitbox(5, 1, 5, 5, 2, 5));
+	////test hitbox
+	//hitboxes.push_back(Hitbox(5, 1, 5, 5, 2, 5));
 
 	//Enemies for Assignment 2
 	enemy1X = 60;
@@ -737,13 +737,13 @@ void SceneGame::Render()
 	//Render Bomb
 	RenderBomb(0);
 
-	//test floor collision
-	modelStack.PushMatrix();
-	modelStack.Translate(5, 1, 5);
-	modelStack.Scale(5, 2, 5);
-	RenderMesh(meshList[GEO_CUBE], false);
-	modelStack.PopMatrix();
-	//Hitbox(5, 1, 5, 5, 2, 5);
+	////test floor collision
+	//modelStack.PushMatrix();
+	//modelStack.Translate(5, 1, 5);
+	//modelStack.Scale(5, 2, 5);
+	//RenderMesh(meshList[GEO_CUBE], false);
+	//modelStack.PopMatrix();
+	////Hitbox(5, 1, 5, 5, 2, 5);
 
 	RenderSkybox();
 
