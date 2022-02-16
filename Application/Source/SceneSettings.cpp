@@ -916,11 +916,16 @@ void SceneSettings::Render()
 	//RenderImageOnScreen(meshList[GEO_PLAY], Color(1, 1, 1), 40, 30, 25, 20);
 	//RenderImageOnScreen(meshList[GEO_OPTIONS], Color(1, 1, 1), 80, 60, 60, 20);
 	RenderImageOnScreen(meshList[GEO_BACKBUTTON], Color(1, 1, 1), 40, 30, 40, 15);
-	RenderImageOnScreen(meshList[GEO_OPTIONSLIDER], Color(1, 1, 1), 80, 60, 40, 40);
-	RenderImageOnScreen(meshList[GEO_OPTIONKNOB], Color(1, 1, 1), 60, 45, 40, 40);
+	RenderImageOnScreen(meshList[GEO_OPTIONSLIDER], Color(1, 1, 1), 80, 60, 45, 40);
+	RenderImageOnScreen(meshList[GEO_OPTIONKNOB], Color(1, 1, 1), 60, 45, 45, 40);
 	RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 55, 25);
-	RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 40, 25);
-	RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 25, 25);
+	RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 45, 25);
+	RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 35, 25);
+	RenderTextOnScreen(meshList[GEO_TEXT], "Sensitivity", Color(0, 0, 0), 4, 6, 38.5f);
+	RenderTextOnScreen(meshList[GEO_TEXT], "Crosshair Color", Color(0, 0, 0), 4, 2, 23.3f);
+	RenderTextOnScreen(meshList[GEO_TEXT], "Red", Color(0, 0, 0), 4, 32, 29);
+	RenderTextOnScreen(meshList[GEO_TEXT], "Blue", Color(0, 0, 0), 4, 41, 29);
+	RenderTextOnScreen(meshList[GEO_TEXT], "Green", Color(0, 0, 0), 4, 50, 29);
 	modelStack.PopMatrix();
 
 	RenderSkybox();

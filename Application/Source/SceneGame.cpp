@@ -8,6 +8,8 @@
 #include "Utility.h"
 #include "LoadTGA.h"
 #include "LoadOBJ.h"
+#include "Entity.h"
+#include "Enemy.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -150,6 +152,7 @@ void SceneGame::Init()
 	meshList[GEO_ENEMY1] = MeshBuilder::GenerateOBJMTL("enemy1", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
 	meshList[GEO_ENEMY1]->textureID = LoadTGA("Image//skin_robot.tga");
 	meshList[GEO_BOMB] = MeshBuilder::GenerateOBJMTL("bomb", "OBJ//clipA.obj", "OBJ//clipA.mtl");
+	meshList[GEO_GUN] = MeshBuilder::GenerateOBJ("gun", "OBJ//TT_gun.obj");
 	meshList[GEO_BIGHOUSE_A] = MeshBuilder::GenerateOBJMTL("big house a", "OBJ//large_buildingA.obj", "OBJ//large_buildingA.mtl");
 	meshList[GEO_BIGHOUSE_B] = MeshBuilder::GenerateOBJMTL("big house b", "OBJ//large_buildingB.obj", "OBJ//large_buildingB.mtl");
 	meshList[GEO_BIGHOUSE_C] = MeshBuilder::GenerateOBJMTL("big house c", "OBJ//large_buildingC.obj", "OBJ//large_buildingC.mtl");
@@ -275,6 +278,7 @@ void SceneGame::Init()
 	characterFacing = 0;
 	enemyVector = Vector3(0, 0, 1);
 	targetVector = Vector3(0, 0, 1);
+	velocityOfEnemy = 20;
 }
 
 void SceneGame::Update(double dt)
@@ -352,22 +356,11 @@ void SceneGame::Update(double dt)
 	{
 		if (DistBetweenPoints(camera.position.x, camera.position.z, enemy1X, enemy1Z) > 20)//if enemy is out of range
 		{
-			if (enemy1X < camera.position.x)
-			{
-				enemy1X += (float)(10 * dt);
-			}
-			if (enemy1X > camera.position.x)
-			{
-				enemy1X -= (float)(10 * dt);
-			}
-			if (enemy1Z < camera.position.z)
-			{
-				enemy1Z += (float)(10 * dt);
-			}
-			if (enemy1Z > camera.position.z)
-			{
-				enemy1Z -= (float)(10 * dt);
-			}
+			targetVector = Vector3(camera.position.x, 0, camera.position.z) - Vector3(enemy1X, 0, enemy1Z);
+			targetVector = targetVector.Normalized();
+			Vector3 newVector = targetVector * velocityOfEnemy * dt;
+			enemy1X += newVector.x;
+			enemy1Z += newVector.z;
 		}
 		targetVector = Vector3(camera.position.x, 0, camera.position.z) - Vector3(enemy1X, 0, enemy1Z);
 		targetVector = targetVector.Normalized();
