@@ -155,6 +155,14 @@ void SceneSettings::Init()
 	meshList[GEO_OPTIONS]->textureID = LoadTGA("Image//settings.tga");
 	meshList[GEO_BACKBUTTON] = MeshBuilder::GenerateQuad("backbutton", Color(1, 1, 1), 1.f, 1.f);
 	meshList[GEO_BACKBUTTON]->textureID = LoadTGA("Image//backbutton.tga");
+	meshList[GEO_OPTIONSLIDER] = MeshBuilder::GenerateQuad("slot", Color(1, 1, 1), 1.f, 1.f);
+	meshList[GEO_OPTIONSLIDER]->textureID = LoadTGA("Image//sliderslot.tga");
+	meshList[GEO_OPTIONKNOB] = MeshBuilder::GenerateQuad("knob", Color(1, 1, 1), 1.f, 1.f);
+	meshList[GEO_OPTIONKNOB]->textureID = LoadTGA("Image//sliderknob.tga");
+	meshList[GEO_OPTIONDESELECT] = MeshBuilder::GenerateQuad("deselect", Color(1, 1, 1), 1.f, 1.f);
+	meshList[GEO_OPTIONDESELECT]->textureID = LoadTGA("Image//deselect.tga");
+	meshList[GEO_OPTIONSELECT] = MeshBuilder::GenerateQuad("select", Color(1, 1, 1), 1.f, 1.f);
+	meshList[GEO_OPTIONSELECT]->textureID = LoadTGA("Image//select.tga");
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//arial.tga");
@@ -908,6 +916,11 @@ void SceneSettings::Render()
 	//RenderImageOnScreen(meshList[GEO_PLAY], Color(1, 1, 1), 40, 30, 25, 20);
 	//RenderImageOnScreen(meshList[GEO_OPTIONS], Color(1, 1, 1), 80, 60, 60, 20);
 	RenderImageOnScreen(meshList[GEO_BACKBUTTON], Color(1, 1, 1), 40, 30, 40, 15);
+	RenderImageOnScreen(meshList[GEO_OPTIONSLIDER], Color(1, 1, 1), 80, 60, 40, 40);
+	RenderImageOnScreen(meshList[GEO_OPTIONKNOB], Color(1, 1, 1), 60, 45, 40, 40);
+	RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 55, 25);
+	RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 40, 25);
+	RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 25, 25);
 	modelStack.PopMatrix();
 
 	RenderSkybox();

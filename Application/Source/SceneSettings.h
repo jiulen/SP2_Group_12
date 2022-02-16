@@ -23,6 +23,10 @@ class SceneSettings : public Scene
 		GEO_PLAY,
 		GEO_OPTIONS,
 		GEO_BACKBUTTON,
+		GEO_OPTIONSLIDER,
+		GEO_OPTIONKNOB,
+		GEO_OPTIONDESELECT,
+		GEO_OPTIONSELECT,
 		//OBJs
 		GEO_LIGHT0, //ceiling light (can be turned off)
 		

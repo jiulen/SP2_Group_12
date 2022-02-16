@@ -9,6 +9,7 @@
 #include "MatrixStack.h"
 #include "Light.h"
 #include "Structs.h"
+#include "Vector3.h"
 #include <fstream>
 
 class SceneGame : public Scene
@@ -145,6 +146,9 @@ private:
 	int bombrand3 = 0;
 	int bomb, bomb2, bomb3;
 	float enemy1X, enemy1Z;
+	bool chase;
+	float characterFacing;
+	Vector3 targetVector, enemyVector;
 public:
 	SceneGame();
 	~SceneGame();
