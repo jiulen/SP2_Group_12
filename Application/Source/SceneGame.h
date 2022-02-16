@@ -9,6 +9,8 @@
 #include "MatrixStack.h"
 #include "Light.h"
 #include "Structs.h"
+#include "Entity.h"
+#include "Enemy.h"
 #include "Vector3.h"
 #include <fstream>
 
@@ -123,13 +125,6 @@ private:
 	Light light[2];
 	bool bLightEnabled;
 	float DistBetweenPoints(float x1, float z1, float x2, float z2);
-	//Collision
-	bool CollisionLineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);
-	bool CollisionLineRect(float x1, float y1, float x2, float y2, float rx, float ry, float rw, float rh);
-	bool CollisionPointCircle(float px, float py, float cx, float cy, float r);
-	bool CollisionLinePoint(float x1, float y1, float x2, float y2, float px, float py);
-	bool CollisionLineCircle(float x1, float y1, float x2, float y2, float cx, float cy, float r);
-	//
 	void RenderSkybox();
 	void RenderBomb(int a);
 	void RenderMesh(Mesh* mesh, bool enableLight);
@@ -146,17 +141,21 @@ private:
 	int bombrand2 = 0;
 	int bombrand3 = 0;
 	int bomb, bomb2, bomb3;
+	//
 	float enemy1X, enemy1Z;
 	bool chase;
 	float characterFacing;
 	Vector3 targetVector, enemyVector;
 	float velocityOfEnemy;
+	//
+	std::vector<Entity*> entities;
 public:
 	SceneGame();
 	~SceneGame();
 
 	virtual void Init();
 	virtual void Update(double dt);
+	void UpdateEnemyMovement(double dt);
 	virtual void Render();
 	virtual void Exit();
 	virtual int NextScene();

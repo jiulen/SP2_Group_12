@@ -6,6 +6,8 @@ Entity::Entity()
 	damage = 1;
 	entityPos = Vector3(0,0,0);
 	velocity = 1.0f;
+	entityFacing = 0.f;
+	type = 'N';
 }
 Entity::~Entity()
 {
@@ -53,4 +55,14 @@ void Entity::updatePosition(Vector3 pos)
 Vector3 Entity::getPosition()
 {
 	return entityPos;
+}
+
+float Entity::getFacing()
+{
+	return entityFacing;
+}
+
+char Entity::getType()
+{
+	return type;
 }

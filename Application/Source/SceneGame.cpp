@@ -8,8 +8,6 @@
 #include "Utility.h"
 #include "LoadTGA.h"
 #include "LoadOBJ.h"
-#include "Entity.h"
-#include "Enemy.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -151,7 +149,7 @@ void SceneGame::Init()
 	meshList[GEO_GROUND]->textureID = LoadTGA("Image//whitebrickfloor.tga");
 	meshList[GEO_ENEMY1] = MeshBuilder::GenerateOBJMTL("enemy1", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
 	meshList[GEO_ENEMY1]->textureID = LoadTGA("Image//skin_robot.tga");
-	meshList[GEO_BOMB] = MeshBuilder::GenerateOBJMTL("bomb", "OBJ//clipA.obj", "OBJ//clipA.mtl");
+	meshList[GEO_BOMB] = MeshBuilder::GenerateOBJMTL("bomb", "OBJ//bomb.obj", "OBJ//bomb.mtl");
 	meshList[GEO_GUN] = MeshBuilder::GenerateOBJ("gun", "OBJ//TT_gun.obj");
 	meshList[GEO_BIGHOUSE_A] = MeshBuilder::GenerateOBJMTL("big house a", "OBJ//large_buildingA.obj", "OBJ//large_buildingA.mtl");
 	meshList[GEO_BIGHOUSE_B] = MeshBuilder::GenerateOBJMTL("big house b", "OBJ//large_buildingB.obj", "OBJ//large_buildingB.mtl");
@@ -271,14 +269,9 @@ void SceneGame::Init()
 	////test hitbox
 	//hitboxes.push_back(Hitbox(5, 1, 5, 5, 2, 5));
 
-	//Enemies for Assignment 2
-	enemy1X = 60;
-	enemy1Z = 2;
-	chase = false;
-	characterFacing = 0;
-	enemyVector = Vector3(0, 0, 1);
-	targetVector = Vector3(0, 0, 1);
-	velocityOfEnemy = 20;
+	//Entities
+	entities.push_back(new Enemy(100, 10, 0, Vector3(60, 0, 2), Vector3(0, 0, 1), false, 20, 20, 15));
+	entities.push_back(new Enemy(100, 10, 0, Vector3(-20, 0, 2), Vector3(0, 0, 1), false, 20, 20, 30));
 }
 
 void SceneGame::Update(double dt)
@@ -347,34 +340,17 @@ void SceneGame::Update(double dt)
 		bLightEnabled = true;
 	}
 
-	if (DistBetweenPoints(camera.position.x, camera.position.z, enemy1X, enemy1Z) <= 20)
-	{
-		chase = true;
+	UpdateEnemyMovement(dt);
+
+}
+void SceneGame::UpdateEnemyMovement(double dt)
+{
+	//For enemies
+	for (int i = 0; i < entities.size(); i++) {
+		if (entities[i]->getType() == 'E') {
+			entities[i]->move(Vector3(camera.position.x, 0, camera.position.z), dt);
+		}
 	}
-
-	if (chase == true)
-	{
-		if (DistBetweenPoints(camera.position.x, camera.position.z, enemy1X, enemy1Z) > 20)//if enemy is out of range
-		{
-			targetVector = Vector3(camera.position.x, 0, camera.position.z) - Vector3(enemy1X, 0, enemy1Z);
-			targetVector = targetVector.Normalized();
-			Vector3 newVector = targetVector * velocityOfEnemy * dt;
-			enemy1X += newVector.x;
-			enemy1Z += newVector.z;
-		}
-		targetVector = Vector3(camera.position.x, 0, camera.position.z) - Vector3(enemy1X, 0, enemy1Z);
-		targetVector = targetVector.Normalized();
-		characterFacing = acosf(enemyVector.Dot(targetVector));
-		if (targetVector.x > 0) {
-			characterFacing = Math::RadianToDegree(characterFacing);
-		}
-		else {
-			characterFacing = -Math::RadianToDegree(characterFacing);
-		}
-		
-	}
-
-
 }
 float SceneGame::DistBetweenPoints(float x1, float z1, float x2, float z2)
 {
@@ -383,88 +359,6 @@ float SceneGame::DistBetweenPoints(float x1, float z1, float x2, float z2)
 	float dist = 0.0f;
 	dist = sqrt((distX * distX) + (distZ * distZ));
 	return dist;
-}
-bool SceneGame::CollisionLineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
-{
-	// calculate the direction of the lines
-	float uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
-	float uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
-
-	// if uA and uB are between 0-1, lines are colliding
-	if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) return true;
-	return false;
-}
-bool SceneGame::CollisionLineRect(float x1, float y1, float x2, float y2, float rx, float ry, float rw, float rh)
-{
-	// check if the line has hit any of the rectangle's sides
-    // uses the Line/Line function below
-	bool left = CollisionLineLine(x1, y1, x2, y2, rx - rw * 0.5f, ry - rh * 0.5f, rx - rw * 0.5f, ry + rh * 0.5f);
-	bool right = CollisionLineLine(x1, y1, x2, y2, rx + rw * 0.5f, ry - rh * 0.5f, rx + rw * 0.5f, ry - rh * 0.5f);
-	bool top = CollisionLineLine(x1, y1, x2, y2, rx - rw * 0.5f, ry - rh * 0.5f, rx + rw * 0.5f, ry - rh * 0.5f);
-	bool bottom = CollisionLineLine(x1, y1, x2, y2, rx - rw * 0.5f, ry + rh * 0.5f, rx + rw * 0.5f, ry + rh * 0.5f);
-
-	// if ANY of the above are true, the line
-	// has hit the rectangle
-	if (left || right || top || bottom) return true;
-	return false;
-}
-
-bool SceneGame::CollisionPointCircle(float px, float py, float cx, float cy, float r)
-{
-	// get distance between the point and circle's center using the Pythagorean Theorem
-	float distX = px - cx;
-	float distY = py - cy;
-	float distance = sqrt((distX * distX) + (distY * distY));
-
-	// if the distance is less than the circle's radius the point is inside!
-	if (distance <= r) return true;
-	return false;
-}
-
-bool SceneGame::CollisionLinePoint(float x1, float y1, float x2, float y2, float px, float py)
-{
-	// get distance from the point to the two ends of the line
-	float d1 = DistBetweenPoints(px, py, x1, y1);
-	float d2 = DistBetweenPoints(px, py, x2, y2);
-
-	// get the length of the line
-	float lineLen = DistBetweenPoints(x1, y1, x2, y2);
-
-	// since floats are so minutely accurate, add a little buffer zone that will give collision
-	float buffer = 0.1;    // higher # = less accurate
-
-	// if the two distances are equal to the line's length, the point is on the line!
-	// note we use the buffer here to give a range,  rather than one #
-	if (d1 + d2 >= lineLen - buffer && d1 + d2 <= lineLen + buffer) return true;
-	return false;
-}
-
-bool SceneGame::CollisionLineCircle(float x1, float y1, float x2, float y2, float cx, float cy, float r)
-{
-	// if either end INSIDE the circle return true
-	bool inside1 = CollisionPointCircle(x1, y1, cx, cy, r);
-	bool inside2 = CollisionPointCircle(x2, y2, cx, cy, r);
-	if (inside1 || inside2) return true;
-
-	// get length of the line
-	float len = DistBetweenPoints(x1, y1, x2, y2);
-
-	// get dot product of the line and circle
-	float dot = (((cx - x1) * (x2 - x1)) + ((cy - y1) * (y2 - y1))) / pow(len, 2.f);
-
-	// find the closest point on the line
-	float closestX = x1 + (dot * (x2 - x1));
-	float closestY = y1 + (dot * (y2 - y1));
-
-	// if this point is on the line segment keep going, but if not, return false
-	bool onSegment = CollisionLinePoint(x1, y1, x2, y2, closestX, closestY);
-	if (!onSegment) return false;
-
-	// get distance to closest point
-	float distance = DistBetweenPoints(closestX, closestY, cx, cy);
-
-	if (distance <= r) return true;
-	return false;
 }
 
 void SceneGame::RenderMesh(Mesh* mesh, bool enableLight)
@@ -638,12 +532,17 @@ void SceneGame::Render()
 	RenderMesh(meshList[GEO_GROUND], false);
 	modelStack.PopMatrix();
 
-	modelStack.PushMatrix();
-	modelStack.Translate(enemy1X, 0, enemy1Z);
-	modelStack.Rotate(characterFacing, 0, 1, 0);
-	modelStack.Scale(0.35, 0.35, 0.35);
-	RenderMesh(meshList[GEO_ENEMY1], true);
-	modelStack.PopMatrix();
+	//for enemies
+	for (int i = 0; i < entities.size(); i++) {
+		if (entities[i]->getType() == 'E') {
+			modelStack.PushMatrix();
+			modelStack.Translate(entities[i]->getPosition().x, 0, entities[i]->getPosition().z);
+			modelStack.Rotate(entities[i]->getFacing(), 0, 1, 0);
+			modelStack.Scale(0.35, 0.35, 0.35);
+			RenderMesh(meshList[GEO_ENEMY1], true);
+			modelStack.PopMatrix();
+		}
+	}
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-60, 0, -60);

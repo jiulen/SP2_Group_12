@@ -12,12 +12,13 @@ Enemy::Enemy(int a, int b, float facing, Vector3 pos, Vector3 direction, bool ch
 	currenthealth = maxhealth;
 	damage = b;
 	entityPos = pos;
-	enemyFacing = facing;
+	entityFacing = facing;
 	directionVector = direction;
 	chase = chasing;
 	detectRange = detectR;
 	attackRange = attackR;
 	velocity = velo;
+	type = 'E';
 }
 Enemy::~Enemy()
 {
@@ -30,21 +31,21 @@ void Enemy::move(Vector3 playerPos, float dt)
 		}
 	}
 	if (chase) {
+		Vector3 targetVector = Vector3(playerPos.x, 0, playerPos.z) - Vector3(entityPos.x, 0, entityPos.z);
+		targetVector = targetVector.Normalized();
 		if (DistBetweenPoints(playerPos.x, playerPos.z, entityPos.x, entityPos.z) > attackRange) //if enemy is out of attack range
 		{
-			Vector3 targetVector = Vector3(playerPos.x, 0, playerPos.z) - Vector3(entityPos.x, 0, entityPos.z);
-			targetVector = targetVector.Normalized();
+			
 			Vector3 newVector = targetVector * velocity * dt;
 			entityPos.x += newVector.x;
 			entityPos.z += newVector.z;
-
-			enemyFacing = acosf(directionVector.Dot(targetVector));
-			if (targetVector.x > 0) {
-				enemyFacing = Math::RadianToDegree(enemyFacing);
-			}
-			else {
-				enemyFacing = -Math::RadianToDegree(enemyFacing);
-			}
+		}
+		entityFacing = acosf(directionVector.Dot(targetVector));
+		if (targetVector.x > 0) {
+			entityFacing = Math::RadianToDegree(entityFacing);
+		}
+		else {
+			entityFacing = -Math::RadianToDegree(entityFacing);
 		}
 	}
 }
