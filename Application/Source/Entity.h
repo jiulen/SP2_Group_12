@@ -9,7 +9,9 @@ protected:
 	int maxhealth, currenthealth, damage;
 	Vector3 entityPos;
 	float velocity;
-	
+	float entityFacing;
+
+	char type; //N for none(entity), P for player(not added yet), E for enemy
 public:
 	Entity();
 	~Entity();
@@ -22,6 +24,8 @@ public:
 	int getmaxhealth();
 	void updatePosition(Vector3 pos);
 	Vector3 getPosition();
+	float getFacing();
+	char getType();
 };
 
 #endif
