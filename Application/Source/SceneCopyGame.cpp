@@ -393,6 +393,7 @@ void SceneCopyGame::RenderCopyGame()
 	{
 		for (int i = 0; i < 5; i++)
 			tocopy[i] = rand() % 9 + 1;
+		currentstage = 1;
 		set++;
 	}
 

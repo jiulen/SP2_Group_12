@@ -87,6 +87,7 @@ private:
 
 	//game
 	int set = 0;
+	int currentstage = 0;
 	int tocopy[5] = { 0,0,0,0,0 };
 	int pressed[5] = { 0,0,0,0,0 };
 	int clicked = 0;
