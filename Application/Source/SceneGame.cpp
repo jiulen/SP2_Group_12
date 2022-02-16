@@ -273,8 +273,8 @@ void SceneGame::Init()
 	enemy1Z = 2;
 	chase = false;
 	characterFacing = 0;
-	enemyVector = (0, 0, 1);
-	targetVector = (camera.position.x, 0, camera.position.z);
+	enemyVector = Vector3(0, 0, 1);
+	targetVector = Vector3(0, 0, 1);
 }
 
 void SceneGame::Update(double dt)
@@ -343,7 +343,7 @@ void SceneGame::Update(double dt)
 		bLightEnabled = true;
 	}
 
-	if (CollisionPointCircle(camera.position.x, camera.position.z, enemy1X, enemy1Z, 20) == true)
+	if (DistBetweenPoints(camera.position.x, camera.position.z, enemy1X, enemy1Z) <= 20)
 	{
 		chase = true;
 	}
@@ -369,10 +369,10 @@ void SceneGame::Update(double dt)
 				enemy1Z -= (float)(10 * dt);
 			}
 		}
-
-		targetVector = (camera.position.x, 0, camera.position.z) - (enemy1X, 0, enemy1Z);
-
+		targetVector = Vector3(camera.position.x, 0, camera.position.z) - Vector3(enemy1X, 0, enemy1Z);
+		targetVector = targetVector.Normalized();
 		characterFacing = acosf(enemyVector.Dot(targetVector));
+		characterFacing = Math::RadianToDegree(characterFacing);
 	}
 
 
@@ -748,7 +748,8 @@ void SceneGame::Render()
 	std::ostringstream ss;
 	ss.str("");
 	ss.precision(4);
-	ss << "FPS: " << FPS;
+	//ss << "FPS: " << FPS;
+	ss << "direction: " << characterFacing;
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 0, 0), 3, 0, 0); //FPS
 }
 
