@@ -10,7 +10,7 @@
 #include "LoadOBJ.h"
 #include <fstream>
 #include <sstream>
-
+#include <iostream>
 
 SceneGame::SceneGame()
 {
@@ -251,7 +251,6 @@ void SceneGame::Init()
 	//Enemies for Assignment 2
 	enemy1X = 60;
 	enemy1Z = 2;
-
 	//Building hitboxes
 	hitboxes.push_back(Hitbox(-60, 29, -60, 24, 58, 24));
 	hitboxes.push_back(Hitbox(0, 9, -70, 32, 18, 20));
@@ -271,6 +270,10 @@ void SceneGame::Init()
 	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
 	//test hitbox
 	hitboxes.push_back(Hitbox(5, 1, 5, 5, 2, 5));
+	chase = false;
+	characterFacing = 0;
+	enemyVector = (0, 0, 1);
+	targetVector = (camera.position.x, 0, camera.position.z);
 }
 
 void SceneGame::Update(double dt)
@@ -338,6 +341,40 @@ void SceneGame::Update(double dt)
 	if (Application::IsKeyPressed('R')) {
 		bLightEnabled = true;
 	}
+
+	if (CollisionPointCircle(camera.position.x, camera.position.z, enemy1X, enemy1Z, 20) == true)
+	{
+		chase = true;
+	}
+
+	if (chase == true)
+	{
+		if (DistBetweenPoints(camera.position.x, camera.position.z, enemy1X, enemy1Z) > 20)//if enemy is out of range
+		{
+			if (enemy1X < camera.position.x)
+			{
+				enemy1X += (float)(10 * dt);
+			}
+			if (enemy1X > camera.position.x)
+			{
+				enemy1X -= (float)(10 * dt);
+			}
+			if (enemy1Z < camera.position.z)
+			{
+				enemy1Z += (float)(10 * dt);
+			}
+			if (enemy1Z > camera.position.z)
+			{
+				enemy1Z -= (float)(10 * dt);
+			}
+		}
+
+		targetVector = (camera.position.x, 0, camera.position.z) - (enemy1X, 0, enemy1Z);
+
+		characterFacing = acosf(enemyVector.Dot(targetVector));
+	}
+
+
 }
 float SceneGame::DistBetweenPoints(float x1, float z1, float x2, float z2)
 {
@@ -603,6 +640,7 @@ void SceneGame::Render()
 
 	modelStack.PushMatrix();
 	modelStack.Translate(enemy1X, 0, enemy1Z);
+	modelStack.Rotate(characterFacing, 0, 1, 0);
 	modelStack.Scale(0.35, 0.35, 0.35);
 	RenderMesh(meshList[GEO_ENEMY1], true);
 	modelStack.PopMatrix();
