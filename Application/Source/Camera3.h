@@ -32,6 +32,7 @@ public:
 	void setFirstMouse();
 private:
 	float lastX, lastY;
+	float totalPitch;
 	float pitch;
 	bool firstMouse;
 	void LookingAround();

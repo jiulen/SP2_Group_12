@@ -194,15 +194,14 @@ void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 	xoffset *= -sensitivity;
 	yoffset *= sensitivity;
 
-	//limits pitch to 90 degrees both up and down (still got problem)
-	float totalPitch = pitch + yoffset; //check if past +-90
-	if (totalPitch > 90.f) {
-		yoffset -= totalPitch - 90.f;
+	//limits pitch to 90 degrees both up and down
+	float totalPitch = pitch + yoffset; //check if past +-80
+	if (totalPitch > 80.f) {
+		yoffset -= totalPitch - 80.f;
 	}
-	else if (totalPitch < -90.f) {
-		yoffset -= totalPitch + 90.f;
+	else if (totalPitch < -80.f) {
+		yoffset -= totalPitch + 80.f;
 	}
-	float a = pitch + yoffset;
 
 	//yaw
 	Mtx44 rotation;
@@ -229,7 +228,7 @@ void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 	else {
 		pitch = -Math::RadianToDegree(pitch);
 	}
-	std::cout << pitch << std::endl;
+
 }
 
 Vector3 Camera3::CollisionCircleRect(float cx, float cy, float radius, float rx, float ry, float rw, float rh) {
