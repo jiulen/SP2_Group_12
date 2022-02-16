@@ -248,9 +248,6 @@ void SceneGame::Init()
 	FPS = 0;
 	bLightEnabled = true;
 
-	//Enemies for Assignment 2
-	enemy1X = 60;
-	enemy1Z = 2;
 	//Building hitboxes
 	hitboxes.push_back(Hitbox(-60, 29, -60, 24, 58, 24));
 	hitboxes.push_back(Hitbox(0, 9, -70, 32, 18, 20));
@@ -270,6 +267,10 @@ void SceneGame::Init()
 	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
 	//test hitbox
 	hitboxes.push_back(Hitbox(5, 1, 5, 5, 2, 5));
+
+	//Enemies for Assignment 2
+	enemy1X = 60;
+	enemy1Z = 2;
 	chase = false;
 	characterFacing = 0;
 	enemyVector = (0, 0, 1);
