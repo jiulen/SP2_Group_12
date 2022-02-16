@@ -152,11 +152,6 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 	if (jump == 0)
 	{
 		position.y -= static_cast<float>(dt) * JUMP_SPEED;
-		/*bool collide = false;
-		playerCeilingCollision(hitboxes, collide);
-		if (collide) {
-			jump = -1;
-		}*/
 		if (position.y <= defaultPosition.y)
 		{
 			position.y = defaultPosition.y;
