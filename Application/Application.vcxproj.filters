@@ -128,5 +128,8 @@
     <ClInclude Include="Source\SceneNumbersGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Structs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

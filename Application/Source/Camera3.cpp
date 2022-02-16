@@ -14,12 +14,6 @@ Camera3::~Camera3()
 
 void Camera3::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 {
-	
-	lastX = Application::GetWindowWidth() * 0.5f;
-	lastY = Application::GetWindowHeight() * 0.5f;
-	totalPitch = 0.f;
-	firstMouse = true;
-
     this->position = defaultPosition = pos;
     this->target = defaultTarget = target;
     Vector3 view = (target - position).Normalized();
@@ -27,9 +21,17 @@ void Camera3::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
     right.y = 0;
     right.Normalize();
     this->up = defaultUp = right.Cross(view).Normalized();
+	//
+	lastX = Application::GetWindowWidth() * 0.5f;
+	lastY = Application::GetWindowHeight() * 0.5f;
+	totalPitch = 0.f;
+	firstMouse = true;
+	//for now camera collision is a sphere - 2 x 4.5 x 2 (4.5 is camera.defaultPos.y)
+	playerRadius = 1.f; // subject to change
+	playerHeight = defaultPosition.y; //camera at top of player
 }
 
-void Camera3::Update(double dt, std::vector<std::vector<float>> hitboxes)
+void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 {
 	static const float ROTATE_SPEED = 90.f;
 	float MOVE_SPEED;
@@ -64,9 +66,9 @@ void Camera3::Update(double dt, std::vector<std::vector<float>> hitboxes)
 		else if (position.z > 97.5) {
 			position.z = 97.5;
 		}
-		if (testCollision(hitboxes)) {
+		/*if (playerCollision(hitboxes)) {
 			position = startPos;
-		}
+		}*/
 		position.y = startPos.y;
 		target = position + view;
 	}
@@ -86,9 +88,9 @@ void Camera3::Update(double dt, std::vector<std::vector<float>> hitboxes)
 		else if (position.z > 97.5) {
 			position.z = 97.5;
 		}
-		if (testCollision(hitboxes)) {
+		/*if (playerCollision(hitboxes)) {
 			position = startPos;
-		}
+		}*/
 		position.y = startPos.y;
 		target = position + view;
 	}
@@ -108,9 +110,7 @@ void Camera3::Update(double dt, std::vector<std::vector<float>> hitboxes)
 		else if (position.z > 97.5) {
 			position.z = 97.5;
 		}
-		if (testCollision(hitboxes)) {
-			position = startPos;
-		}
+		playerWASDCollision(hitboxes);
 		position.y = startPos.y;
 		target = position + view;
 	}
@@ -130,9 +130,9 @@ void Camera3::Update(double dt, std::vector<std::vector<float>> hitboxes)
 		else if (position.z > 97.5) {
 			position.z = 97.5;
 		}
-		if (testCollision(hitboxes)) {
+		/*if (playerCollision(hitboxes)) {
 			position = startPos;
-		}
+		}*/
 		position.y = startPos.y;
 		target = position + view;
 	}
@@ -157,6 +157,8 @@ void Camera3::Update(double dt, std::vector<std::vector<float>> hitboxes)
 		}
 		target = position + view;
 	}
+	//test
+	playerCeilingCollision(hitboxes);
 	if (Application::IsKeyPressed('R'))
 	{
 		Reset();
@@ -222,29 +224,29 @@ void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 	target = position + view;
 }
 
-//Vector3 Camera3::CollisionCircleRect(float cx, float cy, float radius, float rx, float ry, float rw, float rh) {
-//	//assume all y = 0 since y not needed
-//	Vector3 endPos = Vector3(cx, 0, cy);
-//	//Work out nearest point to future player position, around perimeter of cell rectangle. 
-//	//We can test the distance to this point to see if we have collided. 
-//	Vector3 nearestPoint;
-//	nearestPoint.x = Math::Clamp(cx, rx - 0.5f * rw, rx + 0.5f * rw);
-//	nearestPoint.y = 0;
-//	nearestPoint.z = Math::Clamp(cy, ry - 0.5f * rh, ry + 0.5f * rh);
-//	Vector3 rayToNearest = nearestPoint - endPos;
-//	float overlap = radius - rayToNearest.Length();
-//
-//	//If overlap is positive, then a collision has occurred, so we displace backwards by the overlap amount. 
-//	//The potential position is then tested against other tiles in the area therefore "statically" resolving the collision
-//	
-//	if (overlap > 0)
-//	{
-//		//Statically resolve the collision
-//		endPos = endPos - rayToNearest.Normalized() * overlap;
-//	}
-//	
-//	return endPos;
-//}
+Vector3 Camera3::CollisionCircleRect(float cx, float cy, float radius, float rx, float ry, float rw, float rh) {
+	//assume all y = 0 since y not needed
+	Vector3 endPos = Vector3(cx, 0, cy);
+	//Work out nearest point to future player position, around perimeter of cell rectangle. 
+	//We can test the distance to this point to see if we have collided. 
+	Vector3 nearestPoint;
+	nearestPoint.x = Math::Clamp(cx, rx - 0.5f * rw, rx + 0.5f * rw);
+	nearestPoint.y = 0;
+	nearestPoint.z = Math::Clamp(cy, ry - 0.5f * rh, ry + 0.5f * rh);
+	Vector3 rayToNearest = nearestPoint - endPos;
+	float overlap = radius - rayToNearest.Length();
+
+	//If overlap is positive, then a collision has occurred, so we displace backwards by the overlap amount. 
+	//The potential position is then tested against other tiles in the area therefore "statically" resolving the collision
+	
+	if (overlap > 0)
+	{
+		//Statically resolve the collision
+		endPos = endPos - rayToNearest.Normalized() * overlap;
+	}
+	
+	return endPos;
+}
 
 bool Camera3::CollisionAABB(float r1x, float r1y, float r1z, float r1w, float r1h, float r1d, float r2x, float r2y, float r2z, float r2w, float r2h, float r2d)
 {
@@ -252,11 +254,38 @@ bool Camera3::CollisionAABB(float r1x, float r1y, float r1z, float r1w, float r1
 			(r1y - r1h * 0.5f <= r2y + r2h * 0.5f && r1y + r1h * 0.5f >= r2y - r2h * 0.5f) &&
 			(r1z - r1d * 0.5f <= r2z + r2d * 0.5f && r1z + r1d * 0.5f >= r2z - r2d * 0.5f);
 }
-bool Camera3::testCollision(std::vector<std::vector<float>> hitboxes) { //for player with non-moving objects - for now camera is 1x4.5x1
+
+void Camera3::playerWASDCollision(std::vector<Hitbox> hitboxes) { //for player with non-moving objects (not sure if can get moveable entities to work with this
 	for (int i = 0; i < hitboxes.size(); i++) {
-		if (CollisionAABB(position.x, position.y / 2.f, position.z, 1.f, defaultPosition.y, 1.f, (hitboxes[i])[0], (hitboxes[i])[1], (hitboxes[i])[2], (hitboxes[i])[3], (hitboxes[i])[4], (hitboxes[i])[5])) {
-			return true;
+		if (CollisionAABB(position.x, position.y - playerHeight * 0.5f, position.z, playerRadius * 2.f, playerHeight, playerRadius * 2.f, (hitboxes[i]).posX, (hitboxes[i]).posY, (hitboxes[i]).posZ, (hitboxes[i]).sizeX, (hitboxes[i]).sizeY, (hitboxes[i]).sizeZ)) {
+			Vector3 finalPos = CollisionCircleRect(position.x, position.z, playerRadius, (hitboxes[i]).posX, (hitboxes[i]).posZ, (hitboxes[i]).sizeX, (hitboxes[i]).sizeZ);
+			position.x = finalPos.x;
+			position.z = finalPos.z;
 		}
 	}
-	return false; //no collision
+	return; //no collision
+}
+
+void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes) //need make this stop jump/fall
+{
+	for (int i = 0; i < hitboxes.size(); i++) {
+		if (CollisionAABB(position.x, position.y - playerHeight * 0.5f, position.z, playerRadius * 2.f, playerHeight, playerRadius * 2.f, (hitboxes[i]).posX, (hitboxes[i]).posY, (hitboxes[i]).posZ, (hitboxes[i]).sizeX, (hitboxes[i]).sizeY, (hitboxes[i]).sizeZ)) {
+			
+			//test
+			float endPosY = position.y - playerHeight * 0.5f;
+			float nearestPointY = Math::Clamp(endPosY, (hitboxes[i]).posY - 0.5f * (hitboxes[i]).sizeY, (hitboxes[i]).posY + 0.5f * (hitboxes[i]).sizeY);
+		
+			float overlap = playerHeight/2 - (nearestPointY - endPosY);
+	
+			if (overlap > 0)
+			{
+				//Statically resolve the collision
+				position.y -= overlap;
+				target.y -= overlap;
+			}
+			//
+			
+		}
+	}
+	return; //no collision
 }
