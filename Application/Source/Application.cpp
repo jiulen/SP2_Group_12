@@ -152,7 +152,7 @@ void Application::Run()
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
-		if ((scene == scene4) || (scene == scene5)||(scene==scene1)||(scene==scene2))
+		if ((scene == scene4) || (scene == scene5)||(scene==scene1)||(scene==scene2)||(scene==scene6))
 			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		else
 			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //do normal instead of disabled to restore normal cursor mode
