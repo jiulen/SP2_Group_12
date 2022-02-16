@@ -84,6 +84,9 @@ private:
 	unsigned textSpacing[256];
 
 	//game
+	int set = 0;
+	int currentpos = -1;
+	int pos[10] = { 0,0,0,0,0,0,0,0,0,0 };
 	int ticks[10] = { 0,0,0,0,0,0,0,0,0,0 };
 	int clicked = 0;
 	int prevno = 0;
