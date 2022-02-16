@@ -206,7 +206,7 @@ void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 
 	//yaw
 	Mtx44 rotation;
-	rotation.SetToRotation(xoffset, up.x, up.y, up.z);
+	rotation.SetToRotation(xoffset, 0, 1, 0);
 	up = rotation * up;
 	view = rotation * view;
 	target = position + view;
