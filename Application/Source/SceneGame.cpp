@@ -744,8 +744,7 @@ void SceneGame::Render()
 	std::ostringstream ss;
 	ss.str("");
 	ss.precision(4);
-	/*ss << "FPS: " << FPS;*/
-	ss << "X: " << camera.position.x<<" Z:"<<camera.position.z;
+	ss << "FPS: " << FPS;
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 0, 0), 3, 0, 0); //FPS
 }
 
