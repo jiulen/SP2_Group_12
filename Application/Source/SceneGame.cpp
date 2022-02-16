@@ -252,6 +252,9 @@ void SceneGame::Init()
 	enemy1X = 60;
 	enemy1Z = 2;
 	chase = false;
+	characterFacing = 0;
+	enemyVector = (0, 0, 1);
+	targetVector = (camera.position.x, 0, camera.position.z);
 }
 
 void SceneGame::Update(double dt)
@@ -346,7 +349,12 @@ void SceneGame::Update(double dt)
 				enemy1Z -= (float)(10 * dt);
 			}
 		}
+
+		targetVector = (camera.position.x, 0, camera.position.z) - (enemy1X, 0, enemy1Z);
+
+		characterFacing = acosf(enemyVector.Dot(targetVector));
 	}
+
 
 }
 float SceneGame::DistBetweenPoints(float x1, float z1, float x2, float z2)
@@ -613,6 +621,7 @@ void SceneGame::Render()
 
 	modelStack.PushMatrix();
 	modelStack.Translate(enemy1X, 0, enemy1Z);
+	modelStack.Rotate(characterFacing, 0, 1, 0);
 	modelStack.Scale(0.35, 0.35, 0.35);
 	RenderMesh(meshList[GEO_ENEMY1], true);
 	modelStack.PopMatrix();
