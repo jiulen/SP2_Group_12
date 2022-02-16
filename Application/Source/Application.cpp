@@ -177,17 +177,6 @@ void Application::Run()
 			scene = scene4;
 		else if (sceneno == 5)
 			scene = scene5;
-		else if ((sceneno == -1)||(sceneno==-2))
-		{
-			scene4->Exit();
-			delete scene4;
-			scene4 = new SceneWiringGame();
-			scene4->Init();
-			if (sceneno == -1)
-				scene = scene4;
-			else if (sceneno == -2)
-				scene = scene3;
-		}
 		scene->Update(m_timer.getElapsedTime());
 		scene->Render();
 		//Swap buffers
