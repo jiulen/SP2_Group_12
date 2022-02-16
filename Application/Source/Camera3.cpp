@@ -66,10 +66,8 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		else if (position.z > 97.5) {
 			position.z = 97.5;
 		}
-		/*if (playerCollision(hitboxes)) {
-			position = startPos;
-		}*/
 		position.y = startPos.y;
+		playerWASDCollision(hitboxes);
 		target = position + view;
 	}
 	if (Application::IsKeyPressed('D'))
@@ -88,10 +86,8 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		else if (position.z > 97.5) {
 			position.z = 97.5;
 		}
-		/*if (playerCollision(hitboxes)) {
-			position = startPos;
-		}*/
 		position.y = startPos.y;
+		playerWASDCollision(hitboxes);
 		target = position + view;
 	}
 	if (Application::IsKeyPressed('W'))
@@ -110,8 +106,8 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		else if (position.z > 97.5) {
 			position.z = 97.5;
 		}
-		playerWASDCollision(hitboxes);
 		position.y = startPos.y;
+		playerWASDCollision(hitboxes);
 		target = position + view;
 	}
 	if (Application::IsKeyPressed('S'))
@@ -130,10 +126,8 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		else if (position.z > 97.5) {
 			position.z = 97.5;
 		}
-		/*if (playerCollision(hitboxes)) {
-			position = startPos;
-		}*/
 		position.y = startPos.y;
+		playerWASDCollision(hitboxes);
 		target = position + view;
 	}
 	if ((Application::IsKeyPressed(VK_SPACE)) && (jump==-1))
@@ -143,22 +137,27 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 	if (jump == 1)
 	{
 		position.y += static_cast<float>(dt) * JUMP_SPEED;
-		if (position.y > 10)
+		bool collide = false;
+		playerCeilingCollision(hitboxes, collide);
+		if (position.y > 10 || collide)
 			jump = 0;
 		target = position + view;
 	}
 	if (jump == 0)
 	{
 		position.y -= static_cast<float>(dt) * JUMP_SPEED;
+		/*bool collide = false;
+		playerCeilingCollision(hitboxes, collide);
+		if (collide) {
+			jump = -1;
+		}*/
 		if (position.y <= defaultPosition.y)
 		{
 			position.y = defaultPosition.y;
 			jump = -1;
 		}
 		target = position + view;
-	}
-	//test
-	playerCeilingCollision(hitboxes);
+	}	
 	if (Application::IsKeyPressed('R'))
 	{
 		Reset();
@@ -195,7 +194,7 @@ void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 	xoffset *= -sensitivity;
 	yoffset *= sensitivity;
 
-	//limits pitch to 90 degrees both up and down
+	//limits pitch to 90 degrees both up and down (problem)
 	totalPitch += yoffset;
 	if (totalPitch > 90.f) {
 		yoffset -= totalPitch - 90.f;
@@ -235,7 +234,7 @@ Vector3 Camera3::CollisionCircleRect(float cx, float cy, float radius, float rx,
 	nearestPoint.z = Math::Clamp(cy, ry - 0.5f * rh, ry + 0.5f * rh);
 	Vector3 rayToNearest = nearestPoint - endPos;
 	float overlap = radius - rayToNearest.Length();
-
+	if (rayToNearest.Length() == 0) overlap = 0; //may change later
 	//If overlap is positive, then a collision has occurred, so we displace backwards by the overlap amount. 
 	//The potential position is then tested against other tiles in the area therefore "statically" resolving the collision
 	
@@ -266,7 +265,7 @@ void Camera3::playerWASDCollision(std::vector<Hitbox> hitboxes) { //for player w
 	return; //no collision
 }
 
-void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes) //need make this stop jump/fall
+void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes, bool& collide) //need make this stop jump/fall
 {
 	for (int i = 0; i < hitboxes.size(); i++) {
 		if (CollisionAABB(position.x, position.y - playerHeight * 0.5f, position.z, playerRadius * 2.f, playerHeight, playerRadius * 2.f, (hitboxes[i]).posX, (hitboxes[i]).posY, (hitboxes[i]).posZ, (hitboxes[i]).sizeX, (hitboxes[i]).sizeY, (hitboxes[i]).sizeZ)) {
@@ -282,6 +281,7 @@ void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes) //need make t
 				//Statically resolve the collision
 				position.y -= overlap;
 				target.y -= overlap;
+				collide = true;
 			}
 			//
 			
