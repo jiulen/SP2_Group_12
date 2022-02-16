@@ -24,7 +24,6 @@ void Camera3::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 	//
 	lastX = Application::GetWindowWidth() * 0.5f;
 	lastY = Application::GetWindowHeight() * 0.5f;
-	totalPitch = 0.f;
 	firstMouse = true;
 	//for now camera collision is a sphere - 2 x 5 x 2
 	playerRadius = 1.f; // subject to change
@@ -195,18 +194,15 @@ void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 	xoffset *= -sensitivity;
 	yoffset *= sensitivity;
 
-	//limits pitch to 90 degrees both up and down (problem)
-	totalPitch += yoffset;
+	//limits pitch to 90 degrees both up and down (still got problem)
+	float totalPitch = pitch + yoffset; //check if past +-90
 	if (totalPitch > 90.f) {
 		yoffset -= totalPitch - 90.f;
-		totalPitch = 90.f;
 	}
 	else if (totalPitch < -90.f) {
 		yoffset -= totalPitch + 90.f;
-		totalPitch = -90.f;
 	}
-	//std::cout << yoffset << std::endl;
-	//std::cout << totalPitch << std::endl;
+	float a = pitch + yoffset;
 
 	//yaw
 	Mtx44 rotation;
@@ -222,6 +218,18 @@ void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 	rotation.SetToRotation(yoffset, right.x, right.y, right.z);
 	view = rotation * view;
 	target = position + view;
+
+	//updates pitch
+	Vector3 line = view;
+	line.y = 0;
+	pitch = acosf( (view.Dot(line)) / view.Length() * line.Length());
+	if (view.y >= 0) {
+		pitch = Math::RadianToDegree(pitch);
+	}
+	else {
+		pitch = -Math::RadianToDegree(pitch);
+	}
+	std::cout << pitch << std::endl;
 }
 
 Vector3 Camera3::CollisionCircleRect(float cx, float cy, float radius, float rx, float ry, float rw, float rh) {
@@ -292,4 +300,9 @@ void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes, bool& collide
 		}
 	}
 	return; //no collision
+}
+
+void Camera3::setFirstMouse()
+{
+	firstMouse = true;
 }

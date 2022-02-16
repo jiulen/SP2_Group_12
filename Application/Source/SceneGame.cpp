@@ -248,6 +248,7 @@ void SceneGame::Init()
 
 	FPS = 0;
 	bLightEnabled = true;
+	enterScene = true;
 
 	//Building hitboxes
 	hitboxes.push_back(Hitbox(-60, 29, -60, 24, 58, 24));
@@ -276,6 +277,10 @@ void SceneGame::Init()
 
 void SceneGame::Update(double dt)
 {
+	if (enterScene) {
+		camera.setFirstMouse();
+		enterScene = false;
+	}
 	//mouse inputs
 	static bool bLButtonState = false;
 	if (!bLButtonState && Application::IsMousePressed(0))
@@ -526,6 +531,8 @@ void SceneGame::Render()
 	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
 	modelStack.LoadIdentity();	
 
+	RenderSkybox();
+
 	modelStack.PushMatrix();
 	modelStack.Rotate(-90, 1, 0, 0);
 	modelStack.Scale(200, 200, 200);
@@ -632,16 +639,6 @@ void SceneGame::Render()
 
 	//Render Bomb
 	RenderBomb(0);
-
-	////test floor collision
-	//modelStack.PushMatrix();
-	//modelStack.Translate(5, 1, 5);
-	//modelStack.Scale(5, 2, 5);
-	//RenderMesh(meshList[GEO_CUBE], false);
-	//modelStack.PopMatrix();
-	////Hitbox(5, 1, 5, 5, 2, 5);
-
-	RenderSkybox();
 
 	std::ostringstream ss;
 	ss.str("");
@@ -928,15 +925,18 @@ int SceneGame::NextScene()
 	if (nextscene == 4)
 	{
 		nextscene = 3;
+		enterScene = true; //get cursor ready to come back this scene
 		return 4;
 	}
 	else if (nextscene == 5)
 	{
 		nextscene = 3;
+		enterScene = true; //get cursor ready to come back this scene
 		return 5;
 	}
 	return nextscene;
 }
+
 
 void SceneGame::Exit()
 {
