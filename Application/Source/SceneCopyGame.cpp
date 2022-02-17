@@ -365,7 +365,7 @@ void SceneCopyGame::Update(double dt)
 				}
 				else
 				{
-					std::cout << pressed[correct]<<" "<<tocopy[correct] << std::endl;
+					attempts++;
 					set = currentstage = displayed = correct = turn = start = time = 0;
 					for (int i = 0; i < 5; i++)
 					{
@@ -383,8 +383,11 @@ void SceneCopyGame::Update(double dt)
 		time += dt;
 	else
 		time = 0;
+	if (attempts > 3)
+	{
+		timer += dt;
+	}
 	
-	timer += dt;
 	FPS = 1 / (float)dt;
 }
 
@@ -557,12 +560,12 @@ void SceneCopyGame::Render()
 
 	RenderImageOnScreen(meshList[GEO_BACKGROUND], Color(1, 1, 1), 100, 100, 40, 30, 0);
 
-	if (timer<=100)
+	if (attempts<=3)
 		RenderCopyGame();
 	else
 	{
 		RenderTextOnScreen(meshList[GEO_TEXT], "YOU FAILED!", Color(1, 1, 1), 10, 13.5, 25);
-		if (timer >= 103)
+		if (timer >= 3)
 			currentstage = 6;
 	}
 }
@@ -663,8 +666,8 @@ void SceneCopyGame::RenderCopyGame()
 
 	std::ostringstream ss;
 	ss.precision(4);
-	ss << "Time left: " << 100-timer;
-	if (100-timer<=30)
+	ss << "Attempt: " << attempts<<"/3";
+	if (attempts==3)
 		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 0, 0), 3, 0, 0);
 	else 
 		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 1, 1), 3, 0, 0);
@@ -675,6 +678,7 @@ int SceneCopyGame::NextScene()
 	if (currentstage == 6)
 	{
 		set = currentstage = displayed = correct = turn = start = time = timer = 0;
+		attempts = 1;
 		for (int i = 0; i < 5; i++)
 		{
 			tocopy[i] = 0;

@@ -86,6 +86,7 @@ private:
 	unsigned textSpacing[256];
 
 	//game
+	int attempts = 1;
 	double timer = 0;
 	int set = 0;
 	int clear = 0;

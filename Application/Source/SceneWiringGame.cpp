@@ -477,12 +477,12 @@ void SceneWiringGame::Render()
 
 	RenderImageOnScreen(meshList[GEO_BACKGROUND], Color(1, 1, 1), 100, 100, 40, 30, 0);
 
-	if (timer <= 30)
+	if (timer <= 20)
 		RenderWiringGame();
 	else
 	{
 		RenderTextOnScreen(meshList[GEO_TEXT], "YOU FAILED!", Color(1, 1, 1), 10, 13.5, 25);
-		if (timer >= 33)
+		if (timer >= 23)
 			completed = 3;
 	}
 }
@@ -588,8 +588,8 @@ void SceneWiringGame::RenderWiringGame()
 	}
 	std::ostringstream ss;
 	ss.precision(4);
-	ss << "Time left: " << 30 - timer;
-	if (30 - timer <= 10)
+	ss << "Time left: " << 20 - timer;
+	if (20 - timer <= 10)
 		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 0, 0), 3, 0, 0);
 	else
 		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 1, 1), 3, 0, 0);
