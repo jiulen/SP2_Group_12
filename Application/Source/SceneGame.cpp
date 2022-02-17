@@ -256,6 +256,8 @@ void SceneGame::Init()
 	//changing
 	hitboxes.clear();
 
+	yaw = 0;
+	pitch = 0;
 	FPS = 0;
 	bLightEnabled = true;
 	enterScene = true;
@@ -414,6 +416,28 @@ void SceneGame::RenderMesh(Mesh* mesh, bool enableLight)
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }
+
+void SceneGame::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
+{
+	glDisable(GL_DEPTH_TEST);
+	Mtx44 ortho;
+	ortho.SetToOrtho(0, 80, 0, 60, -10, 10); //size of screen UI
+	projectionStack.PushMatrix();
+	projectionStack.LoadMatrix(ortho);
+	viewStack.PushMatrix();
+	viewStack.LoadIdentity(); //No need camera for ortho mode
+	modelStack.PushMatrix();
+	modelStack.LoadIdentity();
+	//to do: scale and translate accordingly
+	modelStack.Translate(40, 30, 1);
+	modelStack.Scale(sizex, sizey, 1);
+	RenderMesh(mesh, false); //UI should not have light
+	projectionStack.PopMatrix();
+	viewStack.PopMatrix();
+	modelStack.PopMatrix();
+	glEnable(GL_DEPTH_TEST);
+}
+
 void SceneGame::RenderText(Mesh* mesh, std::string text, Color color)
 {
 	if (!mesh || mesh->textureID <= 0) //Proper error check
@@ -645,6 +669,7 @@ void SceneGame::Render()
 
 	modelStack.PushMatrix();
 	modelStack.Translate(camera.position.x + 2, camera.position.y - 1, camera.position.z - 5);
+	modelStack.Rotate(yaw, 0, 0, 1);
 	//modelStack.Rotate(camera.u);
 	modelStack.PushMatrix();
 	modelStack.Rotate(100, 0, 1, 0);
@@ -652,6 +677,7 @@ void SceneGame::Render()
 	RenderMesh(meshList[GEO_GUN], true);
 	modelStack.PopMatrix();
 	modelStack.PopMatrix();
+	
 
 	//Render Bomb
 	RenderBomb(0);

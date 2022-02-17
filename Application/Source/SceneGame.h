@@ -128,6 +128,7 @@ private:
 	void RenderSkybox();
 	void RenderBomb(int a);
 	void RenderMesh(Mesh* mesh, bool enableLight);
+	void RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey);
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 	void RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y);
@@ -141,7 +142,8 @@ private:
 	int bombrand2 = 0;
 	int bombrand3 = 0;
 	int bomb, bomb2, bomb3;
-
+	float yaw, pitch;
+	int bulletCount;
 	std::vector<Entity*> entities;
 	bool enterScene;
 public:
