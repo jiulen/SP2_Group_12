@@ -270,10 +270,10 @@ void SceneSettings::Update(double dt)
 		std::cout << "LBUTTON DOWN" << std::endl;
 
 		//use tasklist as button
-		float BUTTON_LEFT = 0;
-		float BUTTON_RIGHT = 30;
-		float BUTTON_BOTTOM = 38;
-		float BUTTON_TOP = 55;
+		float BUTTON_LEFT = 30;
+		float BUTTON_RIGHT = 50;
+		float BUTTON_BOTTOM = 10;
+		float BUTTON_TOP = 20;
 
 		//Converting Viewport space to UI space
 		double x, y;
@@ -286,6 +286,7 @@ void SceneSettings::Update(double dt)
 		if (posX > BUTTON_LEFT && posX < BUTTON_RIGHT && posY > BUTTON_BOTTOM && posY < BUTTON_TOP)
 		{
 			std::cout << "Go back!" << std::endl;
+			nextscene = 1;
 		}
 		else
 		{
@@ -984,7 +985,11 @@ void SceneSettings::RenderSkybox()
 
 int SceneSettings::NextScene()
 {
-	//if press something, switch to other scene(return scene number)
+	if (nextscene == 1)
+	{
+		nextscene = 0;
+		return 1; //from settings to main menu
+	}//if press something, switch to other scene(return scene number)
 	return 0; //not switching
 }
 
