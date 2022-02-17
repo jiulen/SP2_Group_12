@@ -84,6 +84,7 @@ private:
 	unsigned textSpacing[256];
 
 	//game
+	double timer = 0;
 	int set = 0;
 	int currentpos = -1;
 	int pos[10] = { 0,0,0,0,0,0,0,0,0,0 };

@@ -7,23 +7,33 @@ float Enemy::DistBetweenPoints(float x1, float z1, float x2, float z2)
 	dist = sqrt((distX * distX) + (distZ * distZ));
 	return dist;
 }
-Enemy::Enemy(int a, int b, float facing, Vector3 pos, Vector3 direction, bool chasing, float detectR, float attackR, float velo) {
-	maxhealth = a;
+Enemy::Enemy()
+{
+	maxhealth = 10;
 	currenthealth = maxhealth;
-	damage = b;
-	entityPos = pos;
-	entityFacing = facing;
-	directionVector = direction;
-	chase = chasing;
-	detectRange = detectR;
-	attackRange = attackR;
-	velocity = velo;
+	damage = 1;
+	entityPos = Vector3(0, 0, 0);
+	entityFacing = 0;
+	directionVector = Vector3(0, 0, 1);
+	chase = false;
+	detectRange = 10;
+	attackRange = 1;
+	velocity = 10;
 	type = 'E';
+	name = "";
+	hitbox = Hitbox(entityPos.x, entityPos.y + 2.8, entityPos.z, 2.8, 5.6f, 1.4f);
+	//takes longer edge to use to get radius
+	if (hitbox.sizeX > hitbox.sizeZ) {
+		enemyRadius = hitbox.sizeX * 0.5f;
+	}
+	else {
+		enemyRadius = hitbox.sizeZ * 0.5f;
+	}
 }
 Enemy::~Enemy()
 {
 }
-void Enemy::move(Vector3 playerPos, float dt)
+void Enemy::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, std::vector<Entity*> entities)
 {
 	if (!chase) {
 		if (DistBetweenPoints(playerPos.x, playerPos.z, entityPos.x, entityPos.z) <= detectRange) { //if enemy is within detect range
@@ -34,8 +44,7 @@ void Enemy::move(Vector3 playerPos, float dt)
 		Vector3 targetVector = Vector3(playerPos.x, 0, playerPos.z) - Vector3(entityPos.x, 0, entityPos.z);
 		targetVector = targetVector.Normalized();
 		if (DistBetweenPoints(playerPos.x, playerPos.z, entityPos.x, entityPos.z) > attackRange) //if enemy is out of attack range
-		{
-			
+		{			
 			Vector3 newVector = targetVector * velocity * dt;
 			entityPos.x += newVector.x;
 			entityPos.z += newVector.z;

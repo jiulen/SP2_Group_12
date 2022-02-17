@@ -305,6 +305,7 @@ void SceneWiringGame::Update(double dt)
 		a = b = c = d = e = f = g = this->h = i = j = k = l = m = n = o = p = yw = bw = rw = pw = yellow = blue = red = pink = correct = yattached = battached = rattached = pattached = 0;
 	}
 
+	timer += dt;
 	FPS = 1 / (float)dt;
 }
 
@@ -476,15 +477,19 @@ void SceneWiringGame::Render()
 
 	RenderImageOnScreen(meshList[GEO_BACKGROUND], Color(1, 1, 1), 100, 100, 40, 30, 0);
 
-	RenderWiringGame();
+	if (timer <= 20)
+		RenderWiringGame();
+	else
+	{
+		RenderTextOnScreen(meshList[GEO_TEXT], "YOU FAILED!", Color(1, 1, 1), 10, 13.5, 25);
+		if (timer >= 23)
+			completed = 3;
+	}
 }
 
 void SceneWiringGame::RenderWiringGame()
 {
-	modelStack.PushMatrix();
-	modelStack.Scale(0.35, 0.35, 0.35);
 	RenderImageOnScreen(meshList[GEO_WIRING], Color(1, 1, 1), 50, 50, 40, 30, 0);
-	modelStack.PopMatrix();
 	if (yellow != 0)
 	{
 		float opp = 46 - mouseY;
@@ -581,12 +586,20 @@ void SceneWiringGame::RenderWiringGame()
 				RenderImageOnScreen(meshList[GEO_PWIRE], Color(1, 1, 1), o, 1, (18 + m / 2) - 8, (n) / 2 + 6.5, p);
 		}
 	}
+	std::ostringstream ss;
+	ss.precision(4);
+	ss << "Time left: " << 20 - timer;
+	if (20 - timer <= 10)
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 0, 0), 3, 0, 0);
+	else
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 1, 1), 3, 0, 0);
 }
 
 int SceneWiringGame::NextScene()
 {
 	if (completed == 3)
 	{
+		timer = 0;
 		completed = 4;
 		return 3; //game scene
 	}

@@ -153,9 +153,9 @@ void Application::Run()
 		//
 		if (IsKeyPressed(VK_F1))
 			sceneno = 1;
-		else if (IsKeyPressed(VK_F2))
+	    else if (IsKeyPressed(VK_F2))
 			sceneno = 2;
-		else if (IsKeyPressed(VK_F3))
+		if (IsKeyPressed(VK_F3))
 			sceneno = 3;
 		else if (IsKeyPressed(VK_F4))
 			sceneno = 4;

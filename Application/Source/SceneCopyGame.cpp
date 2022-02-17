@@ -208,15 +208,186 @@ void SceneCopyGame::Update(double dt)
 	mouseY = (h - mouseY) / h * 60.f; //convert (600,0) to (0,60)
 	//mouse inputs
 	static bool bLButtonState = false;
-	if (!bLButtonState && Application::IsMousePressed(0))
+	if (turn == 1)
 	{
-		bLButtonState = true;
+		if (!bLButtonState && Application::IsMousePressed(0))
+		{
+			bLButtonState = true;
+			if ((mouseY >= 31.4) && (mouseY <= 38.6))
+			{
+				if ((mouseX >= 47) && (mouseX <= 52.6))
+				{
+					for (int i = 0; i < currentstage; i++)
+					{
+						if (pressed[i] == 0)
+						{
+							pressed[i] = 1;
+							i = currentstage;
+						}
+					}
+					pressedkey[0] = 1;
+					clicked = 1;
+				}
+				else if ((mouseX >= 54.1) && (mouseX <= 59.7))
+				{
+					for (int i = 0; i < currentstage; i++)
+					{
+						if (pressed[i] == 0)
+						{
+							pressed[i] = 2;
+							i = currentstage;
+						}
+					}
+					pressedkey[1] = 1;
+					clicked = 1;
+				}
+				else if ((mouseX >= 61.3) && (mouseX <= 66.9))
+				{
+					for (int i = 0; i < currentstage; i++)
+					{
+						if (pressed[i] == 0)
+						{
+							pressed[i] = 3;
+							i = currentstage;
+						}
+					}
+					pressedkey[2] = 1;
+					clicked = 1;
+				}
+			}
+			else if ((mouseY >= 22.4) && (mouseY <= 29.6))
+			{
+				if ((mouseX >= 47) && (mouseX <= 52.6))
+				{
+					for (int i = 0; i < currentstage; i++)
+					{
+						if (pressed[i] == 0)
+						{
+							pressed[i] = 4;
+							i = currentstage;
+						}
+					}
+					pressedkey[3] = 1;
+					clicked = 1;
+				}
+				else if ((mouseX >= 54.1) && (mouseX <= 59.7))
+				{
+					for (int i = 0; i < currentstage; i++)
+					{
+						if (pressed[i] == 0)
+						{
+							pressed[i] = 5;
+							i = currentstage;
+						}
+					}
+					pressedkey[4] = 1;
+					clicked = 1;
+				}
+				else if ((mouseX >= 61.3) && (mouseX <= 66.9))
+				{
+					for (int i = 0; i < currentstage; i++)
+					{
+						if (pressed[i] == 0)
+						{
+							pressed[i] = 6;
+							i = currentstage;
+						}
+					}
+					pressedkey[5] = 1;
+					clicked = 1;
+				}
+			}
+			else if ((mouseY >= 13.1) && (mouseY <= 20.4))
+			{
+				if ((mouseX >= 47) && (mouseX <= 52.6))
+				{
+					for (int i = 0; i < currentstage; i++)
+					{
+						if (pressed[i] == 0)
+						{
+							pressed[i] = 7;
+							i = currentstage;
+						}
+					}
+					pressedkey[6] = 1;
+					clicked = 1;
+				}
+				else if ((mouseX >= 54.1) && (mouseX <= 59.7))
+				{
+					for (int i = 0; i < currentstage; i++)
+					{
+						if (pressed[i] == 0)
+						{
+							pressed[i] = 8;
+							i = currentstage;
+						}
+					}
+					pressedkey[7] = 1;
+					clicked = 1;
+				}
+				else if ((mouseX >= 61.3) && (mouseX <= 66.9))
+				{
+					for (int i = 0; i < currentstage; i++)
+					{
+						if (pressed[i] == 0)
+						{
+							pressed[i] = 9;
+							i = currentstage;
+						}
+					}
+					pressedkey[8] = 1;
+					clicked = 1;
+				}
+			}
+		}
+		else if (bLButtonState && !Application::IsMousePressed(0))
+		{
+			bLButtonState = false;
+			if (clicked == 1)
+			{
+				for (int i = 0; i < 9; i++)
+				{
+					if (pressedkey[i] != 0)
+						pressedkey[i] = 0;
+				}
+				if (pressed[correct] == tocopy[correct])
+				{
+					correct++;
+					if (correct == currentstage)
+					{
+						for (int i = 0; i < currentstage; i++)
+							pressed[i] = 0;
+						correct = 0;
+						turn = 0;
+						currentstage++;
+						displayed = 0;
+					}
+				}
+				else
+				{
+					attempts++;
+					set = currentstage = displayed = correct = turn = start = time = 0;
+					for (int i = 0; i < 5; i++)
+					{
+						tocopy[i] = 0;
+						pressed[i] = 0;
+					}
+					for (int i = 0; i < 9; i++)
+						pressedkey[i] = 0;
+				}
+				clicked = 0;
+			}
+		}
 	}
-	else if (bLButtonState && !Application::IsMousePressed(0))
+	if (start == 1)
+		time += dt;
+	else
+		time = 0;
+	if (attempts > 3)
 	{
-		bLButtonState = false;
+		timer += dt;
 	}
-
+	
 	FPS = 1 / (float)dt;
 }
 
@@ -389,11 +560,37 @@ void SceneCopyGame::Render()
 
 	RenderImageOnScreen(meshList[GEO_BACKGROUND], Color(1, 1, 1), 100, 100, 40, 30, 0);
 
-	RenderCopyGame();
+	if (attempts<=3)
+		RenderCopyGame();
+	else
+	{
+		RenderTextOnScreen(meshList[GEO_TEXT], "YOU FAILED!", Color(1, 1, 1), 10, 13.5, 25);
+		if (timer >= 3)
+			currentstage = 6;
+	}
 }
 
 void SceneCopyGame::RenderCopyGame()
 {
+	RenderImageOnScreen(meshList[GEO_PAD], Color(1, 1, 1), 70, 50, 39.5, 30, 0);
+	if (currentstage>=2)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 16.5, 45.6, 0);
+	if (currentstage >= 3)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 21.4, 45.6, 0);
+	if (currentstage >= 4)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 26.3, 45.6, 0);
+	if (currentstage >= 5)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 31, 45.6, 0);
+	if (pressed[0] !=0)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 47.4, 45.6, 0);
+	if (pressed[1] != 0)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 52.3, 45.6, 0);
+	if (pressed[2] != 0)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 57.3, 45.6, 0);
+	if (pressed[3] != 0)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 62.1, 45.6, 0);
+	if (pressed[4] != 0)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 66.8, 45.6, 0);
 	if (set == 0)
 	{
 		for (int i = 0; i < 5; i++)
@@ -401,15 +598,96 @@ void SceneCopyGame::RenderCopyGame()
 		currentstage = 1;
 		set++;
 	}
+	if (turn == 0)
+	{
+		for (int i = 0; i < 9; i++)
+			pressedkey[i] = 1;
+		if (displayed!=currentstage)
+		{
+			start = 1;
+			if ((time > 0.3) && (time <= 1))
+			{
+				if (tocopy[displayed] == 1)
+					RenderImageOnScreen(meshList[GEO_BLUESQUARE], Color(1, 1, 1), 5.5, 7.5, 14.6, 35, 0);
+				else if (tocopy[displayed] == 2)
+					RenderImageOnScreen(meshList[GEO_BLUESQUARE], Color(1, 1, 1), 5.5, 7.5, 21.8, 35, 0);
+				else if (tocopy[displayed] == 3)
+					RenderImageOnScreen(meshList[GEO_BLUESQUARE], Color(1, 1, 1), 5.5, 7.5, 29, 35, 0);
+				else if (tocopy[displayed] == 4)
+					RenderImageOnScreen(meshList[GEO_BLUESQUARE], Color(1, 1, 1), 5.5, 7.5, 14.6, 25.8, 0);
+				else if (tocopy[displayed] == 5)
+					RenderImageOnScreen(meshList[GEO_BLUESQUARE], Color(1, 1, 1), 5.5, 7.5, 21.8, 25.8, 0);
+				else if (tocopy[displayed] == 6)
+					RenderImageOnScreen(meshList[GEO_BLUESQUARE], Color(1, 1, 1), 5.5, 7.5, 29, 25.8, 0);
+				else if (tocopy[displayed] == 7)
+					RenderImageOnScreen(meshList[GEO_BLUESQUARE], Color(1, 1, 1), 5.5, 7.5, 14.6, 16.6, 0);
+				else if (tocopy[displayed] == 8)
+					RenderImageOnScreen(meshList[GEO_BLUESQUARE], Color(1, 1, 1), 5.5, 7.5, 21.8, 16.6, 0);
+				else if (tocopy[displayed] == 9)
+					RenderImageOnScreen(meshList[GEO_BLUESQUARE], Color(1, 1, 1), 5.5, 7.5, 29, 16.6, 0);
+			}
+			else if (time > 1)
+			{
+				start = 0;
+				displayed++;
+			}
+		}
+		else if (displayed == currentstage)
+		{
+			clear = 0;
+			turn = 1;
+		}
+	}
+	if ((turn == 1) && (clear == 0))
+	{
+		for (int i = 0; i < 9; i++)
+			pressedkey[i] = 0;
+		clear = 1;
+	}
 
-	modelStack.PushMatrix();
-	modelStack.Scale(0.35, 0.35, 0.35);
-	RenderImageOnScreen(meshList[GEO_PAD], Color(1, 1, 1), 70, 50, 39.5, 30, 0);
-	modelStack.PopMatrix();
+	if (pressedkey[0] == 1)
+		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 5.5, 7.5, 49.8, 35, 0);
+	if (pressedkey[1] == 1)
+		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 5.5, 7.5, 57, 35, 0);
+	if (pressedkey[2] == 1)
+		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 5.5, 7.5, 64.2, 35, 0);
+	if (pressedkey[3] == 1)
+		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 5.5, 7.5, 49.8, 25.8, 0);
+	if (pressedkey[4] == 1)
+		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 5.5, 7.5, 57, 25.8, 0);
+	if (pressedkey[5] == 1)
+		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 5.5, 7.5, 64.2, 25.8, 0);
+	if (pressedkey[6] == 1)
+		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 5.5, 7.5, 49.8, 16.6, 0);
+	if (pressedkey[7] == 1)
+		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 5.5, 7.5, 57, 16.6, 0);
+	if (pressedkey[8] == 1)
+		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 5.5, 7.5, 64.2, 16.6, 0);
+
+	std::ostringstream ss;
+	ss.precision(4);
+	ss << "Attempt: " << attempts<<"/3";
+	if (attempts==3)
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 0, 0), 3, 0, 0);
+	else 
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 1, 1), 3, 0, 0);
 }
 
 int SceneCopyGame::NextScene()
 {
+	if (currentstage == 6)
+	{
+		set = currentstage = displayed = correct = turn = start = time = timer = 0;
+		attempts = 1;
+		for (int i = 0; i < 5; i++)
+		{
+			tocopy[i] = 0;
+			pressed[i] = 0;
+		}
+		for (int i = 0; i < 9; i++)
+			pressedkey[i] = 0;
+		return 3;
+	}
 	return 0; //not switching
 }
 

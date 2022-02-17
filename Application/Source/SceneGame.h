@@ -11,6 +11,7 @@
 #include "Structs.h"
 #include "Entity.h"
 #include "Enemy.h"
+#include "BasicMelee.h"
 #include "Vector3.h"
 #include <fstream>
 
@@ -38,6 +39,7 @@ class SceneGame : public Scene
 
 		//OBJs
 		GEO_ENEMY1,
+
 		GEO_BIGHOUSE_A,
 		GEO_BIGHOUSE_B,
 		GEO_BIGHOUSE_C,
@@ -126,26 +128,31 @@ private:
 	bool bLightEnabled;
 	float DistBetweenPoints(float x1, float z1, float x2, float z2);
 	void RenderSkybox();
-	void RenderBomb(int a);
+	void RenderBomb();
 	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey);
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 	void RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y);
-	std::vector<Hitbox> hitboxes; //floats are pos x, y, z and size x, y, z
+	
 	float FPS;
+	bool enterScene;
+
 	std::ifstream fileStream;
 	unsigned textMaxWidth;
 	unsigned textSpacing[256];
+
 	int nextscene = 3;
 	int bombrand1 = 0;
 	int bombrand2 = 0;
 	int bombrand3 = 0;
 	int bomb, bomb2, bomb3;
+	int minigamesused[3] = { 0,0,0 };
+
+	std::vector<Hitbox> hitboxes; //floats are pos x, y, z and size x, y, z
 	float yaw, pitch;
 	int bulletCount;
 	std::vector<Entity*> entities;
-	bool enterScene;
 public:
 	SceneGame();
 	~SceneGame();
