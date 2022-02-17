@@ -19,7 +19,12 @@ SceneWiringGame::SceneWiringGame()
 SceneWiringGame::~SceneWiringGame()
 {
 }
-
+void SceneWiringGame::UseScene()
+{
+	glBindVertexArray(m_vertexArrayID);
+	glUseProgram(m_programID);
+	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
+}
 void SceneWiringGame::Init()
 {
 	// Init VBO here
@@ -583,9 +588,9 @@ int SceneWiringGame::NextScene()
 	if (completed == 3)
 	{
 		completed = 4;
-		return 3;
+		return 3; //game scene
 	}
-	return 4;
+	return 0; //not switching
 }
 
 void SceneWiringGame::Exit()

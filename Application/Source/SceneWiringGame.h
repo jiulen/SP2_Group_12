@@ -107,6 +107,7 @@ public:
 	SceneWiringGame();
 	~SceneWiringGame();
 	virtual int NextScene();
+	virtual void UseScene();
 	virtual void Init();
 	virtual void Update(double dt);
 	virtual void Render();

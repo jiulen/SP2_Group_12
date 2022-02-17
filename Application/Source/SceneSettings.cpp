@@ -19,7 +19,12 @@ SceneSettings::SceneSettings()
 SceneSettings::~SceneSettings()
 {
 }
-
+void SceneSettings::UseScene()
+{
+	glBindVertexArray(m_vertexArrayID);
+	glUseProgram(m_programID);
+	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
+}
 void SceneSettings::Init()
 {
 	// Init VBO here
@@ -979,19 +984,14 @@ void SceneSettings::RenderSkybox()
 
 int SceneSettings::NextScene()
 {
-	return nextscene;
+	//if press something, switch to other scene(return scene number)
+	return 0; //not switching
 }
 
 void SceneSettings::Exit()
 {
 	// Cleanup VBO here
 	delete meshList[GEO_TEXT];
-	/*delete meshList[GEO_LEFT];
-	delete meshList[GEO_RIGHT];
-	delete meshList[GEO_TOP];
-	delete meshList[GEO_BOTTOM];
-	delete meshList[GEO_FRONT];
-	delete meshList[GEO_BACK];*/
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
 }

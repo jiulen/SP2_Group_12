@@ -257,15 +257,12 @@ Vector3 Camera3::CollisionCircleRect(float cx, float cy, float radius, float rx,
 
 bool Camera3::CollisionAABB(float r1x, float r1y, float r1z, float r1w, float r1h, float r1d, float r2x, float r2y, float r2z, float r2w, float r2h, float r2d)
 {
-	bool x = r1x - r1w * 0.5f <= r2x + r2w * 0.5f && r1x + r1w * 0.5f >= r2x - r2w * 0.5f;
-	bool y = r1y - r1h * 0.5f <= r2y + r2h * 0.5f && r1y + r1h * 0.5f >= r2y - r2h * 0.5f;
-	bool z = r1z - r1d * 0.5f <= r2z + r2d * 0.5f && r1z + r1d * 0.5f >= r2z - r2d * 0.5f;
-	return	(r1x - r1w * 0.5f <= r2x + r2w * 0.5f && r1x + r1w * 0.5f >= r2x - r2w * 0.5f) &&
-			(r1y - r1h * 0.5f <= r2y + r2h * 0.5f && r1y + r1h * 0.5f >= r2y - r2h * 0.5f) &&
-			(r1z - r1d * 0.5f <= r2z + r2d * 0.5f && r1z + r1d * 0.5f >= r2z - r2d * 0.5f);
+	return	(r1x - r1w * 0.5f < r2x + r2w * 0.5f && r1x + r1w * 0.5f > r2x - r2w * 0.5f) &&
+			(r1y - r1h * 0.5f < r2y + r2h * 0.5f && r1y + r1h * 0.5f > r2y - r2h * 0.5f) &&
+			(r1z - r1d * 0.5f < r2z + r2d * 0.5f && r1z + r1d * 0.5f > r2z - r2d * 0.5f);
 }
 
-void Camera3::playerWASDCollision(std::vector<Hitbox> hitboxes) { //for player with non-moving objects (not sure if can get moveable entities to work with this
+void Camera3::playerWASDCollision(std::vector<Hitbox> hitboxes) { //for player with objects
 	for (int i = 0; i < hitboxes.size(); i++) {
 		if (CollisionAABB(position.x, position.y + 0.5f - playerHeight * 0.5f, position.z, playerRadius * 2.f, playerHeight, playerRadius * 2.f, (hitboxes[i]).posX, (hitboxes[i]).posY, (hitboxes[i]).posZ, (hitboxes[i]).sizeX, (hitboxes[i]).sizeY, (hitboxes[i]).sizeZ)) {
 			Vector3 finalPos = CollisionCircleRect(position.x, position.z, playerRadius, (hitboxes[i]).posX, (hitboxes[i]).posZ, (hitboxes[i]).sizeX, (hitboxes[i]).sizeZ);
