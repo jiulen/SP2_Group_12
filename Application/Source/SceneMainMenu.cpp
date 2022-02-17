@@ -260,10 +260,14 @@ void SceneMainMenu::Update(double dt)
 		std::cout << "LBUTTON DOWN" << std::endl;
 
 		//use tasklist as button
-		float BUTTON_LEFT = 10;
-		float BUTTON_RIGHT = 40;
-		float BUTTON_BOTTOM = 15;
-		float BUTTON_TOP = 26;
+		float BUTTON_LEFT_PLAY = 15;
+		float BUTTON_RIGHT_PLAY = 35;
+		float BUTTON_BOTTOM_PLAY = 15;
+		float BUTTON_TOP_PLAY = 25;
+		float BUTTON_LEFT_MENU = 45;
+		float BUTTON_RIGHT_MENU = 65;
+		float BUTTON_BOTTOM_MENU = 15;
+		float BUTTON_TOP_MENU = 25;
 
 		//Converting Viewport space to UI space
 		double x, y;
@@ -273,13 +277,17 @@ void SceneMainMenu::Update(double dt)
 		float posX = x/w * 80.f; //convert (0,800) to (0,80)
 		float posY = (h-y)/h * 60.f; //convert (600,0) to (0,60)
 		std::cout << "posX:" << posX << " , posY:" << posY << std::endl;
-		if (posX > BUTTON_LEFT && posX < BUTTON_RIGHT && posY > BUTTON_BOTTOM && posY < BUTTON_TOP)
+		if (posX > BUTTON_LEFT_PLAY && posX < BUTTON_RIGHT_PLAY && posY > BUTTON_BOTTOM_PLAY && posY < BUTTON_TOP_PLAY)//
 		{
-			std::cout << "Options!" << std::endl;
+			std::cout << "Play!" << std::endl;
+		}
+		else if (posX > BUTTON_LEFT_MENU && posX < BUTTON_RIGHT_MENU && posY > BUTTON_BOTTOM_MENU && posY < BUTTON_TOP_MENU)
+		{
+			std::cout << "Settings!" << std::endl;
 		}
 		else
 		{
-			std::cout << "Miss!" << std::endl;
+			std::cout << "Where you think you clicking, buddy?" << std::endl;
 		}
 
 	}
@@ -908,7 +916,7 @@ void SceneMainMenu::Render()
 	//modelStack.Translate(0, 0, 0);
 	RenderImageOnScreen(meshList[GEO_BACKGROUND], Color(1, 1, 1), 80, 60, 40, 30);
 	RenderImageOnScreen(meshList[GEO_TITLE], Color(1, 1, 1), 40, 30, 40, 45);
-	RenderImageOnScreen(meshList[GEO_PLAY], Color(1, 1, 1), 20, 10, 25, 20);
+	RenderImageOnScreen(meshList[GEO_PLAY], Color(1, 1, 1), 20, 10, 25, 20);//
 	RenderImageOnScreen(meshList[GEO_OPTIONS], Color(1, 1, 1), 20, 10, 55, 20);
 	modelStack.PopMatrix();
 

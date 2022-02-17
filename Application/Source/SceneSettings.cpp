@@ -285,11 +285,11 @@ void SceneSettings::Update(double dt)
 		std::cout << "posX:" << posX << " , posY:" << posY << std::endl;
 		if (posX > BUTTON_LEFT && posX < BUTTON_RIGHT && posY > BUTTON_BOTTOM && posY < BUTTON_TOP)
 		{
-			std::cout << "Hit!" << std::endl;
+			std::cout << "Go back!" << std::endl;
 		}
 		else
 		{
-			std::cout << "Miss!" << std::endl;
+			std::cout << "Not clicking anywhere?" << std::endl;
 		}
 
 	}
