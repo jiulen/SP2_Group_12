@@ -22,11 +22,19 @@ void Camera3::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
     right.Normalize();
     this->up = defaultUp = right.Cross(view).Normalized();
 	//
+	jump = -1;
 	lastX = Application::GetWindowWidth() * 0.5f;
 	lastY = Application::GetWindowHeight() * 0.5f;
 	firstMouse = true;
-	//for now camera collision is a sphere - 2 x 5 x 2
-	playerRadius = 1.f; // subject to change
+	playerHitbox = Hitbox(position.x, position.y + 0.5f - playerHeight / 2, position.z, 2.8, playerHeight, 1.4f); //use circle for collision in camera (when player colliding), use rect for collision in others (when enemy colliding)
+	//takes longer edge to use to get radius
+	if (playerHitbox.sizeX > playerHitbox.sizeZ) {
+		playerRadius = playerHitbox.sizeX * 0.5f;
+	}
+	else {
+		playerRadius = playerHitbox.sizeZ * 0.5f;
+	}
+	
 	playerHeight = 5; //camera 0.5 below top of player
 }
 
@@ -268,6 +276,8 @@ void Camera3::playerWASDCollision(std::vector<Hitbox> hitboxes) { //for player w
 			Vector3 finalPos = CollisionCircleRect(position.x, position.z, playerRadius, (hitboxes[i]).posX, (hitboxes[i]).posZ, (hitboxes[i]).sizeX, (hitboxes[i]).sizeZ);
 			position.x = finalPos.x;
 			position.z = finalPos.z;
+			playerHitbox.posX = position.x;
+			playerHitbox.posZ = position.z;
 		}
 	}
 	return; //no collision
@@ -278,8 +288,6 @@ void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes, bool& collide
 	collide = false;
 	for (int i = 0; i < hitboxes.size(); i++) {
 		if (CollisionAABB(position.x, position.y + 0.5f - playerHeight * 0.5f, position.z, playerRadius * 2.f, playerHeight, playerRadius * 2.f, (hitboxes[i]).posX, (hitboxes[i]).posY, (hitboxes[i]).posZ, (hitboxes[i]).sizeX, (hitboxes[i]).sizeY, (hitboxes[i]).sizeZ)) {
-			
-			//test
 			float endPosY = position.y - playerHeight * 0.5f;
 			float nearestPointY = Math::Clamp(endPosY, (hitboxes[i]).posY - 0.5f * (hitboxes[i]).sizeY, (hitboxes[i]).posY + 0.5f * (hitboxes[i]).sizeY);
 		
@@ -289,9 +297,9 @@ void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes, bool& collide
 			{
 				//Statically resolve the collision
 				position.y -= overlap;
+				playerHitbox.posY = position.y + 0.5f - playerHeight * 0.5f;
 				collide = true;
 			}
-			//
 			
 		}
 	}
@@ -301,4 +309,9 @@ void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes, bool& collide
 void Camera3::setFirstMouse()
 {
 	firstMouse = true;
+}
+
+Hitbox Camera3::getPlayerHitbox()
+{
+	return Hitbox();
 }

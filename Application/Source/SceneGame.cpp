@@ -157,9 +157,10 @@ void SceneGame::Init()
 	meshList[GEO_GROUND] = MeshBuilder::GenerateRepeatingQuad("bottom", Color(1, 1, 1), 20.f);
 	meshList[GEO_GROUND]->textureID = LoadTGA("Image//whitebrickfloor.tga");
 	meshList[GEO_ENEMY1] = MeshBuilder::GenerateOBJMTL("enemy1", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
-	meshList[GEO_ENEMY1]->textureID = LoadTGA("Image//skin_robot.tga");
+	meshList[GEO_ENEMY1]->textureID = LoadTGA("Image//skin_man.tga");
 	meshList[GEO_BOMB] = MeshBuilder::GenerateOBJMTL("bomb", "OBJ//bomb.obj", "OBJ//bomb.mtl");
 	meshList[GEO_GUN] = MeshBuilder::GenerateOBJMTL("gun", "OBJ//pistol.obj", "OBJ//pistol.mtl");
+
 	meshList[GEO_BIGHOUSE_A] = MeshBuilder::GenerateOBJMTL("big house a", "OBJ//large_buildingA.obj", "OBJ//large_buildingA.mtl");
 	meshList[GEO_BIGHOUSE_B] = MeshBuilder::GenerateOBJMTL("big house b", "OBJ//large_buildingB.obj", "OBJ//large_buildingB.mtl");
 	meshList[GEO_BIGHOUSE_C] = MeshBuilder::GenerateOBJMTL("big house c", "OBJ//large_buildingC.obj", "OBJ//large_buildingC.mtl");
@@ -276,12 +277,9 @@ void SceneGame::Init()
 	hitboxes.push_back(Hitbox(10, 12, 80, 16, 24, 16));
 	hitboxes.push_back(Hitbox(10, 4, 70.5, 16, 8, 3));
 	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
-	////test hitbox
-	//hitboxes.push_back(Hitbox(5, 1, 5, 5, 2, 5));
 
 	//Entities
-	entities.push_back(new Enemy(100, 10, 0, Vector3(60, 0, 2), Vector3(0, 0, 1), false, 20, 20, 15));
-	entities.push_back(new Enemy(100, 10, 0, Vector3(-20, 0, 2), Vector3(0, 0, 1), false, 20, 20, 30));
+	entities.push_back(new BasicMelee (0, Vector3(60, 0, 2), Vector3(0, 0, 1)) );
 }
 
 void SceneGame::Update(double dt)
@@ -362,7 +360,7 @@ void SceneGame::UpdateEnemyMovement(double dt)
 	//For enemies
 	for (int i = 0; i < entities.size(); i++) {
 		if (entities[i]->getType() == 'E') {
-			entities[i]->move(Vector3(camera.position.x, 0, camera.position.z), dt);
+			entities[i]->move(Vector3(camera.position.x, 0, camera.position.z), dt, hitboxes);
 		}
 	}
 }
@@ -555,7 +553,9 @@ void SceneGame::Render()
 			modelStack.Translate(entities[i]->getPosition().x, 0, entities[i]->getPosition().z);
 			modelStack.Rotate(entities[i]->getFacing(), 0, 1, 0);
 			modelStack.Scale(0.35, 0.35, 0.35);
-			RenderMesh(meshList[GEO_ENEMY1], true);
+			if (entities[i]->getName() == "BasicMelee") {
+				RenderMesh(meshList[GEO_ENEMY1], false);
+			}
 			modelStack.PopMatrix();
 		}
 	}

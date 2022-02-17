@@ -4,19 +4,21 @@
 #include "Entity.h"
 #include "Vector3.h"
 #include "Structs.h"
+#include <vector>
 class Enemy : public Entity
 {
-private:
+protected:
 	bool chase;
 	Vector3 directionVector;
 	float detectRange, attackRange;
 	float DistBetweenPoints(float x1, float z1, float x2, float z2);
+
+	virtual void checkCollisionStructures(std::vector<Hitbox> hitboxes);
 public:
-	Enemy(int a, int b, float facing, Vector3 pos, Vector3 direction, bool chasing, float detectR, float attackR, float velo);
+	Enemy();
 	~Enemy();
-	void move(Vector3 playerPos, float dt);
-	void attack(); //do later
-	
+	virtual void move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes);
+	virtual void attack();
 };
 
 #endif
