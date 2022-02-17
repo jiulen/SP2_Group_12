@@ -145,5 +145,6 @@ public:
 	virtual void Render();
 	virtual void Exit();
 	virtual int NextScene();
+	virtual void UseScene();
 };
 #endif

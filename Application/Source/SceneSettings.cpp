@@ -19,7 +19,12 @@ SceneSettings::SceneSettings()
 SceneSettings::~SceneSettings()
 {
 }
-
+void SceneSettings::UseScene()
+{
+	glBindVertexArray(m_vertexArrayID);
+	glUseProgram(m_programID);
+	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
+}
 void SceneSettings::Init()
 {
 	// Init VBO here
@@ -280,11 +285,11 @@ void SceneSettings::Update(double dt)
 		std::cout << "posX:" << posX << " , posY:" << posY << std::endl;
 		if (posX > BUTTON_LEFT && posX < BUTTON_RIGHT && posY > BUTTON_BOTTOM && posY < BUTTON_TOP)
 		{
-			std::cout << "Hit!" << std::endl;
+			std::cout << "Go back!" << std::endl;
 		}
 		else
 		{
-			std::cout << "Miss!" << std::endl;
+			std::cout << "Not clicking anywhere?" << std::endl;
 		}
 
 	}
@@ -915,7 +920,7 @@ void SceneSettings::Render()
 	//RenderImageOnScreen(meshList[GEO_TITLE], Color(1, 1, 1), 40, 30, 40, 45);
 	//RenderImageOnScreen(meshList[GEO_PLAY], Color(1, 1, 1), 40, 30, 25, 20);
 	//RenderImageOnScreen(meshList[GEO_OPTIONS], Color(1, 1, 1), 80, 60, 60, 20);
-	RenderImageOnScreen(meshList[GEO_BACKBUTTON], Color(1, 1, 1), 40, 30, 40, 15);
+	RenderImageOnScreen(meshList[GEO_BACKBUTTON], Color(1, 1, 1), 20, 10, 40, 15);
 	RenderImageOnScreen(meshList[GEO_OPTIONSLIDER], Color(1, 1, 1), 80, 60, 45, 40);
 	RenderImageOnScreen(meshList[GEO_OPTIONKNOB], Color(1, 1, 1), 60, 45, 45, 40);
 	RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 55, 25);
@@ -979,19 +984,14 @@ void SceneSettings::RenderSkybox()
 
 int SceneSettings::NextScene()
 {
-	return nextscene;
+	//if press something, switch to other scene(return scene number)
+	return 0; //not switching
 }
 
 void SceneSettings::Exit()
 {
 	// Cleanup VBO here
 	delete meshList[GEO_TEXT];
-	/*delete meshList[GEO_LEFT];
-	delete meshList[GEO_RIGHT];
-	delete meshList[GEO_TOP];
-	delete meshList[GEO_BOTTOM];
-	delete meshList[GEO_FRONT];
-	delete meshList[GEO_BACK];*/
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
 }

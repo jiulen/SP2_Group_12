@@ -20,6 +20,15 @@ SceneGame::~SceneGame()
 {
 }
 
+void SceneGame::UseScene()
+{
+	glBindVertexArray(m_vertexArrayID);
+	glUseProgram(m_programID);
+	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
+
+	enterScene = true;
+}
+
 void SceneGame::Init()
 {
 	// Init VBO here
@@ -931,18 +940,15 @@ int SceneGame::NextScene()
 	if (nextscene == 4)
 	{
 		nextscene = 3;
-		enterScene = true; //get cursor ready to come back this scene
-		return 4;
+		return 4; //wire game
 	}
 	else if (nextscene == 5)
 	{
 		nextscene = 3;
-		enterScene = true; //get cursor ready to come back this scene
-		return 5;
+		return 5; //number game
 	}
-	return nextscene;
+	return 0; //not switching
 }
-
 
 void SceneGame::Exit()
 {

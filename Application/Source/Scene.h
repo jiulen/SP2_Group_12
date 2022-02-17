@@ -12,6 +12,7 @@ public:
 	virtual void Render() = 0;
 	virtual void Exit() = 0;
 	virtual int NextScene() = 0;
+	virtual void UseScene() = 0;
 };
 
 #endif
