@@ -145,21 +145,12 @@ void Application::Run()
 	scene5->Init();
 	scene6->Init();
 
-	//Set cursor mode (do for scene switch also if cursor mode change)
-	
-	//
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
-		if ((scene == scene4) || (scene == scene5)||(scene==scene1)||(scene==scene2)||(scene==scene6))
-			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-		else
-			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //do normal instead of disabled to restore normal cursor mode
-		if (glfwRawMouseMotionSupported()) {
-			glfwSetInputMode(m_window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
-		}
-		int sceneno = scene->NextScene();
+		int sceneno = scene->NextScene(); //0 for not switching scene, other numbers for not switch to that scene
+		//
 		if (IsKeyPressed(VK_F1))
 			sceneno = 1;
 		else if (IsKeyPressed(VK_F2))
@@ -172,21 +163,26 @@ void Application::Run()
 			sceneno = 5;
 		else if (IsKeyPressed(VK_F6))
 			sceneno = 6;
-		if (sceneno == 1)
-			scene = scene1;
-		else if (sceneno == 2)
-			scene = scene2;
-		else if (sceneno == 3)
-		{
-			scene = scene3;
-			//trigger smt in scenegame
+		//
+		if (sceneno == 1) { scene = scene1;}
+		else if (sceneno == 2) { scene = scene2;}
+		else if (sceneno == 3) { scene = scene3;}
+		else if (sceneno == 4) { scene = scene4;}
+		else if (sceneno == 5) { scene = scene5;}
+		else if (sceneno == 6) { scene = scene6;}
+		if (sceneno != 0) {
+			scene->UseScene(); //only triggers when switching scene
 		}
-		else if (sceneno == 4)
-			scene = scene4;
-		else if (sceneno == 5)
-			scene = scene5;
-		else if (sceneno == 6)
-			scene = scene6;
+
+		//Set cursor mode(do for scene switch also if cursor mode change)
+		if ((scene == scene4) || (scene == scene5) || (scene == scene1) || (scene == scene2) || (scene == scene6))
+			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		else
+			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //do normal instead of disabled to restore normal cursor mode
+		if (glfwRawMouseMotionSupported()) {
+			glfwSetInputMode(m_window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+		}
+
 		scene->Update(m_timer.getElapsedTime());
 		scene->Render();
 		//Swap buffers
