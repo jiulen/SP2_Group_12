@@ -210,8 +210,6 @@ void SceneCopyGame::Update(double dt)
 	static bool bLButtonState = false;
 	if (turn == 1)
 	{
-		for (int i = 0; i < 9; i++)
-			pressedkey[i] = 0;
 		if (!bLButtonState && Application::IsMousePressed(0))
 		{
 			bLButtonState = true;
@@ -385,7 +383,8 @@ void SceneCopyGame::Update(double dt)
 		time += dt;
 	else
 		time = 0;
-
+	
+	timer += dt;
 	FPS = 1 / (float)dt;
 }
 
@@ -558,15 +557,37 @@ void SceneCopyGame::Render()
 
 	RenderImageOnScreen(meshList[GEO_BACKGROUND], Color(1, 1, 1), 100, 100, 40, 30, 0);
 
-	RenderCopyGame();
+	if (timer<=100)
+		RenderCopyGame();
+	else
+	{
+		RenderTextOnScreen(meshList[GEO_TEXT], "YOU FAILED!", Color(1, 1, 1), 10, 13.5, 25);
+		if (timer >= 103)
+			currentstage = 6;
+	}
 }
 
 void SceneCopyGame::RenderCopyGame()
 {
-	modelStack.PushMatrix();
-	modelStack.Scale(0.35, 0.35, 0.35);
 	RenderImageOnScreen(meshList[GEO_PAD], Color(1, 1, 1), 70, 50, 39.5, 30, 0);
-	modelStack.PopMatrix();
+	if (currentstage>=2)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 16.5, 45.6, 0);
+	if (currentstage >= 3)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 21.4, 45.6, 0);
+	if (currentstage >= 4)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 26.3, 45.6, 0);
+	if (currentstage >= 5)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 31, 45.6, 0);
+	if (pressed[0] !=0)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 47.4, 45.6, 0);
+	if (pressed[1] != 0)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 52.3, 45.6, 0);
+	if (pressed[2] != 0)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 57.3, 45.6, 0);
+	if (pressed[3] != 0)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 62.1, 45.6, 0);
+	if (pressed[4] != 0)
+		RenderImageOnScreen(meshList[GEO_GREENLIGHT], Color(1, 1, 1), 3.8, 5.5, 66.8, 45.6, 0);
 	if (set == 0)
 	{
 		for (int i = 0; i < 5; i++)
@@ -608,8 +629,17 @@ void SceneCopyGame::RenderCopyGame()
 				displayed++;
 			}
 		}
-		else if (displayed==currentstage)
+		else if (displayed == currentstage)
+		{
+			clear = 0;
 			turn = 1;
+		}
+	}
+	if ((turn == 1) && (clear == 0))
+	{
+		for (int i = 0; i < 9; i++)
+			pressedkey[i] = 0;
+		clear = 1;
 	}
 
 	if (pressedkey[0] == 1)
@@ -632,12 +662,28 @@ void SceneCopyGame::RenderCopyGame()
 		RenderImageOnScreen(meshList[GEO_PRESSED], Color(1, 1, 1), 5.5, 7.5, 64.2, 16.6, 0);
 
 	std::ostringstream ss;
-	ss << "X:" << mouseX<<" Y:"<<mouseY;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 0, 0), 3, 0, 0);
+	ss.precision(4);
+	ss << "Time left: " << 100-timer;
+	if (100-timer<=30)
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 0, 0), 3, 0, 0);
+	else 
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 1, 1), 3, 0, 0);
 }
 
 int SceneCopyGame::NextScene()
 {
+	if (currentstage == 6)
+	{
+		set = currentstage = displayed = correct = turn = start = time = timer = 0;
+		for (int i = 0; i < 5; i++)
+		{
+			tocopy[i] = 0;
+			pressed[i] = 0;
+		}
+		for (int i = 0; i < 9; i++)
+			pressedkey[i] = 0;
+		return 3;
+	}
 	return 0; //not switching
 }
 

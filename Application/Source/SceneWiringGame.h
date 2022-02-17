@@ -86,6 +86,7 @@ private:
 	unsigned textSpacing[256];
 	
 	//wiring
+	double timer = 0;
 	int completed = 4;
 	float a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p;
 	int yw = 0;

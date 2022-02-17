@@ -86,7 +86,9 @@ private:
 	unsigned textSpacing[256];
 
 	//game
+	double timer = 0;
 	int set = 0;
+	int clear = 0;
 	int currentstage = 0;
 	int displayed = 0;
 	int correct = 0;

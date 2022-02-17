@@ -697,7 +697,25 @@ void SceneGame::RenderBomb()
 			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
-				nextscene = rand() % 2 + 4;
+				nextscene = rand() % 3 + 4;
+				for (int i = 0; i < 3; i++)
+				{
+					if (nextscene == minigamesused[i])
+					{
+						nextscene = rand() % 3 + 4;
+						i--;
+					}
+					if (i == 2)
+					{
+						for (int l = 0; l < 3; l++)
+						{
+							if (minigamesused[l] == 0)
+							{
+								minigamesused[l] = nextscene;
+							}
+						}
+					}
+				}
 				if (bomb == 1)
 					bomb = 0;
 				else if (bomb2 == 1)
@@ -720,7 +738,25 @@ void SceneGame::RenderBomb()
 			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
-				nextscene = rand() % 2 + 4;
+				nextscene = rand() % 3 + 4;
+				for (int i = 0; i < 3; i++)
+				{
+					if (nextscene == minigamesused[i])
+					{
+						nextscene = rand() % 3 + 4;
+						i--;
+					}
+					if (i == 2)
+					{
+						for (int l = 0; l < 3; l++)
+						{
+							if (minigamesused[l] == 0)
+							{
+								minigamesused[l] = nextscene;
+							}
+						}
+					}
+				}
 				if (bomb == 2)
 					bomb = 0;
 				else if (bomb2 == 2)
@@ -742,7 +778,25 @@ void SceneGame::RenderBomb()
 			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
-				nextscene = rand() % 2 + 4;
+				nextscene = rand() % 3 + 4;
+				for (int i = 0; i < 3; i++)
+				{
+					if (nextscene == minigamesused[i])
+					{
+						nextscene = rand() % 3 + 4;
+						i--;
+					}
+					if (i == 2)
+					{
+						for (int l = 0; l < 3; l++)
+						{
+							if (minigamesused[l] == 0)
+							{
+								minigamesused[l] = nextscene;
+							}
+						}
+					}
+				}
 				if (bomb == 3)
 					bomb = 0;
 				else if (bomb2 == 3)
@@ -764,7 +818,25 @@ void SceneGame::RenderBomb()
 			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
-				nextscene = rand() % 2+4;
+				nextscene = rand() % 3+4;
+				for (int i = 0; i < 3; i++)
+				{
+					if (nextscene == minigamesused[i])
+					{
+						nextscene = rand() % 3 + 4;
+						i--;
+					}
+					if (i == 2)
+					{
+						for (int l = 0; l < 3; l++)
+						{
+							if (minigamesused[l] == 0)
+							{
+								minigamesused[l] = nextscene;
+							}
+						}
+					}
+				}
 				if (bomb == 4)
 					bomb = 0;
 				else if (bomb2 == 4)
@@ -787,7 +859,25 @@ void SceneGame::RenderBomb()
 			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
-				nextscene = rand() % 2 + 4;
+				nextscene = rand() % 3 + 4;
+				for (int i = 0; i < 3; i++)
+				{
+					if (nextscene == minigamesused[i])
+					{
+						nextscene = rand() % 3 + 4;
+						i--;
+					}
+					if (i == 2)
+					{
+						for (int l = 0; l < 3; l++)
+						{
+							if (minigamesused[l] == 0)
+							{
+								minigamesused[l] = nextscene;
+							}
+						}
+					}
+				}
 				if (bomb == 5)
 					bomb = 0;
 				else if (bomb2 == 5)
@@ -809,7 +899,25 @@ void SceneGame::RenderBomb()
 			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
-				nextscene = rand() % 2 + 4;
+				nextscene = rand() % 3 + 4;
+				for (int i = 0; i < 3; i++)
+				{
+					if (nextscene == minigamesused[i])
+					{
+						nextscene = rand() % 3 + 4;
+						i--;
+					}
+					if (i == 2)
+					{
+						for (int l = 0; l < 3; l++)
+						{
+							if (minigamesused[l] == 0)
+							{
+								minigamesused[l] = nextscene;
+							}
+						}
+					}
+				}
 				if (bomb == 6)
 					bomb = 0;
 				else if (bomb2 == 6)
@@ -832,7 +940,25 @@ void SceneGame::RenderBomb()
 			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
-				nextscene = rand() % 2 + 4;
+				nextscene = rand() % 3 + 4;
+				for (int i = 0; i < 3; i++)
+				{
+					if (nextscene == minigamesused[i])
+					{
+						nextscene = rand() % 3 + 4;
+						i--;
+					}
+					if (i == 2)
+					{
+						for (int l = 0; l < 3; l++)
+						{
+							if (minigamesused[l] == 0)
+							{
+								minigamesused[l] = nextscene;
+							}
+						}
+					}
+				}
 				if (bomb == 7)
 					bomb = 0;
 				else if (bomb2 == 7)
@@ -855,7 +981,25 @@ void SceneGame::RenderBomb()
 			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
-				nextscene = rand() % 2 + 4;
+				nextscene = rand() % 3 + 4;
+				for (int i = 0; i < 3; i++)
+				{
+					if (nextscene == minigamesused[i])
+					{
+						nextscene = rand() % 3 + 4;
+						i--;
+					}
+					if (i == 2)
+					{
+						for (int l = 0; l < 3; l++)
+						{
+							if (minigamesused[l] == 0)
+							{
+								minigamesused[l] = nextscene;
+							}
+						}
+					}
+				}
 				if (bomb == 8)
 					bomb = 0;
 				else if (bomb2 == 8)
@@ -877,7 +1021,25 @@ void SceneGame::RenderBomb()
 			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
-				nextscene = rand() % 2 + 4;
+				nextscene = rand() % 3 + 4;
+				for (int i = 0; i < 3; i++)
+				{
+					if (nextscene == minigamesused[i])
+					{
+						nextscene = rand() % 3 + 4;
+						i--;
+					}
+					if (i == 2)
+					{
+						for (int l = 0; l < 3; l++)
+						{
+							if (minigamesused[l] == 0)
+							{
+								minigamesused[l] = nextscene;
+							}
+						}
+					}
+				}
 				if (bomb == 9)
 					bomb = 0;
 				else if (bomb2 == 9)
@@ -945,6 +1107,11 @@ int SceneGame::NextScene()
 	{
 		nextscene = 3;
 		return 5; //number game
+	}
+	else if (nextscene == 6)
+	{
+		nextscene = 3;
+		return 6; //copy game
 	}
 	return 0; //not switching
 }

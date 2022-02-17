@@ -141,6 +141,7 @@ private:
 	int bombrand2 = 0;
 	int bombrand3 = 0;
 	int bomb, bomb2, bomb3;
+	int minigamesused[3] = { 0,0,0 };
 
 	std::vector<Entity*> entities;
 	bool enterScene;

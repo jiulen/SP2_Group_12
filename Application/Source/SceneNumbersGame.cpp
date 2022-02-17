@@ -303,6 +303,7 @@ void SceneNumbersGame::Update(double dt)
 		bLButtonState = false;
 	}
 
+	timer += dt;
 	FPS = 1 / (float)dt;
 }
 
@@ -475,7 +476,17 @@ void SceneNumbersGame::Render()
 
 	RenderImageOnScreen(meshList[GEO_BACKGROUND], Color(1, 1, 1), 100, 100, 40, 30, 0);
 
-	RenderNumbersGame();
+	if (timer <= 30)
+		RenderNumbersGame();
+	else
+	{
+		RenderTextOnScreen(meshList[GEO_TEXT], "YOU FAILED!", Color(1, 1, 1), 10, 13.5, 25);
+		if (timer >= 33)
+		{
+			for (int i = 0; i < 10; i++)
+				ticks[i] = 1;
+		}
+	}
 }
 
 void SceneNumbersGame::RenderNumbersGame()
@@ -499,11 +510,7 @@ void SceneNumbersGame::RenderNumbersGame()
 		}
 		set++;
 	}
-	//x= 10.7, y=15.6 xbar=1, ybar=1.9
-	modelStack.PushMatrix();
-	modelStack.Scale(0.35, 0.35, 0.35);
 	RenderImageOnScreen(meshList[GEO_NUMBERS], Color(1, 1, 1), 70, 50, 39.5, 30, 0);
-	modelStack.PopMatrix();
 	for (int i = 0; i < 10; i++)
 	{
 		int a, b;
@@ -545,6 +552,14 @@ void SceneNumbersGame::RenderNumbersGame()
 		RenderImageOnScreen(meshList[GEO_TICK], Color(1, 1, 1), 10, 13, 51.4, 21, 0);
 	if (ticks[3] == 1)
 		RenderImageOnScreen(meshList[GEO_TICK], Color(1, 1, 1), 10, 13, 51.4, 38.5, 0);
+
+	std::ostringstream ss;
+	ss.precision(4);
+	ss << "Time left: " << 30 - timer;
+	if (30 - timer <= 10)
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 0, 0), 3, 0, 0);
+	else
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 1, 1), 3, 0, 0);
 }
 
 int SceneNumbersGame::NextScene()
@@ -557,6 +572,7 @@ int SceneNumbersGame::NextScene()
 	}
 	if (a == 10)
 	{
+		timer = 0;
 		for (int i = 0; i < 10; i++)
 			ticks[i] = 0;
 		return 3;
