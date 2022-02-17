@@ -280,10 +280,12 @@ void SceneMainMenu::Update(double dt)
 		if (posX > BUTTON_LEFT_PLAY && posX < BUTTON_RIGHT_PLAY && posY > BUTTON_BOTTOM_PLAY && posY < BUTTON_TOP_PLAY)//
 		{
 			std::cout << "Play!" << std::endl;
+			nextscene = 3;
 		}
 		else if (posX > BUTTON_LEFT_MENU && posX < BUTTON_RIGHT_MENU && posY > BUTTON_BOTTOM_MENU && posY < BUTTON_TOP_MENU)
 		{
 			std::cout << "Settings!" << std::endl;
+			nextscene = 2;
 		}
 		else
 		{
@@ -971,6 +973,17 @@ void SceneMainMenu::RenderSkybox()
 
 int SceneMainMenu::NextScene()
 {
+	if (nextscene == 2)
+	{
+		nextscene = 0;
+		return 2; //settings
+	}
+	else if (nextscene == 3)
+	{
+		nextscene = 0;
+		return 3; //game
+	}
+	return 0;
 	//if press something, switch to options scene(return 2)
 	//if press something, switch to game scene(return 3)
 	return 0;
