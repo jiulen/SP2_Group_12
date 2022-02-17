@@ -149,10 +149,10 @@ void SceneMainMenu::Init()
 	meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image//background.tga");
 	meshList[GEO_TITLE] = MeshBuilder::GenerateQuad("titleamogus", Color(1, 1, 1), 1.f, 1.f);
 	meshList[GEO_TITLE]->textureID = LoadTGA("Image//title.tga");
-	meshList[GEO_PLAY] = MeshBuilder::GenerateQuad("pvzstart", Color(1, 1, 1), 1.f, 1.f);
-	meshList[GEO_PLAY]->textureID = LoadTGA("Image//play.tga");
+	meshList[GEO_PLAY] = MeshBuilder::GenerateQuad("start", Color(1, 1, 1), 1.f, 1.f);
+	meshList[GEO_PLAY]->textureID = LoadTGA("Image//playbutton.tga");
 	meshList[GEO_OPTIONS] = MeshBuilder::GenerateQuad("settings", Color(1, 1, 1), 1.f, 1.f);
-	meshList[GEO_OPTIONS]->textureID = LoadTGA("Image//settings.tga");
+	meshList[GEO_OPTIONS]->textureID = LoadTGA("Image//settingsbutton.tga");
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//arial.tga");
@@ -903,8 +903,8 @@ void SceneMainMenu::Render()
 	//modelStack.Translate(0, 0, 0);
 	RenderImageOnScreen(meshList[GEO_BACKGROUND], Color(1, 1, 1), 80, 60, 40, 30);
 	RenderImageOnScreen(meshList[GEO_TITLE], Color(1, 1, 1), 40, 30, 40, 45);
-	RenderImageOnScreen(meshList[GEO_PLAY], Color(1, 1, 1), 40, 30, 25, 20);
-	RenderImageOnScreen(meshList[GEO_OPTIONS], Color(1, 1, 1), 80, 60, 60, 20);
+	RenderImageOnScreen(meshList[GEO_PLAY], Color(1, 1, 1), 20, 10, 25, 20);
+	RenderImageOnScreen(meshList[GEO_OPTIONS], Color(1, 1, 1), 20, 10, 55, 20);
 	modelStack.PopMatrix();
 
 	RenderSkybox();

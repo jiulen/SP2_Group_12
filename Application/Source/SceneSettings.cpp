@@ -915,7 +915,7 @@ void SceneSettings::Render()
 	//RenderImageOnScreen(meshList[GEO_TITLE], Color(1, 1, 1), 40, 30, 40, 45);
 	//RenderImageOnScreen(meshList[GEO_PLAY], Color(1, 1, 1), 40, 30, 25, 20);
 	//RenderImageOnScreen(meshList[GEO_OPTIONS], Color(1, 1, 1), 80, 60, 60, 20);
-	RenderImageOnScreen(meshList[GEO_BACKBUTTON], Color(1, 1, 1), 40, 30, 40, 15);
+	RenderImageOnScreen(meshList[GEO_BACKBUTTON], Color(1, 1, 1), 20, 10, 40, 15);
 	RenderImageOnScreen(meshList[GEO_OPTIONSLIDER], Color(1, 1, 1), 80, 60, 45, 40);
 	RenderImageOnScreen(meshList[GEO_OPTIONKNOB], Color(1, 1, 1), 60, 45, 45, 40);
 	RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 55, 25);
