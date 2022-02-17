@@ -635,6 +635,7 @@ void SceneGame::Render()
 
 	modelStack.PushMatrix();
 	modelStack.Translate(camera.position.x + 2, camera.position.y - 1, camera.position.z - 5);
+	//modelStack.Rotate(camera.u);
 	modelStack.PushMatrix();
 	modelStack.Rotate(100, 0, 1, 0);
 	modelStack.Scale(10, 10, 10);
