@@ -177,7 +177,10 @@ void Application::Run()
 		else if (sceneno == 2)
 			scene = scene2;
 		else if (sceneno == 3)
+		{
 			scene = scene3;
+			//trigger smt in scenegame
+		}
 		else if (sceneno == 4)
 			scene = scene4;
 		else if (sceneno == 5)

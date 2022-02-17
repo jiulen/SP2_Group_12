@@ -141,14 +141,9 @@ private:
 	int bombrand2 = 0;
 	int bombrand3 = 0;
 	int bomb, bomb2, bomb3;
-	//
-	float enemy1X, enemy1Z;
-	bool chase;
-	float characterFacing;
-	Vector3 targetVector, enemyVector;
-	float velocityOfEnemy;
-	//
+
 	std::vector<Entity*> entities;
+	bool enterScene;
 public:
 	SceneGame();
 	~SceneGame();

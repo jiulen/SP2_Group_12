@@ -275,11 +275,11 @@ bool LoadOBJMTL(const char* file_path, const char* mtl_path, std::vector<Positio
 			sscanf_s((buf + 2), "%f%f%f", &normal.x, &normal.y, &normal.z);
 			temp_normals.push_back(normal);
 		}
-		else if (strncmp("mtllib ", buf, 7) == 0) { //process mtllib //got space for first 2
-			char mtl_path[256];
-			strcpy_s(mtl_path, buf + 7);
-			LoadMTL(mtl_path, materials_map);
-		}
+		//else if (strncmp("mtllib ", buf, 7) == 0) { //process mtllib //got space for first 2
+		//	char mtl_path[256];
+		//	strcpy_s(mtl_path, buf + 7);
+		//	LoadMTL(mtl_path, materials_map);
+		//}
 		else if (strncmp("usemtl ", buf, 7) == 0) { //process usemtl
 			char mtl_name[256];
 			strcpy_s(mtl_name, buf + 7);
