@@ -150,7 +150,7 @@ void SceneGame::Init()
 	meshList[GEO_ENEMY1] = MeshBuilder::GenerateOBJMTL("enemy1", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
 	meshList[GEO_ENEMY1]->textureID = LoadTGA("Image//skin_robot.tga");
 	meshList[GEO_BOMB] = MeshBuilder::GenerateOBJMTL("bomb", "OBJ//bomb.obj", "OBJ//bomb.mtl");
-	//meshList[GEO_GUN] = MeshBuilder::GenerateOBJ("gun", "OBJ//TT_gun.obj");
+	meshList[GEO_GUN] = MeshBuilder::GenerateOBJMTL("gun", "OBJ//pistol.obj", "OBJ//pistol.mtl");
 	meshList[GEO_BIGHOUSE_A] = MeshBuilder::GenerateOBJMTL("big house a", "OBJ//large_buildingA.obj", "OBJ//large_buildingA.mtl");
 	meshList[GEO_BIGHOUSE_B] = MeshBuilder::GenerateOBJMTL("big house b", "OBJ//large_buildingB.obj", "OBJ//large_buildingB.mtl");
 	meshList[GEO_BIGHOUSE_C] = MeshBuilder::GenerateOBJMTL("big house c", "OBJ//large_buildingC.obj", "OBJ//large_buildingC.mtl");
@@ -634,7 +634,12 @@ void SceneGame::Render()
 	//Hitbox(60, 25, 60, 24, 50, 24);
 
 	modelStack.PushMatrix();
-	//RenderMesh(meshList[GEO_GUN], true);
+	modelStack.Translate(camera.position.x + 2, camera.position.y - 1, camera.position.z - 5);
+	modelStack.PushMatrix();
+	modelStack.Rotate(100, 0, 1, 0);
+	modelStack.Scale(10, 10, 10);
+	RenderMesh(meshList[GEO_GUN], true);
+	modelStack.PopMatrix();
 	modelStack.PopMatrix();
 
 	//Render Bomb
