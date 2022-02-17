@@ -216,10 +216,10 @@ void SceneCopyGame::Update(double dt)
 				{
 					for (int i = 0; i < currentstage; i++)
 					{
-						if (pressed[i] != 0)
+						if (pressed[i] == 0)
 						{
-							i = currentstage;
 							pressed[i] = 1;
+							i = currentstage;
 						}
 					}
 					pressedkey[0] = 1;
@@ -229,10 +229,10 @@ void SceneCopyGame::Update(double dt)
 				{
 					for (int i = 0; i < currentstage; i++)
 					{
-						if (pressed[i] != 0)
+						if (pressed[i] == 0)
 						{
-							i = currentstage;
 							pressed[i] = 2;
+							i = currentstage;
 						}
 					}
 					pressedkey[1] = 1;
@@ -242,10 +242,10 @@ void SceneCopyGame::Update(double dt)
 				{
 					for (int i = 0; i < currentstage; i++)
 					{
-						if (pressed[i] != 0)
+						if (pressed[i] == 0)
 						{
-							i = currentstage;
 							pressed[i] = 3;
+							i = currentstage;
 						}
 					}
 					pressedkey[2] = 1;
@@ -258,10 +258,10 @@ void SceneCopyGame::Update(double dt)
 				{
 					for (int i = 0; i < currentstage; i++)
 					{
-						if (pressed[i] != 0)
+						if (pressed[i] == 0)
 						{
-							i = currentstage;
 							pressed[i] = 4;
+							i = currentstage;
 						}
 					}
 					pressedkey[3] = 1;
@@ -271,10 +271,10 @@ void SceneCopyGame::Update(double dt)
 				{
 					for (int i = 0; i < currentstage; i++)
 					{
-						if (pressed[i] != 0)
+						if (pressed[i] == 0)
 						{
-							i = currentstage;
 							pressed[i] = 5;
+							i = currentstage;
 						}
 					}
 					pressedkey[4] = 1;
@@ -284,10 +284,10 @@ void SceneCopyGame::Update(double dt)
 				{
 					for (int i = 0; i < currentstage; i++)
 					{
-						if (pressed[i] != 0)
+						if (pressed[i] == 0)
 						{
-							i = currentstage;
 							pressed[i] = 6;
+							i = currentstage;
 						}
 					}
 					pressedkey[5] = 1;
@@ -300,10 +300,10 @@ void SceneCopyGame::Update(double dt)
 				{
 					for (int i = 0; i < currentstage; i++)
 					{
-						if (pressed[i] != 0)
+						if (pressed[i] == 0)
 						{
-							i = currentstage;
 							pressed[i] = 7;
+							i = currentstage;
 						}
 					}
 					pressedkey[6] = 1;
@@ -313,10 +313,10 @@ void SceneCopyGame::Update(double dt)
 				{
 					for (int i = 0; i < currentstage; i++)
 					{
-						if (pressed[i] != 0)
+						if (pressed[i] == 0)
 						{
-							i = currentstage;
 							pressed[i] = 8;
+							i = currentstage;
 						}
 					}
 					pressedkey[7] = 1;
@@ -326,10 +326,10 @@ void SceneCopyGame::Update(double dt)
 				{
 					for (int i = 0; i < currentstage; i++)
 					{
-						if (pressed[i] != 0)
+						if (pressed[i] == 0)
 						{
-							i = currentstage;
 							pressed[i] = 9;
+							i = currentstage;
 						}
 					}
 					pressedkey[8] = 1;
@@ -352,14 +352,27 @@ void SceneCopyGame::Update(double dt)
 					correct++;
 					if (correct == currentstage)
 					{
+						for (int i = 0; i < currentstage; i++)
+							pressed[i] = 0;
+						correct = 0;
+						turn = 0;
 						currentstage++;
-
+						displayed = 0;
 					}
 				}
 				else
 				{
-					set = 0;
+					std::cout << pressed[correct]<<" "<<tocopy[correct] << std::endl;
+					set = currentstage = displayed = correct = turn = start = time = 0;
+					for (int i = 0; i < 5; i++)
+					{
+						tocopy[i] = 0;
+						pressed[i] = 0;
+					}
+					for (int i = 0; i < 9; i++)
+						pressedkey[i] = 0;
 				}
+				clicked = 0;
 			}
 		}
 	}
@@ -560,10 +573,10 @@ void SceneCopyGame::RenderCopyGame()
 	{
 		for (int i = 0; i < 9; i++)
 			pressedkey[i] = 1;
-		if (displayed != currentstage)
+		if (displayed!=currentstage)
 		{
 			start = 1;
-			if ((time > 0.5)&&(time<=1.5))
+			if ((time > 0.3) && (time <= 1))
 			{
 				if (tocopy[displayed] == 1)
 					RenderImageOnScreen(meshList[GEO_BLUESQUARE], Color(1, 1, 1), 5.5, 7.5, 14.6, 35, 0);
@@ -584,13 +597,14 @@ void SceneCopyGame::RenderCopyGame()
 				else if (tocopy[displayed] == 9)
 					RenderImageOnScreen(meshList[GEO_BLUESQUARE], Color(1, 1, 1), 5.5, 7.5, 29, 16.6, 0);
 			}
-			else if (time>1.5)
+			else if (time > 1)
 			{
-				turn = 1;
 				start = 0;
 				displayed++;
 			}
 		}
+		else if (displayed==currentstage)
+			turn = 1;
 	}
 
 	if (pressedkey[0] == 1)
