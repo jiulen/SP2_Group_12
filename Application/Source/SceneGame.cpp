@@ -634,7 +634,12 @@ void SceneGame::Render()
 	//Hitbox(60, 25, 60, 24, 50, 24);
 
 	modelStack.PushMatrix();
-	//RenderMesh(meshList[GEO_GUN], true);
+	modelStack.Translate(camera.position.x + 2, camera.position.y - 1, camera.position.z - 5);
+	modelStack.PushMatrix();
+	modelStack.Rotate(100, 0, 1, 0);
+	modelStack.Scale(10, 10, 10);
+	RenderMesh(meshList[GEO_GUN], true);
+	modelStack.PopMatrix();
 	modelStack.PopMatrix();
 
 	//Render Bomb
