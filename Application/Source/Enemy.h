@@ -12,12 +12,10 @@ protected:
 	Vector3 directionVector;
 	float detectRange, attackRange;
 	float DistBetweenPoints(float x1, float z1, float x2, float z2);
-
-	virtual void checkCollisionStructures(std::vector<Hitbox> hitboxes);
 public:
 	Enemy();
 	~Enemy();
-	virtual void move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes);
+	virtual void move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, std::vector<Entity*> entities);
 	virtual void attack();
 };
 

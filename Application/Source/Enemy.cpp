@@ -33,7 +33,7 @@ Enemy::Enemy()
 Enemy::~Enemy()
 {
 }
-void Enemy::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes)
+void Enemy::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, std::vector<Entity*> entities)
 {
 	if (!chase) {
 		if (DistBetweenPoints(playerPos.x, playerPos.z, entityPos.x, entityPos.z) <= detectRange) { //if enemy is within detect range
@@ -57,21 +57,6 @@ void Enemy::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes)
 			entityFacing = -Math::RadianToDegree(entityFacing);
 		}
 	}
-}
-
-
-void Enemy::checkCollisionStructures(std::vector<Hitbox> hitboxes)
-{
-	for (int i = 0; i < hitboxes.size(); i++) {
-		if (CollisionAABB((hitboxes[i]).posX, (hitboxes[i]).posY, (hitboxes[i]).posZ, (hitboxes[i]).sizeX, (hitboxes[i]).sizeY, (hitboxes[i]).sizeZ)) {
-			Vector3 finalPos = CollisionCircleRect((hitboxes[i]).posX, (hitboxes[i]).posZ, (hitboxes[i]).sizeX, (hitboxes[i]).sizeZ);
-			entityPos.x = finalPos.x;
-			entityPos.z = finalPos.z;
-			hitbox.posX = entityPos.x;
-			hitbox.posZ = entityPos.z;
-		}
-	}
-	return; //no collision
 }
 
 void Enemy::attack()
