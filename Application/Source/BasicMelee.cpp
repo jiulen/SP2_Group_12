@@ -24,7 +24,7 @@ BasicMelee::BasicMelee(float facing, Vector3 pos, Vector3 direction) {
 BasicMelee::~BasicMelee()
 {
 }
-void BasicMelee::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes)
+void BasicMelee::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, std::vector<Entity*> entities)
 {
 	if (!chase) {
 		if (DistBetweenPoints(playerPos.x, playerPos.z, entityPos.x, entityPos.z) <= detectRange) { //if player is within detect range
@@ -34,13 +34,12 @@ void BasicMelee::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes)
 	if (chase) {
 		Vector3 targetVector = Vector3(playerPos.x, 0, playerPos.z) - Vector3(entityPos.x, 0, entityPos.z);
 		targetVector = targetVector.Normalized();
-		if (DistBetweenPoints(playerPos.x, playerPos.z, entityPos.x, entityPos.z) > attackRange)  //chase player if player is out of attack range
-		{
-			Vector3 newVector = targetVector * velocity * dt;
-			entityPos.x += newVector.x;
-			entityPos.z += newVector.z;
-		}
-		entityFacing = acosf(directionVector.Dot(targetVector)); //face player when chasing
+		//chases player
+		Vector3 newVector = targetVector * velocity * dt;
+		entityPos.x += newVector.x;
+		entityPos.z += newVector.z;
+		//face player when chasing
+		entityFacing = acosf(directionVector.Dot(targetVector)); 
 		if (targetVector.x > 0) {
 			entityFacing = Math::RadianToDegree(entityFacing);
 		}
@@ -53,6 +52,7 @@ void BasicMelee::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes)
 
 	//Collision
 	checkCollisionStructures(hitboxes);
+	checkCollisionEntities(entities);
 }
 
 void BasicMelee::attack()

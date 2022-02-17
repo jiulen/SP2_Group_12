@@ -260,7 +260,7 @@ void SceneGame::Init()
 	bLightEnabled = true;
 	enterScene = true;
 
-	//Building hitboxes
+	//Init non moving hitboxes
 	hitboxes.push_back(Hitbox(-60, 29, -60, 24, 58, 24));
 	hitboxes.push_back(Hitbox(0, 9, -70, 32, 18, 20));
 	hitboxes.push_back(Hitbox(-60, 40, 0, 24, 80, 24));
@@ -278,8 +278,9 @@ void SceneGame::Init()
 	hitboxes.push_back(Hitbox(10, 4, 70.5, 16, 8, 3));
 	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
 
-	//Entities
+	//Init entities
 	entities.push_back(new BasicMelee (0, Vector3(60, 0, 2), Vector3(0, 0, 1)) );
+	entities.push_back(new BasicMelee(0, Vector3(-20, 0, 2), Vector3(0, 0, 1)));
 }
 
 void SceneGame::Update(double dt)
@@ -360,7 +361,7 @@ void SceneGame::UpdateEnemyMovement(double dt)
 	//For enemies
 	for (int i = 0; i < entities.size(); i++) {
 		if (entities[i]->getType() == 'E') {
-			entities[i]->move(Vector3(camera.position.x, 0, camera.position.z), dt, hitboxes);
+			entities[i]->move(Vector3(camera.position.x, 0, camera.position.z), dt, hitboxes, entities);
 		}
 	}
 }
@@ -695,7 +696,7 @@ void SceneGame::RenderBomb()
 		modelStack.PopMatrix();
 		if ((camera.position.x > 76.1) && (camera.position.x < 80) && (camera.position.z > -13) && (camera.position.z < -9))
 		{
-			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
 				nextscene = rand() % 3 + 4;
@@ -736,7 +737,7 @@ void SceneGame::RenderBomb()
 		modelStack.PopMatrix();
 		if ((camera.position.x > 60) && (camera.position.x < 64) && (camera.position.z > -56.9) && (camera.position.z < -53))
 		{
-			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
 				nextscene = rand() % 3 + 4;
@@ -776,7 +777,7 @@ void SceneGame::RenderBomb()
 		modelStack.PopMatrix();
 		if ((camera.position.x > -20) && (camera.position.x < -16.1) && (camera.position.z > -69) && (camera.position.z < -65))
 		{
-			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
 				nextscene = rand() % 3 + 4;
@@ -816,7 +817,7 @@ void SceneGame::RenderBomb()
 		modelStack.PopMatrix();
 		if ((camera.position.x > -76) && (camera.position.x < -72.1) && (camera.position.z > -66) && (camera.position.z < -62))
 		{
-			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
 				nextscene = rand() % 3+4;
@@ -857,7 +858,7 @@ void SceneGame::RenderBomb()
 		modelStack.PopMatrix();
 		if ((camera.position.x > -55) && (camera.position.x < -51) && (camera.position.z > 12.1) && (camera.position.z < 16))
 		{
-			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
 				nextscene = rand() % 3 + 4;
@@ -897,7 +898,7 @@ void SceneGame::RenderBomb()
 		modelStack.PopMatrix();
 		if ((camera.position.x > -31.9) && (camera.position.x < -28) && (camera.position.z > 58) && (camera.position.z < 62))
 		{
-			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
 				nextscene = rand() % 3 + 4;
@@ -938,7 +939,7 @@ void SceneGame::RenderBomb()
 		modelStack.PopMatrix();
 		if ((camera.position.x > 5) && (camera.position.x < 9) && (camera.position.z > 88.1) && (camera.position.z < 92))
 		{
-			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
 				nextscene = rand() % 3 + 4;
@@ -979,7 +980,7 @@ void SceneGame::RenderBomb()
 		modelStack.PopMatrix();
 		if ((camera.position.x > 54) && (camera.position.x < 58) && (camera.position.z > 44) && (camera.position.z < 47.9))
 		{
-			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
 				nextscene = rand() % 3 + 4;
@@ -1019,7 +1020,7 @@ void SceneGame::RenderBomb()
 		modelStack.PopMatrix();
 		if ((camera.position.x > 20.1) && (camera.position.x < 24) && (camera.position.z > -17) && (camera.position.z < -13))
 		{
-			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 1, 1), 4, 22, 28);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 			if (Application::IsKeyPressed('F'))
 			{
 				nextscene = rand() % 3 + 4;

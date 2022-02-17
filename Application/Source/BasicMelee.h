@@ -12,7 +12,7 @@ private:
 public:
 	BasicMelee(float facing, Vector3 pos, Vector3 direction);
 	~BasicMelee();
-	void move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes);
+	void move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, std::vector<Entity*> entities);
 	void attack(); //do later
 };
 

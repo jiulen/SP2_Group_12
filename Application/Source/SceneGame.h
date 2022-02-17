@@ -133,11 +133,14 @@ private:
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 	void RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y);
-	std::vector<Hitbox> hitboxes; //floats are pos x, y, z and size x, y, z
+	
 	float FPS;
+	bool enterScene;
+
 	std::ifstream fileStream;
 	unsigned textMaxWidth;
 	unsigned textSpacing[256];
+
 	int nextscene = 3;
 	int bombrand1 = 0;
 	int bombrand2 = 0;
@@ -145,8 +148,8 @@ private:
 	int bomb, bomb2, bomb3;
 	int minigamesused[3] = { 0,0,0 };
 
+	std::vector<Hitbox> hitboxes; //floats are pos x, y, z and size x, y, z
 	std::vector<Entity*> entities;
-	bool enterScene;
 public:
 	SceneGame();
 	~SceneGame();
