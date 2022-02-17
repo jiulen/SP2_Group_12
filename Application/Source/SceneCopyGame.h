@@ -103,6 +103,7 @@ public:
 	SceneCopyGame();
 	~SceneCopyGame();
 	virtual int NextScene();
+	virtual void UseScene();
 	virtual void Init();
 	virtual void Update(double dt);
 	virtual void Render();
