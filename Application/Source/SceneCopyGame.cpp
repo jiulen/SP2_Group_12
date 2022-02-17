@@ -19,7 +19,12 @@ SceneCopyGame::SceneCopyGame()
 SceneCopyGame::~SceneCopyGame()
 {
 }
-
+void SceneCopyGame::UseScene()
+{
+	glBindVertexArray(m_vertexArrayID);
+	glUseProgram(m_programID);
+	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
+}
 void SceneCopyGame::Init()
 {
 	// Init VBO here
@@ -405,7 +410,7 @@ void SceneCopyGame::RenderCopyGame()
 
 int SceneCopyGame::NextScene()
 {
-	return 6;
+	return 0; //not switching
 }
 
 void SceneCopyGame::Exit()

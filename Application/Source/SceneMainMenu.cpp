@@ -19,7 +19,12 @@ SceneMainMenu::SceneMainMenu()
 SceneMainMenu::~SceneMainMenu()
 {
 }
-
+void SceneMainMenu::UseScene()
+{
+	glBindVertexArray(m_vertexArrayID);
+	glUseProgram(m_programID);
+	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
+}
 void SceneMainMenu::Init()
 {
 	// Init VBO here
@@ -958,7 +963,9 @@ void SceneMainMenu::RenderSkybox()
 
 int SceneMainMenu::NextScene()
 {
-	return nextscene;
+	//if press something, switch to options scene(return 2)
+	//if press something, switch to game scene(return 3)
+	return 0;
 }
 
 void SceneMainMenu::Exit()
