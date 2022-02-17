@@ -11,6 +11,7 @@
 #include "Structs.h"
 #include "Entity.h"
 #include "Enemy.h"
+#include "BasicMelee.h"
 #include "Vector3.h"
 #include <fstream>
 
@@ -38,6 +39,7 @@ class SceneGame : public Scene
 
 		//OBJs
 		GEO_ENEMY1,
+
 		GEO_BIGHOUSE_A,
 		GEO_BIGHOUSE_B,
 		GEO_BIGHOUSE_C,
