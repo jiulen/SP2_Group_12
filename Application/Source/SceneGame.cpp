@@ -638,7 +638,7 @@ void SceneGame::Render()
 	modelStack.PopMatrix();
 
 	//Render Bomb
-	RenderBomb(0);
+	RenderBomb();
 
 	std::ostringstream ss;
 	ss.str("");
@@ -647,7 +647,7 @@ void SceneGame::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 0, 0), 3, 0, 0); //FPS
 }
 
-void SceneGame::RenderBomb(int a)
+void SceneGame::RenderBomb()
 {
 	if (bombrand1 == 0)
 	{

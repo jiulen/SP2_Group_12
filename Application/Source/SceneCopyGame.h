@@ -88,8 +88,14 @@ private:
 	//game
 	int set = 0;
 	int currentstage = 0;
+	int displayed = 0;
+	int correct = 0;
+	int turn = 0;
+	int start = 0;
+	double time = 0;
 	int tocopy[5] = { 0,0,0,0,0 };
 	int pressed[5] = { 0,0,0,0,0 };
+	int pressedkey[9] = { 0,0,0,0,0,0,0,0,0 };
 	int clicked = 0;
 	double mouseX = 0;
 	double mouseY = 0;
