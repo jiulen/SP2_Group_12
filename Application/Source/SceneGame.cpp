@@ -258,6 +258,7 @@ void SceneGame::Init()
 
 	yaw = 0;
 	pitch = 0;
+	rightvector = Vector3(1, 0, 0);
 	FPS = 0;
 	bLightEnabled = true;
 	enterScene = true;
@@ -283,8 +284,9 @@ void SceneGame::Init()
 	//Init entities
 	entities.push_back(new BasicMelee (0, Vector3(60, 0, 2), Vector3(0, 0, 1)) );
 	entities.push_back(new BasicMelee(0, Vector3(-20, 0, 2), Vector3(0, 0, 1)));
+
 	//Init player
-	Player player();
+	player;
 }
 
 void SceneGame::Update(double dt)
@@ -293,53 +295,7 @@ void SceneGame::Update(double dt)
 		camera.setFirstMouse();
 		enterScene = false;
 	}
-	//mouse inputs
-	static bool bLButtonState = false;
-	if (!bLButtonState && Application::IsMousePressed(0))
-	{
-		bLButtonState = true;
-		std::cout << "LBUTTON DOWN" << std::endl;
 
-		//use tasklist as button
-		float BUTTON_LEFT = 0;
-		float BUTTON_RIGHT = 30;
-		float BUTTON_BOTTOM = 38;
-		float BUTTON_TOP = 55;
-
-		//Converting Viewport space to UI space
-		double x, y;
-		Application::GetCursorPos(&x, &y);
-		unsigned w = Application::GetWindowWidth();
-		unsigned h = Application::GetWindowHeight();
-		float posX = x/w * 80.f; //convert (0,800) to (0,80)
-		float posY = (h-y)/h * 60.f; //convert (600,0) to (0,60)
-		std::cout << "posX:" << posX << " , posY:" << posY << std::endl;
-		if (posX > BUTTON_LEFT && posX < BUTTON_RIGHT && posY > BUTTON_BOTTOM && posY < BUTTON_TOP)
-		{
-			std::cout << "Hit!" << std::endl;
-		}
-		else
-		{
-			std::cout << "Miss!" << std::endl;
-		}
-
-	}
-	else if (bLButtonState && !Application::IsMousePressed(0))
-	{
-		bLButtonState = false;
-		std::cout << "LBUTTON UP" << std::endl;
-	}
-	static bool bRButtonState = false;
-	if (!bRButtonState && Application::IsMousePressed(1))
-	{
-		bRButtonState = true;
-		std::cout << "RBUTTON DOWN" << std::endl;
-	}
-	else if (bRButtonState && !Application::IsMousePressed(1))
-	{
-		bRButtonState = false;
-		std::cout << "RBUTTON UP" << std::endl;
-	}
 
 	FPS = 1 / (float)dt;
 	
@@ -351,6 +307,29 @@ void SceneGame::Update(double dt)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //default fill mode
 	if (Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //wireframe mode
+
+	//Shooting
+	if (Application::IsMousePressed(0))
+	{
+		player.attack(dt);
+
+	}
+	static bool rOnClick = false;
+	static bool reloading = false;
+	if (!rOnClick && Application::IsKeyPressed('R'))
+	{
+		rOnClick = true;
+		reloading = true;
+	}
+	else if (rOnClick && !Application::IsKeyPressed('R'))
+	{
+		rOnClick = false;
+	}
+	if (reloading == true)
+	{
+		player.reload(dt, reloading);
+	}
+
 	camera.Update(dt, hitboxes);
 
 	if (Application::IsKeyPressed('R')) {
@@ -358,6 +337,14 @@ void SceneGame::Update(double dt)
 	}
 
 	UpdateEnemyMovement(dt);
+
+	Vector3 viewvector = (camera.target - camera.position).Normalized();
+	yaw = Math::RadianToDegree(atan2(-viewvector.x, -viewvector.z));
+	pitch = Math::RadianToDegree(atan2(viewvector.y, -viewvector.z));
+
+	rightvector = viewvector.Cross(camera.up);
+	rightvector.y = 0;
+	rightvector.Normalize();
 
 }
 void SceneGame::UpdateEnemyMovement(double dt)
@@ -678,17 +665,18 @@ void SceneGame::Render()
 	modelStack.PopMatrix();
 	//Hitbox(60, 25, 60, 24, 50, 24);
 
+
 	modelStack.PushMatrix();
-	modelStack.Translate(camera.position.x + 2, camera.position.y - 1, camera.position.z - 5);
-	modelStack.Rotate(yaw, 0, 0, 1);
-	//modelStack.Rotate(camera.u);
+	modelStack.Translate(camera.position.x, camera.position.y, camera.position.z);
+	//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
+	modelStack.Rotate(yaw, 0, 1, 0);
 	modelStack.PushMatrix();
+	modelStack.Translate(2, -1, -5);
 	modelStack.Rotate(100, 0, 1, 0);
 	modelStack.Scale(10, 10, 10);
 	RenderMesh(meshList[GEO_GUN], true);
 	modelStack.PopMatrix();
 	modelStack.PopMatrix();
-	
 
 	//Render Bomb
 	RenderBomb();

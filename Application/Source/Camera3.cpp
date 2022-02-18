@@ -166,10 +166,10 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		}
 		target = position + view;
 	}	
-	if (Application::IsKeyPressed('R'))
-	{
-		Reset();
-	}
+	//if (Application::IsKeyPressed('R'))
+	//{
+	//	Reset();
+	//}
 }
 
 void Camera3::Reset()
