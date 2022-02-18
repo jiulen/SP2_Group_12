@@ -33,6 +33,8 @@ public:
 	Vector3 getRightVector();
 private:
 	int jump;
+	bool jumping;
+	float jumpTime;
 	float lastX, lastY;
 	float totalPitch;
 	float pitch;
