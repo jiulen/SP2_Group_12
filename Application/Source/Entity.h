@@ -10,9 +10,12 @@ protected:
 	int maxhealth, currenthealth, damage;
 	Vector3 entityPos;
 	float velocity;
+	Vector3 directionVector;
+	float detectRange, attackRange;
 	float entityFacing;
 	Hitbox hitbox;
 	float enemyRadius;
+	float atkCd;
 
 	char type; //N for none(entity), E for enemy, maybe other letter for npcs(if going to add)
 	std::string name;
@@ -26,7 +29,7 @@ public:
 	Entity();
 	~Entity();
 	virtual void move(Vector3, float, std::vector<Hitbox>, std::vector<Entity*> entities);
-	virtual void attack(Vector3, float, Player, float) = 0;
+	virtual void attack(Vector3, float, Player&, float) = 0;
 	void takedamage(int a);
 	void heal(int a);
 	int getdamage();

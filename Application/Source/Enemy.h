@@ -9,14 +9,12 @@ class Enemy : public Entity
 {
 protected:
 	bool chase;
-	Vector3 directionVector;
-	float detectRange, attackRange;
 	float DistBetweenPoints(float x1, float z1, float x2, float z2);
 public:
 	Enemy();
 	~Enemy();
 	virtual void move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, std::vector<Entity*> entities);
-	virtual void attack(Vector3, float, Player, float);
+	virtual void attack(Vector3, float, Player&, float);
 };
 
 #endif

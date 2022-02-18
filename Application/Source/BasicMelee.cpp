@@ -13,6 +13,7 @@ BasicMelee::BasicMelee(float facing, Vector3 pos, Vector3 direction) {
 	type = 'E';
 	name = "BasicMelee";
 	hitbox = Hitbox(entityPos.x, entityPos.y + 2.8, entityPos.z, 2.8, 5.6f, 1.4f);
+	atkCd = 1.f;
 	//takes longer edge to use to get radius
 	if (hitbox.sizeX > hitbox.sizeZ) {
 		enemyRadius = hitbox.sizeX * 0.5f;
@@ -55,9 +56,14 @@ void BasicMelee::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes,
 	checkCollisionEntities(entities);
 }
 
-void BasicMelee::attack(Vector3 playerPos, float playerRadius, Player player, float dt)
+void BasicMelee::attack(Vector3 playerPos, float playerRadius, Player& player, float dt)
 {
-	if (DistBetweenPoints(entityPos.x, entityPos.z, playerPos.x, playerPos.z) <= attackRange + playerRadius) {
-		player.takedamage(damage);
+	static float timePassed = atkCd;
+	timePassed += dt;
+	if (timePassed >= atkCd) {
+		timePassed = 0.f;
+		if (DistBetweenPoints(entityPos.x, entityPos.z, playerPos.x, playerPos.z) <= attackRange + playerRadius) {
+			player.takedamage(damage);
+		}
 	}
 }
