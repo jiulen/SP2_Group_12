@@ -12,8 +12,6 @@ protected:
 	float velocity;
 	Vector3 directionVector;
 	float detectRange, attackRange;
-	Vector3 directionVector;
-	float detectRange, attackRange;
 	float entityFacing;
 	Hitbox hitbox;
 	float enemyRadius;

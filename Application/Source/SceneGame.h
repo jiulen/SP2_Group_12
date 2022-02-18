@@ -142,7 +142,6 @@ private:
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 	void RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y);
 	
-	Player player;
 
 	float FPS;
 	bool enterScene;
