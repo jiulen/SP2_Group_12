@@ -352,7 +352,7 @@ void SceneGame::Update(double dt)
 
 	Vector3 viewvector = (camera.target - camera.position).Normalized();
 	yaw = Math::RadianToDegree(atan2(-viewvector.x, -viewvector.z));
-	pitch = -Math::RadianToDegree(atan2(-viewvector.y, -viewvector.z));
+	pitch = Math::RadianToDegree(asin(viewvector.y));
 	//std::cout << pitch << std::endl;
 
 	rightvector = camera.getRightVector();
@@ -679,10 +679,10 @@ void SceneGame::Render()
 	modelStack.PushMatrix();
 	modelStack.Translate(camera.position.x, camera.position.y, camera.position.z);
 	modelStack.PushMatrix();
-	//revolve around cam (only works on pitch OR yaw)
+	//revolve around cam
 	modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
 	modelStack.Rotate(yaw, 0, 1, 0);
-	modelStack.Translate(2, -1, -5);
+	modelStack.Translate(2, -1.5, -5);
 	modelStack.Rotate(100, 0, 1, 0);
 	modelStack.Scale(10, 10, 10);
 	RenderMesh(meshList[GEO_GUN], true);
