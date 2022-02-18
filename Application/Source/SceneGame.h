@@ -21,7 +21,13 @@ class SceneGame : public Scene
 	{
 		//Shapes
 		GEO_CUBE, //for testing
-		
+
+		//HUD
+		GEO_HEALTH,
+		GEO_AMMO,
+		GEO_REDCROSSHAIR,
+		GEO_GREENCROSSHAIR,
+		GEO_BLUECROSSHAIR,
 
 		//Skybox
 		GEO_LEFT,
@@ -129,6 +135,7 @@ private:
 	float DistBetweenPoints(float x1, float z1, float x2, float z2);
 	void RenderSkybox();
 	void RenderBomb();
+	void RenderHUD();
 	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey);
 	void RenderText(Mesh* mesh, std::string text, Color color);
@@ -143,6 +150,10 @@ private:
 	unsigned textSpacing[256];
 
 	int nextscene = 3;
+
+	int check = 0;
+	int bombspawn = 0;
+	int currentbomb = 0;
 	int bombrand1 = 0;
 	int bombrand2 = 0;
 	int bombrand3 = 0;
