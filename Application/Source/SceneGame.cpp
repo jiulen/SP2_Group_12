@@ -258,6 +258,7 @@ void SceneGame::Init()
 
 	yaw = 0;
 	pitch = 0;
+	rightvector = Vector3(1, 0, 0);
 	FPS = 0;
 	bLightEnabled = true;
 	enterScene = true;
@@ -362,6 +363,12 @@ void SceneGame::Update(double dt)
 	Vector3 viewvector = (camera.target - camera.position).Normalized();
 	yaw = Math::RadianToDegree(atan2(-viewvector.x, -viewvector.z));
 	pitch = Math::RadianToDegree(atan2(viewvector.y, -viewvector.z));
+
+	rightvector = viewvector.Cross(camera.up);
+	rightvector.y = 0;
+	rightvector.Normalize();
+
+
 	std::cout << yaw << std::endl;
 }
 void SceneGame::UpdateEnemyMovement(double dt)
@@ -673,15 +680,13 @@ void SceneGame::Render()
 	modelStack.PopMatrix();
 	//Hitbox(60, 25, 60, 24, 50, 24);
 
-	//Vector3 right = viewector.Cross(camera.up);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(camera.position.x, camera.position.y, camera.position.z);
+	//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
 	modelStack.Rotate(yaw, 0, 1, 0);
-	//modelStack.Rotate(pitch, 1, 0, 0);
 	modelStack.PushMatrix();
 	modelStack.Translate(2, -1, -5);
-	//modelStack.Rotate(camera.u);
 	modelStack.Rotate(100, 0, 1, 0);
 	modelStack.Scale(10, 10, 10);
 	RenderMesh(meshList[GEO_GUN], true);

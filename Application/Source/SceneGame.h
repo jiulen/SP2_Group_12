@@ -151,6 +151,7 @@ private:
 
 	std::vector<Hitbox> hitboxes; //floats are pos x, y, z and size x, y, z
 	float yaw, pitch;
+	Vector3 rightvector;
 	int bulletCount;
 	std::vector<Entity*> entities;
 
