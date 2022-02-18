@@ -356,6 +356,15 @@ void SceneGame::UpdateEnemyMovement(double dt)
 		}
 	}
 }
+void SceneGame::EnemyAttack(double dt)
+{
+	//For enemies
+	for (int i = 0; i < entities.size(); i++) {
+		if (entities[i]->getType() == 'E') {
+			entities[i]->attack(Vector3(camera.position.x, 0, camera.position.z), dt, player, camera.getPlayerRadius());
+		}
+	}
+}
 float SceneGame::DistBetweenPoints(float x1, float z1, float x2, float z2)
 {
 	float distX = x1 - x2;
