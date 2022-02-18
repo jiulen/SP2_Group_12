@@ -203,12 +203,14 @@ void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 	yoffset *= sensitivity;
 
 	//limits pitch to 80 degrees both up and down
-	float totalPitch = pitch + yoffset; //check if past +-80
-	if (totalPitch > 80.f) {
-		yoffset -= totalPitch - 80.f;
+	//test
+	static float Pitch = 0.f;
+	float totalPitch = Pitch + yoffset; //check if past +-80
+	if (totalPitch > 67.5f) {
+		yoffset -= totalPitch - 67.5f;
 	}
-	else if (totalPitch < -80.f) {
-		yoffset -= totalPitch + 80.f;
+	else if (totalPitch < -67.5f) {
+		yoffset -= totalPitch + 67.5f;
 	}
 
 	//yaw
@@ -227,16 +229,18 @@ void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 	view = rotation * view;
 	target = position + view;
 
-	//updates pitch
-	Vector3 line = view;
-	line.y = 0;
-	pitch = acosf( (view.Dot(line)) / view.Length() * line.Length());
-	if (view.y >= 0) {
-		pitch = Math::RadianToDegree(pitch);
-	}
-	else {
-		pitch = -Math::RadianToDegree(pitch);
-	}
+	////updates pitch
+	//Vector3 line = view;
+	//line.y = 0;
+	//pitch = acosf( (view.Dot(line)) / view.Length() * line.Length());
+	//if (view.y >= 0) {
+	//	pitch = Math::RadianToDegree(pitch);
+	//}
+	//else {
+	//	pitch = -Math::RadianToDegree(pitch);
+	//}
+	Pitch = Math::RadianToDegree(asinf(view.y));
+	std::cout << Pitch << std::endl;
 }
 
 Vector3 Camera3::CollisionCircleRect(float cx, float cy, float radius, float rx, float ry, float rw, float rh) {
