@@ -202,7 +202,7 @@ void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 	xoffset *= -sensitivity;
 	yoffset *= sensitivity;
 
-	//limits pitch to 90 degrees both up and down
+	//limits pitch to 80 degrees both up and down
 	float totalPitch = pitch + yoffset; //check if past +-80
 	if (totalPitch > 80.f) {
 		yoffset -= totalPitch - 80.f;
@@ -222,6 +222,7 @@ void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 	right.y = 0;
 	right.Normalize();
 	up = right.Cross(view).Normalized();
+	returningRightVector = right;
 	rotation.SetToRotation(yoffset, right.x, right.y, right.z);
 	view = rotation * view;
 	target = position + view;
@@ -236,7 +237,6 @@ void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 	else {
 		pitch = -Math::RadianToDegree(pitch);
 	}
-
 }
 
 Vector3 Camera3::CollisionCircleRect(float cx, float cy, float radius, float rx, float ry, float rw, float rh) {
@@ -314,6 +314,11 @@ void Camera3::setFirstMouse()
 float Camera3::getPlayerRadius()
 {
 	return playerRadius;
+}
+
+Vector3 Camera3::getRightVector()
+{
+	return returningRightVector;
 }
 
 Hitbox Camera3::getPlayerHitbox()
