@@ -308,11 +308,11 @@ void SceneGame::Update(double dt)
 	if (Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //wireframe mode
 
+	player.Update(dt);
 	//Shooting
 	if (Application::IsMousePressed(0))
 	{
 		player.attack(dt);
-
 	}
 	static bool rOnClick = false;
 	static bool reloading = false;

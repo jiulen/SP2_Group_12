@@ -15,9 +15,10 @@ struct Hitbox //AABB hitbox
 struct Player {
 	int maxHealth, currentHealth, damage, maxAmmo, currentAmmo;
 	float shootCD, reloadCD;
+	float timeBetweenShot;
 	Player(int health = 100, int damage = 20, int ammo = 7, float cd = 0.5, float rd = 2) { Set(health, damage, ammo, cd, rd); }
 	void Set(int health, int damage, int ammo, float cd, float rd) {
-		maxHealth = health; currentHealth = health; this->damage = damage; maxAmmo = ammo, currentAmmo = ammo; shootCD = cd; reloadCD = rd;
+		maxHealth = health; currentHealth = health; this->damage = damage; maxAmmo = ammo, currentAmmo = ammo; shootCD = cd; reloadCD = rd; timeBetweenShot = shootCD;
 	}
 	void takedamage(int dmg) {
 		currentHealth -= dmg;
@@ -32,8 +33,6 @@ struct Player {
 		}
 	}
 	void attack(float dt) {
-		static float timeBetweenShot = shootCD;
-		timeBetweenShot += dt;
 		if (timeBetweenShot >= shootCD)
 		{
 			if (currentAmmo > 0)
@@ -53,6 +52,10 @@ struct Player {
 			reloading = false;
 			std::cout << "reloading" << std::endl;
 		}
+	}
+
+	void Update(float dt) {
+		timeBetweenShot += dt;
 	}
 };
 
