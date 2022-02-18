@@ -151,13 +151,13 @@ void Application::Run()
 	{
 		int sceneno = scene->NextScene(); //0 for not switching scene, other numbers for not switch to that scene
 		//
-		if (IsKeyPressed(VK_F1))
-			sceneno = 1;
-	    else if (IsKeyPressed(VK_F2))
-			sceneno = 2;
-		if (IsKeyPressed(VK_F3))
-			sceneno = 3;
-		else if (IsKeyPressed(VK_F4))
+		//if (IsKeyPressed(VK_F1))
+			//sceneno = 1;
+	    //else if (IsKeyPressed(VK_F2))
+			//sceneno = 2;
+		//if (IsKeyPressed(VK_F3))
+			//sceneno = 3;
+		if (IsKeyPressed(VK_F4))
 			sceneno = 4;
 		else if (IsKeyPressed(VK_F5))
 			sceneno = 5;
