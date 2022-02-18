@@ -87,9 +87,6 @@ Entity::~Entity()
 void Entity::move(Vector3, float, std::vector<Hitbox>, std::vector<Entity*> entities)
 {
 }
-void Entity::attack()
-{
-}
 void Entity::takedamage(int a)
 {
 	currenthealth -= a;

@@ -142,6 +142,8 @@ private:
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 	void RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y);
 	
+	Player player;
+
 	float FPS;
 	bool enterScene;
 
@@ -151,6 +153,8 @@ private:
 
 	int nextscene = 3;
 
+	int crosshairenabled = 1;
+	int crosshair = 1;
 	int check = 0;
 	int bombspawn = 0;
 	int currentbomb = 0;
@@ -169,7 +173,6 @@ private:
 public:
 	SceneGame();
 	~SceneGame();
-
 	virtual void Init();
 	virtual void Update(double dt);
 	void UpdateEnemyMovement(double dt);
