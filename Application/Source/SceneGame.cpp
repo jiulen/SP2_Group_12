@@ -283,6 +283,8 @@ void SceneGame::Init()
 	//Init entities
 	entities.push_back(new BasicMelee (0, Vector3(60, 0, 2), Vector3(0, 0, 1)) );
 	entities.push_back(new BasicMelee(0, Vector3(-20, 0, 2), Vector3(0, 0, 1)));
+	//Init player
+	Player player();
 }
 
 void SceneGame::Update(double dt)
