@@ -353,7 +353,6 @@ void SceneGame::Update(double dt)
 	Vector3 viewvector = (camera.target - camera.position).Normalized();
 	yaw = Math::RadianToDegree(atan2(-viewvector.x, -viewvector.z));
 	pitch = Math::RadianToDegree(asin(viewvector.y));
-	//std::cout << pitch << std::endl;
 
 	rightvector = camera.getRightVector();
 }

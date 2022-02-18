@@ -23,6 +23,8 @@ void Camera3::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
     this->up = defaultUp = right.Cross(view).Normalized();
 	//
 	jump = -1;
+	jumpTime = 0.f;
+	jumping = false;
 	lastX = Application::GetWindowWidth() * 0.5f;
 	lastY = Application::GetWindowHeight() * 0.5f;
 	firstMouse = true;
@@ -46,13 +48,13 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 	LookingAround();
 	if (Application::IsKeyPressed(VK_SHIFT))
 	{
-		MOVE_SPEED = 40.f;
+		MOVE_SPEED = 22.5f;
 	}
 	else
 	{
 		MOVE_SPEED = 15.f;
 	}
-	static const float JUMP_SPEED = 25.f;
+	static float JUMP_SPEED = 25.f;
 	Vector3 view = (target - position).Normalized();
 	Vector3 right = view.Cross(up);
 	right.y = 0;
@@ -137,35 +139,31 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		playerWASDCollision(hitboxes);
 		target = position + view;
 	}
-	if ((Application::IsKeyPressed(VK_SPACE)) && (jump==-1))
+	if (Application::IsKeyPressed(VK_SPACE) && !jumping)
 	{
-		jump = 1;
+		jumpTime = 0.f;
+		jumping = true;
+		JUMP_SPEED = 25.f;
 	}
-	if (jump == 1)
-	{
+	if (jumping) {
+		jumpTime += dt;
 		position.y += static_cast<float>(dt) * JUMP_SPEED;
 		bool collide = false;
 		playerCeilingCollision(hitboxes, collide);
 		if (collide) {
-			jump = 0;
+			JUMP_SPEED = 0.f;
 		}
-		else if (position.y >= 10)
-		{
-			position.y = 10;
-			jump = 0;
-		}	
-		target = position + view;
-	}
-	if (jump == 0)
-	{
-		position.y -= static_cast<float>(dt) * JUMP_SPEED;
+		if (jumpTime > 0.05) {
+			JUMP_SPEED -= 5;
+			jumpTime = 0.f;
+		}
 		if (position.y <= defaultPosition.y)
 		{
 			position.y = defaultPosition.y;
-			jump = -1;
+			jumping = false;
 		}
 		target = position + view;
-	}	
+	}
 	//if (Application::IsKeyPressed('R'))
 	//{
 	//	Reset();
@@ -229,18 +227,7 @@ void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 	view = rotation * view;
 	target = position + view;
 
-	////updates pitch
-	//Vector3 line = view;
-	//line.y = 0;
-	//pitch = acosf( (view.Dot(line)) / view.Length() * line.Length());
-	//if (view.y >= 0) {
-	//	pitch = Math::RadianToDegree(pitch);
-	//}
-	//else {
-	//	pitch = -Math::RadianToDegree(pitch);
-	//}
 	Pitch = Math::RadianToDegree(asinf(view.y));
-	std::cout << Pitch << std::endl;
 }
 
 Vector3 Camera3::CollisionCircleRect(float cx, float cy, float radius, float rx, float ry, float rw, float rh) {
