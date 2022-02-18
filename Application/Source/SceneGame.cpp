@@ -284,8 +284,9 @@ void SceneGame::Init()
 	//Init entities
 	entities.push_back(new BasicMelee (0, Vector3(60, 0, 2), Vector3(0, 0, 1)) );
 	entities.push_back(new BasicMelee(0, Vector3(-20, 0, 2), Vector3(0, 0, 1)));
+
 	//Init player
-	Player player();
+	player;
 }
 
 void SceneGame::Update(double dt)
@@ -294,53 +295,7 @@ void SceneGame::Update(double dt)
 		camera.setFirstMouse();
 		enterScene = false;
 	}
-	//mouse inputs
-	static bool bLButtonState = false;
-	if (!bLButtonState && Application::IsMousePressed(0))
-	{
-		bLButtonState = true;
-		std::cout << "LBUTTON DOWN" << std::endl;
 
-		//use tasklist as button
-		float BUTTON_LEFT = 0;
-		float BUTTON_RIGHT = 30;
-		float BUTTON_BOTTOM = 38;
-		float BUTTON_TOP = 55;
-
-		//Converting Viewport space to UI space
-		double x, y;
-		Application::GetCursorPos(&x, &y);
-		unsigned w = Application::GetWindowWidth();
-		unsigned h = Application::GetWindowHeight();
-		float posX = x/w * 80.f; //convert (0,800) to (0,80)
-		float posY = (h-y)/h * 60.f; //convert (600,0) to (0,60)
-		std::cout << "posX:" << posX << " , posY:" << posY << std::endl;
-		if (posX > BUTTON_LEFT && posX < BUTTON_RIGHT && posY > BUTTON_BOTTOM && posY < BUTTON_TOP)
-		{
-			std::cout << "Hit!" << std::endl;
-		}
-		else
-		{
-			std::cout << "Miss!" << std::endl;
-		}
-
-	}
-	else if (bLButtonState && !Application::IsMousePressed(0))
-	{
-		bLButtonState = false;
-		std::cout << "LBUTTON UP" << std::endl;
-	}
-	static bool bRButtonState = false;
-	if (!bRButtonState && Application::IsMousePressed(1))
-	{
-		bRButtonState = true;
-		std::cout << "RBUTTON DOWN" << std::endl;
-	}
-	else if (bRButtonState && !Application::IsMousePressed(1))
-	{
-		bRButtonState = false;
-		std::cout << "RBUTTON UP" << std::endl;
-	}
 
 	FPS = 1 / (float)dt;
 	
@@ -352,6 +307,29 @@ void SceneGame::Update(double dt)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); //default fill mode
 	if (Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //wireframe mode
+
+	//Shooting
+	if (Application::IsMousePressed(0))
+	{
+		player.attack(dt);
+
+	}
+	static bool rOnClick = false;
+	static bool reloading = false;
+	if (!rOnClick && Application::IsKeyPressed('R'))
+	{
+		rOnClick = true;
+		reloading = true;
+	}
+	else if (rOnClick && !Application::IsKeyPressed('R'))
+	{
+		rOnClick = false;
+	}
+	if (reloading == true)
+	{
+		player.reload(dt, reloading);
+	}
+
 	camera.Update(dt, hitboxes);
 
 	if (Application::IsKeyPressed('R')) {
@@ -368,8 +346,6 @@ void SceneGame::Update(double dt)
 	rightvector.y = 0;
 	rightvector.Normalize();
 
-
-	std::cout << yaw << std::endl;
 }
 void SceneGame::UpdateEnemyMovement(double dt)
 {
