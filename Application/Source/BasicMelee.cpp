@@ -56,9 +56,9 @@ void BasicMelee::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes,
 	checkCollisionEntities(entities);
 }
 
-void BasicMelee::attack(Vector3 playerPos, float playerRadius, Player player, float dt)
+void BasicMelee::attack(Vector3 playerPos, float playerRadius, Player& player, float dt)
 {
-	static float timePassed = atkCd; //ready to atk at start
+	static float timePassed = atkCd;
 	timePassed += dt;
 	if (timePassed >= atkCd) {
 		timePassed = 0.f;

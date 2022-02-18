@@ -60,6 +60,6 @@ void Enemy::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, std:
 	}
 }
 
-void Enemy::attack(Vector3, float, Player, float)
+void Enemy::attack(Vector3, float, Player&, float)
 {
 }

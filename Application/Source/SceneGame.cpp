@@ -336,7 +336,9 @@ void SceneGame::Update(double dt)
 		bLightEnabled = true;
 	}
 
+	//Enemy updates
 	UpdateEnemyMovement(dt);
+	EnemyAttack(dt);
 
 	Vector3 viewvector = (camera.target - camera.position).Normalized();
 	yaw = Math::RadianToDegree(atan2(-viewvector.x, -viewvector.z));
@@ -345,7 +347,6 @@ void SceneGame::Update(double dt)
 	rightvector = viewvector.Cross(camera.up);
 	rightvector.y = 0;
 	rightvector.Normalize();
-
 }
 void SceneGame::UpdateEnemyMovement(double dt)
 {
@@ -361,7 +362,7 @@ void SceneGame::EnemyAttack(double dt)
 	//For enemies
 	for (int i = 0; i < entities.size(); i++) {
 		if (entities[i]->getType() == 'E') {
-			entities[i]->attack(Vector3(camera.position.x, 0, camera.position.z), dt, player, camera.getPlayerRadius());
+			entities[i]->attack(Vector3(camera.position.x, 0, camera.position.z), camera.getPlayerRadius(), player, dt);
 		}
 	}
 }
