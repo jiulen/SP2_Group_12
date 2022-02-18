@@ -68,11 +68,15 @@ Entity::Entity()
 	currenthealth = maxhealth;
 	damage = 1;
 	entityPos = Vector3(0,0,0);
+	directionVector = Vector3(0, 0, 1);
+	detectRange = 10;
+	attackRange = 1;
 	velocity = 1.0f;
 	entityFacing = 0.f;
 	type = 'N';
 	name = "";
 	hitbox = (0.f, 0.f, 0.f, 1.f, 1.f, 1.f);
+	atkCd = 1.f;
 	//takes longer edge to use to get radius
 	if (hitbox.sizeX > hitbox.sizeZ) {
 		enemyRadius = hitbox.sizeX * 0.5f;
@@ -85,9 +89,6 @@ Entity::~Entity()
 {
 }
 void Entity::move(Vector3, float, std::vector<Hitbox>, std::vector<Entity*> entities)
-{
-}
-void Entity::attack()
 {
 }
 void Entity::takedamage(int a)

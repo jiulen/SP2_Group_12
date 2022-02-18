@@ -161,6 +161,7 @@ public:
 	virtual void Init();
 	virtual void Update(double dt);
 	void UpdateEnemyMovement(double dt);
+	void EnemyAttack(double dt);
 	virtual void Render();
 	virtual void Exit();
 	virtual int NextScene();

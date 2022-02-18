@@ -9,8 +9,6 @@ class Enemy : public Entity
 {
 protected:
 	bool chase;
-	Vector3 directionVector;
-	float detectRange, attackRange;
 	float DistBetweenPoints(float x1, float z1, float x2, float z2);
 public:
 	Enemy();
