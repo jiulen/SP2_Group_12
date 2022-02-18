@@ -16,7 +16,7 @@ public:
 	Enemy();
 	~Enemy();
 	virtual void move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, std::vector<Entity*> entities);
-	virtual void attack();
+	virtual void attack(Vector3, float, Player, float);
 };
 
 #endif

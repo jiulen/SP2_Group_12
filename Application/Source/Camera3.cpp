@@ -311,7 +311,12 @@ void Camera3::setFirstMouse()
 	firstMouse = true;
 }
 
+float Camera3::getPlayerRadius()
+{
+	return playerRadius;
+}
+
 Hitbox Camera3::getPlayerHitbox()
 {
-	return Hitbox();
+	return playerHitbox;
 }
