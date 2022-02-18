@@ -29,6 +29,7 @@ public:
 
 	void setFirstMouse();
 	Hitbox getPlayerHitbox();
+	float getPlayerRadius();
 private:
 	int jump;
 	float lastX, lastY;

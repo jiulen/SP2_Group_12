@@ -162,35 +162,10 @@ private:
 
 	std::vector<Hitbox> hitboxes; //floats are pos x, y, z and size x, y, z
 	float yaw, pitch;
+	Vector3 rightvector;
 	int bulletCount;
 	std::vector<Entity*> entities;
 
-	//Player struct
-	struct Player {
-		int maxHealth, currentHealth, damage, maxAmmo, currentAmmo;
-		Player(int health = 100, int damage = 20, int ammo = 7) { Set(health, damage, ammo); }
-		void Set(int health, int damage, int ammo) {
-			maxHealth = health; currentHealth = health; this->damage = damage; maxAmmo = ammo, currentAmmo = ammo;
-		}
-		void takedamage(int dmg) {
-			currentHealth -= dmg;
-			if (currentHealth < 0) {
-				currentHealth = 0;
-			}
-		}
-		void heal(int healing) {
-			currentHealth += healing;
-			if (currentHealth > maxHealth) {
-				currentHealth = maxHealth;
-			}
-		}
-		void attack() {
-			//do shooting here
-		}
-		void reload() {
-			currentAmmo = maxAmmo;
-		}
-	};
 public:
 	SceneGame();
 	~SceneGame();

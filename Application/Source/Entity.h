@@ -26,7 +26,7 @@ public:
 	Entity();
 	~Entity();
 	virtual void move(Vector3, float, std::vector<Hitbox>, std::vector<Entity*> entities);
-	virtual void attack();
+	virtual void attack(Vector3, float, Player, float) = 0;
 	void takedamage(int a);
 	void heal(int a);
 	int getdamage();
