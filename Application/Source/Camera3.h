@@ -30,6 +30,7 @@ public:
 	void setFirstMouse();
 	Hitbox getPlayerHitbox();
 	float getPlayerRadius();
+	Vector3 getRightVector();
 private:
 	int jump;
 	float lastX, lastY;
@@ -39,6 +40,7 @@ private:
 	void LookingAround();
 	float playerRadius, playerHeight;
 	Hitbox playerHitbox;
+	Vector3 returningRightVector;
 };
 
 #endif

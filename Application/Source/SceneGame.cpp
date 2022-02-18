@@ -318,11 +318,11 @@ void SceneGame::Update(double dt)
 	if (Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //wireframe mode
 
+	player.Update(dt);
 	//Shooting
 	if (Application::IsMousePressed(0))
 	{
 		player.attack(dt);
-
 	}
 	static bool rOnClick = false;
 	static bool reloading = false;
@@ -352,11 +352,10 @@ void SceneGame::Update(double dt)
 
 	Vector3 viewvector = (camera.target - camera.position).Normalized();
 	yaw = Math::RadianToDegree(atan2(-viewvector.x, -viewvector.z));
-	pitch = Math::RadianToDegree(atan2(viewvector.y, -viewvector.z));
+	pitch = Math::RadianToDegree(asin(viewvector.y));
+	//std::cout << pitch << std::endl;
 
-	rightvector = viewvector.Cross(camera.up);
-	rightvector.y = 0;
-	rightvector.Normalize();
+	rightvector = camera.getRightVector();
 }
 void SceneGame::UpdateEnemyMovement(double dt)
 {
@@ -679,10 +678,11 @@ void SceneGame::Render()
 
 	modelStack.PushMatrix();
 	modelStack.Translate(camera.position.x, camera.position.y, camera.position.z);
-	//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
-	modelStack.Rotate(yaw, 0, 1, 0);
 	modelStack.PushMatrix();
-	modelStack.Translate(2, -1, -5);
+	//revolve around cam
+	modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
+	modelStack.Rotate(yaw, 0, 1, 0);
+	modelStack.Translate(2, -1.5, -5);
 	modelStack.Rotate(100, 0, 1, 0);
 	modelStack.Scale(10, 10, 10);
 	RenderMesh(meshList[GEO_GUN], true);
