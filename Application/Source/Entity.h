@@ -10,9 +10,14 @@ protected:
 	int maxhealth, currenthealth, damage;
 	Vector3 entityPos;
 	float velocity;
+	Vector3 directionVector;
+	float detectRange, attackRange;
+	Vector3 directionVector;
+	float detectRange, attackRange;
 	float entityFacing;
 	Hitbox hitbox;
 	float enemyRadius;
+	float atkCd;
 
 	char type; //N for none(entity), E for enemy, maybe other letter for npcs(if going to add)
 	std::string name;

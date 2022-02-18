@@ -14,9 +14,10 @@ struct Hitbox //AABB hitbox
 //Player struct
 struct Player {
 	int maxHealth, currentHealth, damage, maxAmmo, currentAmmo;
-	Player(int health = 100, int damage = 20, int ammo = 7) { Set(health, damage, ammo); }
-	void Set(int health, int damage, int ammo) {
-		maxHealth = health; currentHealth = health; this->damage = damage; maxAmmo = ammo, currentAmmo = ammo;
+	float shootCD, reloadCD;
+	Player(int health = 100, int damage = 20, int ammo = 7, float cd = 0.5, float rd = 2) { Set(health, damage, ammo, cd, rd); }
+	void Set(int health, int damage, int ammo, float cd, float rd) {
+		maxHealth = health; currentHealth = health; this->damage = damage; maxAmmo = ammo, currentAmmo = ammo; shootCD = cd; reloadCD = rd;
 	}
 	void takedamage(int dmg) {
 		currentHealth -= dmg;
@@ -30,11 +31,28 @@ struct Player {
 			currentHealth = maxHealth;
 		}
 	}
-	void attack() {
-		//do shooting here
+	void attack(float dt) {
+		static float timeBetweenShot = shootCD;
+		timeBetweenShot += dt;
+		if (timeBetweenShot >= shootCD)
+		{
+			if (currentAmmo > 0)
+			{
+				currentAmmo--;
+				timeBetweenShot = 0;
+				std::cout << currentAmmo << std::endl;
+			}
+		}
 	}
-	void reload() {
-		currentAmmo = maxAmmo;
+	void reload(float dt, bool& reloading) {
+		static float reloadTime = 0;
+		reloadTime += dt;
+		if (reloadTime >= reloadCD)
+		{
+			currentAmmo = maxAmmo;
+			reloading = false;
+			std::cout << "reloading" << std::endl;
+		}
 	}
 };
 

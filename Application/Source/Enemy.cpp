@@ -21,6 +21,7 @@ Enemy::Enemy()
 	velocity = 10;
 	type = 'E';
 	name = "";
+	atkCd = 1.f;
 	hitbox = Hitbox(entityPos.x, entityPos.y + 2.8, entityPos.z, 2.8, 5.6f, 1.4f);
 	//takes longer edge to use to get radius
 	if (hitbox.sizeX > hitbox.sizeZ) {

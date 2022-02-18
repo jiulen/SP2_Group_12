@@ -168,6 +168,9 @@ private:
 	float yaw, pitch;
 	Vector3 rightvector;
 	int bulletCount;
+
+	//Init player
+	Player player;
 	std::vector<Entity*> entities;
 
 public:
@@ -176,6 +179,7 @@ public:
 	virtual void Init();
 	virtual void Update(double dt);
 	void UpdateEnemyMovement(double dt);
+	void EnemyAttack(double dt);
 	virtual void Render();
 	virtual void Exit();
 	virtual int NextScene();
