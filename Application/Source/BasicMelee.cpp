@@ -55,6 +55,9 @@ void BasicMelee::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes,
 	checkCollisionEntities(entities);
 }
 
-void BasicMelee::attack()
+void BasicMelee::attack(Vector3 playerPos, float playerRadius, Player player, float dt)
 {
+	if (DistBetweenPoints(entityPos.x, entityPos.z, playerPos.x, playerPos.z) <= attackRange + playerRadius) {
+		player.takedamage(damage);
+	}
 }
