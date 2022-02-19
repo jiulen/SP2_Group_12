@@ -1,4 +1,5 @@
 #include "SceneGame.h" 
+#include "SceneSettings.h"
 #include "GL\glew.h"
 #include "Mtx44.h"
 #include "MyMath.h"
@@ -32,6 +33,9 @@ void SceneGame::UseScene()
 void SceneGame::Init()
 {
 	// Init VBO here
+	redPicked = true;
+	bluePicked = false;
+	greenPicked = false;
 
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
@@ -1067,11 +1071,11 @@ void SceneGame::RenderHUD()
 		RenderTextOnScreen(meshList[GEO_TEXT], ss1.str(), Color(1, 0, 0), 7, 8, 0);
 	if (crosshairenabled == 1) //Crosshair
 	{
-		if (crosshair == 1)
+		if (crosshair == 1 && redPicked == true)
 			RenderImageOnScreen(meshList[GEO_REDCROSSHAIR], Color(1, 1, 1), 5, 5, 40, 30);
-		else if (crosshair == 2)
+		else if (crosshair == 2 && bluePicked == true)
 			RenderImageOnScreen(meshList[GEO_BLUECROSSHAIR], Color(1, 1, 1), 5, 5, 40, 30);
-		else if (crosshair == 3)
+		else if (crosshair == 3 && greenPicked == true)
 			RenderImageOnScreen(meshList[GEO_GREENCROSSHAIR], Color(1, 1, 1), 5, 5, 40, 30);
 	}
 	RenderTextOnScreen(meshList[GEO_TEXT], ssss.str(), Color(1, 1, 1), 3, 67, 57); //Scams

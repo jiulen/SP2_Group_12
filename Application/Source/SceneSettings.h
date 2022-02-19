@@ -117,6 +117,9 @@ private:
 	bool redAlive, blackAlive, cyanAlive, orangeAlive;
 	bool voting, lightsOn, impostor;
 	bool turnLightOff;
+	bool redPicked;
+	bool bluePicked;
+	bool greenPicked;
 	int voted; //0: not voted, 1: bots voted, 2: player voted
 	int redVotes, blackVotes, cyanVotes, orangeVotes, noVotes;
 	int mostVotes; //0 means tie/no vote, others means that player got most votes
@@ -141,6 +144,8 @@ private:
 		cyanTranslateX, cyanTranslateY, cyanTranslateZ,
 		orangeTranslateX, orangeTranslateY, orangeTranslateZ;
 	int nextscene = 2;
+	double mouseX = 0;
+	double mouseY = 0;
 public:
 	SceneSettings();
 	~SceneSettings();

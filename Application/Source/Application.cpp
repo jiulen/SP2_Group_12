@@ -15,6 +15,7 @@
 #include "SceneMainMenu.h"
 #include "SceneSettings.h"
 #include "SceneGame.h"
+#include "SceneGameOver.h"
 
 GLFWwindow* m_window;
 const unsigned char FPS = 60; // FPS of this game
@@ -137,6 +138,7 @@ void Application::Run()
 	Scene* scene4 = new SceneWiringGame();
 	Scene* scene5 = new SceneNumbersGame();
 	Scene* scene6 = new SceneCopyGame();
+	Scene* scene7 = new SceneGameOver();
 	Scene* scene = scene1;
 	scene1->Init();
 	scene2->Init();
@@ -144,15 +146,16 @@ void Application::Run()
 	scene4->Init();
 	scene5->Init();
 	scene6->Init();
+	scene7->Init();
 
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
 		int sceneno = scene->NextScene(); //0 for not switching scene, other numbers for not switch to that scene
-		/*if (IsKeyPressed(VK_F1))
+		if (IsKeyPressed(VK_F1))
 			sceneno = 1;
-	    else if (IsKeyPressed(VK_F2))
+	    if (IsKeyPressed(VK_F2))
 			sceneno = 2;
 		if (IsKeyPressed(VK_F3))
 			sceneno = 3;
@@ -161,22 +164,32 @@ void Application::Run()
 		else if (IsKeyPressed(VK_F5))
 			sceneno = 5;
 		else if (IsKeyPressed(VK_F6))
-			sceneno = 6;*/
+//<<<<<<< Updated upstream
+			//sceneno = 6;
+//=======
+			sceneno = 6;
+		if (IsKeyPressed(VK_F7))
+			sceneno = 7;
+		//
+//>>>>>>> Stashed changes
 		if (sceneno == 1) { scene = scene1;}
 		else if (sceneno == 2) { scene = scene2;}
 		else if (sceneno == 3) { scene = scene3;}
 		else if (sceneno == 4) { scene = scene4;}
 		else if (sceneno == 5) { scene = scene5;}
 		else if (sceneno == 6) { scene = scene6;}
+		else if (sceneno == 7) { scene = scene7;}
 		if (sceneno != 0) {
 			scene->UseScene(); //only triggers when switching scene
 		}
 
 		//Set cursor mode(do for scene switch also if cursor mode change)
-		if ((scene == scene4) || (scene == scene5) || (scene == scene1) || (scene == scene2) || (scene == scene6))
+		if ((scene == scene4) || (scene == scene5) || (scene == scene1) || (scene == scene2) || (scene == scene6) || (scene == scene7))
 			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		else
-			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //do normal instead of disabled to restore normal cursor mode
+		{
+			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		}//do normal instead of disabled to restore normal cursor mode
 		if (glfwRawMouseMotionSupported()) {
 			glfwSetInputMode(m_window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
 		}
@@ -200,6 +213,10 @@ void Application::Run()
 	delete scene4;
 	scene5->Exit();
 	delete scene5;
+	scene6->Exit();
+	delete scene6; 
+	scene7->Exit();
+	delete scene7;
 }
 
 void Application::Exit()
