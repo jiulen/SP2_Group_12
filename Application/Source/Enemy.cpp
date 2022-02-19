@@ -34,7 +34,7 @@ Enemy::Enemy()
 Enemy::~Enemy()
 {
 }
-void Enemy::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, std::vector<Entity*> entities)
+void Enemy::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, std::vector<Entity*> entities, Hitbox playerHitbox)
 {
 	if (!chase) {
 		if (DistBetweenPoints(playerPos.x, playerPos.z, entityPos.x, entityPos.z) <= detectRange) { //if enemy is within detect range

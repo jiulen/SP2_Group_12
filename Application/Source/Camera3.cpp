@@ -77,6 +77,8 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		}
 		position.y = startPos.y;
 		playerWASDCollision(hitboxes);
+		playerHitbox.posX = position.x;
+		playerHitbox.posZ = position.z;
 		target = position + view;
 	}
 	if (Application::IsKeyPressed('D'))
@@ -97,6 +99,8 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		}
 		position.y = startPos.y;
 		playerWASDCollision(hitboxes);
+		playerHitbox.posX = position.x;
+		playerHitbox.posZ = position.z;
 		target = position + view;
 	}
 	if (Application::IsKeyPressed('W'))
@@ -117,6 +121,8 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		}
 		position.y = startPos.y;
 		playerWASDCollision(hitboxes);
+		playerHitbox.posX = position.x;
+		playerHitbox.posZ = position.z;
 		target = position + view;
 	}
 	if (Application::IsKeyPressed('S'))
@@ -137,6 +143,8 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		}
 		position.y = startPos.y;
 		playerWASDCollision(hitboxes);
+		playerHitbox.posX = position.x;
+		playerHitbox.posZ = position.z;
 		target = position + view;
 	}
 	static bool jumpPressed = false;
@@ -167,6 +175,7 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 			position.y = defaultPosition.y;
 			jumping = false;
 		}
+		playerHitbox.posY = position.y + 0.5f - playerHeight * 0.5f;
 		target = position + view;
 	}
 	//if (Application::IsKeyPressed('R'))
@@ -272,30 +281,37 @@ void Camera3::playerWASDCollision(std::vector<Hitbox> hitboxes) { //for player w
 			Vector3 finalPos = CollisionCircleRect(position.x, position.z, playerRadius, (hitboxes[i]).posX, (hitboxes[i]).posZ, (hitboxes[i]).sizeX, (hitboxes[i]).sizeZ);
 			position.x = finalPos.x;
 			position.z = finalPos.z;
-			playerHitbox.posX = position.x;
-			playerHitbox.posZ = position.z;
 		}
 	}
 	return; //no collision
 }
 
-void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes, bool& collide) //need make this can jump when touch wall and stop fall
+void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes, bool& collide)
 {
 	collide = false;
 	for (int i = 0; i < hitboxes.size(); i++) {
 		if (CollisionAABB(position.x, position.y + 0.5f - playerHeight * 0.5f, position.z, playerRadius * 2.f, playerHeight, playerRadius * 2.f, (hitboxes[i]).posX, (hitboxes[i]).posY, (hitboxes[i]).posZ, (hitboxes[i]).sizeX, (hitboxes[i]).sizeY, (hitboxes[i]).sizeZ)) {
-			float endPosY = position.y - playerHeight * 0.5f;
-			float nearestPointY = Math::Clamp(endPosY, (hitboxes[i]).posY - 0.5f * (hitboxes[i]).sizeY, (hitboxes[i]).posY + 0.5f * (hitboxes[i]).sizeY);
-		
-			float overlap = playerHeight * 0.5f - (nearestPointY - endPosY);
-	
-			if (overlap > 0)
-			{
-				//Statically resolve the collision
-				position.y -= overlap;
-				playerHitbox.posY = position.y + 0.5f - playerHeight * 0.5f;
-				collide = true;
-			}
+			//check circle rect collision
+			Vector3 nearestPoint;
+			nearestPoint.x = Math::Clamp(position.x, (hitboxes[i]).posX - 0.5f * (hitboxes[i]).sizeX, (hitboxes[i]).posX + 0.5f * (hitboxes[i]).sizeX);
+			nearestPoint.y = 0;
+			nearestPoint.z = Math::Clamp(position.y, (hitboxes[i]).posZ - 0.5f * (hitboxes[i]).sizeZ, (hitboxes[i]).posZ + 0.5f * (hitboxes[i]).posZ);
+			Vector3 rayToNearest = nearestPoint - Vector3(position.x, 0, position.z);;
+			float crOverlap = playerRadius - rayToNearest.Length();
+			if (crOverlap > 0) { //collision
+				//collision resolution
+				float endPosY = position.y - playerHeight * 0.5f;
+				float nearestPointY = Math::Clamp(endPosY, (hitboxes[i]).posY - 0.5f * (hitboxes[i]).sizeY, (hitboxes[i]).posY + 0.5f * (hitboxes[i]).sizeY);
+
+				float overlap = playerHeight * 0.5f - (nearestPointY - endPosY);
+
+				if (overlap > 0)
+				{
+					//Statically resolve the collision
+					position.y -= overlap;
+					collide = true;
+				}
+			}		
 			
 		}
 	}
