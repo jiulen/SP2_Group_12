@@ -8,7 +8,7 @@ BasicMelee::BasicMelee(float facing, Vector3 pos, Vector3 direction) {
 	directionVector = direction;
 	chase = false;
 	detectRange = 20;
-	attackRange = 2.8f;
+	attackRange = 2.f;
 	velocity = 15.f;
 	type = 'E';
 	name = "BasicMelee";
@@ -25,7 +25,7 @@ BasicMelee::BasicMelee(float facing, Vector3 pos, Vector3 direction) {
 BasicMelee::~BasicMelee()
 {
 }
-void BasicMelee::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, std::vector<Entity*> entities)
+void BasicMelee::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, std::vector<Entity*> entities, Hitbox playerHitbox)
 {
 	if (!chase) {
 		if (DistBetweenPoints(playerPos.x, playerPos.z, entityPos.x, entityPos.z) <= detectRange) { //if player is within detect range
@@ -54,6 +54,7 @@ void BasicMelee::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes,
 	//Collision
 	checkCollisionStructures(hitboxes);
 	checkCollisionEntities(entities);
+	checkCollisionPlayer(playerHitbox);
 }
 
 void BasicMelee::attack(Vector3 playerPos, float playerRadius, Player& player, float dt)
