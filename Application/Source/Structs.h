@@ -1,6 +1,8 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
+#include "MyMath.h"
+
 struct Hitbox //AABB hitbox
 {
     float posX, posY, posZ, sizeX, sizeY, sizeZ;
@@ -57,6 +59,33 @@ struct Player {
 	void Update(float dt) {
 		timeBetweenShot += dt;
 	}
+};
+
+struct Bullet {
+	int bulletDamage;
+	float bulletSpeed;
+	bool collided;
+	Hitbox bulletHitbox;
+
+	bool bulletHit(Hitbox hitbox) {
+		float x = Math::Clamp(bulletHitbox.posX, hitbox.posX - 0.5f * hitbox.sizeX, hitbox.posX + 0.5f * hitbox.sizeX);
+		float y = Math::Clamp(bulletHitbox.posY, hitbox.posY - 0.5f * hitbox.sizeY, hitbox.posY + 0.5f * hitbox.sizeY);
+		float z = Math::Clamp(bulletHitbox.posZ, hitbox.posY - 0.5f * hitbox.sizeY, hitbox.posY + 0.5f * hitbox.sizeY);
+
+		//check distancebetween nearest point of sphere and cube
+		float distance = sqrt((x - bulletHitbox.posX) * (x - bulletHitbox.posX) + (y - bulletHitbox.posY) * (y - bulletHitbox.posY) + (z - bulletHitbox.posZ) * (z - bulletHitbox.posZ));
+		return distance < (bulletHitbox.sizeX * 0.5f);
+	}
+
+	//void dealDamage(int damage)
+	//{
+	//	bulletDamage = damage;
+	//	if (bulletHit() == true)
+	//	{
+	//		delete 
+	//	}
+	//}
+
 };
 
 #endif
