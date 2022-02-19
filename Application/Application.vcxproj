@@ -161,6 +161,7 @@
     <ClCompile Include="Source\MeshBuilder.cpp" />
     <ClCompile Include="Source\SceneCopyGame.cpp" />
     <ClCompile Include="Source\SceneGame.cpp" />
+    <ClCompile Include="Source\SceneGameOver.cpp" />
     <ClCompile Include="Source\SceneMainMenu.cpp" />
     <ClCompile Include="Source\SceneNumbersGame.cpp" />
     <ClCompile Include="Source\SceneSettings.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneCopyGame.h" />
     <ClInclude Include="Source\SceneGame.h" />
+    <ClInclude Include="Source\SceneGameOver.h" />
     <ClInclude Include="Source\SceneMainMenu.h" />
     <ClInclude Include="Source\SceneNumbersGame.h" />
     <ClInclude Include="Source\SceneSettings.h" />

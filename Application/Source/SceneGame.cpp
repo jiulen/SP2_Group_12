@@ -350,6 +350,12 @@ void SceneGame::Update(double dt)
 	UpdateEnemyMovement(dt);
 	EnemyAttack(dt);
 
+	//Game over
+	if (player.currentHealth <= 0)
+	{
+		nextscene = 7;
+	}
+
 	Vector3 viewvector = (camera.target - camera.position).Normalized();
 	yaw = Math::RadianToDegree(atan2(-viewvector.x, -viewvector.z));
 	pitch = Math::RadianToDegree(asin(viewvector.y));
@@ -1133,6 +1139,11 @@ int SceneGame::NextScene()
 	{
 		nextscene = 3;
 		return 6; //copy game
+	}
+	else if (nextscene == 7)
+	{
+		nextscene = 3;
+		return 7; //game over
 	}
 	return 0; //not switching
 }
