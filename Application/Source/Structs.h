@@ -39,7 +39,7 @@ struct Player {
 			{
 				currentAmmo--;
 				timeBetweenShot = 0;
-				std::cout << currentAmmo << std::endl;
+				std::cout << "Ammo left: " << currentAmmo << std::endl;
 			}
 		}
 	}
@@ -50,7 +50,8 @@ struct Player {
 		{
 			currentAmmo = maxAmmo;
 			reloading = false;
-			std::cout << "reloading" << std::endl;
+			reloadTime = 0;
+			std::cout << "reloaded" << std::endl;
 		}
 	}
 

@@ -150,20 +150,18 @@ void Application::Run()
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
 		int sceneno = scene->NextScene(); //0 for not switching scene, other numbers for not switch to that scene
-		//
-		//if (IsKeyPressed(VK_F1))
-			//sceneno = 1;
-	    //else if (IsKeyPressed(VK_F2))
-			//sceneno = 2;
-		//if (IsKeyPressed(VK_F3))
-			//sceneno = 3;
+		/*if (IsKeyPressed(VK_F1))
+			sceneno = 1;
+	    else if (IsKeyPressed(VK_F2))
+			sceneno = 2;
+		if (IsKeyPressed(VK_F3))
+			sceneno = 3;
 		if (IsKeyPressed(VK_F4))
 			sceneno = 4;
 		else if (IsKeyPressed(VK_F5))
 			sceneno = 5;
 		else if (IsKeyPressed(VK_F6))
-			sceneno = 6;
-		//
+			sceneno = 6;*/
 		if (sceneno == 1) { scene = scene1;}
 		else if (sceneno == 2) { scene = scene2;}
 		else if (sceneno == 3) { scene = scene3;}

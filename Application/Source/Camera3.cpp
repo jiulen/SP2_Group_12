@@ -139,11 +139,16 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		playerWASDCollision(hitboxes);
 		target = position + view;
 	}
-	if (Application::IsKeyPressed(VK_SPACE) && !jumping)
+	static bool jumpPressed = false;
+	if (!jumpPressed && Application::IsKeyPressed(VK_SPACE) && !jumping)
 	{
+		jumpPressed = true;
 		jumpTime = 0.f;
 		jumping = true;
 		JUMP_SPEED = 25.f;
+	}
+	else if (jumpPressed && !Application::IsKeyPressed(VK_SPACE)) {
+		jumpPressed = false;
 	}
 	if (jumping) {
 		jumpTime += dt;
