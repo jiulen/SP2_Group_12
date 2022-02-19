@@ -8,7 +8,7 @@ BasicMelee::BasicMelee(float facing, Vector3 pos, Vector3 direction) {
 	directionVector = direction;
 	chase = false;
 	detectRange = 20;
-	attackRange = 2.8f;
+	attackRange = 2.f;
 	velocity = 15.f;
 	type = 'E';
 	name = "BasicMelee";
