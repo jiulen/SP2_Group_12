@@ -33,6 +33,17 @@ void Entity::checkCollisionEntities(std::vector<Entity*> entities)
 	}
 	return; //no collision
 }
+void Entity::checkCollisionPlayer(Hitbox playerHitbox)
+{
+	if (CollisionAABB(playerHitbox.posX, playerHitbox.posY, playerHitbox.posZ, playerHitbox.sizeX, playerHitbox.sizeY, playerHitbox.sizeZ)) {
+		Vector3 finalPos = CollisionCircleRect(playerHitbox.posX, playerHitbox.posZ, playerHitbox.sizeX, playerHitbox.sizeZ);
+		entityPos.x = finalPos.x;
+		entityPos.z = finalPos.z;
+		hitbox.posX = entityPos.x;
+		hitbox.posZ = entityPos.z;
+	}
+	return; //no collision
+}
 bool Entity::CollisionAABB(float r2x, float r2y, float r2z, float r2w, float r2h, float r2d)
 {
 	return	(hitbox.posX - enemyRadius < r2x + r2w * 0.5f && hitbox.posX + enemyRadius > r2x - r2w * 0.5f) &&
@@ -88,7 +99,7 @@ Entity::Entity()
 Entity::~Entity()
 {
 }
-void Entity::move(Vector3, float, std::vector<Hitbox>, std::vector<Entity*> entities)
+void Entity::move(Vector3, float, std::vector<Hitbox>, std::vector<Entity*> entities, Hitbox playerHitbox)
 {
 }
 void Entity::takedamage(int a)

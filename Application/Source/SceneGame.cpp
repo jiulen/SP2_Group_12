@@ -361,7 +361,7 @@ void SceneGame::UpdateEnemyMovement(double dt)
 	//For enemies
 	for (int i = 0; i < entities.size(); i++) {
 		if (entities[i]->getType() == 'E') {
-			entities[i]->move(Vector3(camera.position.x, 0, camera.position.z), dt, hitboxes, entities);
+			entities[i]->move(Vector3(camera.position.x, 0, camera.position.z), dt, hitboxes, entities, camera.getPlayerHitbox());
 		}
 	}
 }
