@@ -1,4 +1,5 @@
 #include "SceneSettings.h" 
+#include "SceneGame.h"
 #include "GL\glew.h"
 #include "Mtx44.h"
 #include "MyMath.h"
@@ -28,7 +29,9 @@ void SceneSettings::UseScene()
 void SceneSettings::Init()
 {
 	// Init VBO here
-
+	redPicked = true;
+	bluePicked = false;
+	greenPicked = false;
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
 	glEnable(GL_CULL_FACE);
@@ -274,6 +277,22 @@ void SceneSettings::Update(double dt)
 		float BUTTON_RIGHT = 50;
 		float BUTTON_BOTTOM = 10;
 		float BUTTON_TOP = 20;
+		float BUTTON_RED_LEFT = 32;
+		float BUTTON_RED_RIGHT = 38;
+		float BUTTON_RED_BOTTOM = 23;
+		float BUTTON_RED_TOP = 28;
+		float BUTTON_BLUE_LEFT = 43;
+		float BUTTON_BLUE_RIGHT = 48;
+		float BUTTON_BLUE_BOTTOM = 23;
+		float BUTTON_BLUE_TOP = 28;
+		float BUTTON_GREEN_LEFT = 52;
+		float BUTTON_GREEN_RIGHT = 57;
+		float BUTTON_GREEN_BOTTOM = 23;
+		float BUTTON_GREEN_TOP = 28;
+		float SLIDER_LEFT_MAX = 31;
+		float SLIDER_RIGHT_MAX = 59;
+		float SLIDER_TOP_MAX = 41;
+		float SLIDER_BOTTOM_MAX = 39;
 
 		//Converting Viewport space to UI space
 		double x, y;
@@ -288,10 +307,42 @@ void SceneSettings::Update(double dt)
 			std::cout << "Go back!" << std::endl;
 			nextscene = 1;
 		}
+		else if (posX > BUTTON_RED_LEFT && posX < BUTTON_RED_RIGHT && posY > BUTTON_RED_BOTTOM && posY < BUTTON_RED_TOP)
+		{
+			std::cout << "Chosen red crosshair!" << std::endl;
+			redPicked = true;
+			bluePicked = false;
+			greenPicked = false;
+		}
+		else if (posX > BUTTON_BLUE_LEFT && posX < BUTTON_BLUE_RIGHT && posY > BUTTON_BLUE_BOTTOM && posY < BUTTON_BLUE_TOP)
+		{
+			std::cout << "Chosen blue crosshair!" << std::endl;
+			redPicked = false;
+			bluePicked = true;
+			greenPicked = false;
+		}
+		else if (posX > BUTTON_GREEN_LEFT && posX < BUTTON_GREEN_RIGHT && posY > BUTTON_GREEN_BOTTOM && posY < BUTTON_GREEN_TOP)
+		{
+			std::cout << "Chosen green crosshair!" << std::endl;
+			redPicked = false;
+			bluePicked = false;
+			greenPicked = true;
+		}
 		else
 		{
 			std::cout << "Not clicking anywhere?" << std::endl;
 		}
+		if (posX > SLIDER_LEFT_MAX && posX < SLIDER_RIGHT_MAX && posY > SLIDER_BOTTOM_MAX && posY < SLIDER_TOP_MAX)
+		{
+			std::cout << "Slider!" << std::endl;
+			Application::GetCursorPos(&mouseX, &mouseY);
+			Vector3 newPos = Vector3(mouseX, mouseY, 1);
+		}
+		else
+		{
+			std::cout << "Let go!" << std::endl;
+		}
+
 
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
@@ -923,10 +974,31 @@ void SceneSettings::Render()
 	//RenderImageOnScreen(meshList[GEO_OPTIONS], Color(1, 1, 1), 80, 60, 60, 20);
 	RenderImageOnScreen(meshList[GEO_BACKBUTTON], Color(1, 1, 1), 20, 10, 40, 15);
 	RenderImageOnScreen(meshList[GEO_OPTIONSLIDER], Color(1, 1, 1), 80, 60, 45, 40);
-	RenderImageOnScreen(meshList[GEO_OPTIONKNOB], Color(1, 1, 1), 60, 45, 45, 40);
-	RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 55, 25);
-	RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 45, 25);
-	RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 35, 25);
+    RenderImageOnScreen(meshList[GEO_OPTIONKNOB], Color(1, 1, 1), 60, 45, 45, 40);
+	if (greenPicked == true)
+	{
+		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 55, 25);
+	}
+	else
+	{
+        RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 55, 25);
+	}
+	if (bluePicked == true)
+	{
+		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 45, 25);
+	}
+	else
+	{
+		RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 45, 25);
+	}
+	if (redPicked == true)
+	{
+		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 35, 25);
+	}
+	else
+	{
+		RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 35, 25);
+	}
 	RenderTextOnScreen(meshList[GEO_TEXT], "Sensitivity", Color(0, 0, 0), 4, 6, 38.5f);
 	RenderTextOnScreen(meshList[GEO_TEXT], "Crosshair Color", Color(0, 0, 0), 4, 2, 23.3f);
 	RenderTextOnScreen(meshList[GEO_TEXT], "Red", Color(0, 0, 0), 4, 32, 29);
