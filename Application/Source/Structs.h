@@ -68,6 +68,10 @@ struct Bullet {
 	bool collided;
 	Hitbox bulletHitbox;
 
+	Bullet(int damage = 0, float speed = 0, bool collision = false) { Set(damage, speed, collision); }
+	void Set(int damage, float speed, bool collision) {
+		bulletDamage = damage; bulletSpeed = speed; collided = collision;
+	}
 	bool bulletHit(Hitbox hitbox) {
 		float x = Math::Clamp(bulletHitbox.posX, hitbox.posX - 0.5f * hitbox.sizeX, hitbox.posX + 0.5f * hitbox.sizeX);
 		float y = Math::Clamp(bulletHitbox.posY, hitbox.posY - 0.5f * hitbox.sizeY, hitbox.posY + 0.5f * hitbox.sizeY);
@@ -77,16 +81,6 @@ struct Bullet {
 		float distance = sqrt((x - bulletHitbox.posX) * (x - bulletHitbox.posX) + (y - bulletHitbox.posY) * (y - bulletHitbox.posY) + (z - bulletHitbox.posZ) * (z - bulletHitbox.posZ));
 		return distance < (bulletHitbox.sizeX * 0.5f);
 	}
-
-	//void dealDamage(int damage)
-	//{
-	//	bulletDamage = damage;
-	//	if (bulletHit() == true)
-	//	{
-	//		delete 
-	//	}
-	//}
-
 };
 
 #endif
