@@ -33,9 +33,6 @@ void SceneGame::UseScene()
 void SceneGame::Init()
 {
 	// Init VBO here
-	redPicked = true;
-	bluePicked = false;
-	greenPicked = false;
 
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
@@ -1052,6 +1049,8 @@ void SceneGame::RenderBomb()
 
 void SceneGame::RenderHUD()
 {
+	crosshair = Application::GetCrosshair();
+	std::cout << crosshair << std::endl;
 	std::ostringstream ss,sss,ssss,ss1;
 	ss.precision(4);
 	ss << "FPS: " << FPS;
@@ -1071,11 +1070,11 @@ void SceneGame::RenderHUD()
 		RenderTextOnScreen(meshList[GEO_TEXT], ss1.str(), Color(1, 0, 0), 7, 8, 0);
 	if (crosshairenabled == 1) //Crosshair
 	{
-		if (crosshair == 1 && redPicked == true)
+		if (crosshair == 1)
 			RenderImageOnScreen(meshList[GEO_REDCROSSHAIR], Color(1, 1, 1), 5, 5, 40, 30);
-		else if (crosshair == 2 && bluePicked == true)
+		else if (crosshair == 2)
 			RenderImageOnScreen(meshList[GEO_BLUECROSSHAIR], Color(1, 1, 1), 5, 5, 40, 30);
-		else if (crosshair == 3 && greenPicked == true)
+		else if (crosshair == 3)
 			RenderImageOnScreen(meshList[GEO_GREENCROSSHAIR], Color(1, 1, 1), 5, 5, 40, 30);
 	}
 	RenderTextOnScreen(meshList[GEO_TEXT], ssss.str(), Color(1, 1, 1), 3, 67, 57); //Scams

@@ -977,6 +977,7 @@ void SceneSettings::Render()
     RenderImageOnScreen(meshList[GEO_OPTIONKNOB], Color(1, 1, 1), 60, 45, 45, 40);
 	if (greenPicked == true)
 	{
+		Application::SetCrosshair(3);
 		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 55, 25);
 	}
 	else
@@ -985,6 +986,7 @@ void SceneSettings::Render()
 	}
 	if (bluePicked == true)
 	{
+		Application::SetCrosshair(2);
 		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 45, 25);
 	}
 	else
@@ -993,6 +995,7 @@ void SceneSettings::Render()
 	}
 	if (redPicked == true)
 	{
+		Application::SetCrosshair(1);
 		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 35, 25);
 	}
 	else

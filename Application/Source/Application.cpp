@@ -22,6 +22,7 @@ const unsigned char FPS = 60; // FPS of this game
 const unsigned int frameTime = 1000 / FPS; // time for each frame
 unsigned Application::m_width;
 unsigned Application::m_height;
+unsigned Application::crosshair = 1;
 
 void resize_callback(GLFWwindow* window, int w, int h)
 {
@@ -217,6 +218,16 @@ void Application::Run()
 	delete scene6; 
 	scene7->Exit();
 	delete scene7;
+}
+
+int Application::GetCrosshair()
+{
+	return crosshair;
+}
+
+void Application::SetCrosshair(int a)
+{
+	crosshair = a;
 }
 
 void Application::Exit()
