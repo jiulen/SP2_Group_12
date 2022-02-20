@@ -28,6 +28,13 @@ void SceneGame::UseScene()
 	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
 
 	enterScene = true;
+
+	//values for start of game
+	yaw = 0;
+	pitch = 0;
+
+	//Init player
+	player = Player();
 }
 
 void SceneGame::Init()
@@ -267,8 +274,6 @@ void SceneGame::Init()
 	//changing
 	hitboxes.clear();
 
-	yaw = 0;
-	pitch = 0;
 	rightvector = Vector3(1, 0, 0);
 	FPS = 0;
 	bLightEnabled = true;
@@ -294,11 +299,8 @@ void SceneGame::Init()
 	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
 
 	//Init entities
-	entities.push_back(new BasicMelee (0, Vector3(60, 0, 2), Vector3(0, 0, 1)) );
+	entities.push_back(new BasicMelee (0, Vector3(60, 0, 2), Vector3(0, 0, 1)));
 	entities.push_back(new BasicMelee(0, Vector3(-20, 0, 2), Vector3(0, 0, 1)));
-
-	//Init player
-	player;
 }
 
 void SceneGame::Update(double dt)
@@ -1157,14 +1159,10 @@ int SceneGame::NextScene()
 void SceneGame::Exit()
 {
 	// Cleanup VBO here
-	delete meshList[GEO_TEXT];
-	delete meshList[GEO_LEFT];
-	delete meshList[GEO_RIGHT];
-	delete meshList[GEO_TOP];
-	delete meshList[GEO_BOTTOM];
-	delete meshList[GEO_FRONT];
-	delete meshList[GEO_BACK];
-	delete meshList[GEO_BOMB];
+	for (int i = 0; i < NUM_GEOMETRY; i++)
+	{
+		delete meshList[i];
+	}
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
 }

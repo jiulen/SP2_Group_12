@@ -477,7 +477,10 @@ int SceneSettings::NextScene()
 void SceneSettings::Exit()
 {
 	// Cleanup VBO here
-	delete meshList[GEO_TEXT];
+	for (int i = 0; i < NUM_GEOMETRY; i++)
+	{
+		delete meshList[i];
+	}
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
 }
