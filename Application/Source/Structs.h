@@ -64,13 +64,13 @@ struct Player {
 
 struct Bullet {
 	int bulletDamage;
-	float bulletSpeed;
+	float bulletSpeed, posX, posY, posZ;
 	bool collided;
 	Hitbox bulletHitbox;
 
-	Bullet(int damage = 0, float speed = 0, bool collision = false) { Set(damage, speed, collision); }
-	void Set(int damage, float speed, bool collision) {
-		bulletDamage = damage; bulletSpeed = speed; collided = collision;
+	Bullet(int damage = 0, float speed = 0, float x = 0, float y = 0, float z = 0, bool collision = false) { Set(damage, speed, collision, x, y, z); }
+	void Set(int damage, float speed, bool collision, float x, float y, float z) {
+		bulletDamage = damage; bulletSpeed = speed; collided = collision; posX = x; posY = y; posZ = z;
 	}
 	bool bulletHit(Hitbox hitbox) {
 		float x = Math::Clamp(bulletHitbox.posX, hitbox.posX - 0.5f * hitbox.sizeX, hitbox.posX + 0.5f * hitbox.sizeX);
@@ -81,6 +81,11 @@ struct Bullet {
 		float distance = sqrt((x - bulletHitbox.posX) * (x - bulletHitbox.posX) + (y - bulletHitbox.posY) * (y - bulletHitbox.posY) + (z - bulletHitbox.posZ) * (z - bulletHitbox.posZ));
 		return distance < (bulletHitbox.sizeX * 0.5f);
 	}
+
+	void Update(float dt) {
+		posX, posY, posZ;
+	}
+
 };
 
 #endif
