@@ -368,7 +368,6 @@ void SceneGame::Update(double dt)
 		if (player.attack(dt)) {
 			PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
 			bulletVector.push_back(Bullet(player.damage, 30, 1, 1, 1, viewvector, camera.position));
-
 		}
 	}
 	static bool rOnClick = false;
@@ -393,6 +392,12 @@ void SceneGame::Update(double dt)
 	//Enemy updates
 	UpdateEnemyMovement(dt);
 	EnemyAttack(dt);
+
+	//Bullet updates
+	for (int i = 0; i < bulletVector.size(); i++)
+	{
+		bulletVector[i].Update(dt);
+	}
 
 	//Game over
 	if (player.currentHealth <= 0)
