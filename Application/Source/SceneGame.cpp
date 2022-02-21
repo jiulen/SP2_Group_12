@@ -328,14 +328,19 @@ void SceneGame::Update(double dt)
 	//Shooting
 	if (Application::IsMousePressed(0))
 	{
-		player.attack(dt);
+		if (player.attack(dt)) {
+			PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
+		}
 	}
 	static bool rOnClick = false;
 	static bool reloading = false;
 	if (!rOnClick && Application::IsKeyPressed('R'))
 	{
 		rOnClick = true;
-		reloading = true;
+		if (!reloading) {
+			reloading = true;
+			PlaySound(L"Sound//reload.wav", NULL, SND_FILENAME | SND_ASYNC); //play reloading sound
+		}
 	}
 	else if (rOnClick && !Application::IsKeyPressed('R'))
 	{
@@ -697,7 +702,7 @@ void SceneGame::Render()
 	//revolve around cam
 	modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
 	modelStack.Rotate(yaw, 0, 1, 0);
-	modelStack.Translate(2, -1.5, -5);
+	modelStack.Translate(1, -1.25, -4);
 	modelStack.Rotate(100, 0, 1, 0);
 	modelStack.Scale(10, 10, 10);
 	RenderMesh(meshList[GEO_GUN], true);
@@ -1059,7 +1064,7 @@ void SceneGame::RenderBomb()
 void SceneGame::RenderHUD()
 {
 	crosshair = Application::GetCrosshair();
-	std::cout << crosshair << std::endl;
+	//std::cout << crosshair << std::endl; //delete if not needed
 	std::ostringstream ss,sss,ssss,ss1;
 	ss.precision(4);
 	ss << "FPS: " << FPS;
