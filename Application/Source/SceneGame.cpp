@@ -47,27 +47,6 @@ void SceneGame::Reset()
 {
 	player = Player();
 	camera.Init(Vector3(0, 4.5, 5.5), Vector3(0, 4.5, 4.5), Vector3(0, 1, 0));
-	for (int i = 0; i < hitboxes.size(); i++)
-	{
-		hitboxes.pop_back();
-	}
-	hitboxes.push_back(Hitbox(-60, 29, -60, 24, 58, 24));
-	hitboxes.push_back(Hitbox(0, 9, -70, 32, 18, 20));
-	hitboxes.push_back(Hitbox(-60, 40, 0, 24, 80, 24));
-	hitboxes.push_back(Hitbox(0, 17, -20, 40, 34, 24));
-	hitboxes.push_back(Hitbox(60, 12, -65, 40, 28, 16));
-	hitboxes.push_back(Hitbox(60, 20, -15, 32, 40, 32));
-	hitboxes.push_back(Hitbox(30.9, 4, -26.1, 0.6, 8, 0.6));
-	hitboxes.push_back(Hitbox(30.9, 4, -3.9, 0.6, 8, 0.6));
-	hitboxes.push_back(Hitbox(40, 9, -15, 20, 2, 24));
-	hitboxes.push_back(Hitbox(-10, 12, 80, 16, 24, 16));
-	hitboxes.push_back(Hitbox(-10, 4, 70.5, 16, 8, 3));
-	hitboxes.push_back(Hitbox(-60, 13, 60, 16, 26, 16));
-	hitboxes.push_back(Hitbox(-56, 13, 51, 8, 26, 2));
-	hitboxes.push_back(Hitbox(-40, 8, 60, 16, 16, 16));
-	hitboxes.push_back(Hitbox(10, 12, 80, 16, 24, 16));
-	hitboxes.push_back(Hitbox(10, 4, 70.5, 16, 8, 3));
-	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
 	for (int i = 0; i < entities.size(); i++) {
 		entities.pop_back();
 	}
