@@ -21,6 +21,7 @@ class SceneGame : public Scene
 	{
 		//Shapes
 		GEO_CUBE, //for testing
+		GEO_SPHERE, //for bullet
 
 		//HUD
 		GEO_HEALTH,

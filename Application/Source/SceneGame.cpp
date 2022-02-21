@@ -175,7 +175,7 @@ void SceneGame::Init()
 	}
 
 	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", Color(1, 0, 0));
-
+	meshList[GEO_SPHERE] = MeshBuilder::GenerateSphere("sphere", Color(0, 0, 0));
 	meshList[GEO_FRONT] = MeshBuilder::GenerateQuad("front", Color(1, 1, 1), 1.f);
 	meshList[GEO_FRONT]->textureID = LoadTGA("Image//tron_ft.tga");
 	meshList[GEO_BACK] = MeshBuilder::GenerateQuad("back", Color(1, 1, 1), 1.f);
@@ -350,6 +350,12 @@ void SceneGame::Update(double dt)
 	if (Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //wireframe mode
 
+	camera.Update(dt, hitboxes);
+
+	if (Application::IsKeyPressed('R')) {
+		bLightEnabled = true;
+	}
+
 	player.Update(dt);
 	//Shooting
 	Vector3 viewvector = (camera.target - camera.position).Normalized();
@@ -361,7 +367,8 @@ void SceneGame::Update(double dt)
 	{
 		if (player.attack(dt)) {
 			PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
-			bulletVector.push_back(Bullet(player.damage, 30, viewvector));
+			bulletVector.push_back(Bullet(player.damage, 30, 1, 1, 1, viewvector, camera.position));
+
 		}
 	}
 	static bool rOnClick = false;
@@ -381,12 +388,6 @@ void SceneGame::Update(double dt)
 	if (reloading == true)
 	{
 		player.reload(dt, reloading);
-	}
-
-	camera.Update(dt, hitboxes);
-
-	if (Application::IsKeyPressed('R')) {
-		bLightEnabled = true;
 	}
 
 	//Enemy updates
@@ -738,6 +739,16 @@ void SceneGame::Render()
 
 	//Render Bomb
 	RenderBomb();
+
+	//Render Bullet
+	for (int i = 0; i < bulletVector.size(); i++)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(bulletVector[i].bulletHitbox.posX, bulletVector[i].bulletHitbox.posY, bulletVector[i].bulletHitbox.posZ);
+		modelStack.Scale(bulletVector[i].bulletHitbox.sizeX, bulletVector[i].bulletHitbox.sizeY, bulletVector[i].bulletHitbox.sizeZ);
+		RenderMesh(meshList[GEO_SPHERE], false);
+		modelStack.PopMatrix();
+	}
 
 	//RenderHUD
 	RenderHUD();
