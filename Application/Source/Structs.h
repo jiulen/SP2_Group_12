@@ -34,7 +34,7 @@ struct Player {
 			currentHealth = maxHealth;
 		}
 	}
-	void attack(float dt) {
+	bool attack(float dt) {
 		if (timeBetweenShot >= shootCD)
 		{
 			if (currentAmmo > 0)
@@ -42,8 +42,10 @@ struct Player {
 				currentAmmo--;
 				timeBetweenShot = 0;
 				std::cout << "Ammo left: " << currentAmmo << std::endl;
+				return true;
 			}
 		}
+		return false;
 	}
 	void reload(float dt, bool& reloading) {
 		static float reloadTime = 0;
