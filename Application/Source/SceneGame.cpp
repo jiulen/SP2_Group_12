@@ -278,6 +278,8 @@ void SceneGame::Init()
 	FPS = 0;
 	bLightEnabled = true;
 	enterScene = true;
+	bulletHit = true;
+
 
 	//Init non moving hitboxes
 	hitboxes.push_back(Hitbox(-60, 29, -60, 24, 58, 24));
@@ -365,6 +367,8 @@ void SceneGame::Update(double dt)
 	pitch = Math::RadianToDegree(asin(viewvector.y));
 
 	rightvector = camera.getRightVector();
+
+
 }
 void SceneGame::UpdateEnemyMovement(double dt)
 {
