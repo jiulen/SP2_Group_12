@@ -44,7 +44,7 @@ private:
 	Hitbox playerHitbox;
 	Vector3 returningRightVector;
 
-	int sensitivityoption = 4;
+	float sensitivityoption = 1;
 };
 
 #endif

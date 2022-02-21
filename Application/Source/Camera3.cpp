@@ -195,7 +195,6 @@ void Camera3::Reset()
 
 void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 {
-	Application::GetSensitivity();
 	Vector3 view = (target - position).Normalized();
 	Vector3 right = view.Cross(up);
 	right.y = 0;
@@ -213,7 +212,7 @@ void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 	lastX = x;
 	lastY = y;
 
-	sensitivityoption = Application::GetSensitivity();
+	Application::GetSensitivity();
     float sensitivity = 0.05f * sensitivityoption;
 	xoffset *= -sensitivity;
 	yoffset *= sensitivity;
