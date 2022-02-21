@@ -467,56 +467,56 @@ void SceneSettings::Render()
 	if (greenPicked == true)
 	{
 		Application::SetCrosshair(3);
-		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 55, 25);
+		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 4, 3, 55, 25);
 	}
 	else
 	{
-        RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 55, 25);
+        RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 4, 3, 55, 25);
 	}
 	if (bluePicked == true)
 	{
 		Application::SetCrosshair(2);
-		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 45, 25);
+		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 4, 3, 45, 25);
 	}
 	else
 	{
-		RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 45, 25);
+		RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 4, 3, 45, 25);
 	}
 	if (redPicked == true)
 	{
 		Application::SetCrosshair(1);
-		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 35, 25);
+		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 4, 3, 35, 25);
 	}
 	else
 	{
-		RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 35, 25);
+		RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 4, 3, 35, 25);
 	}
 	if (highPicked == true)
 	{
 		Application::SetSensitivity(1.5f);
-		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 55, 40);
+		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 4, 3, 55, 40);
 	}
 	else
 	{
-		RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 55, 40);
+		RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 4, 3, 55, 40);
 	}
 	if (mediumPicked == true)
 	{
 		Application::SetSensitivity(1);
-		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 45, 40);
+		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 4, 3, 45, 40);
 	}
 	else
 	{
-		RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 45, 40);
+		RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 4, 3, 45, 40);
 	}
 	if (lowPicked == true)
 	{
 		Application::SetSensitivity(0.5f);
-		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 35, 40);
+		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 4, 3, 35, 40);
 	}
 	else
 	{
-		RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 35, 40);
+		RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 4, 3, 35, 40);
 	}
 	RenderTextOnScreen(meshList[GEO_TEXT], "Sensitivity", Color(0, 0, 0), 4, 6, 38.5f);
 	RenderTextOnScreen(meshList[GEO_TEXT], "Crosshair Color", Color(0, 0, 0), 4, 2, 23.3f);
