@@ -609,12 +609,10 @@ int SceneWiringGame::NextScene()
 void SceneWiringGame::Exit()
 {
 	// Cleanup VBO here
-	delete meshList[GEO_TEXT];
-	delete meshList[GEO_WIRING];
-	delete meshList[GEO_YWIRE];
-	delete meshList[GEO_BWIRE];
-	delete meshList[GEO_RWIRE];
-	delete meshList[GEO_PWIRE];
+	for (int i = 0; i < NUM_GEOMETRY; i++)
+	{
+		delete meshList[i];
+	}
 
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);

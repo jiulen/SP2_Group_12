@@ -1,17 +1,22 @@
 # Created by Kenney (www.kenney.nl)
 
 newmtl border
+Ka 0.18693 0.18954 0.2
 Kd 0.5607843 0.5686275 0.6
 
 newmtl _defaultMat
+Ka 0.38275 0.38275 0.38275
 Kd 0.764151 0.764151 0.764151
 
 newmtl door
+Ka 0.12941 0.13333 0.14902
 Kd 0.3882353 0.4 0.4470588
 
 newmtl window
+Ka 0.7372549 0.8862745 1
 Kd 0.7372549 0.8862745 1
 
 newmtl roof
+Ka 0.11241 0.24575 0.2
 Kd 0.3372549 0.7372549 0.6
 

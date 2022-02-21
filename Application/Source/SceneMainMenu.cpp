@@ -192,7 +192,10 @@ void SceneMainMenu::Update(double dt)
 			std::cout << "Settings!" << std::endl;
 			nextscene = 2;
 		}
-
+	}
+	else
+	{
+		bLButtonState = false;
 	}
 }
 

@@ -17,8 +17,11 @@ public:
 	static void GetCursorPos(double* xpos, double* ypos);
 	static int GetWindowWidth();
 	static int GetWindowHeight();
+	static int GetCrosshair();
+	static void SetCrosshair(int a);
 	static unsigned m_width;
 	static unsigned m_height;
+	static unsigned crosshair;
 
 private:
 

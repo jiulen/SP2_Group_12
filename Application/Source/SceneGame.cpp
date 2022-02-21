@@ -28,14 +28,18 @@ void SceneGame::UseScene()
 	Mesh::SetMaterialLoc(m_parameters[U_MATERIAL_AMBIENT], m_parameters[U_MATERIAL_DIFFUSE], m_parameters[U_MATERIAL_SPECULAR], m_parameters[U_MATERIAL_SHININESS]);
 
 	enterScene = true;
+
+	//values for start of game
+	yaw = 0;
+	pitch = 0;
+
+	//Init player
+	player = Player();
 }
 
 void SceneGame::Init()
 {
 	// Init VBO here
-	redPicked = true;
-	bluePicked = false;
-	greenPicked = false;
 
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
@@ -89,8 +93,8 @@ void SceneGame::Init()
 	glUseProgram(m_programID);
 	glUniform1i(m_parameters[U_NUMLIGHTS], 2);
 
-	light[0].type = Light::LIGHT_SPOT;
-	light[0].position.Set(0, 19.99, 0);
+	light[0].type = Light::LIGHT_DIRECTIONAL;
+	light[0].position.Set(0, 100, 0);
 	light[0].color.Set(1, 1, 1);
 	light[0].power = 1.f;
 	light[0].kC = 1.f;
@@ -111,8 +115,8 @@ void SceneGame::Init()
 	glUniform1f(m_parameters[U_LIGHT0_COSINNER], light[0].cosInner);
 	glUniform1f(m_parameters[U_LIGHT0_EXPONENT], light[0].exponent);
 
-	light[1].type = Light::LIGHT_POINT;
-	light[1].position.Set(46, 8, 46);
+	light[1].type = Light::LIGHT_DIRECTIONAL;
+	light[1].position.Set(0, 100, 0);
 	light[1].color.Set(1, 1, 1);
 	light[1].power = 1.f;
 	light[1].kC = 1.f;
@@ -270,8 +274,6 @@ void SceneGame::Init()
 	//changing
 	hitboxes.clear();
 
-	yaw = 0;
-	pitch = 0;
 	rightvector = Vector3(1, 0, 0);
 	FPS = 0;
 	bLightEnabled = true;
@@ -289,7 +291,8 @@ void SceneGame::Init()
 	hitboxes.push_back(Hitbox(30.9, 4, -26.1, 0.6, 8, 0.6));
 	hitboxes.push_back(Hitbox(30.9, 4, -3.9, 0.6, 8, 0.6));
 	hitboxes.push_back(Hitbox(40, 9, -15, 20, 2, 24));
-	hitboxes.push_back(Hitbox(0, 13, 78.5, 36, 26, 19));
+	hitboxes.push_back(Hitbox(-10, 12, 80, 16, 24, 16));
+	hitboxes.push_back(Hitbox(-10, 4, 70.5, 16, 8, 3));
 	hitboxes.push_back(Hitbox(-60, 13, 60, 16, 26, 16));
 	hitboxes.push_back(Hitbox(-56, 13, 51, 8, 26, 2));
 	hitboxes.push_back(Hitbox(-40, 8, 60, 16, 16, 16));
@@ -298,11 +301,8 @@ void SceneGame::Init()
 	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
 
 	//Init entities
-	entities.push_back(new BasicMelee (0, Vector3(60, 0, 2), Vector3(0, 0, 1)) );
+	entities.push_back(new BasicMelee (0, Vector3(60, 0, 2), Vector3(0, 0, 1)));
 	entities.push_back(new BasicMelee(0, Vector3(-20, 0, 2), Vector3(0, 0, 1)));
-
-	//Init player
-	player;
 }
 
 void SceneGame::Update(double dt)
@@ -561,7 +561,7 @@ void SceneGame::Render()
 		Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
 		glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightPosition_cameraspace.x);
 	}
-	if (light[1].type == Light::LIGHT_DIRECTIONAL)
+	/*if (light[1].type == Light::LIGHT_DIRECTIONAL)
 	{
 		Vector3 lightDir(light[1].position.x, light[1].position.y, light[1].position.z);
 		Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
@@ -578,7 +578,7 @@ void SceneGame::Render()
 	{
 		Position lightPosition_cameraspace = viewStack.Top() * light[1].position;
 		glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1, &lightPosition_cameraspace.x);
-	}
+	}*/
 
 	viewStack.LoadIdentity();
 	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
@@ -589,7 +589,7 @@ void SceneGame::Render()
 	modelStack.PushMatrix();
 	modelStack.Rotate(-90, 1, 0, 0);
 	modelStack.Scale(200, 200, 200);
-	RenderMesh(meshList[GEO_GROUND], false);
+	RenderMesh(meshList[GEO_GROUND], true);
 	modelStack.PopMatrix();
 
 	//for enemies
@@ -656,7 +656,9 @@ void SceneGame::Render()
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_SMALLHOUSE_D], true);
 	modelStack.PopMatrix();
-	//Hitbox(0, 13, 78.5, 36, 26, 19);
+	//Hitbox(-10, 12, 80, 16, 24, 16);
+	//Hitbox(-10, 4, 70.5, 16, 8, 3);
+
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-60, 0, 60);
@@ -1056,6 +1058,8 @@ void SceneGame::RenderBomb()
 
 void SceneGame::RenderHUD()
 {
+	crosshair = Application::GetCrosshair();
+	std::cout << crosshair << std::endl;
 	std::ostringstream ss,sss,ssss,ss1;
 	ss.precision(4);
 	ss << "FPS: " << FPS;
@@ -1075,11 +1079,11 @@ void SceneGame::RenderHUD()
 		RenderTextOnScreen(meshList[GEO_TEXT], ss1.str(), Color(1, 0, 0), 7, 8, 0);
 	if (crosshairenabled == 1) //Crosshair
 	{
-		if (crosshair == 1 && redPicked == true)
+		if (crosshair == 1)
 			RenderImageOnScreen(meshList[GEO_REDCROSSHAIR], Color(1, 1, 1), 5, 5, 40, 30);
-		else if (crosshair == 2 && bluePicked == true)
+		else if (crosshair == 2)
 			RenderImageOnScreen(meshList[GEO_BLUECROSSHAIR], Color(1, 1, 1), 5, 5, 40, 30);
-		else if (crosshair == 3 && greenPicked == true)
+		else if (crosshair == 3)
 			RenderImageOnScreen(meshList[GEO_GREENCROSSHAIR], Color(1, 1, 1), 5, 5, 40, 30);
 	}
 	RenderTextOnScreen(meshList[GEO_TEXT], ssss.str(), Color(1, 1, 1), 3, 67, 57); //Scams
@@ -1090,7 +1094,7 @@ void SceneGame::RenderSkybox()
 {
 	modelStack.PushMatrix();
 	modelStack.Translate(camera.position.x, camera.position.y, camera.position.z);
-	int OFFSET = 499;
+	static int OFFSET = 499;
 	modelStack.PushMatrix();
 	modelStack.Translate(OFFSET, 0, 0);
 	modelStack.Rotate(-90, 0, 1, 0);
@@ -1159,14 +1163,10 @@ int SceneGame::NextScene()
 void SceneGame::Exit()
 {
 	// Cleanup VBO here
-	delete meshList[GEO_TEXT];
-	delete meshList[GEO_LEFT];
-	delete meshList[GEO_RIGHT];
-	delete meshList[GEO_TOP];
-	delete meshList[GEO_BOTTOM];
-	delete meshList[GEO_FRONT];
-	delete meshList[GEO_BACK];
-	delete meshList[GEO_BOMB];
+	for (int i = 0; i < NUM_GEOMETRY; i++)
+	{
+		delete meshList[i];
+	}
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
 }

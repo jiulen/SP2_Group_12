@@ -694,11 +694,10 @@ int SceneCopyGame::NextScene()
 void SceneCopyGame::Exit()
 {
 	// Cleanup VBO here
-	delete meshList[GEO_TEXT];
-	delete meshList[GEO_PAD];
-	delete meshList[GEO_PRESSED];
-	delete meshList[GEO_BLUESQUARE];
-	delete meshList[GEO_GREENLIGHT];
+	for (int i = 0; i < NUM_GEOMETRY; i++)
+	{
+		delete meshList[i];
+	}
 
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 	glDeleteProgram(m_programID);
