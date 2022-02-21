@@ -170,6 +170,7 @@ private:
 	float yaw, pitch;
 	Vector3 rightvector;
 	int bulletCount;
+	bool bulletHit;
 
 	//Init player
 	Player player;

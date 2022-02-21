@@ -2,6 +2,7 @@
 #define STRUCTS_H
 
 #include "MyMath.h"
+#include "Camera3.h"
 
 struct Hitbox //AABB hitbox
 {
@@ -64,13 +65,14 @@ struct Player {
 
 struct Bullet {
 	int bulletDamage;
-	float bulletSpeed, posX, posY, posZ;
+	float bulletSpeed;
 	bool collided;
+	Vector3 directionVector;
 	Hitbox bulletHitbox;
 
-	Bullet(int damage = 0, float speed = 0, float x = 0, float y = 0, float z = 0, bool collision = false) { Set(damage, speed, collision, x, y, z); }
-	void Set(int damage, float speed, bool collision, float x, float y, float z) {
-		bulletDamage = damage; bulletSpeed = speed; collided = collision; posX = x; posY = y; posZ = z;
+	Bullet(int damage = 0, float speed = 0, bool collision = false, Vector3 direction = (0, 0, 0)) { Set(damage, speed, collision, direction); }
+	void Set(int damage, float speed, bool collision, Vector3 direction) {
+		bulletDamage = damage; bulletSpeed = speed; collided = collision;
 	}
 	bool bulletHit(Hitbox hitbox) {
 		float x = Math::Clamp(bulletHitbox.posX, hitbox.posX - 0.5f * hitbox.sizeX, hitbox.posX + 0.5f * hitbox.sizeX);
@@ -83,7 +85,7 @@ struct Bullet {
 	}
 
 	void Update(float dt) {
-		posX, posY, posZ;
+
 	}
 
 };
