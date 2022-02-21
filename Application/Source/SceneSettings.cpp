@@ -1,5 +1,5 @@
 #include "SceneSettings.h" 
-#include "SceneGame.h"
+#include "Camera3.h"
 #include "GL\glew.h"
 #include "Mtx44.h"
 #include "MyMath.h"
@@ -32,6 +32,9 @@ void SceneSettings::Init()
 	redPicked = true;
 	bluePicked = false;
 	greenPicked = false;
+	lowPicked = false;
+	mediumPicked = true;
+	highPicked = false;
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
 	glEnable(GL_CULL_FACE);
@@ -205,6 +208,18 @@ void SceneSettings::Update(double dt)
 		float SLIDER_RIGHT_MAX = 59;
 		float SLIDER_TOP_MAX = 41;
 		float SLIDER_BOTTOM_MAX = 39;
+		float BUTTON_LOW_LEFT = 32;
+		float BUTTON_LOW_RIGHT = 38;
+		float BUTTON_LOW_BOTTOM = 42;
+		float BUTTON_LOW_TOP = 38;
+		float BUTTON_MEDIUM_LEFT = 43;
+		float BUTTON_MEDIUM_RIGHT = 48;
+		float BUTTON_MEDIUM_BOTTOM = 42;
+		float BUTTON_MEDIUM_TOP = 38;
+		float BUTTON_HIGH_LEFT = 52;
+		float BUTTON_HIGH_RIGHT = 57;
+		float BUTTON_HIGH_BOTTOM = 42;
+		float BUTTON_HIGH_TOP = 38;
 
 		//Converting Viewport space to UI space
 		double x, y;
@@ -240,11 +255,32 @@ void SceneSettings::Update(double dt)
 			bluePicked = false;
 			greenPicked = true;
 		}
+		if (posX > BUTTON_LOW_LEFT && posX < BUTTON_LOW_RIGHT && posY > BUTTON_LOW_BOTTOM && posY < BUTTON_LOW_TOP)
+		{
+			std::cout << "Chosen low sensitivty option!" << std::endl;
+			lowPicked = true;
+			mediumPicked = false;
+			highPicked = false;
+		}
+		else if (posX > BUTTON_MEDIUM_LEFT && posX < BUTTON_MEDIUM_RIGHT && posY > BUTTON_MEDIUM_BOTTOM && posY < BUTTON_MEDIUM_TOP)
+		{
+			std::cout << "Chosen medium senstivity!" << std::endl;
+			lowPicked = false;
+			mediumPicked = true;
+			highPicked = false;
+		}
+		else if (posX > BUTTON_HIGH_LEFT && posX < BUTTON_HIGH_RIGHT && posY > BUTTON_HIGH_BOTTOM && posY < BUTTON_HIGH_TOP)
+		{
+			std::cout << "Chosen high senstivity!" << std::endl;
+			lowPicked = false;
+			mediumPicked = false;
+			highPicked = true;
+		}
 		else
 		{
 			std::cout << "Not clicking anywhere?" << std::endl;
 		}
-		if (posX > SLIDER_LEFT_MAX && posX < SLIDER_RIGHT_MAX && posY > SLIDER_BOTTOM_MAX && posY < SLIDER_TOP_MAX)
+		/*if (posX > SLIDER_LEFT_MAX && posX < SLIDER_RIGHT_MAX && posY > SLIDER_BOTTOM_MAX && posY < SLIDER_TOP_MAX)
 		{
 			std::cout << "Slider!" << std::endl;
 			Application::GetCursorPos(&mouseX, &mouseY);
@@ -253,7 +289,7 @@ void SceneSettings::Update(double dt)
 		else
 		{
 			std::cout << "Let go!" << std::endl;
-		}
+		}*/
 
 
 	}
@@ -426,8 +462,8 @@ void SceneSettings::Render()
 
 	RenderImageOnScreen(meshList[GEO_BACKGROUND], Color(1, 1, 1), 80, 60, 40, 30);
 	RenderImageOnScreen(meshList[GEO_BACKBUTTON], Color(1, 1, 1), 20, 10, 40, 15);
-	RenderImageOnScreen(meshList[GEO_OPTIONSLIDER], Color(1, 1, 1), 80, 60, 45, 40);
-    RenderImageOnScreen(meshList[GEO_OPTIONKNOB], Color(1, 1, 1), 60, 45, 45, 40);
+	//RenderImageOnScreen(meshList[GEO_OPTIONSLIDER], Color(1, 1, 1), 80, 60, 45, 40);
+    //RenderImageOnScreen(meshList[GEO_OPTIONKNOB], Color(1, 1, 1), 60, 45, 45, 40);
 	if (greenPicked == true)
 	{
 		Application::SetCrosshair(3);
@@ -454,6 +490,33 @@ void SceneSettings::Render()
 	else
 	{
 		RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 35, 25);
+	}
+	if (highPicked == true)
+	{
+		//Application::SetSenstivity(3);
+		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 55, 40);
+	}
+	else
+	{
+		RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 55, 40);
+	}
+	if (mediumPicked == true)
+	{
+		//Application::SetSenstivity(2);
+		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 45, 40);
+	}
+	else
+	{
+		RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 45, 40);
+	}
+	if (lowPicked == true)
+	{
+		//Application::SetSenstivity(1);
+		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 35, 40);
+	}
+	else
+	{
+		RenderImageOnScreen(meshList[GEO_OPTIONDESELECT], Color(1, 1, 1), 40, 30, 35, 40);
 	}
 	RenderTextOnScreen(meshList[GEO_TEXT], "Sensitivity", Color(0, 0, 0), 4, 6, 38.5f);
 	RenderTextOnScreen(meshList[GEO_TEXT], "Crosshair Color", Color(0, 0, 0), 4, 2, 23.3f);
