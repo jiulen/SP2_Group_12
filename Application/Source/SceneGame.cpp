@@ -47,9 +47,10 @@ void SceneGame::Reset()
 {
 	player = Player();
 	camera.Init(Vector3(0, 4.5, 5.5), Vector3(0, 4.5, 4.5), Vector3(0, 1, 0));
-	int a = entities.size();
-	for (int i = 0; i < a; i++)
+	for (int i = entities.size() - 1; i >= 0; i--) { //removes all entities
+		delete entities[i];
 		entities.pop_back();
+	}
 	crosshairenabled = 1;
 	check = 0;
 	bombspawn = 0;
