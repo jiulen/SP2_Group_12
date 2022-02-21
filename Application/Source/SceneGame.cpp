@@ -47,11 +47,9 @@ void SceneGame::Reset()
 {
 	player = Player();
 	camera.Init(Vector3(0, 4.5, 5.5), Vector3(0, 4.5, 4.5), Vector3(0, 1, 0));
-	for (int i = 0; i < entities.size(); i++) {
+	int a = entities.size();
+	for (int i = 0; i < a; i++)
 		entities.pop_back();
-	}
-	entities.push_back(new BasicMelee(0, Vector3(60, 0, 2), Vector3(0, 0, 1)));
-	entities.push_back(new BasicMelee(0, Vector3(-20, 0, 2), Vector3(0, 0, 1)));
 	crosshairenabled = 1;
 	check = 0;
 	bombspawn = 0;
@@ -59,6 +57,7 @@ void SceneGame::Reset()
 	bombrand1 = 0;
 	bombrand2 = 0;
 	bombrand3 = 0;
+	spawn = 0;
 	for (int i = 0; i < 3; i++)
 		minigamesused[i] = 0;
 }
@@ -326,9 +325,6 @@ void SceneGame::Init()
 	hitboxes.push_back(Hitbox(10, 4, 70.5, 16, 8, 3));
 	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
 
-	//Init entities
-	entities.push_back(new BasicMelee (0, Vector3(60, 0, 2), Vector3(0, 0, 1)));
-	entities.push_back(new BasicMelee(0, Vector3(-20, 0, 2), Vector3(0, 0, 1)));
 }
 
 void SceneGame::Update(double dt)
@@ -846,6 +842,26 @@ void SceneGame::RenderBomb()
 			currentbomb = bomb3;
 		if (currentbomb==1)
 		{
+			if (spawn == 0)
+			{
+				if (bombspawn <= 2)
+				{
+					entities.push_back(new BasicMelee(90, Vector3(78, 0, -6), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(90, Vector3(78, 0, -16), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(90, Vector3(78, 0, -11), Vector3(0, 0, 1)));
+					if (bombspawn >= 1)
+					{
+						entities.push_back(new BasicMelee(0, Vector3(68, 0, 2), Vector3(0, 0, 1)));
+						entities.push_back(new BasicMelee(0, Vector3(73, 0, 2), Vector3(0, 0, 1)));
+						if (bombspawn == 2)
+						{
+							entities.push_back(new BasicMelee(90, Vector3(78, 0, -21), Vector3(0, 0, 1)));
+							entities.push_back(new BasicMelee(90, Vector3(78, 0, -26), Vector3(0, 0, 1)));
+						}
+					}
+				}
+				spawn++;
+			}
 			modelStack.PushMatrix();
 			modelStack.Translate(76.1, 3, -11);
 			modelStack.Scale(5, 5, 5);
@@ -857,6 +873,7 @@ void SceneGame::RenderBomb()
 				RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 				if (Application::IsKeyPressed('F'))
 				{
+					spawn--;
 					if (bombspawn == 0)
 						nextscene = minigamesused[0];
 					else if (bombspawn == 1)
@@ -877,6 +894,26 @@ void SceneGame::RenderBomb()
 		}
 		if (currentbomb == 2)
 		{
+			if (spawn == 0)
+			{
+				if (bombspawn <= 2)
+				{
+					entities.push_back(new BasicMelee(0, Vector3(67, 0, -54), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(0, Vector3(72, 0, -54), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(0, Vector3(62, 0, -54), Vector3(0, 0, 1)));
+					if (bombspawn >= 1)
+					{
+						entities.push_back(new BasicMelee(0, Vector3(57, 0, -54), Vector3(0, 0, 1)));
+						entities.push_back(new BasicMelee(0, Vector3(52, 0, -54), Vector3(0, 0, 1)));
+						if (bombspawn == 2)
+						{
+							entities.push_back(new BasicMelee(0, Vector3(47, 0, -54), Vector3(0, 0, 1)));
+							entities.push_back(new BasicMelee(0, Vector3(42, 0, -54), Vector3(0, 0, 1)));
+						}
+					}
+				}
+				spawn++;
+			}
 			modelStack.PushMatrix();
 			modelStack.Translate(62, 3, -56.9);
 			modelStack.Rotate(90, 0, 1, 0);
@@ -889,6 +926,7 @@ void SceneGame::RenderBomb()
 				RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 				if (Application::IsKeyPressed('F'))
 				{
+					spawn--;
 					nextscene = rand() % 3 + 4;
 					if (bombspawn == 0)
 						nextscene = minigamesused[0];
@@ -910,6 +948,26 @@ void SceneGame::RenderBomb()
 		}
 		if (currentbomb == 3)
 		{
+			if (spawn == 0)
+			{
+				if (bombspawn <= 2)
+				{
+					entities.push_back(new BasicMelee(270, Vector3(-18, 0, -69), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(270, Vector3(-18, 0, -74), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(270, Vector3(-18, 0, -64), Vector3(0, 0, 1)));
+					if (bombspawn >= 1)
+					{
+						entities.push_back(new BasicMelee(0, Vector3(-13, 0, -59), Vector3(0, 0, 1)));
+						entities.push_back(new BasicMelee(0, Vector3(-8, 0, -59), Vector3(0, 0, 1)));
+						if (bombspawn == 2)
+						{
+							entities.push_back(new BasicMelee(180, Vector3(-13, 0, -82), Vector3(0, 0, 1)));
+							entities.push_back(new BasicMelee(180, Vector3(-8, 0, -82), Vector3(0, 0, 1)));
+						}
+					}
+				}
+				spawn++;
+			}
 			modelStack.PushMatrix();
 			modelStack.Translate(-16.1, 3, -67);
 			modelStack.Scale(5, 5, 5);
@@ -921,6 +979,7 @@ void SceneGame::RenderBomb()
 				RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 				if (Application::IsKeyPressed('F'))
 				{
+					spawn--;
 					nextscene = rand() % 3 + 4;
 					if (bombspawn == 0)
 						nextscene = minigamesused[0];
@@ -942,6 +1001,26 @@ void SceneGame::RenderBomb()
 		}
 		if (currentbomb == 4)
 		{
+			if (spawn == 0)
+			{
+				if (bombspawn <= 2)
+				{
+					entities.push_back(new BasicMelee(270, Vector3(-74, 0, -69), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(270, Vector3(-74, 0, -59), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(270, Vector3(-74, 0, -64), Vector3(0, 0, 1)));
+					if (bombspawn >= 1)
+					{
+						entities.push_back(new BasicMelee(270, Vector3(-74, 0, -54), Vector3(0, 0, 1)));
+						entities.push_back(new BasicMelee(270, Vector3(-74, 0, -49), Vector3(0, 0, 1)));
+						if (bombspawn == 2)
+						{
+							entities.push_back(new BasicMelee(180, Vector3(-70, 0, -75), Vector3(0, 0, 1)));
+							entities.push_back(new BasicMelee(180, Vector3(-65, 0, -75), Vector3(0, 0, 1)));
+						}
+					}
+				}
+				spawn++;
+			}
 			modelStack.PushMatrix();
 			modelStack.Translate(-72.1, 3, -64);
 			modelStack.Scale(5, 5, 5);
@@ -953,6 +1032,7 @@ void SceneGame::RenderBomb()
 				RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 				if (Application::IsKeyPressed('F'))
 				{
+					spawn--;
 					nextscene = rand() % 3 + 4;
 					if (bombspawn == 0)
 						nextscene = minigamesused[0];
@@ -974,6 +1054,26 @@ void SceneGame::RenderBomb()
 		}
 		if (currentbomb == 5)
 		{
+			if (spawn == 0)
+			{
+				if (bombspawn <= 2)
+				{
+					entities.push_back(new BasicMelee(0, Vector3(-53, 0, 14), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(0, Vector3(-58, 0, 14), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(0, Vector3(-63, 0, 14), Vector3(0, 0, 1)));
+					if (bombspawn >= 1)
+					{
+						entities.push_back(new BasicMelee(0, Vector3(-68, 0, 14), Vector3(0, 0, 1)));
+						entities.push_back(new BasicMelee(270, Vector3(-73, 0, 10), Vector3(0, 0, 1)));
+						if (bombspawn == 2)
+						{
+							entities.push_back(new BasicMelee(90, Vector3(-45, 0, 10), Vector3(0, 0, 1)));
+							entities.push_back(new BasicMelee(90, Vector3(-45, 0, 5), Vector3(0, 0, 1)));
+						}
+					}
+				}
+				spawn++;
+			}
 			modelStack.PushMatrix();
 			modelStack.Translate(-53, 3, 12.1);
 			modelStack.Rotate(90, 0, 1, 0);
@@ -986,6 +1086,7 @@ void SceneGame::RenderBomb()
 				RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 				if (Application::IsKeyPressed('F'))
 				{
+					spawn--;
 					nextscene = rand() % 3 + 4;
 					if (bombspawn == 0)
 						nextscene = minigamesused[0];
@@ -1007,6 +1108,26 @@ void SceneGame::RenderBomb()
 		}
 		if (currentbomb == 6)
 		{
+			if (spawn == 0)
+			{
+				if (bombspawn <= 2)
+				{
+					entities.push_back(new BasicMelee(90, Vector3(-30, 0, 60), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(90, Vector3(-30, 0, 65), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(90, Vector3(-30, 0, 55), Vector3(0, 0, 1)));
+					if (bombspawn >= 1)
+					{
+						entities.push_back(new BasicMelee(0, Vector3(-35, 0, 70), Vector3(0, 0, 1)));
+						entities.push_back(new BasicMelee(0, Vector3(-40, 0, 70), Vector3(0, 0, 1)));
+						if (bombspawn == 2)
+						{
+							entities.push_back(new BasicMelee(180, Vector3(-35, 0, 50), Vector3(0, 0, 1)));
+							entities.push_back(new BasicMelee(180, Vector3(-40, 0, 50), Vector3(0, 0, 1)));
+						}
+					}
+				}
+				spawn++;
+			}
 			modelStack.PushMatrix();
 			modelStack.Translate(-31.9, 3, 60);
 			modelStack.Scale(5, 5, 5);
@@ -1018,6 +1139,7 @@ void SceneGame::RenderBomb()
 				RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 				if (Application::IsKeyPressed('F'))
 				{
+					spawn--;
 					nextscene = rand() % 3 + 4;
 					if (bombspawn == 0)
 						nextscene = minigamesused[0];
@@ -1039,6 +1161,26 @@ void SceneGame::RenderBomb()
 		}
 		if (currentbomb == 7)
 		{
+			if (spawn == 0)
+			{
+				if (bombspawn <= 2)
+				{
+					entities.push_back(new BasicMelee(0, Vector3(7, 0, 90), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(0, Vector3(12, 0, 90), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(0, Vector3(2, 0, 90), Vector3(0, 0, 1)));
+					if (bombspawn >= 1)
+					{
+						entities.push_back(new BasicMelee(0, Vector3(-3, 0, 90), Vector3(0, 0, 1)));
+						entities.push_back(new BasicMelee(0, Vector3(-8, 0, 90), Vector3(0, 0, 1)));
+						if (bombspawn == 2)
+						{
+							entities.push_back(new BasicMelee(90, Vector3(20, 0, 85), Vector3(0, 0, 1)));
+							entities.push_back(new BasicMelee(90, Vector3(20, 0, 80), Vector3(0, 0, 1)));
+						}
+					}
+				}
+				spawn++;
+			}
 			modelStack.PushMatrix();
 			modelStack.Translate(7, 3, 88.1);
 			modelStack.Rotate(90, 0, 1, 0);
@@ -1051,6 +1193,7 @@ void SceneGame::RenderBomb()
 				RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 				if (Application::IsKeyPressed('F'))
 				{
+					spawn--;
 					nextscene = rand() % 3 + 4;
 					if (bombspawn == 0)
 						nextscene = minigamesused[0];
@@ -1072,6 +1215,26 @@ void SceneGame::RenderBomb()
 		}
 		if (currentbomb == 8)
 		{
+			if (spawn == 0)
+			{
+				if (bombspawn <= 2)
+				{
+					entities.push_back(new BasicMelee(180, Vector3(56, 0, 46), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(180, Vector3(51, 0, 46), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(180, Vector3(61, 0, 46), Vector3(0, 0, 1)));
+					if (bombspawn >= 1)
+					{
+						entities.push_back(new BasicMelee(180, Vector3(66, 0, 46), Vector3(0, 0, 1)));
+						entities.push_back(new BasicMelee(180, Vector3(71, 0, 46), Vector3(0, 0, 1)));
+						if (bombspawn == 2)
+						{
+							entities.push_back(new BasicMelee(270, Vector3(46, 0, 51), Vector3(0, 0, 1)));
+							entities.push_back(new BasicMelee(270, Vector3(46, 0, 56), Vector3(0, 0, 1)));
+						}
+					}
+				}
+				spawn++;
+			}
 			modelStack.PushMatrix();
 			modelStack.Translate(56, 3, 47.9);
 			modelStack.Rotate(90, 0, 1, 0);
@@ -1084,6 +1247,7 @@ void SceneGame::RenderBomb()
 				RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 				if (Application::IsKeyPressed('F'))
 				{
+					spawn--;
 					nextscene = rand() % 3 + 4;
 					if (bombspawn == 0)
 						nextscene = minigamesused[0];
@@ -1105,6 +1269,26 @@ void SceneGame::RenderBomb()
 		}
 		if (currentbomb == 9)
 		{
+			if (spawn == 0)
+			{
+				if (bombspawn <= 2)
+				{
+					entities.push_back(new BasicMelee(90, Vector3(22, 0, -15), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(90, Vector3(22, 0, -10), Vector3(0, 0, 1)));
+					entities.push_back(new BasicMelee(90, Vector3(22, 0, -20), Vector3(0, 0, 1)));
+					if (bombspawn >= 1)
+					{
+						entities.push_back(new BasicMelee(90, Vector3(22, 0, -25), Vector3(0, 0, 1)));
+						entities.push_back(new BasicMelee(90, Vector3(22, 0, -30), Vector3(0, 0, 1)));
+						if (bombspawn == 2)
+						{
+							entities.push_back(new BasicMelee(180, Vector3(17, 0, -35), Vector3(0, 0, 1)));
+							entities.push_back(new BasicMelee(180, Vector3(12, 0, -35), Vector3(0, 0, 1)));
+						}
+					}
+				}
+				spawn++;
+			}
 			modelStack.PushMatrix();
 			modelStack.Translate(20.1, 3, -15);
 			modelStack.Scale(5, 5, 5);
@@ -1116,6 +1300,7 @@ void SceneGame::RenderBomb()
 				RenderTextOnScreen(meshList[GEO_TEXT], "Press F to start defusing", Color(1, 0, 0), 4, 22, 28);
 				if (Application::IsKeyPressed('F'))
 				{
+					spawn--;
 					nextscene = rand() % 3 + 4;
 					if (bombspawn == 0)
 						nextscene = minigamesused[0];
