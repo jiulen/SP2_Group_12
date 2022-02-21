@@ -68,7 +68,7 @@ struct Bullet {
 	Vector3 directionVector;
 	Hitbox bulletHitbox;
 
-	Bullet(int damage = 0, float speed = 0, Vector3 direction = (0, 0, 0)) { Set(damage, speed); }
+	Bullet(int damage = 0, float speed = 0, Vector3 direction = (0, 0, 0)) { Set(damage, speed, direction); }
 	void Set(int damage, float speed, Vector3 direction) {
 		bulletDamage = damage; bulletSpeed = speed;
 	}
