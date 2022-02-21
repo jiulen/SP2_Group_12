@@ -398,6 +398,7 @@ void SceneGame::Update(double dt)
 	if (player.currentHealth <= 0)
 	{
 		nextscene = 7;
+		PlaySound(L"Sound//gameover.wav", NULL, SND_FILENAME | SND_ASYNC);
 	}
 
 

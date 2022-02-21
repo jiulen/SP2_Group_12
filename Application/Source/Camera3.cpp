@@ -1,4 +1,5 @@
 #include "Camera3.h"
+#include "SceneSettings.h"
 #include "Application.h"
 #include "Mtx44.h"
 #include "MyMath.h"
@@ -193,6 +194,7 @@ void Camera3::Reset()
 
 void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 {
+
 	Vector3 view = (target - position).Normalized();
 	Vector3 right = view.Cross(up);
 	right.y = 0;
@@ -210,6 +212,7 @@ void Camera3::LookingAround() //bug: cant look directly up/down aft a while
 	lastX = x;
 	lastY = y;
 
+	//sensitivtyoption = Application::GetSensitivity();
 	float sensitivity = 0.05f;
 	xoffset *= -sensitivity;
 	yoffset *= sensitivity;
