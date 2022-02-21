@@ -422,10 +422,12 @@ void SceneGame::Update(double dt)
 	{
 		if (entities[i]->getcurrenthealth() <= 0)
 		{
-			entities.erase(std::remove(entities.begin(), entities.end(), nullptr), entities.end());
+			delete entities[i];
+			entities[i] = nullptr;
 		}
 	}
 
+	entities.erase(std::remove(entities.begin(), entities.end(), nullptr), entities.end());
 	
 
 	//Game over
