@@ -566,7 +566,7 @@ void SceneCopyGame::Render()
 	{
 		RenderTextOnScreen(meshList[GEO_TEXT], "YOU FAILED!", Color(1, 1, 1), 10, 13.5, 25);
 		if (timer >= 3)
-			currentstage = 6;
+			currentstage = 7;
 	}
 }
 
@@ -675,8 +675,9 @@ void SceneCopyGame::RenderCopyGame()
 
 int SceneCopyGame::NextScene()
 {
-	if (currentstage == 6)
+	if (currentstage >= 6)
 	{
+		int a = currentstage;
 		set = currentstage = displayed = correct = turn = start = time = timer = 0;
 		attempts = 1;
 		for (int i = 0; i < 5; i++)
@@ -686,7 +687,10 @@ int SceneCopyGame::NextScene()
 		}
 		for (int i = 0; i < 9; i++)
 			pressedkey[i] = 0;
-		return 3;
+		if (a==6)
+			return 3;
+		else if (a == 7)
+			return 7;
 	}
 	return 0; //not switching
 }

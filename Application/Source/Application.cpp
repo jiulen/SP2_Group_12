@@ -175,6 +175,15 @@ void Application::Run()
 		else if (sceneno == 5) { scene = scene5;}
 		else if (sceneno == 6) { scene = scene6;}
 		else if (sceneno == 7) { scene = scene7;}
+		else if (sceneno == 8)
+		{
+			scene = scene1;
+			sceneno = 1;
+			scene3->Exit();
+			delete scene3;
+			scene3 = new SceneGame();
+			scene3->Init();
+		}
 		if (sceneno != 0) {
 			scene->UseScene(); //only triggers when switching scene
 		}

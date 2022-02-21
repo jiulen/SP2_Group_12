@@ -483,7 +483,7 @@ void SceneWiringGame::Render()
 	{
 		RenderTextOnScreen(meshList[GEO_TEXT], "YOU FAILED!", Color(1, 1, 1), 10, 13.5, 25);
 		if (timer >= 23)
-			completed = 3;
+			completed = 7;
 	}
 }
 
@@ -602,6 +602,12 @@ int SceneWiringGame::NextScene()
 		timer = 0;
 		completed = 4;
 		return 3; //game scene
+	}
+	else if (completed == 7)
+	{
+		timer = 0;
+		completed = 4;
+		return 7; //game over
 	}
 	return 0; //not switching
 }

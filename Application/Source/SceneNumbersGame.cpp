@@ -484,7 +484,7 @@ void SceneNumbersGame::Render()
 		if (timer >= 23)
 		{
 			for (int i = 0; i < 10; i++)
-				ticks[i] = 1;
+				ticks[i] = 2;
 		}
 	}
 }
@@ -569,6 +569,8 @@ int SceneNumbersGame::NextScene()
 	{
 		if (ticks[i] == 1)
 			a++;
+		else if (ticks[i] == 2)
+			a += 2;
 	}
 	if (a == 10)
 	{
@@ -577,6 +579,14 @@ int SceneNumbersGame::NextScene()
 			ticks[i] = 0;
 		return 3;
 	}
+	else if (a == 20)
+	{
+		timer = 0;
+		for (int i = 0; i < 10; i++)
+			ticks[i] = 0;
+		return 7;
+	}
+
 	return 5;
 }
 

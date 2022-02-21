@@ -380,7 +380,7 @@ int SceneGameOver::NextScene()
 	if (nextscene == 1)
 	{
 		nextscene = 0;
-		return 1; //back to main
+		return 8; //back to main
 	}
 	//if press something, switch to options scene(return 2)
 	//if press something, switch to game scene(return 3)

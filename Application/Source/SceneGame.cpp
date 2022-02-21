@@ -1062,15 +1062,15 @@ void SceneGame::RenderHUD()
 	sss << player.currentHealth;
 	ss1 << player.currentAmmo << "/" << player.maxAmmo;
 	ssss << "Scams: " << bombspawn << "/3";
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 1, 1), 3, 0, 57); //FPS
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0.6, 0.1), 3, 0, 57); //FPS
 	RenderImageOnScreen(meshList[GEO_HEALTH], Color(1, 1, 1), 7, 7, 4, 14); //Health
-	if (player.currentHealth>30)
-		RenderTextOnScreen(meshList[GEO_TEXT], sss.str(), Color(1, 1, 1), 7, 8, 10); 
-	else 
+	if (player.currentHealth > 30)
+		RenderTextOnScreen(meshList[GEO_TEXT], sss.str(), Color(0, 0.6, 0.1), 7, 8, 10);
+	else
 		RenderTextOnScreen(meshList[GEO_TEXT], sss.str(), Color(1, 0, 0), 7, 8, 10);
 	RenderImageOnScreen(meshList[GEO_AMMO], Color(1, 1, 1), 2, 10, 4, 5);//Ammo
 	if (player.currentAmmo>player.maxAmmo*0.3)
-		RenderTextOnScreen(meshList[GEO_TEXT], ss1.str(), Color(1, 1, 1), 7, 8, 0);
+		RenderTextOnScreen(meshList[GEO_TEXT], ss1.str(), Color(0, 0.6, 0.1), 7, 8, 0);
 	else
 		RenderTextOnScreen(meshList[GEO_TEXT], ss1.str(), Color(1, 0, 0), 7, 8, 0);
 	if (crosshairenabled == 1) //Crosshair
@@ -1082,7 +1082,7 @@ void SceneGame::RenderHUD()
 		else if (crosshair == 3)
 			RenderImageOnScreen(meshList[GEO_GREENCROSSHAIR], Color(1, 1, 1), 5, 5, 40, 30);
 	}
-	RenderTextOnScreen(meshList[GEO_TEXT], ssss.str(), Color(1, 1, 1), 3, 67, 57); //Scams
+	RenderTextOnScreen(meshList[GEO_TEXT], ssss.str(), Color(0, 0.6, 0.1), 3, 67, 57); //Scams
 	
 }
 
