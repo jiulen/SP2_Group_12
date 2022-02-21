@@ -398,6 +398,39 @@ void SceneGame::Update(double dt)
 	{
 		bulletVector[i].Update(dt);
 	}
+	std::vector<int>bulletInt;
+	bulletInt.clear();
+	for (int i = 0; i < bulletVector.size(); i++)
+	{
+		bool collided = false;
+		for (int j = 0; j < entities.size(); j++)
+		{
+			if (bulletVector[i].bulletHit(entities[j]->getHitbox())) 
+			{
+				entities[j]->takedamage(bulletVector[i].bulletDamage);
+				bulletInt.push_back(i);
+				collided = true;
+			}
+		}
+		for (int k = 0; k < hitboxes.size(); k++)
+		{
+			if (bulletVector[i].bulletHit(hitboxes[k])) 
+			{
+				bulletInt.push_back(i);
+				collided = true;
+			}
+		}
+	}
+
+	for (int i = 0; i < entities.size(); i++)
+	{
+		if (entities[i]->getcurrenthealth() <= 0)
+		{
+			entities.erase(std::remove(entities.begin(), entities.end(), nullptr), entities.end());
+		}
+	}
+
+	
 
 	//Game over
 	if (player.currentHealth <= 0)
