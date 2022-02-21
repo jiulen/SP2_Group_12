@@ -132,6 +132,7 @@ private:
 	unsigned m_parameters[U_TOTAL];
 	Light light[2];
 	bool bLightEnabled;
+	void Reset();
 	float DistBetweenPoints(float x1, float z1, float x2, float z2);
 	void RenderSkybox();
 	void RenderBomb();

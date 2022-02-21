@@ -19,9 +19,12 @@ public:
 	static int GetWindowHeight();
 	static int GetCrosshair();
 	static void SetCrosshair(int a);
+	static int GetReset();
+	static void SetReset(int a);
 	static unsigned m_width;
 	static unsigned m_height;
 	static unsigned crosshair;
+	static unsigned resetscene;
 
 private:
 

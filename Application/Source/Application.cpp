@@ -23,6 +23,7 @@ const unsigned int frameTime = 1000 / FPS; // time for each frame
 unsigned Application::m_width;
 unsigned Application::m_height;
 unsigned Application::crosshair = 1;
+unsigned Application::resetscene = 0;
 
 void resize_callback(GLFWwindow* window, int w, int h)
 {
@@ -154,7 +155,7 @@ void Application::Run()
 	while (!glfwWindowShouldClose(m_window) && !IsKeyPressed(VK_ESCAPE))
 	{
 		int sceneno = scene->NextScene(); //0 for not switching scene, other numbers for not switch to that scene
-		/*if (IsKeyPressed(VK_F1)) //dont uncomment, if u need uncomment to test one scene, then comment back after u done
+		if (IsKeyPressed(VK_F1)) //dont uncomment, if u need uncomment to test one scene, then comment back after u done
 			sceneno = 1;
 	    if (IsKeyPressed(VK_F2))
 			sceneno = 2;
@@ -167,7 +168,7 @@ void Application::Run()
 		else if (IsKeyPressed(VK_F6))
 			sceneno = 6;
 		if (IsKeyPressed(VK_F7))
-			sceneno = 7;*/
+			sceneno = 7;
 		if (sceneno == 1) { scene = scene1;}
 		else if (sceneno == 2) { scene = scene2;}
 		else if (sceneno == 3) { scene = scene3;}
@@ -178,11 +179,7 @@ void Application::Run()
 		else if (sceneno == 8)
 		{
 			scene = scene1;
-			sceneno = 1;
-			scene3->Exit();
-			delete scene3;
-			scene3 = new SceneGame();
-			scene3->Init();
+			resetscene = 1;
 		}
 		if (sceneno != 0) {
 			scene->UseScene(); //only triggers when switching scene
@@ -232,6 +229,16 @@ int Application::GetCrosshair()
 void Application::SetCrosshair(int a)
 {
 	crosshair = a;
+}
+
+int Application::GetReset()
+{
+	return resetscene;
+}
+
+void Application::SetReset(int a)
+{
+	resetscene = a;
 }
 
 void Application::Exit()
