@@ -493,7 +493,7 @@ void SceneSettings::Render()
 	}
 	if (highPicked == true)
 	{
-		Application::SetSensitivity(6);
+		Application::SetSensitivity(1.5f);
 		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 55, 40);
 	}
 	else
@@ -502,7 +502,7 @@ void SceneSettings::Render()
 	}
 	if (mediumPicked == true)
 	{
-		Application::SetSensitivity(4);
+		Application::SetSensitivity(1);
 		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 45, 40);
 	}
 	else
@@ -511,7 +511,7 @@ void SceneSettings::Render()
 	}
 	if (lowPicked == true)
 	{
-		Application::SetSensitivity(2);
+		Application::SetSensitivity(0.5f);
 		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 35, 40);
 	}
 	else
