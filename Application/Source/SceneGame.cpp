@@ -362,7 +362,7 @@ void SceneGame::Update(double dt)
 	if (Application::IsMousePressed(0))
 	{
 		if (player.attack(dt)) {
-			/*PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);*/
+			PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
 			bulletVector.push_back(Bullet(player.damage, 30, 1, 1, 1, viewvector, camera.position));
 		}
 	}
