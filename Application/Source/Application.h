@@ -26,7 +26,7 @@ public:
 	static unsigned m_width;
 	static unsigned m_height;
 	static unsigned crosshair;
-	static unsigned sensitivtyoption;
+	static unsigned sensitivityoption;
 	static unsigned resetscene;
 
 private:

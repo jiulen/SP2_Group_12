@@ -210,16 +210,16 @@ void SceneSettings::Update(double dt)
 		float SLIDER_BOTTOM_MAX = 39;
 		float BUTTON_LOW_LEFT = 32;
 		float BUTTON_LOW_RIGHT = 38;
-		float BUTTON_LOW_BOTTOM = 42;
-		float BUTTON_LOW_TOP = 38;
+		float BUTTON_LOW_BOTTOM = 38.5f;
+		float BUTTON_LOW_TOP = 42;
 		float BUTTON_MEDIUM_LEFT = 43;
 		float BUTTON_MEDIUM_RIGHT = 48;
-		float BUTTON_MEDIUM_BOTTOM = 42;
-		float BUTTON_MEDIUM_TOP = 38;
+		float BUTTON_MEDIUM_BOTTOM = 38.5f;
+		float BUTTON_MEDIUM_TOP = 42;
 		float BUTTON_HIGH_LEFT = 52;
 		float BUTTON_HIGH_RIGHT = 57;
-		float BUTTON_HIGH_BOTTOM = 42;
-		float BUTTON_HIGH_TOP = 38;
+		float BUTTON_HIGH_BOTTOM = 38.5f;
+		float BUTTON_HIGH_TOP = 42;
 
 		//Converting Viewport space to UI space
 		double x, y;
@@ -493,7 +493,7 @@ void SceneSettings::Render()
 	}
 	if (highPicked == true)
 	{
-		Application::SetSenstivity(3);
+		Application::SetSensitivity(6);
 		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 55, 40);
 	}
 	else
@@ -502,7 +502,7 @@ void SceneSettings::Render()
 	}
 	if (mediumPicked == true)
 	{
-		Application::SetSenstivity(2);
+		Application::SetSensitivity(4);
 		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 45, 40);
 	}
 	else
@@ -511,7 +511,7 @@ void SceneSettings::Render()
 	}
 	if (lowPicked == true)
 	{
-		Application::SetSenstivity(1);
+		Application::SetSensitivity(2);
 		RenderImageOnScreen(meshList[GEO_OPTIONSELECT], Color(1, 1, 1), 40, 30, 35, 40);
 	}
 	else
@@ -523,6 +523,9 @@ void SceneSettings::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], "Red", Color(0, 0, 0), 4, 32, 29);
 	RenderTextOnScreen(meshList[GEO_TEXT], "Blue", Color(0, 0, 0), 4, 41, 29);
 	RenderTextOnScreen(meshList[GEO_TEXT], "Green", Color(0, 0, 0), 4, 50, 29);
+	RenderTextOnScreen(meshList[GEO_TEXT], "Low", Color(0, 0, 0), 3, 32.5f, 45);
+	RenderTextOnScreen(meshList[GEO_TEXT], "Medium", Color(0, 0, 0), 3, 40.5f, 45);
+	RenderTextOnScreen(meshList[GEO_TEXT], "High", Color(0, 0, 0), 3, 52.5f, 45);
 
 }
 
