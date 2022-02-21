@@ -1103,7 +1103,7 @@ void SceneGame::RenderHUD()
 		RenderTextOnScreen(meshList[GEO_TEXT], sss.str(), Color(0, 0.6, 0.1), 7, 8, 10);
 	else
 		RenderTextOnScreen(meshList[GEO_TEXT], sss.str(), Color(1, 0, 0), 7, 8, 10);
-	RenderImageOnScreen(meshList[GEO_AMMO], Color(1, 1, 1), 2, 10, 4, 5);//Ammo
+	RenderImageOnScreen(meshList[GEO_AMMO], Color(1, 1, 1), 2, 8, 4, 5);//Ammo
 	if (player.currentAmmo>player.maxAmmo*0.3)
 		RenderTextOnScreen(meshList[GEO_TEXT], ss1.str(), Color(0, 0.6, 0.1), 7, 8, 0);
 	else
@@ -1111,11 +1111,11 @@ void SceneGame::RenderHUD()
 	if (crosshairenabled == 1) //Crosshair
 	{
 		if (crosshair == 1)
-			RenderImageOnScreen(meshList[GEO_REDCROSSHAIR], Color(1, 1, 1), 5, 5, 40, 30);
+			RenderImageOnScreen(meshList[GEO_REDCROSSHAIR], Color(1, 1, 1), 3, 3, 40, 30);
 		else if (crosshair == 2)
-			RenderImageOnScreen(meshList[GEO_BLUECROSSHAIR], Color(1, 1, 1), 5, 5, 40, 30);
+			RenderImageOnScreen(meshList[GEO_BLUECROSSHAIR], Color(1, 1, 1), 3, 3, 40, 30);
 		else if (crosshair == 3)
-			RenderImageOnScreen(meshList[GEO_GREENCROSSHAIR], Color(1, 1, 1), 5, 5, 40, 30);
+			RenderImageOnScreen(meshList[GEO_GREENCROSSHAIR], Color(1, 1, 1), 3, 3, 40, 30);
 	}
 	RenderTextOnScreen(meshList[GEO_TEXT], ssss.str(), Color(0, 0.6, 0.1), 3, 67, 57); //Scams
 	
