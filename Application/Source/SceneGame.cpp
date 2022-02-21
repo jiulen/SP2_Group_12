@@ -1345,6 +1345,8 @@ void SceneGame::RenderBomb()
 				crosshairenabled = 1;
 		}
 	}
+	else 
+		crosshairenabled = 1;
 }
 
 void SceneGame::RenderHUD()
