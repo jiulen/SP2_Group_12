@@ -460,7 +460,6 @@ void SceneSettings::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], "Red", Color(0, 0, 0), 4, 32, 29);
 	RenderTextOnScreen(meshList[GEO_TEXT], "Blue", Color(0, 0, 0), 4, 41, 29);
 	RenderTextOnScreen(meshList[GEO_TEXT], "Green", Color(0, 0, 0), 4, 50, 29);
-	modelStack.PopMatrix();
 
 }
 
