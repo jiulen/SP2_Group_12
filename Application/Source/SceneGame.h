@@ -164,6 +164,9 @@ private:
 	int bomb, bomb2, bomb3;
 	int minigamesused[3] = { 0,0,0 };
 
+	//spawn enemies
+	int spawn = 0;
+
 	std::vector<Hitbox> hitboxes; //floats are pos x, y, z and size x, y, z
 	float yaw, pitch;
 	Vector3 rightvector;
