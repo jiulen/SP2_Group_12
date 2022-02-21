@@ -353,19 +353,13 @@ void SceneGame::Update(double dt)
 	}
 
 	player.Update(dt);
-	//Shooting
+	
 	Vector3 viewvector = (camera.target - camera.position).Normalized();
 	yaw = Math::RadianToDegree(atan2(-viewvector.x, -viewvector.z));
 	pitch = Math::RadianToDegree(asin(viewvector.y));
 	rightvector = camera.getRightVector();
 
-	if (Application::IsMousePressed(0))
-	{
-		if (player.attack(dt)) {
-			PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
-			bulletVector.push_back(Bullet(player.damage, 30, 1, 1, 1, viewvector, camera.position));
-		}
-	}
+	//Reloading
 	static bool rOnClick = false;
 	static bool reloading = false;
 	if (!rOnClick && Application::IsKeyPressed('R'))
@@ -383,6 +377,16 @@ void SceneGame::Update(double dt)
 	if (reloading == true)
 	{
 		player.reload(dt, reloading);
+	}
+	//Shooting
+	if (Application::IsMousePressed(0))
+	{
+		if (!reloading) {
+			if (player.attack(dt)) {
+				PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
+				bulletVector.push_back(Bullet(player.damage, 30, 1, 1, 1, viewvector, camera.position));
+			}
+		}
 	}
 
 	//Enemy updates
@@ -418,13 +422,17 @@ void SceneGame::Update(double dt)
 		}
 	}
 
+	//remove dead enemies
 	for (int i = 0; i < entities.size(); i++)
 	{
 		if (entities[i]->getcurrenthealth() <= 0)
 		{
-			entities.erase(std::remove(entities.begin(), entities.end(), nullptr), entities.end());
+			delete entities[i];
+			entities[i] = nullptr;
 		}
 	}
+
+	entities.erase(std::remove(entities.begin(), entities.end(), nullptr), entities.end());
 
 	
 
