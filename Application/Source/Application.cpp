@@ -23,6 +23,7 @@ const unsigned int frameTime = 1000 / FPS; // time for each frame
 unsigned Application::m_width;
 unsigned Application::m_height;
 unsigned Application::crosshair = 1;
+unsigned Application::sensitivtyoption = 2;
 unsigned Application::resetscene = 0;
 
 void resize_callback(GLFWwindow* window, int w, int h)
@@ -229,6 +230,16 @@ int Application::GetCrosshair()
 void Application::SetCrosshair(int a)
 {
 	crosshair = a;
+}
+
+int Application::GetSensitivity()
+{
+	return sensitivtyoption;
+}
+
+void Application::SetSensitivity(int a)
+{
+	sensitivtyoption = a;
 }
 
 int Application::GetReset()

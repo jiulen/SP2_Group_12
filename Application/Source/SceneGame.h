@@ -21,6 +21,7 @@ class SceneGame : public Scene
 	{
 		//Shapes
 		GEO_CUBE, //for testing
+		GEO_SPHERE, //for bullet
 
 		//HUD
 		GEO_HEALTH,
@@ -172,6 +173,7 @@ private:
 	Vector3 rightvector;
 	int bulletCount;
 	bool bulletHit;
+	std::vector<Bullet> bulletVector;
 
 	//Init player
 	Player player;

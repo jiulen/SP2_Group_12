@@ -70,9 +70,9 @@ struct Bullet {
 	Vector3 directionVector;
 	Hitbox bulletHitbox;
 
-	Bullet(int damage = 0, float speed = 0, Vector3 direction = (0, 0, 0)) { Set(damage, speed, direction); }
-	void Set(int damage, float speed, Vector3 direction) {
-		bulletDamage = damage; bulletSpeed = speed;
+	Bullet(int damage = 0, float speed = 0, float sizeX = 1, float sizeY = 1, float sizeZ = 1, Vector3 direction = (0, 0, 0), Vector3 pos = (0, 0, 0)) { Set(damage, speed, sizeX, sizeY, sizeZ, direction, pos); }
+	void Set(int damage, float speed, float sizeX, float sizeY, float sizeZ, Vector3 direction, Vector3 pos) {
+		bulletDamage = damage; bulletSpeed = speed; bulletHitbox.posX = pos.x; bulletHitbox.posY = pos.y; bulletHitbox.posZ = pos.z; bulletHitbox.sizeX = sizeX; bulletHitbox.sizeY = sizeY; bulletHitbox.sizeZ = sizeZ; directionVector = direction;
 	}
 	bool bulletHit(Hitbox hitbox) {
 		float x = Math::Clamp(bulletHitbox.posX, hitbox.posX - 0.5f * hitbox.sizeX, hitbox.posX + 0.5f * hitbox.sizeX);
