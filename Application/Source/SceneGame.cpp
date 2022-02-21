@@ -405,7 +405,7 @@ void SceneGame::Update(double dt)
 		bool collided = false;
 		for (int j = 0; j < entities.size(); j++)
 		{
-			if (bulletVector[i].bulletHit(entities[j]->getHitbox())) 
+			if (bulletVector[i].bulletHit(entities[j]->getHitbox()) && !collided)
 			{
 				entities[j]->takedamage(bulletVector[i].bulletDamage);
 				bulletInt.push_back(i);
@@ -414,12 +414,17 @@ void SceneGame::Update(double dt)
 		}
 		for (int k = 0; k < hitboxes.size(); k++)
 		{
-			if (bulletVector[i].bulletHit(hitboxes[k])) 
+			if (bulletVector[i].bulletHit(hitboxes[k]) && !collided)
 			{
 				bulletInt.push_back(i);
 				collided = true;
 			}
 		}
+	}
+
+	for (int i = bulletInt.size() - 1; i >= 0; i--)
+	{
+		bulletVector.erase(bulletVector.begin() + bulletInt[i]);
 	}
 
 	//remove dead enemies
