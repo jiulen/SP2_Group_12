@@ -85,7 +85,10 @@ struct Bullet {
 	}
 
 	void Update(float dt) {
-		bulletHit(bulletHitbox);
+		Vector3 newVector = directionVector * bulletSpeed * dt;
+		bulletHitbox.posX += newVector.x;
+		bulletHitbox.posY += newVector.x;
+		bulletHitbox.posZ += newVector.z;
 	}
 
 };
