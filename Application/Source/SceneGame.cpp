@@ -427,6 +427,18 @@ void SceneGame::Update(double dt)
 		bulletVector.erase(bulletVector.begin() + bulletInt[i]);
 	}
 
+	bulletInt.clear();
+
+	for (int i = bulletInt.size() - 1; i >= 0; i--)
+	{
+		if (bulletVector[i].bulletHitbox.posX > 150 || bulletVector[i].bulletHitbox.posX < -150 ||
+			bulletVector[i].bulletHitbox.posY > 200 || bulletVector[i].bulletHitbox.posY < 0 + bulletVector[i].bulletHitbox.sizeY ||
+			bulletVector[i].bulletHitbox.posZ > 150 || bulletVector[i].bulletHitbox.posZ < -150)
+		{
+			bulletVector.erase(bulletVector.begin() + bulletInt[i]);
+		}
+	}
+
 	//remove dead enemies
 	for (int i = 0; i < entities.size(); i++)
 	{
