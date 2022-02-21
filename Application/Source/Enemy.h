@@ -13,6 +13,7 @@ protected:
 public:
 	Enemy();
 	~Enemy();
+	virtual void takedamage(int a);
 	virtual void move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, std::vector<Entity*> entities, Hitbox playerHitbox);
 	virtual void attack(Vector3, float, Player&, float);
 };

@@ -34,6 +34,14 @@ Enemy::Enemy()
 Enemy::~Enemy()
 {
 }
+void Enemy::takedamage(int a)
+{
+	currenthealth -= a;
+	if (currenthealth < 0)
+	{
+		currenthealth = 0;
+	}
+}
 void Enemy::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, std::vector<Entity*> entities, Hitbox playerHitbox)
 {
 	if (!chase) {

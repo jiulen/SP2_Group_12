@@ -25,6 +25,18 @@ BasicMelee::BasicMelee(float facing, Vector3 pos, Vector3 direction) {
 BasicMelee::~BasicMelee()
 {
 }
+void BasicMelee::takedamage(int a)
+{
+	if (!chase) 
+	{ 
+		chase = true; 
+	} //aggro if hit
+	currenthealth -= a;
+	if (currenthealth < 0)
+	{
+		currenthealth = 0;
+	}
+}
 void BasicMelee::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, std::vector<Entity*> entities, Hitbox playerHitbox)
 {
 	if (!chase) {

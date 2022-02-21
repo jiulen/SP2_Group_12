@@ -31,8 +31,8 @@ public:
 	~Entity();
 	virtual void move(Vector3, float, std::vector<Hitbox>, std::vector<Entity*> entities, Hitbox playerHitbox);
 	virtual void attack(Vector3, float, Player&, float) = 0;
-	void takedamage(int a);
-	void heal(int a);
+	virtual void takedamage(int a);
+	virtual void heal(int a);
 	int getdamage();
 	int getcurrenthealth();
 	int getmaxhealth();
