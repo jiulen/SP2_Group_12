@@ -352,10 +352,16 @@ void SceneGame::Update(double dt)
 
 	player.Update(dt);
 	//Shooting
+	Vector3 viewvector = (camera.target - camera.position).Normalized();
+	yaw = Math::RadianToDegree(atan2(-viewvector.x, -viewvector.z));
+	pitch = Math::RadianToDegree(asin(viewvector.y));
+	rightvector = camera.getRightVector();
+
 	if (Application::IsMousePressed(0))
 	{
 		if (player.attack(dt)) {
 			PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
+			bulletVector.push_back(Bullet(player.damage, 30, viewvector));
 		}
 	}
 	static bool rOnClick = false;
@@ -393,11 +399,6 @@ void SceneGame::Update(double dt)
 		nextscene = 7;
 	}
 
-	Vector3 viewvector = (camera.target - camera.position).Normalized();
-	yaw = Math::RadianToDegree(atan2(-viewvector.x, -viewvector.z));
-	pitch = Math::RadianToDegree(asin(viewvector.y));
-
-	rightvector = camera.getRightVector();
 
 
 }

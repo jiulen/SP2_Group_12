@@ -169,6 +169,7 @@ private:
 	Vector3 rightvector;
 	int bulletCount;
 	bool bulletHit;
+	std::vector<Bullet> bulletVector;
 
 	//Init player
 	Player player;
