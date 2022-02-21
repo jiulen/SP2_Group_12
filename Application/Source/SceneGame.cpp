@@ -385,7 +385,7 @@ void SceneGame::Update(double dt)
 		if (!reloading) {
 			if (player.attack(dt)) {
 				PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
-				bulletVector.push_back(Bullet(player.damage, 30, 1, 1, 1, viewvector, camera.position));
+				bulletVector.push_back(Bullet(player.damage, 50, 1, 1, 1, viewvector, camera.position));
 			}
 		}
 	}
@@ -428,15 +428,13 @@ void SceneGame::Update(double dt)
 		bulletVector.erase(bulletVector.begin() + bulletInt[i]);
 	}
 
-	bulletInt.clear();
-
-	for (int i = bulletInt.size() - 1; i >= 0; i--)
+	for (int i = bulletVector.size() - 1; i >= 0; i--)
 	{
 		if (bulletVector[i].bulletHitbox.posX > 150 || bulletVector[i].bulletHitbox.posX < -150 ||
-			bulletVector[i].bulletHitbox.posY > 200 || bulletVector[i].bulletHitbox.posY < 0 + bulletVector[i].bulletHitbox.sizeY ||
+			bulletVector[i].bulletHitbox.posY > 200 || bulletVector[i].bulletHitbox.posY < 0 + bulletVector[i].bulletHitbox.sizeY / 2 ||
 			bulletVector[i].bulletHitbox.posZ > 150 || bulletVector[i].bulletHitbox.posZ < -150)
 		{
-			bulletVector.erase(bulletVector.begin() + bulletInt[i]);
+			bulletVector.erase(bulletVector.begin() + i);
 		}
 	}
 
