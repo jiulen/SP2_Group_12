@@ -47,9 +47,10 @@ void SceneGame::Reset()
 {
 	player = Player();
 	camera.Init(Vector3(0, 4.5, 5.5), Vector3(0, 4.5, 4.5), Vector3(0, 1, 0));
-	int a = entities.size();
-	for (int i = 0; i < a; i++)
+	for (int i = entities.size() - 1; i >= 0; i--) { //removes all entities
+		delete entities[i];
 		entities.pop_back();
+	}
 	crosshairenabled = 1;
 	check = 0;
 	bombspawn = 0;
@@ -353,19 +354,13 @@ void SceneGame::Update(double dt)
 	}
 
 	player.Update(dt);
-	//Shooting
+	
 	Vector3 viewvector = (camera.target - camera.position).Normalized();
 	yaw = Math::RadianToDegree(atan2(-viewvector.x, -viewvector.z));
 	pitch = Math::RadianToDegree(asin(viewvector.y));
 	rightvector = camera.getRightVector();
 
-	if (Application::IsMousePressed(0))
-	{
-		if (player.attack(dt)) {
-			PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
-			bulletVector.push_back(Bullet(player.damage, 30, 1, 1, 1, viewvector, camera.position));
-		}
-	}
+	//Reloading
 	static bool rOnClick = false;
 	static bool reloading = false;
 	if (!rOnClick && Application::IsKeyPressed('R'))
@@ -384,6 +379,16 @@ void SceneGame::Update(double dt)
 	{
 		player.reload(dt, reloading);
 	}
+	//Shooting
+	if (Application::IsMousePressed(0))
+	{
+		if (!reloading) {
+			if (player.attack(dt)) {
+				PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
+				bulletVector.push_back(Bullet(player.damage, 50, 1, 1, 1, viewvector, camera.position));
+			}
+		}
+	}
 
 	//Enemy updates
 	UpdateEnemyMovement(dt);
@@ -401,7 +406,7 @@ void SceneGame::Update(double dt)
 		bool collided = false;
 		for (int j = 0; j < entities.size(); j++)
 		{
-			if (bulletVector[i].bulletHit(entities[j]->getHitbox())) 
+			if (bulletVector[i].bulletHit(entities[j]->getHitbox()) && !collided)
 			{
 				entities[j]->takedamage(bulletVector[i].bulletDamage);
 				bulletInt.push_back(i);
@@ -410,7 +415,7 @@ void SceneGame::Update(double dt)
 		}
 		for (int k = 0; k < hitboxes.size(); k++)
 		{
-			if (bulletVector[i].bulletHit(hitboxes[k])) 
+			if (bulletVector[i].bulletHit(hitboxes[k]) && !collided)
 			{
 				bulletInt.push_back(i);
 				collided = true;
@@ -418,13 +423,32 @@ void SceneGame::Update(double dt)
 		}
 	}
 
+	for (int i = bulletInt.size() - 1; i >= 0; i--)
+	{
+		bulletVector.erase(bulletVector.begin() + bulletInt[i]);
+	}
+
+	for (int i = bulletVector.size() - 1; i >= 0; i--)
+	{
+		if (bulletVector[i].bulletHitbox.posX > 150 || bulletVector[i].bulletHitbox.posX < -150 ||
+			bulletVector[i].bulletHitbox.posY > 200 || bulletVector[i].bulletHitbox.posY < 0 + bulletVector[i].bulletHitbox.sizeY / 2 ||
+			bulletVector[i].bulletHitbox.posZ > 150 || bulletVector[i].bulletHitbox.posZ < -150)
+		{
+			bulletVector.erase(bulletVector.begin() + i);
+		}
+	}
+
+	//remove dead enemies
 	for (int i = 0; i < entities.size(); i++)
 	{
 		if (entities[i]->getcurrenthealth() <= 0)
 		{
-			entities.erase(std::remove(entities.begin(), entities.end(), nullptr), entities.end());
+			delete entities[i];
+			entities[i] = nullptr;
 		}
 	}
+
+	entities.erase(std::remove(entities.begin(), entities.end(), nullptr), entities.end());
 
 	
 
