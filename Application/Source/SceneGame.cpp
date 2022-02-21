@@ -350,6 +350,7 @@ void SceneGame::Update(double dt)
 	if (Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //wireframe mode
 
+	camera.Update(dt, hitboxes);
 	player.Update(dt);
 	//Shooting
 	Vector3 viewvector = (camera.target - camera.position).Normalized();
@@ -381,12 +382,6 @@ void SceneGame::Update(double dt)
 	if (reloading == true)
 	{
 		player.reload(dt, reloading);
-	}
-
-	camera.Update(dt, hitboxes);
-
-	if (Application::IsKeyPressed('R')) {
-		bLightEnabled = true;
 	}
 
 	//Enemy updates
