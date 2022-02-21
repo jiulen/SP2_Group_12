@@ -77,7 +77,7 @@ struct Bullet {
 	bool bulletHit(Hitbox hitbox) {
 		float x = Math::Clamp(bulletHitbox.posX, hitbox.posX - 0.5f * hitbox.sizeX, hitbox.posX + 0.5f * hitbox.sizeX);
 		float y = Math::Clamp(bulletHitbox.posY, hitbox.posY - 0.5f * hitbox.sizeY, hitbox.posY + 0.5f * hitbox.sizeY);
-		float z = Math::Clamp(bulletHitbox.posZ, hitbox.posY - 0.5f * hitbox.sizeY, hitbox.posY + 0.5f * hitbox.sizeY);
+		float z = Math::Clamp(bulletHitbox.posZ, hitbox.posZ - 0.5f * hitbox.sizeZ, hitbox.posZ + 0.5f * hitbox.sizeZ);
 
 		//check distancebetween nearest point of sphere and cube
 		float distance = sqrt((x - bulletHitbox.posX) * (x - bulletHitbox.posX) + (y - bulletHitbox.posY) * (y - bulletHitbox.posY) + (z - bulletHitbox.posZ) * (z - bulletHitbox.posZ));
