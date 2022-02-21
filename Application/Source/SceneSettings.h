@@ -76,6 +76,9 @@ private:
 	bool redPicked;
 	bool bluePicked;
 	bool greenPicked;
+	bool lowPicked;
+	bool mediumPicked;
+	bool highPicked;
 	int nextscene = 2;
 	double mouseX = 0;
 	double mouseY = 0;
