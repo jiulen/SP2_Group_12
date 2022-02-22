@@ -80,6 +80,7 @@ Entity::Entity()
 	damage = 1;
 	entityPos = Vector3(0,0,0);
 	directionVector = Vector3(0, 0, 1);
+	chase = false;
 	detectRange = 10;
 	attackRange = 1;
 	velocity = 1.0f;
@@ -159,4 +160,14 @@ Hitbox Entity::getHitbox()
 std::string Entity::getName()
 {
 	return name;
+}
+
+bool Entity::getChase()
+{
+	return chase;
+}
+
+void Entity::setChase(bool chasing)
+{
+	chase = chasing;
 }

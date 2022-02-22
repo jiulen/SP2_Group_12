@@ -1,6 +1,6 @@
 #include "BasicMelee.h"
 BasicMelee::BasicMelee(float facing, Vector3 pos, Vector3 direction, Vector3 patrol, float delay) {
-	maxhealth = 50;
+	maxhealth = 60;
 	currenthealth = maxhealth;
 	damage = 10;
 	entityPos = pos;
@@ -9,7 +9,7 @@ BasicMelee::BasicMelee(float facing, Vector3 pos, Vector3 direction, Vector3 pat
 	chase = false;
 	detectRange = 20;
 	attackRange = 2.f;
-	velocity = 15.f;
+	velocity = 10.f;
 	type = 'E';
 	name = "BasicMelee";
 	hitbox = Hitbox(entityPos.x, entityPos.y + 2.8, entityPos.z, 2.8, 5.6f, 1.4f);
@@ -50,7 +50,7 @@ void BasicMelee::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes,
 	if (!chase && patrolVector.Length() != 0) { //patrol
 		patrolVector.Normalize();
 		if (patrolTime >= 0.f) {
-			Vector3 newVector = patrolVector * velocity * 0.67f * dt;
+			Vector3 newVector = patrolVector * velocity * dt;
 			entityPos.x += newVector.x;
 			entityPos.z += newVector.z;
 			//face player when chasing
@@ -99,8 +99,8 @@ void BasicMelee::attack(Vector3 playerPos, float playerRadius, Player& player, f
 	static float timePassed = atkCd;
 	timePassed += dt;
 	if (timePassed >= atkCd) {
-		timePassed = 0.f;
 		if (DistBetweenPoints(entityPos.x, entityPos.z, playerPos.x, playerPos.z) <= attackRange + playerRadius) {
+			timePassed = 0.f;
 			player.takedamage(damage);
 		}
 	}

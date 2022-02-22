@@ -12,6 +12,7 @@
 #include "Entity.h"
 #include "Enemy.h"
 #include "BasicMelee.h"
+#include "Watcher.h"
 #include "Boss.h"
 #include "Vector3.h"
 #include <fstream>
@@ -47,6 +48,7 @@ class SceneGame : public Scene
 
 		//OBJs
 		GEO_ENEMY1,
+		GEO_ENEMY2,
 		GEO_BOSS,
 
 		GEO_SPIKE,
