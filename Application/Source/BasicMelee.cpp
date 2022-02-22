@@ -45,7 +45,7 @@ void BasicMelee::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes,
 			chase = true;
 		}
 	}
-	if (!chase) { //patrol
+	if (!chase && patrolVector.Length() != 0) { //patrol
 		patrolVector.Normalize();
 		Vector3 newVector = patrolVector * velocity * dt;
 		entityPos.x += newVector.x;

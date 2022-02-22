@@ -831,9 +831,32 @@ void SceneGame::Render()
 	//Hitbox(60, 25, 60, 24, 50, 24);
 
 	modelStack.PushMatrix();
-	modelStack.Scale(20, 20, 20);
+	modelStack.Translate(0, 0, 160);
+	modelStack.Scale(300, 20, 20);
 	RenderMesh(meshList[GEO_WALL], true);
 	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, -141);
+	modelStack.Scale(300, 20, 20);
+	RenderMesh(meshList[GEO_WALL], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(159, 0, 1);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(310, 20, 20);
+	RenderMesh(meshList[GEO_WALL], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-140, 0, 1);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(300, 20, 20);
+	RenderMesh(meshList[GEO_WALL], true);
+	modelStack.PopMatrix();
+
+
 
 	modelStack.PushMatrix();
 	modelStack.Translate(camera.position.x, camera.position.y, camera.position.z);
