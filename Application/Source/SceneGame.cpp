@@ -239,6 +239,8 @@ void SceneGame::Init()
 	meshList[GEO_SMALLHOUSE_D] = MeshBuilder::GenerateOBJMTL("small house d", "OBJ//small_buildingD.obj", "OBJ//small_buildingD.mtl");
 	meshList[GEO_SMALLHOUSE_E] = MeshBuilder::GenerateOBJMTL("small house E", "OBJ//small_buildingE.obj", "OBJ//small_buildingE.mtl");
 	meshList[GEO_SMALLHOUSE_F] = MeshBuilder::GenerateOBJMTL("small house F", "OBJ//small_buildingF.obj", "OBJ//small_buildingF.mtl");
+	meshList[GEO_WALL] = MeshBuilder::GenerateOBJMTL("wall", "OBJ//stoneWall.obj", "OBJ//stoneWall.mtl");
+	meshList[GEO_WALL_CORNER] = MeshBuilder::GenerateOBJMTL("wall", "OBJ//stoneWallCurve.obj", "OBJ//stoneWallCurve.mtl");
 
 	//HUD
 	meshList[GEO_HEALTH] = MeshBuilder::GenerateQuad("health", Color(1, 1, 1), 1.f);
@@ -853,6 +855,10 @@ void SceneGame::Render()
 	modelStack.PopMatrix();
 	//Hitbox(60, 25, 60, 24, 50, 24);
 
+	modelStack.PushMatrix();
+	modelStack.Scale(20, 20, 20);
+	RenderMesh(meshList[GEO_WALL], true);
+	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
 	modelStack.Translate(camera.position.x, camera.position.y, camera.position.z);
