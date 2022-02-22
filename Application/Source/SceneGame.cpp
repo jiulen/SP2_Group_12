@@ -204,6 +204,8 @@ void SceneGame::Init()
 	meshList[GEO_GROUND]->textureID = LoadTGA("Image//whitebrickfloor.tga");
 	meshList[GEO_ENEMY1] = MeshBuilder::GenerateOBJMTL("enemy1", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
 	meshList[GEO_ENEMY1]->textureID = LoadTGA("Image//skin_man.tga");
+	meshList[GEO_ENEMY2] = MeshBuilder::GenerateOBJMTL("enemy2", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
+	meshList[GEO_ENEMY2]->textureID = LoadTGA("Image//skin_adventurer.tga");	
 	meshList[GEO_BOSS] = MeshBuilder::GenerateOBJMTL("boss", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
 	meshList[GEO_BOSS]->textureID = LoadTGA("Image//skin_robot.tga");
 	meshList[GEO_SPIKE] = MeshBuilder::GenerateOBJ("spike", "OBJ//spike.obj");
@@ -545,6 +547,7 @@ void SceneGame::UpdateEnemyMovement(double dt)
 	//For enemies
 	for (int i = 0; i < entities.size(); i++) {
 		if (entities[i]->getType() == 'E') {
+			entities[i]->alert(entities);
 			entities[i]->move(Vector3(camera.position.x, 0, camera.position.z), dt, hitboxes, entities, camera.getPlayerHitbox());
 		}
 	}
@@ -772,6 +775,9 @@ void SceneGame::Render()
 			if (entities[i]->getName() == "BasicMelee") {
 				RenderMesh(meshList[GEO_ENEMY1], false);
 			}
+			else if (entities[i]->getName() == "Watcher") {
+				RenderMesh(meshList[GEO_ENEMY2], false);
+			}
 			else if (entities[i]->getName() == "Boss") {
 				RenderMesh(meshList[GEO_BOSS], false);
 			}
@@ -987,11 +993,11 @@ void SceneGame::RenderBomb()
 					if (bombspawn >= 1)
 					{
 						entities.push_back(new BasicMelee(0, Vector3(68, 0, 2), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-						entities.push_back(new BasicMelee(0, Vector3(73, 0, 2), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+						entities.push_back(new Watcher(0, Vector3(73, 0, 2), Vector3(0, 0, 1)));
 						if (bombspawn == 2)
 						{
-							entities.push_back(new BasicMelee(90, Vector3(78, 0, -21), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-							entities.push_back(new BasicMelee(90, Vector3(78, 0, -26), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+							entities.push_back(new Watcher(90, Vector3(78, 0, -21), Vector3(0, 0, 1)));
+							entities.push_back(new Watcher(90, Vector3(78, 0, -26), Vector3(0, 0, 1)));
 						}
 					}
 				}
@@ -1039,11 +1045,11 @@ void SceneGame::RenderBomb()
 					if (bombspawn >= 1)
 					{
 						entities.push_back(new BasicMelee(0, Vector3(57, 0, -54), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-						entities.push_back(new BasicMelee(0, Vector3(52, 0, -54), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+						entities.push_back(new Watcher(0, Vector3(52, 0, -54), Vector3(0, 0, 1)));
 						if (bombspawn == 2)
 						{
-							entities.push_back(new BasicMelee(0, Vector3(47, 0, -54), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-							entities.push_back(new BasicMelee(0, Vector3(42, 0, -54), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+							entities.push_back(new Watcher(0, Vector3(47, 0, -54), Vector3(0, 0, 1)));
+							entities.push_back(new Watcher(0, Vector3(42, 0, -54), Vector3(0, 0, 1)));
 						}
 					}
 				}
@@ -1093,11 +1099,11 @@ void SceneGame::RenderBomb()
 					if (bombspawn >= 1)
 					{
 						entities.push_back(new BasicMelee(0, Vector3(-13, 0, -59), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-						entities.push_back(new BasicMelee(0, Vector3(-8, 0, -59), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+						entities.push_back(new Watcher(0, Vector3(-8, 0, -59), Vector3(0, 0, 1)));
 						if (bombspawn == 2)
 						{
-							entities.push_back(new BasicMelee(180, Vector3(-13, 0, -82), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-							entities.push_back(new BasicMelee(180, Vector3(-8, 0, -82), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+							entities.push_back(new Watcher(180, Vector3(-13, 0, -82), Vector3(0, 0, 1)));
+							entities.push_back(new Watcher(180, Vector3(-8, 0, -82), Vector3(0, 0, 1)));
 						}
 					}
 				}
@@ -1146,11 +1152,11 @@ void SceneGame::RenderBomb()
 					if (bombspawn >= 1)
 					{
 						entities.push_back(new BasicMelee(270, Vector3(-74, 0, -54), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-						entities.push_back(new BasicMelee(270, Vector3(-74, 0, -49), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+						entities.push_back(new Watcher(270, Vector3(-74, 0, -49), Vector3(0, 0, 1)));
 						if (bombspawn == 2)
 						{
-							entities.push_back(new BasicMelee(180, Vector3(-70, 0, -75), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-							entities.push_back(new BasicMelee(180, Vector3(-65, 0, -75), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+							entities.push_back(new Watcher(180, Vector3(-70, 0, -75), Vector3(0, 0, 1)));
+							entities.push_back(new Watcher(180, Vector3(-65, 0, -75), Vector3(0, 0, 1)));
 						}
 					}
 				}
@@ -1199,11 +1205,11 @@ void SceneGame::RenderBomb()
 					if (bombspawn >= 1)
 					{
 						entities.push_back(new BasicMelee(0, Vector3(-68, 0, 14), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-						entities.push_back(new BasicMelee(270, Vector3(-73, 0, 10), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+						entities.push_back(new Watcher(270, Vector3(-73, 0, 10), Vector3(0, 0, 1)));
 						if (bombspawn == 2)
 						{
-							entities.push_back(new BasicMelee(90, Vector3(-45, 0, 10), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-							entities.push_back(new BasicMelee(90, Vector3(-45, 0, 5), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+							entities.push_back(new Watcher(90, Vector3(-45, 0, 10), Vector3(0, 0, 1)));
+							entities.push_back(new Watcher(90, Vector3(-45, 0, 5), Vector3(0, 0, 1)));
 						}
 					}
 				}
@@ -1253,11 +1259,11 @@ void SceneGame::RenderBomb()
 					if (bombspawn >= 1)
 					{
 						entities.push_back(new BasicMelee(0, Vector3(-35, 0, 70), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-						entities.push_back(new BasicMelee(0, Vector3(-40, 0, 70), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+						entities.push_back(new Watcher(0, Vector3(-40, 0, 70), Vector3(0, 0, 1)));
 						if (bombspawn == 2)
 						{
-							entities.push_back(new BasicMelee(180, Vector3(-35, 0, 50), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-							entities.push_back(new BasicMelee(180, Vector3(-40, 0, 50), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+							entities.push_back(new Watcher(180, Vector3(-35, 0, 50), Vector3(0, 0, 1)));
+							entities.push_back(new Watcher(180, Vector3(-40, 0, 50), Vector3(0, 0, 1)));
 						}
 					}
 				}
@@ -1306,11 +1312,11 @@ void SceneGame::RenderBomb()
 					if (bombspawn >= 1)
 					{
 						entities.push_back(new BasicMelee(0, Vector3(-3, 0, 90), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-						entities.push_back(new BasicMelee(0, Vector3(-8, 0, 90), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+						entities.push_back(new Watcher(0, Vector3(-8, 0, 90), Vector3(0, 0, 1)));
 						if (bombspawn == 2)
 						{
-							entities.push_back(new BasicMelee(90, Vector3(20, 0, 85), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-							entities.push_back(new BasicMelee(90, Vector3(20, 0, 80), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+							entities.push_back(new Watcher(90, Vector3(20, 0, 85), Vector3(0, 0, 1)));
+							entities.push_back(new Watcher(90, Vector3(20, 0, 80), Vector3(0, 0, 1)));
 						}
 					}
 				}
@@ -1360,11 +1366,11 @@ void SceneGame::RenderBomb()
 					if (bombspawn >= 1)
 					{
 						entities.push_back(new BasicMelee(180, Vector3(66, 0, 46), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-						entities.push_back(new BasicMelee(180, Vector3(71, 0, 46), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+						entities.push_back(new Watcher(180, Vector3(71, 0, 46), Vector3(0, 0, 1)));
 						if (bombspawn == 2)
 						{
-							entities.push_back(new BasicMelee(270, Vector3(46, 0, 51), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-							entities.push_back(new BasicMelee(270, Vector3(46, 0, 56), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+							entities.push_back(new Watcher(270, Vector3(46, 0, 51), Vector3(0, 0, 1)));
+							entities.push_back(new Watcher(270, Vector3(46, 0, 56), Vector3(0, 0, 1)));
 						}
 					}
 				}
@@ -1414,11 +1420,11 @@ void SceneGame::RenderBomb()
 					if (bombspawn >= 1)
 					{
 						entities.push_back(new BasicMelee(90, Vector3(22, 0, -25), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-						entities.push_back(new BasicMelee(90, Vector3(22, 0, -30), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+						entities.push_back(new Watcher(90, Vector3(22, 0, -30), Vector3(0, 0, 1)));
 						if (bombspawn == 2)
 						{
-							entities.push_back(new BasicMelee(180, Vector3(17, 0, -35), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
-							entities.push_back(new BasicMelee(180, Vector3(12, 0, -35), Vector3(0, 0, 1), Vector3(0, 0, 0), 0.f));
+							entities.push_back(new Watcher(180, Vector3(17, 0, -35), Vector3(0, 0, 1)));
+							entities.push_back(new Watcher(180, Vector3(12, 0, -35), Vector3(0, 0, 1)));
 						}
 					}
 				}
@@ -1463,7 +1469,6 @@ void SceneGame::RenderBomb()
 void SceneGame::RenderHUD()
 {
 	crosshair = Application::GetCrosshair();
-	//std::cout << crosshair << std::endl; //delete if not needed
 	std::ostringstream ss,sss,ssss,ss1;
 	ss.precision(4);
 	ss << "FPS: " << FPS;
