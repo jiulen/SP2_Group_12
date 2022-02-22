@@ -91,6 +91,8 @@ class SceneGame : public Scene
 		GEO_LIGHTPOST,
 		GEO_BOMB,
 		GEO_GUN,
+		GEO_RED,
+		GEO_BLACK,
 
 		NUM_GEOMETRY,
 	};
@@ -201,6 +203,8 @@ private:
 	Player player;
 	std::vector<Entity*> entities;
 
+	//test - bullet effect
+	std::vector<Particle> particles;
 public:
 	SceneGame();
 	~SceneGame();

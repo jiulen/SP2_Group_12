@@ -52,6 +52,7 @@ void SceneGame::Reset()
 		entities.pop_back();
 	}
 	bulletVector.clear();
+	particles.clear();
 	crosshairenabled = 1;
 	check = 0;
 	bombspawn = 0;
@@ -249,7 +250,9 @@ void SceneGame::Init()
 	meshList[GEO_WALL_CORNER] = MeshBuilder::GenerateOBJMTL("wall", "OBJ//stoneWallCurve.obj", "OBJ//stoneWallCurve.mtl");
 	meshList[GEO_LIGHTPOST] = MeshBuilder::GenerateOBJMTL("light post", "OBJ//lightpostSingle.obj", "OBJ//lightpostSingle.mtl");
 
-	//HUD
+	//HUD + UI
+	meshList[GEO_RED] = MeshBuilder::GenerateQuad("red", Color(1, 0, 0), 1.f);
+	meshList[GEO_BLACK] = MeshBuilder::GenerateQuad("black", Color(0, 0, 0), 1.f);
 	meshList[GEO_HEALTH] = MeshBuilder::GenerateQuad("health", Color(1, 1, 1), 1.f);
 	meshList[GEO_HEALTH]->textureID = LoadTGA("Image//health.tga");
 	meshList[GEO_AMMO] = MeshBuilder::GenerateQuad("ammo", Color(1, 1, 1), 1.f);
@@ -477,6 +480,11 @@ void SceneGame::Update(double dt)
 				collided = true;
 			}
 		}
+
+		if (collided) {
+			Vector3 effectPos = Vector3(bulletVector[i].bulletHitbox.posX, bulletVector[i].bulletHitbox.posY, bulletVector[i].bulletHitbox.posZ) - bulletVector[i].directionVector * 0.5f; //moves bullet back 0.5f
+			particles.push_back(Particle(effectPos));
+		}
 	}
 
 	for (int i = bulletInt.size() - 1; i >= 0; i--)
@@ -490,7 +498,21 @@ void SceneGame::Update(double dt)
 			bulletVector[i].bulletHitbox.posY > 250 || bulletVector[i].bulletHitbox.posY < 0 + bulletVector[i].bulletHitbox.sizeY / 2 ||
 			bulletVector[i].bulletHitbox.posZ > 200 || bulletVector[i].bulletHitbox.posZ < -200)
 		{
+			Vector3 effectPos = Vector3(bulletVector[i].bulletHitbox.posX, bulletVector[i].bulletHitbox.posY, bulletVector[i].bulletHitbox.posZ) - bulletVector[i].directionVector * 0.5f; //moves bullet back 0.5f
+			particles.push_back(Particle(effectPos));
 			bulletVector.erase(bulletVector.begin() + i);
+		}
+	}
+
+	//remove particles
+	for (int i = 0; i < particles.size(); i++)
+	{
+		particles[i].time += dt;
+	}
+	for (int i = particles.size() - 1; i >= 0; i--)
+	{
+		if (particles[i].time > 0.25) {
+			particles.erase(particles.begin() + i);
 		}
 	}
 
@@ -770,6 +792,31 @@ void SceneGame::Render()
 		if (entities[i]->getType() == 'E') {
 			modelStack.PushMatrix();
 			modelStack.Translate(entities[i]->getPosition().x, 0, entities[i]->getPosition().z);
+			//Health bar
+			modelStack.PushMatrix();
+			Vector3 targetVector = Vector3(camera.position.x, 0, camera.position.z) - Vector3(entities[i]->getPosition().x, 0, entities[i]->getPosition().z);
+			targetVector = targetVector.Normalized();
+			float healthbarFacing = acosf(Vector3(0,0,1).Dot(targetVector));
+			if (targetVector.x > 0) {
+				healthbarFacing = Math::RadianToDegree(healthbarFacing);
+			}
+			else {
+				healthbarFacing = -Math::RadianToDegree(healthbarFacing);
+			}
+			modelStack.Rotate(healthbarFacing,0,1,0);
+			modelStack.PushMatrix();
+			modelStack.Translate(0, 6.3, 0);
+			modelStack.Scale(3, 0.7, 1);
+			RenderMesh(meshList[GEO_BLACK], false);
+			modelStack.PopMatrix();
+			modelStack.PushMatrix();
+			float length = (float(entities[i]->getcurrenthealth()) / float(entities[i]->getmaxhealth())) * 3;
+			modelStack.Translate(-(3-length)/2, 6.3, 0.01);
+			modelStack.Scale(length, 0.7, 1);
+			RenderMesh(meshList[GEO_RED], false);
+			modelStack.PopMatrix();
+			modelStack.PopMatrix();
+
 			modelStack.Rotate(entities[i]->getFacing(), 0, 1, 0);
 			modelStack.Scale(0.35, 0.35, 0.35);
 			if (entities[i]->getName() == "BasicMelee") {
@@ -936,6 +983,15 @@ void SceneGame::Render()
 
 	if ((bombspawn==3)&&(win==0))
 		RenderBoss();
+
+	//render particle (bullet hit indicator)
+	for (int i = 0; i < particles.size(); i++) {
+		modelStack.PushMatrix();
+		modelStack.Translate(particles[i].position.x, particles[i].position.y, particles[i].position.z);
+		modelStack.Scale(0.5, 0.5, 0.5);
+		RenderMesh(meshList[GEO_CUBE], false);
+		modelStack.PopMatrix();
+	}
 }
 
 void SceneGame::RenderBomb()

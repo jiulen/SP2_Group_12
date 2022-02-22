@@ -71,7 +71,7 @@ struct Bullet {
 	Hitbox bulletHitbox;
 	char bulletType; //P for player, E for enemy
 
-	Bullet(int damage = 100, float speed = 0, float sizeX = 1, float sizeY = 1, float sizeZ = 1, Vector3 direction = (0, 0, 0), Vector3 pos = (0, 0, 0), char type = 'P') { Set(damage, speed, sizeX, sizeY, sizeZ, direction, pos, type); }
+	Bullet(int damage = 100, float speed = 0, float sizeX = 1, float sizeY = 1, float sizeZ = 1, Vector3 direction = Vector3(0, 0, 0), Vector3 pos = Vector3(0, 0, 0), char type = 'P') { Set(damage, speed, sizeX, sizeY, sizeZ, direction, pos, type); }
 	void Set(int damage, float speed, float sizeX, float sizeY, float sizeZ, Vector3 direction, Vector3 pos, char type) {
 		bulletDamage = damage; bulletSpeed = speed; bulletHitbox.posX = pos.x; bulletHitbox.posY = pos.y; bulletHitbox.posZ = pos.z; bulletHitbox.sizeX = sizeX; bulletHitbox.sizeY = sizeY; bulletHitbox.sizeZ = sizeZ; directionVector = direction; bulletType = type;
 	}
@@ -92,6 +92,16 @@ struct Bullet {
 		bulletHitbox.posZ += newVector.z;
 	}
 
+};
+
+struct Particle {
+	Vector3 position;
+	float time;
+
+	Particle(Vector3 position = Vector3(0, 0, 0), float time = 0.f) { Set(position, time); }
+	void Set(Vector3 position, float time) {
+		this->position = position; this->time = time;
+	}
 };
 
 #endif
