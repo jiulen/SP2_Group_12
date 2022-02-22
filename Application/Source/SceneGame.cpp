@@ -396,7 +396,7 @@ void SceneGame::Update(double dt)
 		if (!reloading) {
 			if (player.attack(dt)) {
 				PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
-				bulletVector.push_back(Bullet(player.damage, 50, 1, 1, 1, viewvector, camera.position));
+				bulletVector.push_back(Bullet(player.damage, 50, 1, 1, 1, viewvector, camera.position, 'P'));
 			}
 		}
 	}
@@ -415,18 +415,31 @@ void SceneGame::Update(double dt)
 	for (int i = 0; i < bulletVector.size(); i++)
 	{
 		bool collided = false;
-		for (int j = 0; j < entities.size(); j++)
-		{
-			if (bulletVector[i].bulletHit(entities[j]->getHitbox()) && !collided)
+
+		if (bulletVector[i].bulletType == 'P') { //damage enemies
+			for (int j = 0; j < entities.size() && !collided; j++)
 			{
-				entities[j]->takedamage(bulletVector[i].bulletDamage);
+				if (bulletVector[i].bulletHit(entities[j]->getHitbox()))
+				{
+					entities[j]->takedamage(bulletVector[i].bulletDamage);
+					bulletInt.push_back(i);
+					collided = true;
+				}
+			}
+		}
+
+		if (bulletVector[i].bulletType == 'E') { //damage player
+			if (bulletVector[i].bulletHit(camera.getPlayerHitbox()))
+			{
+				player.takedamage(bulletVector[i].bulletDamage);
 				bulletInt.push_back(i);
 				collided = true;
 			}
 		}
-		for (int k = 0; k < hitboxes.size(); k++)
+		
+		for (int k = 0; k < hitboxes.size() && !collided; k++)
 		{
-			if (bulletVector[i].bulletHit(hitboxes[k]) && !collided)
+			if (bulletVector[i].bulletHit(hitboxes[k]))
 			{
 				bulletInt.push_back(i);
 				collided = true;
