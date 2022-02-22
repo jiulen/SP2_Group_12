@@ -476,6 +476,11 @@ void SceneGame::Update(double dt)
 				collided = true;
 			}
 		}
+
+		if (collided) {
+			Vector3 effectPos = Vector3(bulletVector[i].bulletHitbox.posX, bulletVector[i].bulletHitbox.posY, bulletVector[i].bulletHitbox.posZ) - bulletVector[i].directionVector * 0.5f; //moves bullet back 0.5f
+			particles.push_back(Particle(effectPos));
+		}
 	}
 
 	for (int i = bulletInt.size() - 1; i >= 0; i--)
@@ -489,7 +494,21 @@ void SceneGame::Update(double dt)
 			bulletVector[i].bulletHitbox.posY > 250 || bulletVector[i].bulletHitbox.posY < 0 + bulletVector[i].bulletHitbox.sizeY / 2 ||
 			bulletVector[i].bulletHitbox.posZ > 200 || bulletVector[i].bulletHitbox.posZ < -200)
 		{
+			Vector3 effectPos = Vector3(bulletVector[i].bulletHitbox.posX, bulletVector[i].bulletHitbox.posY, bulletVector[i].bulletHitbox.posZ) - bulletVector[i].directionVector * 0.5f; //moves bullet back 0.5f
+			particles.push_back(Particle(effectPos));
 			bulletVector.erase(bulletVector.begin() + i);
+		}
+	}
+
+	//remove particles
+	for (int i = 0; i < particles.size(); i++)
+	{
+		particles[i].time += dt;
+	}
+	for (int i = particles.size() - 1; i >= 0; i--)
+	{
+		if (particles[i].time > 0.25) {
+			particles.erase(particles.begin() + i);
 		}
 	}
 
@@ -927,6 +946,15 @@ void SceneGame::Render()
 
 	if ((bombspawn==3)&&(win==0))
 		RenderBoss();
+
+	//render particle (bullet hit indicator)
+	for (int i = 0; i < particles.size(); i++) {
+		modelStack.PushMatrix();
+		modelStack.Translate(particles[i].position.x, particles[i].position.y, particles[i].position.z);
+		modelStack.Scale(0.5, 0.5, 0.5);
+		RenderMesh(meshList[GEO_CUBE], false);
+		modelStack.PopMatrix();
+	}
 }
 
 void SceneGame::RenderBomb()

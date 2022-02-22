@@ -200,6 +200,8 @@ private:
 	Player player;
 	std::vector<Entity*> entities;
 
+	//test - bullet effect
+	std::vector<Particle> particles;
 public:
 	SceneGame();
 	~SceneGame();
