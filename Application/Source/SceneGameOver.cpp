@@ -110,6 +110,8 @@ void SceneGameOver::Init()
 	meshList[GEO_OPTIONS]->textureID = LoadTGA("Image//settingsbutton.tga");
 	meshList[GEO_GAMEOVER] = MeshBuilder::GenerateQuad("gameover", Color(1, 1, 1), 1.f, 1.f);
 	meshList[GEO_GAMEOVER]->textureID = LoadTGA("Image//gameover.tga");
+	meshList[GEO_YOUWIN] = MeshBuilder::GenerateQuad("youwin", Color(1, 1, 1), 1.f, 1.f);
+	meshList[GEO_YOUWIN]->textureID = LoadTGA("Image//win.tga");
 	meshList[GEO_BACKSCREEN] = MeshBuilder::GenerateQuad("backtohome", Color(1, 1, 1), 1.f, 1.f);
 	meshList[GEO_BACKSCREEN]->textureID = LoadTGA("Image//backtohome.tga");
 
@@ -198,6 +200,7 @@ void SceneGameOver::Update(double dt)
 		if (posX > BUTTON_LEFT_MAINMENU && posX < BUTTON_RIGHT_MAINMENU && posY > BUTTON_BOTTOM_MAINMENU && posY < BUTTON_TOP_MAINMENU)//
 		{
 			std::cout << "Back to main menu!" << std::endl;
+			Application::SetWin(0);
 			nextscene = 1;
 		}
 	}
@@ -369,8 +372,11 @@ void SceneGameOver::Render()
 	modelStack.LoadIdentity();	
 
 	RenderImageOnScreen(meshList[GEO_BACKGROUND], Color(1, 1, 1), 80, 60, 40, 30);
-	RenderImageOnScreen(meshList[GEO_GAMEOVER], Color(1, 1, 1), 40, 30, 40, 45);
-	RenderImageOnScreen(meshList[GEO_BACKSCREEN], Color(1, 1, 1), 20, 10, 40, 20);//
+	if (Application::GetWin()==0)
+		RenderImageOnScreen(meshList[GEO_GAMEOVER], Color(1, 1, 1), 40, 30, 40, 45);
+	else
+		RenderImageOnScreen(meshList[GEO_YOUWIN], Color(1, 1, 1), 40, 30, 40, 42.5);
+	RenderImageOnScreen(meshList[GEO_BACKSCREEN], Color(1, 1, 1), 20, 10, 40, 20);
 
 
 }

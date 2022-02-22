@@ -23,6 +23,7 @@ class SceneGameOver : public Scene
 		GEO_PLAY,
 		GEO_OPTIONS,
 		GEO_GAMEOVER,
+		GEO_YOUWIN,
 		GEO_RETRY,
 		GEO_BACKSCREEN,
 		NUM_GEOMETRY,

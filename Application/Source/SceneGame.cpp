@@ -59,6 +59,7 @@ void SceneGame::Reset()
 	bombrand2 = 0;
 	bombrand3 = 0;
 	spawn = 0;
+	timer = 0;
 	for (int i = 0; i < 3; i++)
 		minigamesused[i] = 0;
 }
@@ -459,7 +460,16 @@ void SceneGame::Update(double dt)
 		PlaySound(L"Sound//gameover.wav", NULL, SND_FILENAME | SND_ASYNC);
 	}
 
-
+	//Win
+	if (bombspawn == 3)
+	{
+		timer += dt;
+		if (timer == 3)
+		{
+			nextscene = 7;
+			Application::SetWin(1);
+		}
+	}
 
 }
 void SceneGame::UpdateEnemyMovement(double dt)

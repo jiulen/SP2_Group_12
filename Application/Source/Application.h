@@ -21,6 +21,8 @@ public:
 	static void SetCrosshair(int a);
 	static int GetSensitivity();
 	static void SetSensitivity(int a);
+	static int GetWin();
+	static void SetWin(int a);
 	static int GetReset();
 	static void SetReset(int a);
 	static unsigned m_width;
@@ -28,6 +30,7 @@ public:
 	static unsigned crosshair;
 	static unsigned sensitivityoption;
 	static unsigned resetscene;
+	static unsigned win;
 
 private:
 
