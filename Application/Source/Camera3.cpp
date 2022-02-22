@@ -30,7 +30,7 @@ void Camera3::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 	lastX = Application::GetWindowWidth() * 0.5f;
 	lastY = Application::GetWindowHeight() * 0.5f;
 	firstMouse = true;
-	playerHitbox = Hitbox(position.x, position.y + 0.5f - playerHeight / 2, position.z, 2.8, playerHeight, 1.4f); //use circle for collision in camera (when player colliding), use rect for collision in others (when enemy colliding)
+	playerHitbox = Hitbox(position.x, position.y + 0.5f - playerHeight * 0.5f, position.z, 2.8, playerHeight, 1.4f); //use circle for collision in camera (when player colliding), use rect for collision in others (when enemy colliding)
 	//takes longer edge to use to get radius
 	if (playerHitbox.sizeX > playerHitbox.sizeZ) {
 		playerRadius = playerHitbox.sizeX * 0.5f;
@@ -194,7 +194,7 @@ void Camera3::Reset()
     up = defaultUp;
 }
 
-void Camera3::LookingAround() //bug: cant look directly up/down aft a while
+void Camera3::LookingAround()
 {
 	Vector3 view = (target - position).Normalized();
 	Vector3 right = view.Cross(up);

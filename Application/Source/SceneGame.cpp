@@ -382,7 +382,7 @@ void SceneGame::Update(double dt)
 	{
 		if (entities[i]->getName() == "Boss")
 		{
-			viewvector2 = Vector3(camera.getPlayerHitbox().posX, camera.getPlayerHitbox().posY, camera.getPlayerHitbox().posZ) - Vector3(entities[i]->getHitbox().posX, 4.5, entities[i]->getHitbox().posZ);
+			viewvector2 = Vector3(camera.getPlayerHitbox().posX, camera.getPlayerHitbox().posY, camera.getPlayerHitbox().posZ) - Vector3(entities[i]->getHitbox().posX, entities[i]->getHitbox().posY, entities[i]->getHitbox().posZ);
 			viewvector2.Normalize();
 		}
 	}
@@ -424,7 +424,7 @@ void SceneGame::Update(double dt)
 		{
 			if (entities[i]->getName() == "Boss")
 			{
-				bulletVector.push_back(Bullet(entities[i]->getdamage(), 75, 1, 1, 1, viewvector2, Vector3(entities[i]->getHitbox().posX, 4.5, entities[i]->getHitbox().posZ), 'E'));
+				bulletVector.push_back(Bullet(entities[i]->getdamage(), 75, 1, 1, 1, viewvector2, Vector3(entities[i]->getHitbox().posX, entities[i]->getHitbox().posY, entities[i]->getHitbox().posZ), 'E'));
 			}
 		}
 		bossshoot = 0;
