@@ -368,16 +368,17 @@ void SceneGame::Update(double dt)
 
 	player.Update(dt);
 	
-	/*Vector3 viewvector2;
-	for (int i = 0; i < entities.size(); i++)
-	{
-		if (entities[i]->getName() == "Boss")
-			viewfactor2 = (entities[i]->getFacing() - entities[i]->getPosition()).Normalized();
-	}*/
+	
 	Vector3 viewvector = (camera.target - camera.position).Normalized();
 	yaw = Math::RadianToDegree(atan2(-viewvector.x, -viewvector.z));
 	pitch = Math::RadianToDegree(asin(viewvector.y));
 	rightvector = camera.getRightVector();
+	Vector3 viewvector2;
+	for (int i = 0; i < entities.size(); i++)
+	{
+		if (entities[i]->getName() == "Boss")
+			viewvector2 = (Vector3(0,0,1) - entities[i]->getPosition()).Normalized();
+	}
 
 	//Reloading
 	static bool rOnClick = false;
@@ -417,7 +418,7 @@ void SceneGame::Update(double dt)
 			if (entities[i]->getName() == "Boss")
 			{
 				std::cout << "ok" << std::endl;
-				bulletVector.push_back(Bullet(entities[i]->getdamage(), 50, 1, 1, 1, entities[i]->getFacing(), entities[i]->getPosition(), 'E'));
+				bulletVector.push_back(Bullet(entities[i]->getdamage(), 50, 1, 1, 1, viewvector2, entities[i]->getPosition(), 'E'));
 			}
 		}
 	}
@@ -889,7 +890,7 @@ void SceneGame::Render()
 	//RenderHUD
 	RenderHUD();
 
-	if ((bombspawn==3)&&(win==0))
+	/*if ((bombspawn==3)&&(win==0))*/
 		RenderSpike();
 }
 
