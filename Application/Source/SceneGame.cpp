@@ -61,6 +61,12 @@ void SceneGame::Reset()
 	bombrand3 = 0;
 	spawn = 0;
 	timer = 0;
+	spiketimer = 0;
+	spikestart = 0;
+	spikeypos = -1.5;
+	spikexpos = 0;
+	spikezpos = 0;
+	spikedmg = 0;
 	for (int i = 0; i < 3; i++)
 		minigamesused[i] = 0;
 }
@@ -196,7 +202,7 @@ void SceneGame::Init()
 	meshList[GEO_ENEMY1]->textureID = LoadTGA("Image//skin_man.tga");
 	meshList[GEO_BOSS] = MeshBuilder::GenerateOBJMTL("boss", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
 	meshList[GEO_BOSS]->textureID = LoadTGA("Image//skin_robot.tga");
-	meshList[GEO_SPIKE] = MeshBuilder::GenerateOBJMTL("spike", "OBJ//spike.obj", "OBJ//spike.mtl");
+	meshList[GEO_SPIKE] = MeshBuilder::GenerateOBJ("spike", "OBJ//spike.obj");
 	meshList[GEO_BOMB] = MeshBuilder::GenerateOBJMTL("bomb", "OBJ//bomb.obj", "OBJ//bomb.mtl");
 	meshList[GEO_GUN] = MeshBuilder::GenerateOBJMTL("gun", "OBJ//pistol.obj", "OBJ//pistol.mtl");
 	meshList[GEO_GUN]->textureID = LoadTGA("Image//pistol_.tga");
@@ -455,7 +461,20 @@ void SceneGame::Update(double dt)
 
 	entities.erase(std::remove(entities.begin(), entities.end(), nullptr), entities.end());
 
-	
+	if (spikestart == 1)
+	{
+		spiketimer += dt;
+		if ((spiketimer >= 5)&&(spiketimer<=7))
+		{
+			if (spikeypos<=0)
+				spikeypos += 10 * dt;
+		}
+		if (spiketimer > 7)
+		{
+			if (spikeypos >-1.5)
+				spikeypos -= 15 * dt;
+		}
+	}
 
 	//Game over
 	if (player.currentHealth <= 0)
@@ -1446,10 +1465,36 @@ void SceneGame::RenderSkybox()
 
 void SceneGame::RenderSpike()
 {
-	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 0);
-	RenderMesh(meshList[GEO_SPIKE], true);
-	modelStack.PopMatrix();
+	spikestart = 1;
+	if ((spiketimer >= 4.3) && (spiketimer <= 4.5))
+	{
+		PlaySound(L"Sound//spikesound.wav", NULL, SND_FILENAME | SND_ASYNC);
+		spikexpos = camera.position.x;
+		spikezpos = camera.position.z;
+	}
+	if ((spiketimer >= 5)&&(spiketimer<=10))
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(spikexpos, spikeypos, spikezpos);
+		modelStack.Scale(10, 10, 10);
+		RenderMesh(meshList[GEO_SPIKE], true);
+		modelStack.PopMatrix();
+		if ((camera.position.x >= spikexpos - 2.4) && (camera.position.x <= spikexpos + 2.4) && (camera.position.z >= spikezpos - 2.4) && (camera.position.z <= spikezpos + 2.4) && (camera.position.y < spikeypos + 5))
+		{
+			if (spikedmg == 0)
+			{
+				player.currentHealth -= 20;
+				spikedmg = 1;
+			}
+		}
+		else
+			spikedmg = 0;
+	}
+	if (spiketimer > 10)
+	{
+		spiketimer = 0;
+		spikeypos = -1.5;
+	}
 }
 
 int SceneGame::NextScene()

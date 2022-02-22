@@ -170,6 +170,12 @@ private:
 	int minigamesused[3] = { 0,0,0 };
 
 	double timer = 0;
+	double spiketimer = 0;
+	int spikestart = 0;
+	float spikeypos = -1.5;
+	float spikexpos = 0;
+	float spikezpos = 0;
+	int spikedmg = 0;
 
 	//spawn enemies
 	int spawn = 0;
