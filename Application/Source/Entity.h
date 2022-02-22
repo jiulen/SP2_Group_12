@@ -16,8 +16,9 @@ protected:
 	Hitbox hitbox;
 	float enemyRadius;
 	float atkCd;
+	bool chase;
 
-	char type; //N for none(entity), E for enemy, maybe other letter for npcs(if going to add)
+	char type; //N for none(entity), E for enemy, maybe other letter for friendly npcs(if going to add)
 	std::string name;
 
 	float DistBetweenPoints(float x1, float z1, float x2, float z2);
@@ -33,6 +34,7 @@ public:
 	virtual void attack(Vector3, float, Player&, float) = 0;
 	virtual void takedamage(int a);
 	virtual void heal(int a);
+	virtual void alert(std::vector<Entity*>& entities) = 0;
 	int getdamage();
 	int getcurrenthealth();
 	int getmaxhealth();
@@ -42,6 +44,8 @@ public:
 	char getType();
 	Hitbox getHitbox();
 	std::string getName();
+	bool getChase();
+	void setChase(bool chasing);
 };
 
 #endif
