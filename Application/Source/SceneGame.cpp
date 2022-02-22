@@ -456,9 +456,9 @@ void SceneGame::Update(double dt)
 
 	for (int i = bulletVector.size() - 1; i >= 0; i--)
 	{
-		if (bulletVector[i].bulletHitbox.posX > 150 || bulletVector[i].bulletHitbox.posX < -150 ||
-			bulletVector[i].bulletHitbox.posY > 200 || bulletVector[i].bulletHitbox.posY < 0 + bulletVector[i].bulletHitbox.sizeY / 2 ||
-			bulletVector[i].bulletHitbox.posZ > 150 || bulletVector[i].bulletHitbox.posZ < -150)
+		if (bulletVector[i].bulletHitbox.posX > 200 || bulletVector[i].bulletHitbox.posX < -200 ||
+			bulletVector[i].bulletHitbox.posY > 250 || bulletVector[i].bulletHitbox.posY < 0 + bulletVector[i].bulletHitbox.sizeY / 2 ||
+			bulletVector[i].bulletHitbox.posZ > 200 || bulletVector[i].bulletHitbox.posZ < -200)
 		{
 			bulletVector.erase(bulletVector.begin() + i);
 		}
