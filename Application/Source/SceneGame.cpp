@@ -247,7 +247,7 @@ void SceneGame::Init()
 	meshList[GEO_SMALLHOUSE_F] = MeshBuilder::GenerateOBJMTL("small house F", "OBJ//small_buildingF.obj", "OBJ//small_buildingF.mtl");
 	meshList[GEO_WALL] = MeshBuilder::GenerateOBJMTL("wall", "OBJ//stoneWall.obj", "OBJ//stoneWall.mtl");
 	meshList[GEO_WALL_CORNER] = MeshBuilder::GenerateOBJMTL("wall", "OBJ//stoneWallCurve.obj", "OBJ//stoneWallCurve.mtl");
-	meshList[GEO_LIGHTPOST] = MeshBuilder::GenerateOBJMTL("light post", "OBJ//lightpostSingle.obj", "lightpostSingle.mtl");
+	meshList[GEO_LIGHTPOST] = MeshBuilder::GenerateOBJMTL("light post", "OBJ//lightpostSingle.obj", "OBJ//lightpostSingle.mtl");
 
 	//HUD
 	meshList[GEO_HEALTH] = MeshBuilder::GenerateQuad("health", Color(1, 1, 1), 1.f);
@@ -876,7 +876,7 @@ void SceneGame::Render()
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, -141);
+	modelStack.Translate(0, 0, -140);
 	modelStack.Scale(300, 20, 20);
 	RenderMesh(meshList[GEO_WALL], true);
 	modelStack.PopMatrix();
@@ -894,6 +894,14 @@ void SceneGame::Render()
 	modelStack.Scale(300, 20, 20);
 	RenderMesh(meshList[GEO_WALL], true);
 	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, 0);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(5, 5, 5);
+	RenderMesh(meshList[GEO_LIGHTPOST], true);
+	modelStack.PopMatrix();
+
 
 
 
