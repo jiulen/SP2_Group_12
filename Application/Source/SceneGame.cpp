@@ -366,6 +366,12 @@ void SceneGame::Update(double dt)
 
 	player.Update(dt);
 	
+	/*Vector3 viewvector2;
+	for (int i = 0; i < entities.size(); i++)
+	{
+		if (entities[i]->getName() == "Boss")
+			viewfactor2 = (entities[i]->getFacing() - entities[i]->getPosition()).Normalized();
+	}*/
 	Vector3 viewvector = (camera.target - camera.position).Normalized();
 	yaw = Math::RadianToDegree(atan2(-viewvector.x, -viewvector.z));
 	pitch = Math::RadianToDegree(asin(viewvector.y));
@@ -397,6 +403,19 @@ void SceneGame::Update(double dt)
 			if (player.attack(dt)) {
 				PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
 				bulletVector.push_back(Bullet(player.damage, 50, 1, 1, 1, viewvector, camera.position, 'P'));
+			}
+		}
+	}
+
+	if (Application::IsKeyPressed('C'))
+	{
+		PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
+		for (int i = 0; i < entities.size(); i++)
+		{
+			if (entities[i]->getName() == "Boss")
+			{
+				std::cout << "ok" << std::endl;
+				bulletVector.push_back(Bullet(entities[i]->getdamage(), 50, 1, 1, 1, entities[i]->getFacing(), entities[i]->getPosition(), 'E'));
 			}
 		}
 	}
@@ -499,8 +518,8 @@ void SceneGame::Update(double dt)
 	}
 
 	//Win
-	//if (win==1)
-	if (bombspawn == 3)
+	if (win==1)
+	/*if (bombspawn == 3)*/
 	{
 		timer += dt;
 		if (timer >= 3)
@@ -864,7 +883,7 @@ void SceneGame::Render()
 	//RenderHUD
 	RenderHUD();
 
-	/*if (bombspawn==3)*/
+	if ((bombspawn==3)&&(win==0))
 		RenderSpike();
 }
 
@@ -1487,8 +1506,19 @@ void SceneGame::RenderSpike()
 {
 	if (spikestart == 0)
 	{
-		entities.push_back(new Boss(90, Vector3(0, 0, 0), Vector3(0, 0, 1)));
-		spikestart = 1;
+		entities.push_back(new Boss(0, Vector3(0, 0, 0), Vector3(0, 0, 1)));
+		spikestart = 2;
+	}
+	if (spikestart == 2)
+	{
+		for (int i = 0; i < entities.size(); i++)
+		{
+			if (entities[i]->getName() == "Boss")
+			{
+				if (entities[i]->getPosition() != Vector3(0, 0, 0))
+					spikestart = 1;
+			}
+		}
 	}
 	if ((spiketimer >= 4.7) && (spikelockon == 0))
 		spikelockon = 1;

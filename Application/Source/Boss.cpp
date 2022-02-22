@@ -1,6 +1,6 @@
 #include "Boss.h"
 Boss::Boss(float facing, Vector3 pos, Vector3 direction) {
-	maxhealth = 300;
+	maxhealth = 400;
 	currenthealth = maxhealth;
 	damage = 30;
 	entityPos = pos;
