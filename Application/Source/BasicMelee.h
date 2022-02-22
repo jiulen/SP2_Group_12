@@ -8,7 +8,8 @@
 class BasicMelee : public Enemy
 {
 private:
-	
+	Vector3 startPos;
+	Vector3 patrolVector;
 public:
 	BasicMelee(float facing, Vector3 pos, Vector3 direction);
 	~BasicMelee();

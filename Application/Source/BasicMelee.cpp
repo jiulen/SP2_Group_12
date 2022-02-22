@@ -21,6 +21,7 @@ BasicMelee::BasicMelee(float facing, Vector3 pos, Vector3 direction) {
 	else {
 		enemyRadius = hitbox.sizeZ * 0.5f;
 	}
+	startPos = entityPos;
 }
 BasicMelee::~BasicMelee()
 {
@@ -43,6 +44,25 @@ void BasicMelee::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes,
 		if (DistBetweenPoints(playerPos.x, playerPos.z, entityPos.x, entityPos.z) <= detectRange) { //if player is within detect range
 			chase = true;
 		}
+	}
+	if (!chase) { //patrol
+		patrolVector.Normalize();
+		Vector3 newVector = patrolVector * velocity * dt;
+		entityPos.x += newVector.x;
+		entityPos.z += newVector.z;
+		//face player when chasing
+		entityFacing = acosf(directionVector.Dot(patrolVector));
+		if (patrolVector.x > 0) {
+			entityFacing = Math::RadianToDegree(entityFacing);
+		}
+		else {
+			entityFacing = -Math::RadianToDegree(entityFacing);
+		}
+		//reverse patrol vector if too far (or time?)
+		if (DistBetweenPoints(startPos.x, startPos.z, entityPos.x, entityPos.z) > 5) {
+			patrolVector *= -1;
+		}
+
 	}
 	if (chase) {
 		Vector3 targetVector = Vector3(playerPos.x, 0, playerPos.z) - Vector3(entityPos.x, 0, entityPos.z);
