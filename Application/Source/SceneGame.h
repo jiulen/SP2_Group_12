@@ -90,6 +90,8 @@ class SceneGame : public Scene
 		GEO_WALL_CORNER,
 		GEO_BOMB,
 		GEO_GUN,
+		GEO_RED,
+		GEO_BLACK,
 
 		NUM_GEOMETRY,
 	};
