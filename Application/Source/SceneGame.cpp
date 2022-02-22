@@ -694,7 +694,7 @@ void SceneGame::Render()
 
 	modelStack.PushMatrix();
 	modelStack.Rotate(-90, 1, 0, 0);
-	modelStack.Scale(200, 200, 200);
+	modelStack.Scale(300, 300, 300);
 	RenderMesh(meshList[GEO_GROUND], true);
 	modelStack.PopMatrix();
 
