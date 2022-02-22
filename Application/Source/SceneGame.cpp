@@ -1542,7 +1542,7 @@ void SceneGame::RenderBoss()
 		spikelockon = 1;
 	if (spikelockon == 1)
 	{
-		/*PlaySound(L"Sound//spikesound.wav", NULL, SND_FILENAME | SND_ASYNC);*/
+		PlaySound(L"Sound//spikesound.wav", NULL, SND_FILENAME | SND_ASYNC);
 		spikexpos = camera.position.x;
 		spikezpos = camera.position.z;
 		spikelockon = 2;
