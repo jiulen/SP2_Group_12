@@ -52,6 +52,7 @@ void SceneGame::Reset()
 		entities.pop_back();
 	}
 	bulletVector.clear();
+	particlesVector.clear();
 	crosshairenabled = 1;
 	check = 0;
 	bombspawn = 0;
