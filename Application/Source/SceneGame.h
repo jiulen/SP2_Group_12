@@ -12,6 +12,7 @@
 #include "Entity.h"
 #include "Enemy.h"
 #include "BasicMelee.h"
+#include "Boss.h"
 #include "Vector3.h"
 #include <fstream>
 
@@ -176,6 +177,8 @@ private:
 	float spikexpos = 0;
 	float spikezpos = 0;
 	int spikedmg = 0;
+	int spikelockon = 0;
+	int win = 0;
 
 	//spawn enemies
 	int spawn = 0;

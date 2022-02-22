@@ -454,6 +454,8 @@ void SceneGame::Update(double dt)
 	{
 		if (entities[i]->getcurrenthealth() <= 0)
 		{
+			if (entities[i]->getName() == "Boss")
+				win = 1;
 			delete entities[i];
 			entities[i] = nullptr;
 		}
@@ -484,6 +486,7 @@ void SceneGame::Update(double dt)
 	}
 
 	//Win
+	//if (win==1)
 	if (bombspawn == 3)
 	{
 		timer += dt;
@@ -727,6 +730,9 @@ void SceneGame::Render()
 			if (entities[i]->getName() == "BasicMelee") {
 				RenderMesh(meshList[GEO_ENEMY1], false);
 			}
+			else if (entities[i]->getName() == "Boss") {
+				RenderMesh(meshList[GEO_BOSS], false);
+			}
 			modelStack.PopMatrix();
 		}
 	}
@@ -845,7 +851,8 @@ void SceneGame::Render()
 	//RenderHUD
 	RenderHUD();
 
-	RenderSpike();
+	/*if (bombspawn==3)*/
+		RenderSpike();
 }
 
 void SceneGame::RenderBomb()
@@ -1465,14 +1472,21 @@ void SceneGame::RenderSkybox()
 
 void SceneGame::RenderSpike()
 {
-	spikestart = 1;
-	if ((spiketimer >= 4.3) && (spiketimer <= 4.5))
+	if (spikestart == 0)
+	{
+		entities.push_back(new Boss(90, Vector3(0, 0, 0), Vector3(0, 0, 1)));
+		spikestart = 1;
+	}
+	if ((spiketimer >= 4.7) && (spikelockon == 0))
+		spikelockon = 1;
+	if (spikelockon == 1)
 	{
 		PlaySound(L"Sound//spikesound.wav", NULL, SND_FILENAME | SND_ASYNC);
 		spikexpos = camera.position.x;
 		spikezpos = camera.position.z;
+		spikelockon = 2;
 	}
-	if ((spiketimer >= 5)&&(spiketimer<=10))
+	if ((spiketimer >= 5)&&(spiketimer<=8))
 	{
 		modelStack.PushMatrix();
 		modelStack.Translate(spikexpos, spikeypos, spikezpos);
@@ -1490,8 +1504,9 @@ void SceneGame::RenderSpike()
 		else
 			spikedmg = 0;
 	}
-	if (spiketimer > 10)
+	if (spiketimer > 8)
 	{
+		spikelockon = 0;
 		spiketimer = 0;
 		spikeypos = -1.5;
 	}
