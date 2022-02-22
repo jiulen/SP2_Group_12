@@ -69,10 +69,11 @@ struct Bullet {
 	float bulletSpeed;
 	Vector3 directionVector;
 	Hitbox bulletHitbox;
+	char bulletType; //P for player, E for enemy
 
-	Bullet(int damage = 100, float speed = 0, float sizeX = 1, float sizeY = 1, float sizeZ = 1, Vector3 direction = (0, 0, 0), Vector3 pos = (0, 0, 0)) { Set(damage, speed, sizeX, sizeY, sizeZ, direction, pos); }
-	void Set(int damage, float speed, float sizeX, float sizeY, float sizeZ, Vector3 direction, Vector3 pos) {
-		bulletDamage = damage; bulletSpeed = speed; bulletHitbox.posX = pos.x; bulletHitbox.posY = pos.y; bulletHitbox.posZ = pos.z; bulletHitbox.sizeX = sizeX; bulletHitbox.sizeY = sizeY; bulletHitbox.sizeZ = sizeZ; directionVector = direction;
+	Bullet(int damage = 100, float speed = 0, float sizeX = 1, float sizeY = 1, float sizeZ = 1, Vector3 direction = (0, 0, 0), Vector3 pos = (0, 0, 0), char type = 'P') { Set(damage, speed, sizeX, sizeY, sizeZ, direction, pos, type); }
+	void Set(int damage, float speed, float sizeX, float sizeY, float sizeZ, Vector3 direction, Vector3 pos, char type) {
+		bulletDamage = damage; bulletSpeed = speed; bulletHitbox.posX = pos.x; bulletHitbox.posY = pos.y; bulletHitbox.posZ = pos.z; bulletHitbox.sizeX = sizeX; bulletHitbox.sizeY = sizeY; bulletHitbox.sizeZ = sizeZ; directionVector = direction; bulletType = type;
 	}
 	bool bulletHit(Hitbox hitbox) {
 		float x = Math::Clamp(bulletHitbox.posX, hitbox.posX - 0.5f * hitbox.sizeX, hitbox.posX + 0.5f * hitbox.sizeX);
