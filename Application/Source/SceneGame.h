@@ -88,6 +88,7 @@ class SceneGame : public Scene
 		GEO_SMALLHOUSE_F,
 		GEO_WALL,
 		GEO_WALL_CORNER,
+		GEO_LIGHTPOST,
 		GEO_BOMB,
 		GEO_GUN,
 		GEO_RED,

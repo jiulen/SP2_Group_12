@@ -247,6 +247,7 @@ void SceneGame::Init()
 	meshList[GEO_SMALLHOUSE_F] = MeshBuilder::GenerateOBJMTL("small house F", "OBJ//small_buildingF.obj", "OBJ//small_buildingF.mtl");
 	meshList[GEO_WALL] = MeshBuilder::GenerateOBJMTL("wall", "OBJ//stoneWall.obj", "OBJ//stoneWall.mtl");
 	meshList[GEO_WALL_CORNER] = MeshBuilder::GenerateOBJMTL("wall", "OBJ//stoneWallCurve.obj", "OBJ//stoneWallCurve.mtl");
+	meshList[GEO_LIGHTPOST] = MeshBuilder::GenerateOBJMTL("light post", "OBJ//lightpostSingle.obj", "lightpostSingle.mtl");
 
 	//HUD + UI
 	meshList[GEO_RED] = MeshBuilder::GenerateQuad("red", Color(1, 0, 0), 1.f);
