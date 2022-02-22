@@ -607,6 +607,7 @@ int SceneWiringGame::NextScene()
 	{
 		timer = 0;
 		completed = 4;
+		a = b = c = d = e = f = g = this->h = i = j = k = l = m = n = o = p = yw = bw = rw = pw = yellow = blue = red = pink = correct = yattached = battached = rattached = pattached = 0;
 		return 7; //game over
 	}
 	return 0; //not switching
