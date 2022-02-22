@@ -39,7 +39,7 @@ void SceneGame::UseScene()
 	if (Application::GetReset() == 1)
 	{
 		Reset();
-		Application::SetReset(1);
+		Application::SetReset(0);
 	}
 }
 
@@ -465,7 +465,7 @@ void SceneGame::Update(double dt)
 	if (bombspawn == 3)
 	{
 		timer += dt;
-		if (timer == 3)
+		if (timer >= 3)
 		{
 			nextscene = 7;
 			Application::SetWin(1);

@@ -165,7 +165,7 @@ private:
 	int bomb, bomb2, bomb3;
 	int minigamesused[3] = { 0,0,0 };
 
-	int timer = 0;
+	double timer = 0;
 
 	//spawn enemies
 	int spawn = 0;
