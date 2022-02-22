@@ -10,8 +10,9 @@ class BasicMelee : public Enemy
 private:
 	Vector3 startPos;
 	Vector3 patrolVector;
+	float patrolTime;
 public:
-	BasicMelee(float facing, Vector3 pos, Vector3 direction);
+	BasicMelee(float facing, Vector3 pos, Vector3 direction, Vector3 patrol, float delay);
 	~BasicMelee();
 	void takedamage(int a);
 	void move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, std::vector<Entity*> entities, Hitbox playerHitbox);
