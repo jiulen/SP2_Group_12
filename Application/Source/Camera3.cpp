@@ -167,6 +167,7 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		playerCeilingCollision(hitboxes, collide);
 		if (collide) {
 			JUMP_SPEED = -5.f;
+			collide = false;
 		}
 		if (jumpTime > 0.05) {
 			JUMP_SPEED -= 5;

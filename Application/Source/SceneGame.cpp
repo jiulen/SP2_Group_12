@@ -832,7 +832,7 @@ void SceneGame::Render()
 
 	modelStack.PushMatrix();
 	modelStack.Scale(20, 20, 20);
-	RenderMesh(meshList[GEO_WALL], true);
+	//RenderMesh(meshList[GEO_WALL], true);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
