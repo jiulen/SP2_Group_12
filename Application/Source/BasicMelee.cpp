@@ -1,5 +1,5 @@
 #include "BasicMelee.h"
-BasicMelee::BasicMelee(float facing, Vector3 pos, Vector3 direction) {
+BasicMelee::BasicMelee(float facing, Vector3 pos, Vector3 direction, Vector3 patrol, float delay) {
 	maxhealth = 50;
 	currenthealth = maxhealth;
 	damage = 10;
@@ -21,6 +21,8 @@ BasicMelee::BasicMelee(float facing, Vector3 pos, Vector3 direction) {
 	else {
 		enemyRadius = hitbox.sizeZ * 0.5f;
 	}
+	patrolVector = patrol;
+	patrolTime = 0.f - delay;
 	startPos = entityPos;
 }
 BasicMelee::~BasicMelee()
@@ -45,24 +47,27 @@ void BasicMelee::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes,
 			chase = true;
 		}
 	}
-	if (!chase) { //patrol
+	if (!chase && patrolVector.Length() != 0) { //patrol
 		patrolVector.Normalize();
-		Vector3 newVector = patrolVector * velocity * dt;
-		entityPos.x += newVector.x;
-		entityPos.z += newVector.z;
-		//face player when chasing
-		entityFacing = acosf(directionVector.Dot(patrolVector));
-		if (patrolVector.x > 0) {
-			entityFacing = Math::RadianToDegree(entityFacing);
+		if (patrolTime >= 0.f) {
+			Vector3 newVector = patrolVector * velocity * 0.67f * dt;
+			entityPos.x += newVector.x;
+			entityPos.z += newVector.z;
+			//face player when chasing
+			entityFacing = acosf(directionVector.Dot(patrolVector));
+			if (patrolVector.x > 0) {
+				entityFacing = Math::RadianToDegree(entityFacing);
+			}
+			else {
+				entityFacing = -Math::RadianToDegree(entityFacing);
+			}
 		}
-		else {
-			entityFacing = -Math::RadianToDegree(entityFacing);
-		}
-		//reverse patrol vector if too far (or time?)
-		if (DistBetweenPoints(startPos.x, startPos.z, entityPos.x, entityPos.z) > 5) {
+		//reverse patrol vector if time reached
+		patrolTime += dt;
+		if (patrolTime > 4.f) {
 			patrolVector *= -1;
+			patrolTime = 0.f;
 		}
-
 	}
 	if (chase) {
 		Vector3 targetVector = Vector3(playerPos.x, 0, playerPos.z) - Vector3(entityPos.x, 0, entityPos.z);
