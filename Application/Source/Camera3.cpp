@@ -166,7 +166,7 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		bool collide = false;
 		playerCeilingCollision(hitboxes, collide);
 		if (collide) {
-			JUMP_SPEED = 0.f;
+			JUMP_SPEED = -5.f;
 		}
 		if (jumpTime > 0.05) {
 			JUMP_SPEED -= 5;
@@ -298,7 +298,7 @@ void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes, bool& collide
 			Vector3 nearestPoint;
 			nearestPoint.x = Math::Clamp(position.x, (hitboxes[i]).posX - 0.5f * (hitboxes[i]).sizeX, (hitboxes[i]).posX + 0.5f * (hitboxes[i]).sizeX);
 			nearestPoint.y = 0;
-			nearestPoint.z = Math::Clamp(position.y, (hitboxes[i]).posZ - 0.5f * (hitboxes[i]).sizeZ, (hitboxes[i]).posZ + 0.5f * (hitboxes[i]).posZ);
+			nearestPoint.z = Math::Clamp(position.z, (hitboxes[i]).posZ - 0.5f * (hitboxes[i]).sizeZ, (hitboxes[i]).posZ + 0.5f * (hitboxes[i]).sizeZ);
 			Vector3 rayToNearest = nearestPoint - Vector3(position.x, 0, position.z);;
 			float crOverlap = playerRadius - rayToNearest.Length();
 			if (crOverlap > 0) { //collision
