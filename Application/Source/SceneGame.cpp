@@ -51,6 +51,7 @@ void SceneGame::Reset()
 		delete entities[i];
 		entities.pop_back();
 	}
+	bulletVector.clear();
 	crosshairenabled = 1;
 	check = 0;
 	bombspawn = 0;
