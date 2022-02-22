@@ -46,6 +46,9 @@ class SceneGame : public Scene
 
 		//OBJs
 		GEO_ENEMY1,
+		GEO_BOSS,
+
+		GEO_SPIKE,
 
 		GEO_BIGHOUSE_A,
 		GEO_BIGHOUSE_B,
@@ -137,6 +140,7 @@ private:
 	float DistBetweenPoints(float x1, float z1, float x2, float z2);
 	void RenderSkybox();
 	void RenderBomb();
+	void RenderSpike();
 	void RenderHUD();
 	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey);

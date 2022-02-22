@@ -194,6 +194,9 @@ void SceneGame::Init()
 	meshList[GEO_GROUND]->textureID = LoadTGA("Image//whitebrickfloor.tga");
 	meshList[GEO_ENEMY1] = MeshBuilder::GenerateOBJMTL("enemy1", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
 	meshList[GEO_ENEMY1]->textureID = LoadTGA("Image//skin_man.tga");
+	meshList[GEO_BOSS] = MeshBuilder::GenerateOBJMTL("boss", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
+	meshList[GEO_BOSS]->textureID = LoadTGA("Image//skin_robot.tga");
+	meshList[GEO_SPIKE] = MeshBuilder::GenerateOBJMTL("spike", "OBJ//spike.obj", "OBJ//spike.mtl");
 	meshList[GEO_BOMB] = MeshBuilder::GenerateOBJMTL("bomb", "OBJ//bomb.obj", "OBJ//bomb.mtl");
 	meshList[GEO_GUN] = MeshBuilder::GenerateOBJMTL("gun", "OBJ//pistol.obj", "OBJ//pistol.mtl");
 	meshList[GEO_GUN]->textureID = LoadTGA("Image//pistol_.tga");
@@ -822,6 +825,8 @@ void SceneGame::Render()
 
 	//RenderHUD
 	RenderHUD();
+
+	RenderSpike();
 }
 
 void SceneGame::RenderBomb()
@@ -1436,6 +1441,14 @@ void SceneGame::RenderSkybox()
 	modelStack.Scale(1000, 1000, 1000);
 	RenderMesh(meshList[GEO_BOTTOM], false);
 	modelStack.PopMatrix();
+	modelStack.PopMatrix();
+}
+
+void SceneGame::RenderSpike()
+{
+	modelStack.PushMatrix();
+	modelStack.Translate(0, 0, 0);
+	RenderMesh(meshList[GEO_SPIKE], true);
 	modelStack.PopMatrix();
 }
 
