@@ -143,7 +143,7 @@ private:
 	float DistBetweenPoints(float x1, float z1, float x2, float z2);
 	void RenderSkybox();
 	void RenderBomb();
-	void RenderSpike();
+	void RenderBoss();
 	void RenderHUD();
 	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey);
@@ -181,6 +181,8 @@ private:
 	int spikedmg = 0;
 	int spikelockon = 0;
 	int win = 0;
+	int bossshoot = 0;
+	double prevshot = 0;
 
 	//spawn enemies
 	int spawn = 0;

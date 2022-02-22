@@ -67,6 +67,10 @@ void SceneGame::Reset()
 	spikexpos = 0;
 	spikezpos = 0;
 	spikedmg = 0;
+	spikelockon = 0;
+	win = 0;
+	bossshoot = 0;
+	prevshot = 0;
 	for (int i = 0; i < 3; i++)
 		minigamesused[i] = 0;
 }
@@ -377,7 +381,10 @@ void SceneGame::Update(double dt)
 	for (int i = 0; i < entities.size(); i++)
 	{
 		if (entities[i]->getName() == "Boss")
-			viewvector2 = (Vector3(0,0,1) - entities[i]->getPosition()).Normalized();
+		{
+			viewvector2 = Vector3(camera.getPlayerHitbox().posX, camera.getPlayerHitbox().posY, camera.getPlayerHitbox().posZ) - Vector3(entities[i]->getHitbox().posX, 4.5, entities[i]->getHitbox().posZ);
+			viewvector2.Normalize();
+		}
 	}
 
 	//Reloading
@@ -410,17 +417,17 @@ void SceneGame::Update(double dt)
 		}
 	}
 
-	if (Application::IsKeyPressed('C'))
+	if (bossshoot==1)
 	{
 		PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
 		for (int i = 0; i < entities.size(); i++)
 		{
 			if (entities[i]->getName() == "Boss")
 			{
-				std::cout << "ok" << std::endl;
-				bulletVector.push_back(Bullet(entities[i]->getdamage(), 50, 1, 1, 1, viewvector2, entities[i]->getPosition(), 'E'));
+				bulletVector.push_back(Bullet(entities[i]->getdamage(), 75, 1, 1, 1, viewvector2, Vector3(entities[i]->getHitbox().posX, 4.5, entities[i]->getHitbox().posZ), 'E'));
 			}
 		}
+		bossshoot = 0;
 	}
 
 	//Enemy updates
@@ -521,8 +528,7 @@ void SceneGame::Update(double dt)
 	}
 
 	//Win
-	if (win==1)
-	/*if (bombspawn == 3)*/
+	if ((win==1)&&(entities.size()==0))
 	{
 		timer += dt;
 		if (timer >= 3)
@@ -890,8 +896,8 @@ void SceneGame::Render()
 	//RenderHUD
 	RenderHUD();
 
-	/*if ((bombspawn==3)&&(win==0))*/
-		RenderSpike();
+	if ((bombspawn==3)&&(win==0))
+		RenderBoss();
 }
 
 void SceneGame::RenderBomb()
@@ -1509,7 +1515,7 @@ void SceneGame::RenderSkybox()
 	modelStack.PopMatrix();
 }
 
-void SceneGame::RenderSpike()
+void SceneGame::RenderBoss()
 {
 	if (spikestart == 0)
 	{
@@ -1527,11 +1533,16 @@ void SceneGame::RenderSpike()
 			}
 		}
 	}
+	if ((spiketimer >= 1.6 + prevshot) && (bossshoot == 0))
+	{
+		bossshoot = 1;
+		prevshot = spiketimer;
+	}
 	if ((spiketimer >= 4.7) && (spikelockon == 0))
 		spikelockon = 1;
 	if (spikelockon == 1)
 	{
-		PlaySound(L"Sound//spikesound.wav", NULL, SND_FILENAME | SND_ASYNC);
+		/*PlaySound(L"Sound//spikesound.wav", NULL, SND_FILENAME | SND_ASYNC);*/
 		spikexpos = camera.position.x;
 		spikezpos = camera.position.z;
 		spikelockon = 2;
@@ -1559,6 +1570,8 @@ void SceneGame::RenderSpike()
 		spikelockon = 0;
 		spiketimer = 0;
 		spikeypos = -1.5;
+		bossshoot = 0;
+		prevshot = 0;
 	}
 }
 
