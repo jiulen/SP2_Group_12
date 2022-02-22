@@ -211,13 +211,13 @@ void SceneWiringGame::Update(double dt)
 	{
 		bLButtonState = true;
 
-		if ((mouseX > 18) && (mouseX < 21.5) && (mouseY > 44) && (mouseY < 46))
+		if ((mouseX > 16) && (mouseX < 21.5) && (mouseY > 44) && (mouseY < 46))
 			yellow = 1;
-		else if ((mouseX > 18) && (mouseX < 21.5) && (mouseY > 33.5) && (mouseY < 35.5))
+		else if ((mouseX > 16) && (mouseX < 21.5) && (mouseY > 33.5) && (mouseY < 35.5))
 			blue = 1;
-		else if ((mouseX > 18) && (mouseX < 21.5) && (mouseY > 23.5) && (mouseY < 25.5))
+		else if ((mouseX > 16) && (mouseX < 21.5) && (mouseY > 23.5) && (mouseY < 25.5))
 			red = 1;
-		else if ((mouseX > 18) && (mouseX < 21.5) && (mouseY > 13.1) && (mouseY < 15.1))
+		else if ((mouseX > 16) && (mouseX < 21.5) && (mouseY > 13.1) && (mouseY < 15.1))
 			pink = 1;
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
