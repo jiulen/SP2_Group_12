@@ -21,9 +21,9 @@ protected:
 	std::string name;
 
 	float DistBetweenPoints(float x1, float z1, float x2, float z2);
-	virtual void checkCollisionStructures(std::vector<Hitbox> hitboxes);
-	virtual void checkCollisionEntities(std::vector<Entity*> entities);
-	virtual void checkCollisionPlayer(Hitbox playerHitbox);
+	void checkCollisionStructures(std::vector<Hitbox> hitboxes);
+	void checkCollisionEntities(std::vector<Entity*> entities);
+	void checkCollisionPlayer(Hitbox playerHitbox);
 	bool CollisionAABB(float r2x, float r2y, float r2z, float r2w, float r2h, float r2d); //similar to the one in camera, 2 represents the collided object (1 is for colliding object)
 	Vector3 CollisionCircleRect(float rx, float ry, float rw, float rh);
 public:
