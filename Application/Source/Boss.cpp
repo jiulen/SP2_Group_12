@@ -7,7 +7,7 @@ Boss::Boss(float facing, Vector3 pos, Vector3 direction) {
 	entityFacing = facing;
 	directionVector = direction;
 	chase = false;
-	detectRange = 40;
+	detectRange = 100;
 	attackRange = 2.f;
 	velocity = 20.f;
 	type = 'E';
