@@ -816,6 +816,7 @@ void SceneGame::Render()
 
 	RenderSkybox();
 
+
 	modelStack.PushMatrix();
 	modelStack.Rotate(-90, 1, 0, 0);
 	modelStack.Scale(300, 300, 300);

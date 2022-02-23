@@ -25,7 +25,7 @@ public:
 	Vector3 CollisionCircleRect(float cx, float cy, float radius, float rx, float ry, float rw, float rh);
 	bool CollisionAABB(float r1x, float r1y, float r1z, float r1w, float r1h, float r1d, float r2x, float r2y, float r2z, float r2w, float r2h, float r2d); //(w)idth is x, (h)eight is y, (d)epth is z
 	void playerWASDCollision(std::vector<Hitbox> hitboxes);
-	void playerCeilingCollision(std::vector<Hitbox> hitboxes, bool& collide); //when jumping - only does y axis
+	void playerCeilingCollision(std::vector<Hitbox> hitboxes, bool& collide, bool up); //when jumping - only does y axis
 
 	void setFirstMouse();
 	Hitbox getPlayerHitbox();
