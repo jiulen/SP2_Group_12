@@ -131,7 +131,7 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 	else if (jumpPressed && !Application::IsKeyPressed(VK_SPACE)) {
 		jumpPressed = false;
 	}
-	if (jumping) {
+	if (jumping && JUMP_SPEED >= 0) {
 		jumpTime += dt;
 		position.y += static_cast<float>(dt) * JUMP_SPEED;
 		bool collide = false;
@@ -145,20 +145,20 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 			jumpTime = 0.f;
 		}
 		if (JUMP_SPEED < 0) {
-			jumping = false;
 			jumpTime = 0.f;
 		}
 		playerHitbox.posY = position.y + 0.5f - playerHeight * 0.5f;
 		target = position + view;
 	}
-	if (JUMP_SPEED < 0) {
+	if (jumping && JUMP_SPEED < 0) {
 		jumpTime += dt;
 		position.y += static_cast<float>(dt) * JUMP_SPEED;
 		bool collide = false;
 		playerCeilingCollision(hitboxes, collide, false);
 		if (collide) {
-			JUMP_SPEED = -0.001f;
+			JUMP_SPEED = -0.001f; //may still fall down so negative for falling
 			collide = false;
+			jumping = false;
 		}
 		if (jumpTime > 0.05) {
 			JUMP_SPEED -= 5;
@@ -166,8 +166,9 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		}
 		if (position.y <= defaultPosition.y)
 		{
-			position.y = defaultPosition.y;
+			position.y = defaultPosition.y; //cant fall below this
 			JUMP_SPEED = 0;
+			jumping = false;
 		}
 		playerHitbox.posY = position.y + 0.5f - playerHeight * 0.5f;
 		target = position + view;
