@@ -207,8 +207,8 @@ private:
 	Vector3 currentview;
 
 	//Ambient Effetcs
-	float paperx = 50;
-	float papery = 2;
+	float paperx = 150;
+	float papery = 50;
 	float paperz = 20;
 	float paperrt = 0;
 	int zturn = 0;
