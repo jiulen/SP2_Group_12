@@ -394,7 +394,7 @@ void SceneGame::Update(double dt)
 
 	//Reloading
 	static bool rOnClick = false;
-	if (!rOnClick && Application::IsKeyPressed('R'))
+	if ((!rOnClick && Application::IsKeyPressed('R'))&&(player.currentAmmo!=player.maxAmmo))
 	{
 		rOnClick = true;
 		if (!reloading) {
@@ -577,13 +577,22 @@ void SceneGame::Update(double dt)
 	}
 
 	//Win
-	if ((win==1)&&(entities.size()==0))
+	if (win==1)
 	{
-		timer += dt;
-		if (timer >= 3)
+		int check = 0;
+		for (int i = 0; i < entities.size(); i++)
 		{
-			nextscene = 7;
-			Application::SetWin(1);
+			if (entities[i]->getName() == "ScaredGuy")
+				check++;
+		}
+		if (entities.size() == check)
+		{
+			timer += dt;
+			if (timer >= 3)
+			{
+				nextscene = 7;
+				Application::SetWin(1);
+			}
 		}
 	}
 
@@ -1047,6 +1056,20 @@ void SceneGame::Render()
 	RenderMesh(meshList[GEO_BENCH], true);
 	modelStack.PopMatrix();
 	//Hitbox(30, 2, 60, 7.4, 4, 3.8);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(100, 0.1, 100);
+	modelStack.Scale(20, 20, 20);
+	RenderMesh(meshList[GEO_GROUND_GRASS], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(100, 0.2, 100);
+	modelStack.Scale(20, 20, 20);
+	RenderMesh(meshList[GEO_TREE], true);
+	modelStack.PopMatrix();
+
+
 
 	if (tutorial == 1 && firstcoinPicked == false) //first coin
 	{

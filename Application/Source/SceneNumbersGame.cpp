@@ -574,16 +574,30 @@ int SceneNumbersGame::NextScene()
 	}
 	if (a == 10)
 	{
-		timer = 0;
+		set = 0;
+		currentpos = -1;
 		for (int i = 0; i < 10; i++)
+		{
+			pos[i] = 0;
 			ticks[i] = 0;
+		}
+		prevno = 0;
+		currentno = 0;
+		timer = 0;
 		return 3;
 	}
 	else if (a == 20)
 	{
 		timer = 0;
+		set = 0;
+		currentpos = -1;
 		for (int i = 0; i < 10; i++)
+		{
+			pos[i] = 0;
 			ticks[i] = 0;
+		}
+		prevno = 0;
+		currentno = 0;
 		return 7;
 	}
 
