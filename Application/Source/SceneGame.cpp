@@ -956,12 +956,45 @@ void SceneGame::Render()
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-	modelStack.Translate(0, 0, 0);
+	modelStack.Translate(-45, 0, 10);
 	modelStack.Rotate(90, 0, 1, 0);
-	modelStack.Scale(5, 5, 5);
+	modelStack.Scale(8, 8, 8);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
 
+	modelStack.PushMatrix();
+	modelStack.Translate(-25, 0, -20);
+	modelStack.Rotate(-90, 0, 1, 0);
+	modelStack.Scale(8, 8, 8);
+	RenderMesh(meshList[GEO_LIGHTPOST], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-45, 0, -50);
+	modelStack.Rotate(90, 0, 1, 0);
+	modelStack.Scale(8, 8, 8);
+	RenderMesh(meshList[GEO_LIGHTPOST], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(40, 0, 60);
+	modelStack.Rotate(180, 0, 1, 0);
+	modelStack.Scale(8, 8, 8);
+	RenderMesh(meshList[GEO_LIGHTPOST], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(30, 0, -60);
+	modelStack.Scale(8, 8, 8);
+	RenderMesh(meshList[GEO_LIGHTPOST], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(-25, 0, 60);
+	modelStack.Rotate(180, 0, 1, 0);
+	modelStack.Scale(5, 5, 5);
+	RenderMesh(meshList[GEO_LIGHTPOST], true);
+	modelStack.PopMatrix();
 
 
 
