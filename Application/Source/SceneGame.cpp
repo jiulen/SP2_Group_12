@@ -90,6 +90,9 @@ void SceneGame::Reset()
 	reloadTime = 0;
 	reloadRotateTime = 0;
 	reloadAngle = 0;
+
+	//npc
+	entities.push_back(new ScaredGuy(180, Vector3(30, 0, 57), Vector3(0, 0, 1)));
 }
 
 void SceneGame::Init()
@@ -306,13 +309,13 @@ void SceneGame::Init()
 	reloadAngle = 0;
 
 	//Init non moving hitboxes
-	
 	//walls
 	hitboxes.push_back(Hitbox(0, 6.5, -153, 300, 13, 10));
 	hitboxes.push_back(Hitbox(0, 6.5, 155, 300, 13, 10));
 	hitboxes.push_back(Hitbox(-153, 6.5, 0, 10, 13, 300));
 	hitboxes.push_back(Hitbox(154, 6.5, 0, 10, 13, 300));
 
+	//others
 	hitboxes.push_back(Hitbox(-60, 29, -60, 24, 58, 24));
 	hitboxes.push_back(Hitbox(0, 9, -70, 32, 18, 20));
 	hitboxes.push_back(Hitbox(-60, 40, 0, 24, 80, 24));
@@ -338,7 +341,10 @@ void SceneGame::Init()
 	hitboxes.push_back(Hitbox(30, 0, -60, 5, 20, 5));
 	hitboxes.push_back(Hitbox(-25, 0, 60, 5, 20, 5));
 
-	hitboxes.push_back(Hitbox(30, 10, 60, 10, 20, 5));
+	hitboxes.push_back(Hitbox(30, 2, 60, 7.4, 4, 3.8));
+
+	//npc
+	entities.push_back(new ScaredGuy(180, Vector3(30, 0, 57), Vector3(0, 0, 1)));
 }
 
 void SceneGame::Update(double dt)
@@ -347,7 +353,6 @@ void SceneGame::Update(double dt)
 		camera.setFirstMouse();
 		enterScene = false;
 	}
-
 
 	FPS = 1 / (float)dt;
 	
@@ -406,7 +411,7 @@ void SceneGame::Update(double dt)
 		player.reload(dt, reloading);
 		reloadRotateTime += dt;
 		reloadTime += dt;
-		if (reloadRotateTime > 0.02) {
+		if (reloadRotateTime > 0.01) { //Reload animation angle
 			reloadRotateTime = 0.f;
 			if (reloadTime < 1) {
 				reloadAngle -= 0.5f;
@@ -415,9 +420,7 @@ void SceneGame::Update(double dt)
 				reloadAngle += 0.5f;
 			}
 		}
-	}
-	//Reload animation angle
-	
+	}	
 
 	//Shooting
 	if (Application::IsMousePressed(0))
@@ -426,6 +429,14 @@ void SceneGame::Update(double dt)
 			if (player.attack(dt)) {
 				PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
 				bulletVector.push_back(Bullet(player.damage, 75, 0.75, 0.75, 0.75, viewvector, camera.position, 'P'));
+				for (int i = 0; i < entities.size(); i++) {
+					if (entities[i]->getName() == "ScaredGuy") {
+						float a = DistBetweenPoints(camera.position.x, camera.position.z, entities[i]->getPosition().x, entities[i]->getPosition().z);
+						if (DistBetweenPoints(camera.position.x, camera.position.z, entities[i]->getPosition().x, entities[i]->getPosition().z) <= 20) {
+							entities[i]->setChase(true);
+						}
+					}
+				}
 				if (stage == 3)
 					keyused++;
 			}
@@ -607,10 +618,8 @@ void SceneGame::UpdateEnemyMovement(double dt)
 {
 	//For enemies
 	for (int i = 0; i < entities.size(); i++) {
-		if (entities[i]->getType() == 'E') {
-			entities[i]->alert(entities);
-			entities[i]->move(Vector3(camera.position.x, 0, camera.position.z), dt, hitboxes, entities, camera.getPlayerHitbox());
-		}
+		entities[i]->alert(entities);
+		entities[i]->move(Vector3(camera.position.x, 0, camera.position.z), dt, hitboxes, entities, camera.getPlayerHitbox());
 	}
 }
 void SceneGame::EnemyAttack(double dt)
@@ -853,6 +862,16 @@ void SceneGame::Render()
 			}
 			modelStack.PopMatrix();
 		}
+		else if (entities[i]->getType() == 'F') {
+			if (entities[i]->getName() == "ScaredGuy") {
+				modelStack.PushMatrix();
+				modelStack.Translate(entities[i]->getPosition().x, entities[i]->getPosition().y, entities[i]->getPosition().z);
+				modelStack.Rotate(entities[i]->getFacing(), 0, 1, 0);
+				modelStack.Scale(0.35, 0.35, 0.35);
+				RenderMesh(meshList[GEO_NPC], false);
+				modelStack.PopMatrix();
+			}
+		}
 	}
 
 	modelStack.PushMatrix();
@@ -1018,7 +1037,7 @@ void SceneGame::Render()
 	modelStack.Scale(12, 12, 12);
 	RenderMesh(meshList[GEO_BENCH], true);
 	modelStack.PopMatrix();
-	//Hitbox(30, 10, 60, 10, 20, 5);
+	//Hitbox(30, 2, 60, 7.4, 4, 3.8);
 
 	if (tutorial == 1 && firstcoinPicked == false) //first coin
 	{
