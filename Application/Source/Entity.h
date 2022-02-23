@@ -17,6 +17,7 @@ protected:
 	float enemyRadius;
 	float atkCd;
 	bool chase;
+	float defaultY;
 
 	char type; //N for none(entity), E for enemy, maybe other letter for friendly npcs(if going to add)
 	std::string name;

@@ -825,7 +825,7 @@ void SceneGame::Render()
 	for (int i = 0; i < entities.size(); i++) {
 		if (entities[i]->getType() == 'E') {
 			modelStack.PushMatrix();
-			modelStack.Translate(entities[i]->getPosition().x, 0, entities[i]->getPosition().z);
+			modelStack.Translate(entities[i]->getPosition().x, entities[i]->getPosition().y, entities[i]->getPosition().z);
 			//Health bar
 			modelStack.PushMatrix();
 			Vector3 targetVector = Vector3(camera.position.x, 0, camera.position.z) - Vector3(entities[i]->getPosition().x, 0, entities[i]->getPosition().z);

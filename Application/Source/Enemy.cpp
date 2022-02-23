@@ -23,6 +23,7 @@ Enemy::Enemy()
 	name = "";
 	atkCd = 1.f;
 	hitbox = Hitbox(entityPos.x, entityPos.y + 2.8, entityPos.z, 2.8, 5.6f, 1.4f);
+	defaultY = entityPos.y;
 	//takes longer edge to use to get radius
 	if (hitbox.sizeX > hitbox.sizeZ) {
 		enemyRadius = hitbox.sizeX * 0.5f;
