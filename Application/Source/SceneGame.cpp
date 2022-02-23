@@ -109,8 +109,6 @@ void SceneGame::Init()
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	
-
 	m_programID = LoadShaders("Shader//Texture.vertexshader", "Shader//Text.fragmentshader");
 	m_parameters[U_NUMLIGHTS] = glGetUniformLocation(m_programID, "numLights");
 	m_parameters[U_COLOR_TEXTURE_ENABLED] = glGetUniformLocation(m_programID, "colorTextureEnabled");
@@ -138,21 +136,9 @@ void SceneGame::Init()
 	m_parameters[U_LIGHT0_COSINNER] = glGetUniformLocation(m_programID, "lights[0].cosInner");
 	m_parameters[U_LIGHT0_EXPONENT] = glGetUniformLocation(m_programID, "lights[0].exponent");
 
-	m_parameters[U_LIGHT1_POSITION] = glGetUniformLocation(m_programID, "lights[1].position_cameraspace");
-	m_parameters[U_LIGHT1_COLOR] = glGetUniformLocation(m_programID, "lights[1].color");
-	m_parameters[U_LIGHT1_POWER] = glGetUniformLocation(m_programID, "lights[1].power");
-	m_parameters[U_LIGHT1_KC] = glGetUniformLocation(m_programID, "lights[1].kC");
-	m_parameters[U_LIGHT1_KL] = glGetUniformLocation(m_programID, "lights[1].kL");
-	m_parameters[U_LIGHT1_KQ] = glGetUniformLocation(m_programID, "lights[1].kQ");
-	m_parameters[U_LIGHT1_TYPE] = glGetUniformLocation(m_programID, "lights[1].type");
-	m_parameters[U_LIGHT1_SPOTDIRECTION] = glGetUniformLocation(m_programID, "lights[1].spotDirection");
-	m_parameters[U_LIGHT1_COSCUTOFF] = glGetUniformLocation(m_programID, "lights[1].cosCutoff");
-	m_parameters[U_LIGHT1_COSINNER] = glGetUniformLocation(m_programID, "lights[1].cosInner");
-	m_parameters[U_LIGHT1_EXPONENT] = glGetUniformLocation(m_programID, "lights[1].exponent");
-
 	m_parameters[U_NUMLIGHTS] = glGetUniformLocation(m_programID, "numLights");
 	glUseProgram(m_programID);
-	glUniform1i(m_parameters[U_NUMLIGHTS], 2);
+	glUniform1i(m_parameters[U_NUMLIGHTS], 1);
 
 	light[0].type = Light::LIGHT_DIRECTIONAL;
 	light[0].position.Set(0, 100, 0);
@@ -175,28 +161,6 @@ void SceneGame::Init()
 	glUniform1f(m_parameters[U_LIGHT0_COSCUTOFF], light[0].cosCutoff);
 	glUniform1f(m_parameters[U_LIGHT0_COSINNER], light[0].cosInner);
 	glUniform1f(m_parameters[U_LIGHT0_EXPONENT], light[0].exponent);
-
-	light[1].type = Light::LIGHT_DIRECTIONAL;
-	light[1].position.Set(0, 100, 0);
-	light[1].color.Set(1, 1, 1);
-	light[1].power = 1.f;
-	light[1].kC = 1.f;
-	light[1].kL = 0.01f;
-	light[1].kQ = 0.001f;
-	light[1].cosCutoff = cos(Math::DegreeToRadian(45));
-	light[1].cosInner = cos(Math::DegreeToRadian(30));
-	light[1].exponent = 3.f;
-	light[1].spotDirection.Set(0.f, 1.f, 0.f);
-
-	glUniform1i(m_parameters[U_LIGHT1_TYPE], light[1].type);
-	glUniform3fv(m_parameters[U_LIGHT1_COLOR], 1, &light[1].color.r);
-	glUniform1f(m_parameters[U_LIGHT1_POWER], light[1].power);
-	glUniform1f(m_parameters[U_LIGHT1_KC], light[1].kC);
-	glUniform1f(m_parameters[U_LIGHT1_KL], light[1].kL);
-	glUniform1f(m_parameters[U_LIGHT1_KQ], light[1].kQ);
-	glUniform1f(m_parameters[U_LIGHT1_COSCUTOFF], light[1].cosCutoff);
-	glUniform1f(m_parameters[U_LIGHT1_COSINNER], light[1].cosInner);
-	glUniform1f(m_parameters[U_LIGHT1_EXPONENT], light[1].exponent);
 
 	glGenVertexArrays(1, &m_vertexArrayID);
 	glBindVertexArray(m_vertexArrayID);
@@ -241,34 +205,11 @@ void SceneGame::Init()
 	meshList[GEO_GUN] = MeshBuilder::GenerateOBJMTL("gun", "OBJ//pistol.obj", "OBJ//pistol.mtl");
 	meshList[GEO_GUN]->textureID = LoadTGA("Image//pistol.tga");
 	meshList[GEO_BIGHOUSE_A] = MeshBuilder::GenerateOBJMTL("big house a", "OBJ//large_buildingA.obj", "OBJ//large_buildingA.mtl");
-	meshList[GEO_BIGHOUSE_B] = MeshBuilder::GenerateOBJMTL("big house b", "OBJ//large_buildingB.obj", "OBJ//large_buildingB.mtl");
-	meshList[GEO_BIGHOUSE_C] = MeshBuilder::GenerateOBJMTL("big house c", "OBJ//large_buildingC.obj", "OBJ//large_buildingC.mtl");
-	meshList[GEO_BIGHOUSE_D] = MeshBuilder::GenerateOBJMTL("big house d", "OBJ//large_buildingD.obj", "OBJ//large_buildingD.mtl");
-	meshList[GEO_BIGHOUSE_E] = MeshBuilder::GenerateOBJMTL("big house e", "OBJ//large_buildingE.obj", "OBJ//large_buildingE.mtl");
 	meshList[GEO_BIGHOUSE_F] = MeshBuilder::GenerateOBJMTL("big house f", "OBJ//large_buildingF.obj", "OBJ//large_buildingF.mtl");
 	meshList[GEO_BIGHOUSE_G] = MeshBuilder::GenerateOBJMTL("big house g", "OBJ//large_buildingG.obj", "OBJ//large_buildingG.mtl");
-	meshList[GEO_LOWHOUSE_A] = MeshBuilder::GenerateOBJMTL("small house a", "OBJ//low_buildingA.obj", "OBJ//low_buildingA.mtl");
-	meshList[GEO_LOWHOUSE_B] = MeshBuilder::GenerateOBJMTL("small house b", "OBJ//low_buildingB.obj", "OBJ//low_buildingB.mtl");
-	meshList[GEO_LOWHOUSE_C] = MeshBuilder::GenerateOBJMTL("small house c", "OBJ//low_buildingC.obj", "OBJ//low_buildingC.mtl");
-	meshList[GEO_LOWHOUSE_D] = MeshBuilder::GenerateOBJMTL("small house d", "OBJ//low_buildingD.obj", "OBJ//low_buildingD.mtl");
-	meshList[GEO_LOWHOUSE_E] = MeshBuilder::GenerateOBJMTL("small house e", "OBJ//low_buildingE.obj", "OBJ//low_buildingE.mtl");
-	meshList[GEO_LOWHOUSE_F] = MeshBuilder::GenerateOBJMTL("small house f", "OBJ//low_buildingF.obj", "OBJ//low_buildingF.mtl");
-	meshList[GEO_LOWHOUSE_G] = MeshBuilder::GenerateOBJMTL("small house g", "OBJ//low_buildingG.obj", "OBJ//low_buildingG.mtl");
-	meshList[GEO_LOWHOUSE_H] = MeshBuilder::GenerateOBJMTL("small house h", "OBJ//low_buildingH.obj", "OBJ//low_buildingH.mtl");
-	meshList[GEO_LOWHOUSE_I] = MeshBuilder::GenerateOBJMTL("small house i", "OBJ//low_buildingI.obj", "OBJ//low_buildingI.mtl");
-	meshList[GEO_LOWHOUSE_J] = MeshBuilder::GenerateOBJMTL("small house j", "OBJ//low_buildingJ.obj", "OBJ//low_buildingJ.mtl");
-	meshList[GEO_LOWHOUSE_K] = MeshBuilder::GenerateOBJMTL("small house k", "OBJ//low_buildingK.obj", "OBJ//low_buildingK.mtl");
-	meshList[GEO_LOWHOUSE_L] = MeshBuilder::GenerateOBJMTL("small house l", "OBJ//low_buildingL.obj", "OBJ//low_buildingL.mtl");
-	meshList[GEO_LOWHOUSE_M] = MeshBuilder::GenerateOBJMTL("small house m", "OBJ//low_buildingM.obj", "OBJ//low_buildingM.mtl");
-	meshList[GEO_LOWHOUSE_N] = MeshBuilder::GenerateOBJMTL("small house n", "OBJ//low_buildingN.obj", "OBJ//low_buildingN.mtl");
 	meshList[GEO_SKYSCRAPER_A] = MeshBuilder::GenerateOBJMTL("skyscraper a", "OBJ//skyscraperA.obj", "OBJ//skyscraperA.mtl");
-	meshList[GEO_SKYSCRAPER_B] = MeshBuilder::GenerateOBJMTL("skyscraper b", "OBJ//skyscraperB.obj", "OBJ//skyscraperB.mtl");
-	meshList[GEO_SKYSCRAPER_C] = MeshBuilder::GenerateOBJMTL("skyscraper c", "OBJ//skyscraperC.obj", "OBJ//skyscraperC.mtl");
-	meshList[GEO_SKYSCRAPER_D] = MeshBuilder::GenerateOBJMTL("skyscraper d", "OBJ//skyscraperD.obj", "OBJ//skyscraperD.mtl");
 	meshList[GEO_SKYSCRAPER_E] = MeshBuilder::GenerateOBJMTL("skyscraper e", "OBJ//skyscraperE.obj", "OBJ//skyscraperE.mtl");
 	meshList[GEO_SKYSCRAPER_F] = MeshBuilder::GenerateOBJMTL("skyscraper f", "OBJ//skyscraperF.obj", "OBJ//skyscraperF.mtl");
-	meshList[GEO_SMALLHOUSE_A] = MeshBuilder::GenerateOBJMTL("small house a", "OBJ//small_buildingA.obj", "OBJ//small_buildingA.mtl");
-	meshList[GEO_SMALLHOUSE_B] = MeshBuilder::GenerateOBJMTL("small house b", "OBJ//small_buildingB.obj", "OBJ//small_buildingB.mtl");
 	meshList[GEO_SMALLHOUSE_C] = MeshBuilder::GenerateOBJMTL("small house c", "OBJ//small_buildingC.obj", "OBJ//small_buildingC.mtl");
 	meshList[GEO_SMALLHOUSE_D] = MeshBuilder::GenerateOBJMTL("small house d", "OBJ//small_buildingD.obj", "OBJ//small_buildingD.mtl");
 	meshList[GEO_SMALLHOUSE_E] = MeshBuilder::GenerateOBJMTL("small house E", "OBJ//small_buildingE.obj", "OBJ//small_buildingE.mtl");
@@ -358,8 +299,6 @@ void SceneGame::Init()
 		fileStream.close();
 	}
 	bombPos = Vector3(0, 0, 0);
-
-	hitboxes.clear();
 
 	rightvector = Vector3(1, 0, 0);
 	FPS = 0;
@@ -853,24 +792,6 @@ void SceneGame::Render()
 		Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
 		glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightPosition_cameraspace.x);
 	}
-	/*if (light[1].type == Light::LIGHT_DIRECTIONAL)
-	{
-		Vector3 lightDir(light[1].position.x, light[1].position.y, light[1].position.z);
-		Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
-		glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1, &lightDirection_cameraspace.x);
-	}
-	else if (light[1].type == Light::LIGHT_SPOT)
-	{
-		Position lightPosition_cameraspace = viewStack.Top() * light[1].position;
-		glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1, &lightPosition_cameraspace.x);
-		Vector3 spotDirection_cameraspace = viewStack.Top() * light[1].spotDirection;
-		glUniform3fv(m_parameters[U_LIGHT1_SPOTDIRECTION], 1, &spotDirection_cameraspace.x);
-	}
-	else
-	{
-		Position lightPosition_cameraspace = viewStack.Top() * light[1].position;
-		glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1, &lightPosition_cameraspace.x);
-	}*/
 
 	viewStack.LoadIdentity();
 	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
