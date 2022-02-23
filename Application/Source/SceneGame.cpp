@@ -2281,27 +2281,40 @@ void SceneGame::RenderAmbientEffects()
 		paperx = 150;
 		paperz = 20;
 		papery = 50;
+		paperrt = 0;
+		if (side == 0)
+			side = 1;
+		else
+			side = 0;
 	}
 	if (zturn == 0)
 	{
-		paperz += 0.1;
-		paperrt = -10;
+		if (paperrt>-5)
+			paperrt -=1;
+		paperz += 0.05;
 		if (paperz > 22)
 			zturn = 1;
 	}
 	if (zturn == 1)
 	{
-		paperz -= 0.1;
-		paperrt = 10;
+		if (paperrt < 5)
+			paperrt += 1;
+		paperz -= 0.05;
 		if (paperz < 18)
 			zturn = 0;
 	}
 	if (papery > 5)
 		papery -= 0.05;
-	modelStack.Translate(paperx, papery, paperz);
+	if (side==0)
+		modelStack.Translate(paperx, papery, paperz);
+	else if (side == 1)
+		modelStack.Translate(paperx, papery, -15-paperz);
 	modelStack.Rotate(90, 1, 0, 0);
 	modelStack.Rotate(20, 0, 1, 0);
-	modelStack.Rotate(paperrt, 0, 0, 1);
+	if (side==0)
+		modelStack.Rotate(paperrt, 0, 0, 1);
+	else
+		modelStack.Rotate(-paperrt, 0, 0, 1);
 	modelStack.Scale(3, 0.01, 2);
 	RenderMesh(meshList[GEO_PAPER], true);
 	modelStack.PopMatrix();

@@ -213,6 +213,7 @@ private:
 	float paperz = 20;
 	float paperrt = 0;
 	int zturn = 0;
+	int side = 0;
 	
 	//sidequests
 	bool firstcoinPicked;
