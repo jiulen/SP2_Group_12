@@ -402,6 +402,8 @@ void SceneGame::Update(double dt)
 		if (!reloading) {
 			reloading = true;
 			PlaySound(L"Sound//reload.wav", NULL, SND_FILENAME | SND_ASYNC); //play reloading sound
+			if (stage == 4)
+				keyused = 1;
 		}
 	}
 	else if (rOnClick && !Application::IsKeyPressed('R'))
@@ -419,6 +421,8 @@ void SceneGame::Update(double dt)
 			if (player.attack(dt)) {
 				PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
 				bulletVector.push_back(Bullet(player.damage, 75, 1, 1, 1, viewvector, camera.position, 'P'));
+				if (stage == 3)
+					keyused++;
 			}
 		}
 	}
@@ -567,6 +571,13 @@ void SceneGame::Update(double dt)
 	if (stage == 0)
 	{
 		if ((Application::IsKeyPressed('W'))|| (Application::IsKeyPressed('A')) || (Application::IsKeyPressed('S')) || (Application::IsKeyPressed('D')))
+		{
+			keyused += dt;
+		}
+	}
+	else if (stage == 1)
+	{
+		if ((Application::IsKeyPressed(VK_SHIFT))&&((Application::IsKeyPressed('W')) || (Application::IsKeyPressed('A')) || (Application::IsKeyPressed('S')) || (Application::IsKeyPressed('D'))))
 		{
 			keyused += dt;
 		}
@@ -1719,13 +1730,39 @@ void SceneGame::RenderBoss()
 
 void SceneGame::RenderTutorial()
 {
-	if (stage == 0)
+	if (stage == -2)
 	{
-		if (keyused < 3)
-			RenderTextOnScreen(meshList[GEO_TEXT], "Use W,A,S,D to move (3 sec)", Color(1, 1, 1), 3, 22, 53);
+		currentview = (camera.target - camera.position).Normalized();
+		stage = -1;
+	}
+	else if (stage == -1)
+	{
+		if (keyused == 0)
+		{
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use mouse to look around", Color(1, 0, 0), 3, 24, 53);
+			if (currentview != (camera.target - camera.position).Normalized())
+				keyused = 1;
+		}
 		else
 		{
-			RenderTextOnScreen(meshList[GEO_TEXT], "Use W,A,S,D to move (3 sec)", Color(0, 0.6, 0.1), 3, 22, 53);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use mouse to look around", Color(0, 0.6, 0.1), 3, 24, 53);
+			starttimer2 = 1;
+		}
+		if (timer2 > 1.5)
+		{
+			stage = 0;
+			keyused = 0;
+			starttimer2 = 0;
+			timer2 = 0;
+		}
+	}
+	else if (stage == 0)
+	{
+		if (keyused < 2)
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use W,A,S,D to move (2 sec)", Color(1, 0, 0), 3, 22, 53);
+		else
+		{
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use W,A,S,D to move (2 sec)", Color(0, 0.6, 0.1), 3, 22, 53);
 			starttimer2 = 1;
 		}
 		if (timer2 > 1.5)
@@ -1733,6 +1770,100 @@ void SceneGame::RenderTutorial()
 			stage = 1;
 			keyused = 0;
 			starttimer2 = 0;
+			timer2 = 0;
+		}
+	}
+	else if (stage == 1)
+	{
+		if (keyused < 2)
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use SHIFT and W,A,S,D to sprint (2 sec)", Color(1, 0, 0), 3, 18, 53);
+		else
+		{
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use SHIFT and W,A,S,D to sprint (2 sec)", Color(0, 0.6, 0.1), 3, 18, 53);
+			starttimer2 = 1;
+		}
+		if (timer2 > 1.5)
+		{
+			stage = 2;
+			keyused = 0;
+			starttimer2 = 0;
+			timer2 = 0;
+		}
+	}
+	else if (stage == 2)
+	{
+		if (keyused == 0)
+		{
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use SPACE to jump", Color(1, 0, 0), 3, 28, 53);
+			if (Application::IsKeyPressed(VK_SPACE))
+				keyused = 1;
+		}
+		else
+		{
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use SPACE to jump", Color(0, 0.6, 0.1), 3, 28, 53);
+			starttimer2 = 1;
+		}
+		if (timer2 > 1.5)
+		{
+			stage = 3;
+			keyused = 0;
+			starttimer2 = 0;
+			timer2 = 0;
+		}
+	}
+	else if (stage == 3)
+	{
+		if (keyused == 0)
+		{
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use Left Click to shoot", Color(1, 0, 0), 3, 27, 53);
+		}
+		else
+		{
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use Left Click to shoot", Color(0, 0.6, 0.1), 3, 27, 53);
+			starttimer2 = 1;
+		}
+		if (timer2 > 1.5)
+		{
+			stage = 4;
+			keyused = 0;
+			starttimer2 = 0;
+			timer2 = 0;
+		}
+	}
+	else if (stage == 4)
+	{
+		if (keyused == 0)
+		{
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use R to reload", Color(1, 0, 0), 3, 30, 53);
+		}
+		else
+		{
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use R to reload", Color(0, 0.6, 0.1), 3, 30, 53);
+			starttimer2 = 1;
+		}
+		if (timer2 > 1.5)
+		{
+			stage = 5;
+			keyused = 0;
+			starttimer2 = 0;
+			timer2 = 0;
+		}
+	}
+	else if (stage == 5)
+	{
+		RenderTextOnScreen(meshList[GEO_TEXT], "You are now prepared.", Color(0, 0.6, 0.1), 3, 28, 53);
+		RenderTextOnScreen(meshList[GEO_TEXT], "Defeat all the scammers and stop the scams.", Color(0, 0.6, 0.1), 3, 16, 50);
+		RenderTextOnScreen(meshList[GEO_TEXT], "Good luck Officer.", Color(0, 0.6, 0.1), 3, 30, 47);
+		starttimer2 = 1;
+		if (timer2 > 5)
+		{
+			stage = 6;
+			keyused = 0;
+			starttimer2 = 0;
+			timer2 = 0;
+			tutorial = 1;
+			player.currentAmmo = 7;
+			camera.Init(Vector3(0, 4.5, 5.5), Vector3(0, 4.5, 4.5), Vector3(0, 1, 0));
 		}
 	}
 }

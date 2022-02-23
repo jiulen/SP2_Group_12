@@ -195,7 +195,8 @@ private:
 	double keyused = 0;
 	double timer2 = 0;
 	int starttimer2 = 0;
-	int stage = 0;
+	int stage = -2;
+	Vector3 currentview;
 
 	//spawn enemies
 	int spawn = 0;
