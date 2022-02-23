@@ -14,6 +14,8 @@
 #include "BasicMelee.h"
 #include "Watcher.h"
 #include "Boss.h"
+#include "ScaredGuy.h"
+#include "Rain.h"
 #include "Vector3.h"
 #include <fstream>
 
@@ -58,34 +60,11 @@ class SceneGame : public Scene
 		GEO_SPIKE,
 
 		GEO_BIGHOUSE_A,
-		GEO_BIGHOUSE_B,
-		GEO_BIGHOUSE_C,
-		GEO_BIGHOUSE_D,
-		GEO_BIGHOUSE_E,
 		GEO_BIGHOUSE_F,
 		GEO_BIGHOUSE_G,
-		GEO_LOWHOUSE_A,
-		GEO_LOWHOUSE_B,
-		GEO_LOWHOUSE_C,
-		GEO_LOWHOUSE_D,
-		GEO_LOWHOUSE_E,
-		GEO_LOWHOUSE_F,
-		GEO_LOWHOUSE_G,
-		GEO_LOWHOUSE_H,
-		GEO_LOWHOUSE_I,
-		GEO_LOWHOUSE_J,
-		GEO_LOWHOUSE_K,
-		GEO_LOWHOUSE_L,
-		GEO_LOWHOUSE_M,
-		GEO_LOWHOUSE_N,
 		GEO_SKYSCRAPER_A,
-		GEO_SKYSCRAPER_B,
-		GEO_SKYSCRAPER_C,
-		GEO_SKYSCRAPER_D,
 		GEO_SKYSCRAPER_E,
 		GEO_SKYSCRAPER_F,
-		GEO_SMALLHOUSE_A,
-		GEO_SMALLHOUSE_B,
 		GEO_SMALLHOUSE_C,
 		GEO_SMALLHOUSE_D,
 		GEO_SMALLHOUSE_E,
@@ -102,7 +81,7 @@ class SceneGame : public Scene
 		GEO_BLACK,
 		GEO_BLUE,
 		GEO_TEXTBOX,
-		GEO_PAPER,
+		GEO_RAIN,
 		GEO_COIN,
 
 		NUM_GEOMETRY,
@@ -128,17 +107,6 @@ class SceneGame : public Scene
 		U_LIGHT0_COSCUTOFF,
 		U_LIGHT0_COSINNER,
 		U_LIGHT0_EXPONENT,
-		U_LIGHT1_POSITION,
-		U_LIGHT1_COLOR,
-		U_LIGHT1_POWER,
-		U_LIGHT1_KC,
-		U_LIGHT1_KL,
-		U_LIGHT1_KQ,
-		U_LIGHT1_TYPE,
-		U_LIGHT1_SPOTDIRECTION,
-		U_LIGHT1_COSCUTOFF,
-		U_LIGHT1_COSINNER,
-		U_LIGHT1_EXPONENT,
 		U_NUMLIGHTS,
 		U_COLOR_TEXTURE_ENABLED,
 		U_COLOR_TEXTURE,
@@ -153,7 +121,7 @@ private:
 	Mesh* meshList[NUM_GEOMETRY];
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
-	Light light[2];
+	Light light[1];
 	bool bLightEnabled;
 	void Reset();
 	float DistBetweenPoints(float x1, float z1, float x2, float z2);
@@ -210,12 +178,11 @@ private:
 	Vector3 currentview;
 
 	//Ambient Effetcs
-	float paperx = 150;
-	float papery = 50;
-	float paperz = 20;
-	float paperrt = 0;
-	int zturn = 0;
-	int side = 0;
+	float rainy1 = 50;
+	float rainy2 = 50;
+	std::vector<Rain*> rain;
+	int spawnrain = 0;
+	double raintime = 0;
 	
 	//sidequests
 	bool firstcoinPicked;

@@ -90,12 +90,10 @@ void SceneGame::Reset()
 	reloadTime = 0;
 	reloadRotateTime = 0;
 	reloadAngle = 0;
-	paperx = 150;
-	papery = 50;
-	paperz = 20;
-	paperrt = 0;
-	zturn = 0;
-	side = 0;
+
+	//npc
+	entities.push_back(new ScaredGuy(180, Vector3(30, 0, 57), Vector3(0, 0, 1)));
+	entities.push_back(new ScaredGuy(180, Vector3(60, 0, -75), Vector3(0, 0, 1)));
 }
 
 void SceneGame::Init()
@@ -108,8 +106,6 @@ void SceneGame::Init()
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	
 
 	m_programID = LoadShaders("Shader//Texture.vertexshader", "Shader//Text.fragmentshader");
 	m_parameters[U_NUMLIGHTS] = glGetUniformLocation(m_programID, "numLights");
@@ -138,21 +134,9 @@ void SceneGame::Init()
 	m_parameters[U_LIGHT0_COSINNER] = glGetUniformLocation(m_programID, "lights[0].cosInner");
 	m_parameters[U_LIGHT0_EXPONENT] = glGetUniformLocation(m_programID, "lights[0].exponent");
 
-	m_parameters[U_LIGHT1_POSITION] = glGetUniformLocation(m_programID, "lights[1].position_cameraspace");
-	m_parameters[U_LIGHT1_COLOR] = glGetUniformLocation(m_programID, "lights[1].color");
-	m_parameters[U_LIGHT1_POWER] = glGetUniformLocation(m_programID, "lights[1].power");
-	m_parameters[U_LIGHT1_KC] = glGetUniformLocation(m_programID, "lights[1].kC");
-	m_parameters[U_LIGHT1_KL] = glGetUniformLocation(m_programID, "lights[1].kL");
-	m_parameters[U_LIGHT1_KQ] = glGetUniformLocation(m_programID, "lights[1].kQ");
-	m_parameters[U_LIGHT1_TYPE] = glGetUniformLocation(m_programID, "lights[1].type");
-	m_parameters[U_LIGHT1_SPOTDIRECTION] = glGetUniformLocation(m_programID, "lights[1].spotDirection");
-	m_parameters[U_LIGHT1_COSCUTOFF] = glGetUniformLocation(m_programID, "lights[1].cosCutoff");
-	m_parameters[U_LIGHT1_COSINNER] = glGetUniformLocation(m_programID, "lights[1].cosInner");
-	m_parameters[U_LIGHT1_EXPONENT] = glGetUniformLocation(m_programID, "lights[1].exponent");
-
 	m_parameters[U_NUMLIGHTS] = glGetUniformLocation(m_programID, "numLights");
 	glUseProgram(m_programID);
-	glUniform1i(m_parameters[U_NUMLIGHTS], 2);
+	glUniform1i(m_parameters[U_NUMLIGHTS], 1);
 
 	light[0].type = Light::LIGHT_DIRECTIONAL;
 	light[0].position.Set(0, 100, 0);
@@ -175,28 +159,6 @@ void SceneGame::Init()
 	glUniform1f(m_parameters[U_LIGHT0_COSCUTOFF], light[0].cosCutoff);
 	glUniform1f(m_parameters[U_LIGHT0_COSINNER], light[0].cosInner);
 	glUniform1f(m_parameters[U_LIGHT0_EXPONENT], light[0].exponent);
-
-	light[1].type = Light::LIGHT_DIRECTIONAL;
-	light[1].position.Set(0, 100, 0);
-	light[1].color.Set(1, 1, 1);
-	light[1].power = 1.f;
-	light[1].kC = 1.f;
-	light[1].kL = 0.01f;
-	light[1].kQ = 0.001f;
-	light[1].cosCutoff = cos(Math::DegreeToRadian(45));
-	light[1].cosInner = cos(Math::DegreeToRadian(30));
-	light[1].exponent = 3.f;
-	light[1].spotDirection.Set(0.f, 1.f, 0.f);
-
-	glUniform1i(m_parameters[U_LIGHT1_TYPE], light[1].type);
-	glUniform3fv(m_parameters[U_LIGHT1_COLOR], 1, &light[1].color.r);
-	glUniform1f(m_parameters[U_LIGHT1_POWER], light[1].power);
-	glUniform1f(m_parameters[U_LIGHT1_KC], light[1].kC);
-	glUniform1f(m_parameters[U_LIGHT1_KL], light[1].kL);
-	glUniform1f(m_parameters[U_LIGHT1_KQ], light[1].kQ);
-	glUniform1f(m_parameters[U_LIGHT1_COSCUTOFF], light[1].cosCutoff);
-	glUniform1f(m_parameters[U_LIGHT1_COSINNER], light[1].cosInner);
-	glUniform1f(m_parameters[U_LIGHT1_EXPONENT], light[1].exponent);
 
 	glGenVertexArrays(1, &m_vertexArrayID);
 	glBindVertexArray(m_vertexArrayID);
@@ -234,41 +196,18 @@ void SceneGame::Init()
 	meshList[GEO_BOSS]->textureID = LoadTGA("Image//skin_robot.tga");
 	meshList[GEO_NPC] = MeshBuilder::GenerateOBJMTL("npc", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
 	meshList[GEO_NPC]->textureID = LoadTGA("Image//skin_manAlternative.tga");
-	meshList[GEO_BIRD] = MeshBuilder::GenerateOBJMTL("bird", "OBJ//bird.obj", "OBJ//bird.mtl");
-	meshList[GEO_BIRD]->textureID = LoadTGA("Image//bird.tga");
+	/*meshList[GEO_BIRD] = MeshBuilder::GenerateOBJMTL("bird", "OBJ//bird.obj", "OBJ//bird.mtl");
+	meshList[GEO_BIRD]->textureID = LoadTGA("Image//bird.tga");*/
 	meshList[GEO_SPIKE] = MeshBuilder::GenerateOBJ("spike", "OBJ//spike.obj");
 	meshList[GEO_BOMB] = MeshBuilder::GenerateOBJMTL("bomb", "OBJ//bomb.obj", "OBJ//bomb.mtl");
 	meshList[GEO_GUN] = MeshBuilder::GenerateOBJMTL("gun", "OBJ//pistol.obj", "OBJ//pistol.mtl");
 	meshList[GEO_GUN]->textureID = LoadTGA("Image//pistol.tga");
 	meshList[GEO_BIGHOUSE_A] = MeshBuilder::GenerateOBJMTL("big house a", "OBJ//large_buildingA.obj", "OBJ//large_buildingA.mtl");
-	meshList[GEO_BIGHOUSE_B] = MeshBuilder::GenerateOBJMTL("big house b", "OBJ//large_buildingB.obj", "OBJ//large_buildingB.mtl");
-	meshList[GEO_BIGHOUSE_C] = MeshBuilder::GenerateOBJMTL("big house c", "OBJ//large_buildingC.obj", "OBJ//large_buildingC.mtl");
-	meshList[GEO_BIGHOUSE_D] = MeshBuilder::GenerateOBJMTL("big house d", "OBJ//large_buildingD.obj", "OBJ//large_buildingD.mtl");
-	meshList[GEO_BIGHOUSE_E] = MeshBuilder::GenerateOBJMTL("big house e", "OBJ//large_buildingE.obj", "OBJ//large_buildingE.mtl");
 	meshList[GEO_BIGHOUSE_F] = MeshBuilder::GenerateOBJMTL("big house f", "OBJ//large_buildingF.obj", "OBJ//large_buildingF.mtl");
 	meshList[GEO_BIGHOUSE_G] = MeshBuilder::GenerateOBJMTL("big house g", "OBJ//large_buildingG.obj", "OBJ//large_buildingG.mtl");
-	meshList[GEO_LOWHOUSE_A] = MeshBuilder::GenerateOBJMTL("small house a", "OBJ//low_buildingA.obj", "OBJ//low_buildingA.mtl");
-	meshList[GEO_LOWHOUSE_B] = MeshBuilder::GenerateOBJMTL("small house b", "OBJ//low_buildingB.obj", "OBJ//low_buildingB.mtl");
-	meshList[GEO_LOWHOUSE_C] = MeshBuilder::GenerateOBJMTL("small house c", "OBJ//low_buildingC.obj", "OBJ//low_buildingC.mtl");
-	meshList[GEO_LOWHOUSE_D] = MeshBuilder::GenerateOBJMTL("small house d", "OBJ//low_buildingD.obj", "OBJ//low_buildingD.mtl");
-	meshList[GEO_LOWHOUSE_E] = MeshBuilder::GenerateOBJMTL("small house e", "OBJ//low_buildingE.obj", "OBJ//low_buildingE.mtl");
-	meshList[GEO_LOWHOUSE_F] = MeshBuilder::GenerateOBJMTL("small house f", "OBJ//low_buildingF.obj", "OBJ//low_buildingF.mtl");
-	meshList[GEO_LOWHOUSE_G] = MeshBuilder::GenerateOBJMTL("small house g", "OBJ//low_buildingG.obj", "OBJ//low_buildingG.mtl");
-	meshList[GEO_LOWHOUSE_H] = MeshBuilder::GenerateOBJMTL("small house h", "OBJ//low_buildingH.obj", "OBJ//low_buildingH.mtl");
-	meshList[GEO_LOWHOUSE_I] = MeshBuilder::GenerateOBJMTL("small house i", "OBJ//low_buildingI.obj", "OBJ//low_buildingI.mtl");
-	meshList[GEO_LOWHOUSE_J] = MeshBuilder::GenerateOBJMTL("small house j", "OBJ//low_buildingJ.obj", "OBJ//low_buildingJ.mtl");
-	meshList[GEO_LOWHOUSE_K] = MeshBuilder::GenerateOBJMTL("small house k", "OBJ//low_buildingK.obj", "OBJ//low_buildingK.mtl");
-	meshList[GEO_LOWHOUSE_L] = MeshBuilder::GenerateOBJMTL("small house l", "OBJ//low_buildingL.obj", "OBJ//low_buildingL.mtl");
-	meshList[GEO_LOWHOUSE_M] = MeshBuilder::GenerateOBJMTL("small house m", "OBJ//low_buildingM.obj", "OBJ//low_buildingM.mtl");
-	meshList[GEO_LOWHOUSE_N] = MeshBuilder::GenerateOBJMTL("small house n", "OBJ//low_buildingN.obj", "OBJ//low_buildingN.mtl");
 	meshList[GEO_SKYSCRAPER_A] = MeshBuilder::GenerateOBJMTL("skyscraper a", "OBJ//skyscraperA.obj", "OBJ//skyscraperA.mtl");
-	meshList[GEO_SKYSCRAPER_B] = MeshBuilder::GenerateOBJMTL("skyscraper b", "OBJ//skyscraperB.obj", "OBJ//skyscraperB.mtl");
-	meshList[GEO_SKYSCRAPER_C] = MeshBuilder::GenerateOBJMTL("skyscraper c", "OBJ//skyscraperC.obj", "OBJ//skyscraperC.mtl");
-	meshList[GEO_SKYSCRAPER_D] = MeshBuilder::GenerateOBJMTL("skyscraper d", "OBJ//skyscraperD.obj", "OBJ//skyscraperD.mtl");
 	meshList[GEO_SKYSCRAPER_E] = MeshBuilder::GenerateOBJMTL("skyscraper e", "OBJ//skyscraperE.obj", "OBJ//skyscraperE.mtl");
 	meshList[GEO_SKYSCRAPER_F] = MeshBuilder::GenerateOBJMTL("skyscraper f", "OBJ//skyscraperF.obj", "OBJ//skyscraperF.mtl");
-	meshList[GEO_SMALLHOUSE_A] = MeshBuilder::GenerateOBJMTL("small house a", "OBJ//small_buildingA.obj", "OBJ//small_buildingA.mtl");
-	meshList[GEO_SMALLHOUSE_B] = MeshBuilder::GenerateOBJMTL("small house b", "OBJ//small_buildingB.obj", "OBJ//small_buildingB.mtl");
 	meshList[GEO_SMALLHOUSE_C] = MeshBuilder::GenerateOBJMTL("small house c", "OBJ//small_buildingC.obj", "OBJ//small_buildingC.mtl");
 	meshList[GEO_SMALLHOUSE_D] = MeshBuilder::GenerateOBJMTL("small house d", "OBJ//small_buildingD.obj", "OBJ//small_buildingD.mtl");
 	meshList[GEO_SMALLHOUSE_E] = MeshBuilder::GenerateOBJMTL("small house E", "OBJ//small_buildingE.obj", "OBJ//small_buildingE.mtl");
@@ -298,7 +237,7 @@ void SceneGame::Init()
 	meshList[GEO_BOMBARROW]->textureID = LoadTGA("Image//bomb-pointer.tga");
 	meshList[GEO_TEXTBOX] = MeshBuilder::GenerateQuad("text box", Color(1, 1, 1), 1.f);
 	meshList[GEO_TEXTBOX]->textureID = LoadTGA("Image//textbox.tga");
-	meshList[GEO_PAPER] = MeshBuilder::GenerateCube("paper", Color(1, 0.9, 0.8));
+	meshList[GEO_RAIN] = MeshBuilder::GenerateCube("rain", Color(0.2, 0.5, 1));
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//arial.tga");
@@ -361,8 +300,6 @@ void SceneGame::Init()
 	}
 	bombPos = Vector3(0, 0, 0);
 
-	hitboxes.clear();
-
 	rightvector = Vector3(1, 0, 0);
 	FPS = 0;
 	bLightEnabled = true;
@@ -375,13 +312,13 @@ void SceneGame::Init()
 	reloadAngle = 0;
 
 	//Init non moving hitboxes
-	
 	//walls
 	hitboxes.push_back(Hitbox(0, 6.5, -153, 300, 13, 10));
 	hitboxes.push_back(Hitbox(0, 6.5, 155, 300, 13, 10));
 	hitboxes.push_back(Hitbox(-153, 6.5, 0, 10, 13, 300));
 	hitboxes.push_back(Hitbox(154, 6.5, 0, 10, 13, 300));
 
+	//others
 	hitboxes.push_back(Hitbox(-60, 29, -60, 24, 58, 24));
 	hitboxes.push_back(Hitbox(0, 9, -70, 32, 18, 20));
 	hitboxes.push_back(Hitbox(-60, 40, 0, 24, 80, 24));
@@ -400,14 +337,18 @@ void SceneGame::Init()
 	hitboxes.push_back(Hitbox(10, 4, 70.5, 16, 8, 3));
 	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
 
-	hitboxes.push_back(Hitbox(-45, 0, 10, 5, 20, 5));
-	hitboxes.push_back(Hitbox(-25, 0, -20, 5, 20, 5));
-	hitboxes.push_back(Hitbox(-45, 0, -50, 5, 20, 5));
-	hitboxes.push_back(Hitbox(40, 0, 60, 5, 20, 5));
-	hitboxes.push_back(Hitbox(30, 0, -60, 5, 20, 5));
-	hitboxes.push_back(Hitbox(-25, 0, 60, 5, 20, 5));
+	hitboxes.push_back(Hitbox(-44, 5.5, 10, 3.1, 11, 2));
+	hitboxes.push_back(Hitbox(-26, 5.5, -20, 3.1, 11, 2));
+	hitboxes.push_back(Hitbox(-44, 5.5, -50, 3.1, 11, 2));
+	hitboxes.push_back(Hitbox(40, 5.5, 59, 2, 11, 3.1));
+	hitboxes.push_back(Hitbox(30, 5.5, -59, 2, 11, 3.1));
+	hitboxes.push_back(Hitbox(-25, 5.5, 59, 2, 11, 3.1));
 
-	hitboxes.push_back(Hitbox(30, 10, 60, 10, 20, 5));
+	hitboxes.push_back(Hitbox(30, 2, 60, 7.4, 4, 3.8));
+
+	//npc
+	entities.push_back(new ScaredGuy(180, Vector3(30, 0, 57), Vector3(0, 0, 1)));
+	entities.push_back(new ScaredGuy(180, Vector3(60, 0, -75), Vector3(0, 0, 1)));
 }
 
 void SceneGame::Update(double dt)
@@ -416,7 +357,6 @@ void SceneGame::Update(double dt)
 		camera.setFirstMouse();
 		enterScene = false;
 	}
-
 
 	FPS = 1 / (float)dt;
 	
@@ -475,7 +415,7 @@ void SceneGame::Update(double dt)
 		player.reload(dt, reloading);
 		reloadRotateTime += dt;
 		reloadTime += dt;
-		if (reloadRotateTime > 0.02) {
+		if (reloadRotateTime > 0.01) { //Reload animation angle
 			reloadRotateTime = 0.f;
 			if (reloadTime < 1) {
 				reloadAngle -= 0.5f;
@@ -484,9 +424,7 @@ void SceneGame::Update(double dt)
 				reloadAngle += 0.5f;
 			}
 		}
-	}
-	//Reload animation angle
-	
+	}	
 
 	//Shooting
 	if (Application::IsMousePressed(0))
@@ -495,6 +433,14 @@ void SceneGame::Update(double dt)
 			if (player.attack(dt)) {
 				PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
 				bulletVector.push_back(Bullet(player.damage, 75, 0.75, 0.75, 0.75, viewvector, camera.position, 'P'));
+				for (int i = 0; i < entities.size(); i++) {
+					if (entities[i]->getName() == "ScaredGuy") {
+						float a = DistBetweenPoints(camera.position.x, camera.position.z, entities[i]->getPosition().x, entities[i]->getPosition().z);
+						if (DistBetweenPoints(camera.position.x, camera.position.z, entities[i]->getPosition().x, entities[i]->getPosition().z) <= 20) {
+							entities[i]->setChase(true);
+						}
+					}
+				}
 				if (stage == 3)
 					keyused++;
 			}
@@ -661,15 +607,23 @@ void SceneGame::Update(double dt)
 		timer2 += dt;
 	}
 
+	//Rain
+	if (spawnrain == 1)
+	{
+		raintime += dt;
+		if (raintime > 0.3)
+		{
+			spawnrain = 0;
+			raintime =0;
+		}
+	}
 }
 void SceneGame::UpdateEnemyMovement(double dt)
 {
 	//For enemies
 	for (int i = 0; i < entities.size(); i++) {
-		if (entities[i]->getType() == 'E') {
-			entities[i]->alert(entities);
-			entities[i]->move(Vector3(camera.position.x, 0, camera.position.z), dt, hitboxes, entities, camera.getPlayerHitbox());
-		}
+		entities[i]->alert(entities);
+		entities[i]->move(Vector3(camera.position.x, 0, camera.position.z), dt, hitboxes, entities, camera.getPlayerHitbox());
 	}
 }
 void SceneGame::EnemyAttack(double dt)
@@ -855,24 +809,6 @@ void SceneGame::Render()
 		Position lightPosition_cameraspace = viewStack.Top() * light[0].position;
 		glUniform3fv(m_parameters[U_LIGHT0_POSITION], 1, &lightPosition_cameraspace.x);
 	}
-	/*if (light[1].type == Light::LIGHT_DIRECTIONAL)
-	{
-		Vector3 lightDir(light[1].position.x, light[1].position.y, light[1].position.z);
-		Vector3 lightDirection_cameraspace = viewStack.Top() * lightDir;
-		glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1, &lightDirection_cameraspace.x);
-	}
-	else if (light[1].type == Light::LIGHT_SPOT)
-	{
-		Position lightPosition_cameraspace = viewStack.Top() * light[1].position;
-		glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1, &lightPosition_cameraspace.x);
-		Vector3 spotDirection_cameraspace = viewStack.Top() * light[1].spotDirection;
-		glUniform3fv(m_parameters[U_LIGHT1_SPOTDIRECTION], 1, &spotDirection_cameraspace.x);
-	}
-	else
-	{
-		Position lightPosition_cameraspace = viewStack.Top() * light[1].position;
-		glUniform3fv(m_parameters[U_LIGHT1_POSITION], 1, &lightPosition_cameraspace.x);
-	}*/
 
 	viewStack.LoadIdentity();
 	viewStack.LookAt(camera.position.x, camera.position.y, camera.position.z, camera.target.x, camera.target.y, camera.target.z, camera.up.x, camera.up.y, camera.up.z);
@@ -929,6 +865,16 @@ void SceneGame::Render()
 				RenderMesh(meshList[GEO_BOSS], false);
 			}
 			modelStack.PopMatrix();
+		}
+		else if (entities[i]->getType() == 'F') {
+			if (entities[i]->getName() == "ScaredGuy") {
+				modelStack.PushMatrix();
+				modelStack.Translate(entities[i]->getPosition().x, entities[i]->getPosition().y, entities[i]->getPosition().z);
+				modelStack.Rotate(entities[i]->getFacing(), 0, 1, 0);
+				modelStack.Scale(0.35, 0.35, 0.35);
+				RenderMesh(meshList[GEO_NPC], false);
+				modelStack.PopMatrix();
+			}
 		}
 	}
 
@@ -1021,12 +967,14 @@ void SceneGame::Render()
 	modelStack.Scale(300, 20, 20);
 	RenderMesh(meshList[GEO_WALL], true);
 	modelStack.PopMatrix();
+	//Hitbox(0, 6.5, 155, 300, 13, 10);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, -140);
 	modelStack.Scale(300, 20, 20);
 	RenderMesh(meshList[GEO_WALL], true);
 	modelStack.PopMatrix();
+	//Hitbox(0, 6.5, -153, 300, 13, 10)
 
 	modelStack.PushMatrix();
 	modelStack.Translate(159, 0, 1);
@@ -1034,6 +982,7 @@ void SceneGame::Render()
 	modelStack.Scale(310, 20, 20);
 	RenderMesh(meshList[GEO_WALL], true);
 	modelStack.PopMatrix();
+	//Hitbox(154, 6.5, 0, 10, 13, 300);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-140, 0, 1);
@@ -1041,6 +990,7 @@ void SceneGame::Render()
 	modelStack.Scale(300, 20, 20);
 	RenderMesh(meshList[GEO_WALL], true);
 	modelStack.PopMatrix();
+	//Hitbox(-153, 6.5, 0, 10, 13, 300);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-45, 0, 10);
@@ -1048,7 +998,7 @@ void SceneGame::Render()
 	modelStack.Scale(8, 8, 8);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
-	//Hitbox(-45, 0, 10, 5, 20, 5);
+	//Hitbox(-44, 5.5, 10, 3.1, 11, 2);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-25, 0, -20);
@@ -1056,7 +1006,7 @@ void SceneGame::Render()
 	modelStack.Scale(8, 8, 8);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
-	//Hitbox(-25, 0, -20, 5, 20, 5);
+	//Hitbox(-26, 5.5, -20, 3.1, 11, 2);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-45, 0, -50);
@@ -1064,7 +1014,7 @@ void SceneGame::Render()
 	modelStack.Scale(8, 8, 8);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
-	//Hitbox(-45, 0, -50, 5, 20, 5);
+	//Hitbox(-44, 5.5, -50, 3.1, 11, 2);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(40, 0, 60);
@@ -1072,14 +1022,14 @@ void SceneGame::Render()
 	modelStack.Scale(8, 8, 8);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
-	//Hitbox(40, 0, 60, 5, 20, 5);
+	//Hitbox(40, 5.5, 59, 2, 11, 3.1);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(30, 0, -60);
 	modelStack.Scale(8, 8, 8);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
-	//Hitbox(30, 0, -60, 5, 20, 5);
+	//Hitbox(30, 5.5, -59, 2, 11, 3.1);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-25, 0, 60);
@@ -1087,7 +1037,7 @@ void SceneGame::Render()
 	modelStack.Scale(5, 5, 5);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
-	//Hitbox(-25, 0, 60), 5, 20, 5);
+	//Hitbox(-25, 5.5, 59, 2, 11, 3.1);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(30, 0, 60);
@@ -1095,7 +1045,7 @@ void SceneGame::Render()
 	modelStack.Scale(12, 12, 12);
 	RenderMesh(meshList[GEO_BENCH], true);
 	modelStack.PopMatrix();
-	//Hitbox(30, 10, 60, 10, 20, 5);
+	//Hitbox(30, 2, 60, 7.4, 4, 3.8);
 
 	if (tutorial == 1 && firstcoinPicked == false) //first coin
 	{
@@ -1249,6 +1199,7 @@ void SceneGame::Render()
 		{
 			coinscollected = coinscollected + 1;
 			firstcoinPicked = true;
+			PlaySound(L"Sound//coin.wav", NULL, SND_FILENAME | SND_ASYNC); //play coin sound
 		}
 	}
 	if (camera.position.x >= -5 && camera.position.x <= 5 && camera.position.z >= -11 && camera.position.z <= -1 && secondcoinPicked == false)//second coin
@@ -1258,6 +1209,7 @@ void SceneGame::Render()
 		{
 			coinscollected = coinscollected + 1;
 			secondcoinPicked = true;
+			PlaySound(L"Sound//coin.wav", NULL, SND_FILENAME | SND_ASYNC); //play coin sound
 		}
 	}
 	if (camera.position.x >= 100 && camera.position.x <= 110 && camera.position.z >= -15 && camera.position.z <= -5 && thirdcoinPicked == false)//third coin
@@ -1267,6 +1219,7 @@ void SceneGame::Render()
 		{
 			coinscollected = coinscollected + 1;
 			thirdcoinPicked = true;
+			PlaySound(L"Sound//coin.wav", NULL, SND_FILENAME | SND_ASYNC); //play coin sound
 		}
 	}
 	if (camera.position.x >= -5 && camera.position.x <= 5 && camera.position.z >= 75 && camera.position.z <= 85 && fourthcoinPicked == false)//fourth coin
@@ -1276,6 +1229,7 @@ void SceneGame::Render()
 		{
 			coinscollected = coinscollected + 1;
 			fourthcoinPicked = true;
+			PlaySound(L"Sound//coin.wav", NULL, SND_FILENAME | SND_ASYNC); //play coin sound
 		}
 	}
 	if (camera.position.x >= -135 && camera.position.x <= -125 && camera.position.z >= 125 && camera.position.z <= 135 && fifthcoinPicked == false)//fifth coin
@@ -1285,6 +1239,7 @@ void SceneGame::Render()
 		{
 			coinscollected = coinscollected + 1;
 			fifthcoinPicked = true;
+			PlaySound(L"Sound//coin.wav", NULL, SND_FILENAME | SND_ASYNC); //play coin sound
 		}
 	}
 	if (camera.position.x >= -135 && camera.position.x <= -125 && camera.position.z >= -135 && camera.position.z <= -125 && sixthcoinPicked == false)//sixth coin
@@ -1294,6 +1249,7 @@ void SceneGame::Render()
 		{
 			coinscollected = coinscollected + 1;
 			sixthcoinPicked = true;
+			PlaySound(L"Sound//coin.wav", NULL, SND_FILENAME | SND_ASYNC); //play coin sound
 		}
 	}
 	if (camera.position.x >= 125 && camera.position.x <= 135 && camera.position.z >= 125 && camera.position.z <= 135 && seventhcoinPicked == false)//seventh coin
@@ -1303,6 +1259,7 @@ void SceneGame::Render()
 		{
 			coinscollected = coinscollected + 1;
 			seventhcoinPicked = true;
+			PlaySound(L"Sound//coin.wav", NULL, SND_FILENAME | SND_ASYNC); //play coin sound
 		}
 	}
 	if (camera.position.x >= 125 && camera.position.x <= 135 && camera.position.z >= -135 && camera.position.z <= -125 && eighthcoinPicked == false)//eighth coin
@@ -1312,6 +1269,7 @@ void SceneGame::Render()
 		{
 			coinscollected = coinscollected + 1;
 			eighthcoinPicked = true;
+			PlaySound(L"Sound//coin.wav", NULL, SND_FILENAME | SND_ASYNC); //play coin sound
 		}
 	}
 
@@ -1331,7 +1289,7 @@ void SceneGame::Render()
 		/*modelStack.Rotate(birdFacing, 0, 1, 0);*/
 		modelStack.Rotate(-90, 1, 0, 0);
 		modelStack.Scale(0.13f, 0.13f, 0.13f);
-		RenderMesh(meshList[GEO_BIRD], false);
+		//RenderMesh(meshList[GEO_BIRD], false);
 		modelStack.PopMatrix();
 	}
 
@@ -1961,12 +1919,12 @@ void SceneGame::RenderHUD()
 	
 	RenderImageOnScreen(meshList[GEO_HEALTH], Color(1, 1, 1), 7, 7, 4, 14); //Health
 	if (player.currentHealth > 30)
-		RenderTextOnScreen(meshList[GEO_TEXT], sss.str(), Color(0, 0.6, 0.1), 7, 8, 10);
+		RenderTextOnScreen(meshList[GEO_TEXT], sss.str(), Color(0, 1, 0), 7, 8, 10);
 	else
 		RenderTextOnScreen(meshList[GEO_TEXT], sss.str(), Color(1, 0, 0), 7, 8, 10);
 	RenderImageOnScreen(meshList[GEO_AMMO], Color(1, 1, 1), 2, 8, 4, 5);//Ammo
 	if (player.currentAmmo>player.maxAmmo*0.3)
-		RenderTextOnScreen(meshList[GEO_TEXT], ss1.str(), Color(0, 0.6, 0.1), 7, 8, 0);
+		RenderTextOnScreen(meshList[GEO_TEXT], ss1.str(), Color(0, 1, 0), 7, 8, 0);
 	else
 		RenderTextOnScreen(meshList[GEO_TEXT], ss1.str(), Color(1, 0, 0), 7, 8, 0);
 	if (crosshairenabled == 1) //Crosshair
@@ -1980,9 +1938,9 @@ void SceneGame::RenderHUD()
 	}
 	if (tutorial == 1)
 	{
-		RenderTextOnScreen(meshList[GEO_TEXT], ssss.str(), Color(0, 0.6, 0.1), 3, 67, 57); //Scams
-		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0.6, 0.1), 3, 0, 57); //FPS
-		RenderTextOnScreen(meshList[GEO_TEXT], sssss.str(), Color(0, 0.6, 0.1), 3, 0, 54); //Coins
+		RenderTextOnScreen(meshList[GEO_TEXT], ssss.str(), Color(0, 1, 0), 3, 67, 57); //Scams
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 57); //FPS
+		RenderTextOnScreen(meshList[GEO_TEXT], sssss.str(), Color(0, 1, 0), 3, 0, 54); //Coins
 	}
 
 	if (reloading) {
@@ -1999,13 +1957,13 @@ void SceneGame::RenderSkybox()
 	modelStack.Translate(OFFSET, 0, 0);
 	modelStack.Rotate(-90, 0, 1, 0);
 	modelStack.Scale(1000, 1000, 1000);
-	RenderMesh(meshList[GEO_BACK], false);
+	RenderMesh(meshList[GEO_FRONT], false);
 	modelStack.PopMatrix();
 	modelStack.PushMatrix();
 	modelStack.Translate(-OFFSET, 0, 0);
 	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Scale(1000, 1000, 1000);
-	RenderMesh(meshList[GEO_FRONT], false);
+	RenderMesh(meshList[GEO_BACK], false);
 	modelStack.PopMatrix();
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, -OFFSET);
@@ -2021,7 +1979,6 @@ void SceneGame::RenderSkybox()
 	modelStack.PushMatrix();
 	modelStack.Translate(0, OFFSET, 0);
 	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Rotate(-90, 0, 0, 1);
 	modelStack.Scale(1000, 1000, 1000);
 	RenderMesh(meshList[GEO_TOP], false);
 	modelStack.PopMatrix();
@@ -2288,51 +2245,35 @@ void SceneGame::RenderTutorial()
 
 void SceneGame::RenderAmbientEffects()
 {
-	modelStack.PushMatrix();
-	if (paperx > -150)
-		paperx -= 0.5;
-	else
+	if (spawnrain == 0)
 	{
-		paperx = 150;
-		paperz = 20;
-		papery = 50;
-		paperrt = 0;
-		if (side == 0)
-			side = 1;
+		for (int i = -10; i < 10; i++)
+		{
+			for (int l = -10; l < 10; l++)
+			{
+				rain.push_back(new Rain(rand()%10+(i * 15), 50, rand() % 10 + (l * 15)));
+			}
+		}
+		spawnrain = 1;
+	}
+	for (int i = 0; i < rain.size(); i++)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(rain[i]->getpos(1), rain[i]->getpos(2), rain[i]->getpos(3));
+		modelStack.Scale(0.1, 0.2, 0.1);
+		RenderMesh(meshList[GEO_RAIN], false);
+		modelStack.PopMatrix();
+	}
+	for (int i =0; i <rain.size(); i++)
+	{ 
+		if (rain[i]->getpos(2) < 0)
+		{
+			rain.erase(rain.begin());
+			i--;
+		}
 		else
-			side = 0;
+			rain[i]->setpos(2, rain[i]->getpos(2) - 0.8);
 	}
-	if (zturn == 0)
-	{
-		if (paperrt>-5)
-			paperrt -=1;
-		paperz += 0.05;
-		if (paperz > 22)
-			zturn = 1;
-	}
-	if (zturn == 1)
-	{
-		if (paperrt < 5)
-			paperrt += 1;
-		paperz -= 0.05;
-		if (paperz < 18)
-			zturn = 0;
-	}
-	if (papery > 5)
-		papery -= 0.05;
-	if (side==0)
-		modelStack.Translate(paperx, papery, paperz);
-	else if (side == 1)
-		modelStack.Translate(paperx, papery, -15-paperz);
-	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Rotate(20, 0, 1, 0);
-	if (side==0)
-		modelStack.Rotate(paperrt, 0, 0, 1);
-	else
-		modelStack.Rotate(-paperrt, 0, 0, 1);
-	modelStack.Scale(3, 0.01, 2);
-	RenderMesh(meshList[GEO_PAPER], true);
-	modelStack.PopMatrix();
 }
 
 int SceneGame::NextScene()

@@ -19,7 +19,7 @@ protected:
 	bool chase;
 	float defaultY;
 
-	char type; //N for none(entity), E for enemy, maybe other letter for friendly npcs(if going to add)
+	char type; //N for none(entity), E for enemy, F for friendly npcs
 	std::string name;
 
 	float DistBetweenPoints(float x1, float z1, float x2, float z2);
