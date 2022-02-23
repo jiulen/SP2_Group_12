@@ -353,7 +353,7 @@ void SceneGame::Init()
 	hitboxes.push_back(Hitbox(10, 12, 80, 16, 24, 16));
 	hitboxes.push_back(Hitbox(10, 4, 70.5, 16, 8, 3));
 	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
-
+	hitboxes.push_back(Hitbox(30, 10, 60, 10, 20, 5));
 }
 
 void SceneGame::Update(double dt)
@@ -1017,10 +1017,10 @@ void SceneGame::Render()
 	modelStack.PushMatrix();
 	modelStack.Translate(30, 0, 60);
 	modelStack.Rotate(180, 0, 1, 0);
-	modelStack.Scale(15, 15, 15);
+	modelStack.Scale(12, 12, 12);
 	RenderMesh(meshList[GEO_BENCH], true);
 	modelStack.PopMatrix();
-
+	//Hitbox(30, 10, 60, 10, 20, 5);
 
 
 	modelStack.PushMatrix();
