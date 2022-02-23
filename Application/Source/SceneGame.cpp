@@ -249,6 +249,7 @@ void SceneGame::Init()
 	meshList[GEO_WALL] = MeshBuilder::GenerateOBJMTL("wall", "OBJ//stoneWall.obj", "OBJ//stoneWall.mtl");
 	meshList[GEO_WALL_CORNER] = MeshBuilder::GenerateOBJMTL("wall", "OBJ//stoneWallCurve.obj", "OBJ//stoneWallCurve.mtl");
 	meshList[GEO_LIGHTPOST] = MeshBuilder::GenerateOBJMTL("light post", "OBJ//lightpostSingle.obj", "OBJ//lightpostSingle.mtl");
+	meshList[GEO_BENCH] = MeshBuilder::GenerateOBJMTL("bench", "OBJ//bench.obj", "OBJ//bench.mtl");
 
 	//HUD + UI
 	meshList[GEO_RED] = MeshBuilder::GenerateQuad("red", Color(1, 0, 0), 1.f);
@@ -1005,6 +1006,13 @@ void SceneGame::Render()
 	modelStack.Rotate(180, 0, 1, 0);
 	modelStack.Scale(5, 5, 5);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(30, 0, 60);
+	modelStack.Rotate(180, 0, 1, 0);
+	modelStack.Scale(15, 15, 15);
+	RenderMesh(meshList[GEO_BENCH], true);
 	modelStack.PopMatrix();
 
 
