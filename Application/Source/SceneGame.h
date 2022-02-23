@@ -22,7 +22,7 @@ class SceneGame : public Scene
 	enum GEOMETRY_TYPE
 	{
 		//Shapes
-		GEO_CUBE, //for testing
+		GEO_CUBE, //for particle
 		GEO_SPHERE, //for bullet
 
 		//HUD
@@ -44,6 +44,7 @@ class SceneGame : public Scene
 		GEO_GROUND,
 
 		//Other TGAs
+		GEO_BOMBARROW,
 		GEO_TEXT,
 
 		//OBJs
@@ -89,11 +90,14 @@ class SceneGame : public Scene
 		GEO_WALL,
 		GEO_WALL_CORNER,
 		GEO_LIGHTPOST,
+		GEO_BENCH,
 		GEO_BOMB,
 		GEO_GUN,
 		GEO_RED,
 		GEO_BLACK,
 		GEO_BLUE,
+
+		GEO_COIN,
 
 		NUM_GEOMETRY,
 	};
@@ -156,7 +160,7 @@ private:
 	void RenderMeshOnScreen(Mesh* mesh, float x, float y, float sizex, float sizey);
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
-	void RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y);
+	void RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y, Vector3 rotationAxis = Vector3(0, 0, 1), float angle = 0.f);
 	
 
 	float FPS;
@@ -199,8 +203,21 @@ private:
 	int stage = -2;
 	Vector3 currentview;
 
+	//sidequests
+	bool firstcoinPicked;
+	bool secondcoinPicked;
+	bool thirdcoinPicked;
+	bool fourthcoinPicked;
+	bool fifthcoinPicked;
+	bool sixthcoinPicked;
+	bool seventhcoinPicked;
+	bool eighthcoinPicked;
+	int score = 0;
+
 	//spawn enemies
 	int spawn = 0;
+
+	Vector3 bombPos;
 
 	std::vector<Hitbox> hitboxes; //floats are pos x, y, z and size x, y, z
 	float yaw, pitch;
@@ -213,7 +230,7 @@ private:
 	Player player;
 	std::vector<Entity*> entities;
 
-	//test - bullet effect
+	//bullet effect
 	std::vector<Particle> particles;
 public:
 	SceneGame();
