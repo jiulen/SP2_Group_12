@@ -24,6 +24,7 @@ BasicMelee::BasicMelee(float facing, Vector3 pos, Vector3 direction, Vector3 pat
 	patrolVector = patrol;
 	patrolTime = 0.f - delay;
 	startPos = entityPos;
+	defaultY = entityPos.y;
 }
 BasicMelee::~BasicMelee()
 {
@@ -96,12 +97,40 @@ void BasicMelee::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes,
 
 void BasicMelee::attack(Vector3 playerPos, float playerRadius, Player& player, float dt)
 {
+	//for jump animation
+	static bool attack = false;
+	static float jumpSpeed = 10.f;
+	static float jumpTime = 0.f;
+
+	//for actual atk
 	static float timePassed = atkCd;
 	timePassed += dt;
 	if (timePassed >= atkCd) {
 		if (DistBetweenPoints(entityPos.x, entityPos.z, playerPos.x, playerPos.z) <= attackRange + playerRadius) {
 			timePassed = 0.f;
 			player.takedamage(damage);
+			attack = true;
+			jumpSpeed = 10.f;
+			jumpTime = 0.f;
 		}
+	}
+	//jump animation
+	if (attack) {
+		jumpTime += dt;
+		entityPos.y += static_cast<float>(dt) * jumpSpeed;
+		if (jumpTime > 0.05) {
+			jumpSpeed -= 5.f;
+			jumpTime = 0.f;
+		}
+		if (entityPos.y <= defaultY)
+		{
+			entityPos.y = defaultY;
+			attack = false;
+		}
+		hitbox.posY = entityPos.y + 2.8;
+	}
+	if (!attack) { 
+		entityPos.y = defaultY; 
+		hitbox.posY = entityPos.y + 2.8;
 	}
 }

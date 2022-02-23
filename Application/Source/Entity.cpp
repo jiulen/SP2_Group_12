@@ -89,6 +89,7 @@ Entity::Entity()
 	name = "";
 	hitbox = (0.f, 0.f, 0.f, 1.f, 1.f, 1.f);
 	atkCd = 1.f;
+	defaultY = entityPos.y;
 	//takes longer edge to use to get radius
 	if (hitbox.sizeX > hitbox.sizeZ) {
 		enemyRadius = hitbox.sizeX * 0.5f;

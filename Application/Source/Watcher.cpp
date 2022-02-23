@@ -14,6 +14,7 @@ Watcher::Watcher(float facing, Vector3 pos, Vector3 direction) {
 	name = "Watcher";
 	hitbox = Hitbox(entityPos.x, entityPos.y + 2.8, entityPos.z, 2.8, 5.6f, 1.4f);
 	atkCd = 1.f;
+	defaultY = entityPos.y;
 	//takes longer edge to use to get radius
 	if (hitbox.sizeX > hitbox.sizeZ) {
 		enemyRadius = hitbox.sizeX * 0.5f;
@@ -71,13 +72,41 @@ void Watcher::move(Vector3 playerPos, float dt, std::vector<Hitbox> hitboxes, st
 
 void Watcher::attack(Vector3 playerPos, float playerRadius, Player& player, float dt)
 {
+	//for jump animation
+	static bool attack = false;
+	static float jumpSpeed = 10.f;
+	static float jumpTime = 0.f;
+
+	//for actual atk
 	static float timePassed = atkCd;
 	timePassed += dt;
 	if (timePassed >= atkCd) {
 		if (DistBetweenPoints(entityPos.x, entityPos.z, playerPos.x, playerPos.z) <= attackRange + playerRadius) {
 			timePassed = 0.f;
 			player.takedamage(damage);
+			attack = true;
+			jumpSpeed = 10.f;
+			jumpTime = 0.f;
 		}
+	}
+	//jump animation
+	if (attack) {
+		jumpTime += dt;
+		entityPos.y += static_cast<float>(dt) * jumpSpeed;
+		if (jumpTime > 0.05) {
+			jumpSpeed -= 5.f;
+			jumpTime = 0.f;
+		}
+		if (entityPos.y <= defaultY)
+		{
+			entityPos.y = defaultY;
+			attack = false;
+		}
+		hitbox.posY = entityPos.y + 2.8;
+	}
+	if (!attack) {
+		entityPos.y = defaultY;
+		hitbox.posY = entityPos.y + 2.8;
 	}
 }
 
