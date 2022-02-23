@@ -94,6 +94,8 @@ class SceneGame : public Scene
 		GEO_WALL_CORNER,
 		GEO_LIGHTPOST,
 		GEO_BENCH,
+		GEO_GROUND_GRASS,
+		GEO_TREE,
 		GEO_BOMB,
 		GEO_GUN,
 		GEO_RED,

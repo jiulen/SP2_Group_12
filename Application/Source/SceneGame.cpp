@@ -277,6 +277,8 @@ void SceneGame::Init()
 	meshList[GEO_WALL_CORNER] = MeshBuilder::GenerateOBJMTL("wall", "OBJ//stoneWallCurve.obj", "OBJ//stoneWallCurve.mtl");
 	meshList[GEO_LIGHTPOST] = MeshBuilder::GenerateOBJMTL("light post", "OBJ//lightpostSingle.obj", "OBJ//lightpostSingle.mtl");
 	meshList[GEO_BENCH] = MeshBuilder::GenerateOBJMTL("bench", "OBJ//bench.obj", "OBJ//bench.mtl");
+	meshList[GEO_GROUND_GRASS] = MeshBuilder::GenerateOBJMTL("ground grass", "OBJ//ground_grass.obj", "OBJ//ground_grass.mtl");
+	meshList[GEO_TREE] = MeshBuilder::GenerateOBJMTL("tree", "OBJ//tree_oak.obj", "OBJ//tree_oak.mtl");
 
 	//HUD + UI
 	meshList[GEO_BLUE] = MeshBuilder::GenerateQuad("blue", Color(0, 0.8, 1), 1.f);
