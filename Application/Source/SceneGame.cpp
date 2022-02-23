@@ -353,6 +353,14 @@ void SceneGame::Init()
 	hitboxes.push_back(Hitbox(10, 12, 80, 16, 24, 16));
 	hitboxes.push_back(Hitbox(10, 4, 70.5, 16, 8, 3));
 	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
+
+	hitboxes.push_back(Hitbox(-45, 0, 10, 5, 20, 5));
+	hitboxes.push_back(Hitbox(-25, 0, -20, 5, 20, 5));
+	hitboxes.push_back(Hitbox(-45, 0, -50, 5, 20, 5));
+	hitboxes.push_back(Hitbox(40, 0, 60, 5, 20, 5));
+	hitboxes.push_back(Hitbox(30, 0, -60, 5, 20, 5));
+	hitboxes.push_back(Hitbox(-25, 0, 60, 5, 20, 5));
+
 	hitboxes.push_back(Hitbox(30, 10, 60, 10, 20, 5));
 }
 
@@ -979,6 +987,7 @@ void SceneGame::Render()
 	modelStack.Scale(8, 8, 8);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
+	//Hitbox(-45, 0, 10, 5, 20, 5);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-25, 0, -20);
@@ -986,6 +995,7 @@ void SceneGame::Render()
 	modelStack.Scale(8, 8, 8);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
+	//Hitbox(-25, 0, -20, 5, 20, 5);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-45, 0, -50);
@@ -993,6 +1003,7 @@ void SceneGame::Render()
 	modelStack.Scale(8, 8, 8);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
+	//Hitbox(-45, 0, -50, 5, 20, 5);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(40, 0, 60);
@@ -1000,12 +1011,14 @@ void SceneGame::Render()
 	modelStack.Scale(8, 8, 8);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
+	//Hitbox(40, 0, 60, 5, 20, 5);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(30, 0, -60);
 	modelStack.Scale(8, 8, 8);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
+	//Hitbox(30, 0, -60, 5, 20, 5);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-25, 0, 60);
@@ -1013,6 +1026,7 @@ void SceneGame::Render()
 	modelStack.Scale(5, 5, 5);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
+	//Hitbox(-25, 0, 60), 5, 20, 5);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(30, 0, 60);
