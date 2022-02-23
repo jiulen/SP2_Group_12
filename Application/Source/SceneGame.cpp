@@ -198,8 +198,8 @@ void SceneGame::Init()
 	meshList[GEO_BOSS]->textureID = LoadTGA("Image//skin_robot.tga");
 	meshList[GEO_NPC] = MeshBuilder::GenerateOBJMTL("npc", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
 	meshList[GEO_NPC]->textureID = LoadTGA("Image//skin_manAlternative.tga");
-	meshList[GEO_BIRD] = MeshBuilder::GenerateOBJMTL("bird", "OBJ//bird.obj", "OBJ//bird.mtl");
-	meshList[GEO_BIRD]->textureID = LoadTGA("Image//bird.tga");
+	/*meshList[GEO_BIRD] = MeshBuilder::GenerateOBJMTL("bird", "OBJ//bird.obj", "OBJ//bird.mtl");
+	meshList[GEO_BIRD]->textureID = LoadTGA("Image//bird.tga");*/
 	meshList[GEO_SPIKE] = MeshBuilder::GenerateOBJ("spike", "OBJ//spike.obj");
 	meshList[GEO_BOMB] = MeshBuilder::GenerateOBJMTL("bomb", "OBJ//bomb.obj", "OBJ//bomb.mtl");
 	meshList[GEO_GUN] = MeshBuilder::GenerateOBJMTL("gun", "OBJ//pistol.obj", "OBJ//pistol.mtl");
@@ -218,7 +218,7 @@ void SceneGame::Init()
 	meshList[GEO_WALL_CORNER] = MeshBuilder::GenerateOBJMTL("wall", "OBJ//stoneWallCurve.obj", "OBJ//stoneWallCurve.mtl");
 	meshList[GEO_LIGHTPOST] = MeshBuilder::GenerateOBJMTL("light post", "OBJ//lightpostSingle.obj", "OBJ//lightpostSingle.mtl");
 	meshList[GEO_BENCH] = MeshBuilder::GenerateOBJMTL("bench", "OBJ//bench.obj", "OBJ//bench.mtl");
-
+	
 	//HUD + UI
 	meshList[GEO_BLUE] = MeshBuilder::GenerateQuad("blue", Color(0, 0.8, 1), 1.f);
 	meshList[GEO_RED] = MeshBuilder::GenerateQuad("red", Color(1, 0, 0), 1.f);
@@ -1250,7 +1250,7 @@ void SceneGame::Render()
 		/*modelStack.Rotate(birdFacing, 0, 1, 0);*/
 		modelStack.Rotate(-90, 1, 0, 0);
 		modelStack.Scale(0.13f, 0.13f, 0.13f);
-		RenderMesh(meshList[GEO_BIRD], false);
+		//RenderMesh(meshList[GEO_BIRD], false);
 		modelStack.PopMatrix();
 	}
 
