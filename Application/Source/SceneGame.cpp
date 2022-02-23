@@ -72,6 +72,7 @@ void SceneGame::Reset()
 	win = 0;
 	bossshoot = 0;
 	prevshot = 0;
+	bombPos = Vector3(0, 0, 0);
 	for (int i = 0; i < 3; i++)
 		minigamesused[i] = 0;
 }
@@ -263,7 +264,8 @@ void SceneGame::Init()
 	meshList[GEO_GREENCROSSHAIR]->textureID = LoadTGA("Image//greencrosshair.tga");
 	meshList[GEO_BLUECROSSHAIR] = MeshBuilder::GenerateQuad("bluecrosshair", Color(1, 1, 1), 1.f);
 	meshList[GEO_BLUECROSSHAIR]->textureID = LoadTGA("Image//bluecrosshair.tga");
-
+	meshList[GEO_BOMBARROW] = MeshBuilder::GenerateQuad("bomb arrow", Color(1, 1, 1), 1.f);
+	meshList[GEO_BOMBARROW]->textureID = LoadTGA("Image//bomb-pointer.tga");
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//arial.tga");
@@ -320,7 +322,8 @@ void SceneGame::Init()
 		}
 		fileStream.close();
 	}
-	//changing
+	bombPos = Vector3(0, 0, 0);
+
 	hitboxes.clear();
 
 	rightvector = Vector3(1, 0, 0);
@@ -739,7 +742,7 @@ void SceneGame::RenderTextOnScreen(Mesh* mesh, std::string text, Color color, fl
 	modelStack.PopMatrix();
 	glEnable(GL_DEPTH_TEST); //uncomment for RenderTextOnScreen
 }
-void SceneGame::RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y)
+void SceneGame::RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y, Vector3 rotationAxis, float angle)
 {
 	glDisable(GL_DEPTH_TEST);
 	Mtx44 ortho;
@@ -752,6 +755,7 @@ void SceneGame::RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float 
 	modelStack.LoadIdentity(); //Reset modelStack
 	modelStack.Translate(x, y, 0);
 	modelStack.Scale(sizeX, sizeY, 1);
+	modelStack.Rotate(angle, rotationAxis.x, rotationAxis.y, rotationAxis.z); //testing
 	RenderMesh(mesh, false);
 	projectionStack.PopMatrix();
 	viewStack.PopMatrix();
@@ -1052,6 +1056,16 @@ void SceneGame::Render()
 		RenderMesh(meshList[GEO_CUBE], false);
 		modelStack.PopMatrix();
 	}
+
+	//Render bomb indicator
+	Vector3 viewTarget = (camera.target - camera.position).Normalized();
+	viewTarget.y = 0;
+	Vector3 viewBomb = (bombPos - camera.position).Normalized();
+	viewBomb.y = 0;
+	float arrowAngle;
+	arrowAngle = atan2(viewBomb.z * viewTarget.x - viewBomb.x * viewTarget.z, viewBomb.x * viewTarget.x + viewBomb.z * viewTarget.z);
+	arrowAngle = -Math::RadianToDegree(arrowAngle);
+	RenderImageOnScreen(meshList[GEO_BOMBARROW], Color(1, 1, 1), 10, 10, 40, 5, Vector3(0, 0, 1), arrowAngle);
 }
 
 void SceneGame::RenderBomb()
@@ -1132,6 +1146,7 @@ void SceneGame::RenderBomb()
 			modelStack.Scale(5, 5, 5);
 			RenderMesh(meshList[GEO_BOMB], true);
 			modelStack.PopMatrix();
+			bombPos = Vector3(76.1, 3, -11);
 			if ((camera.position.x > 76.1) && (camera.position.x < 80) && (camera.position.z > -13) && (camera.position.z < -9))
 			{
 				crosshairenabled = 0;
@@ -1185,6 +1200,7 @@ void SceneGame::RenderBomb()
 			modelStack.Scale(5, 5, 5);
 			RenderMesh(meshList[GEO_BOMB], true);
 			modelStack.PopMatrix();
+			bombPos = Vector3(62, 3, -56.9);
 			if ((camera.position.x > 60) && (camera.position.x < 64) && (camera.position.z > -56.9) && (camera.position.z < -53))
 			{
 				crosshairenabled = 0;
@@ -1238,6 +1254,7 @@ void SceneGame::RenderBomb()
 			modelStack.Scale(5, 5, 5);
 			RenderMesh(meshList[GEO_BOMB], true);
 			modelStack.PopMatrix();
+			bombPos = Vector3(-16.1, 3, -67);
 			if ((camera.position.x > -20) && (camera.position.x < -16.1) && (camera.position.z > -69) && (camera.position.z < -65))
 			{
 				crosshairenabled = 0;
@@ -1291,6 +1308,7 @@ void SceneGame::RenderBomb()
 			modelStack.Scale(5, 5, 5);
 			RenderMesh(meshList[GEO_BOMB], true);
 			modelStack.PopMatrix();
+			bombPos = Vector3(-72.1, 3, -64);
 			if ((camera.position.x > -76) && (camera.position.x < -72.1) && (camera.position.z > -66) && (camera.position.z < -62))
 			{
 				crosshairenabled = 0;
@@ -1345,6 +1363,7 @@ void SceneGame::RenderBomb()
 			modelStack.Scale(5, 5, 5);
 			RenderMesh(meshList[GEO_BOMB], true);
 			modelStack.PopMatrix();
+			bombPos = Vector3 (-53, 3, 12.1);
 			if ((camera.position.x > -55) && (camera.position.x < -51) && (camera.position.z > 12.1) && (camera.position.z < 16))
 			{
 				crosshairenabled = 0;
@@ -1398,6 +1417,7 @@ void SceneGame::RenderBomb()
 			modelStack.Scale(5, 5, 5);
 			RenderMesh(meshList[GEO_BOMB], true);
 			modelStack.PopMatrix();
+			bombPos = Vector3(-31.9, 3, 60);
 			if ((camera.position.x > -31.9) && (camera.position.x < -28) && (camera.position.z > 58) && (camera.position.z < 62))
 			{
 				crosshairenabled = 0;
@@ -1452,6 +1472,7 @@ void SceneGame::RenderBomb()
 			modelStack.Scale(5, 5, 5);
 			RenderMesh(meshList[GEO_BOMB], true);
 			modelStack.PopMatrix();
+			bombPos = Vector3(7, 3, 88.1);
 			if ((camera.position.x > 5) && (camera.position.x < 9) && (camera.position.z > 88.1) && (camera.position.z < 92))
 			{
 				crosshairenabled = 0;
@@ -1506,6 +1527,7 @@ void SceneGame::RenderBomb()
 			modelStack.Scale(5, 5, 5);
 			RenderMesh(meshList[GEO_BOMB], true);
 			modelStack.PopMatrix();
+			bombPos = Vector3(56, 3, 47.9);
 			if ((camera.position.x > 54) && (camera.position.x < 58) && (camera.position.z > 44) && (camera.position.z < 47.9))
 			{
 				crosshairenabled = 0;
@@ -1559,6 +1581,7 @@ void SceneGame::RenderBomb()
 			modelStack.Scale(5, 5, 5);
 			RenderMesh(meshList[GEO_BOMB], true);
 			modelStack.PopMatrix();
+			bombPos = Vector3(20.1, 3, -15);
 			if ((camera.position.x > 20.1) && (camera.position.x < 24) && (camera.position.z > -17) && (camera.position.z < -13))
 			{
 				crosshairenabled = 0;
