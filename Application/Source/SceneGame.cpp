@@ -2316,7 +2316,7 @@ void SceneGame::RenderAmbientEffects()
 	else if (side == 1)
 		modelStack.Translate(paperx, papery, -15-paperz);
 	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Rotate(20, 0, 1, 0);
+	modelStack.Rotate(10, 0, 1, 0);
 	if (side==0)
 		modelStack.Rotate(paperrt, 0, 0, 1);
 	else
