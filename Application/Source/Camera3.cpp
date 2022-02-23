@@ -84,18 +84,6 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 	{
 		Vector3 startPos = position;
 		position -= right * static_cast<float>(dt) * MOVE_SPEED;
-		if (position.x < -147.5) {
-			position.x = -147.5;
-		}
-		else if (position.x > 147.5) {
-			position.x = 147.5;
-		}
-		if (position.z < -147.5) {
-			position.z = -147.5;
-		}
-		else if (position.z > 147.5) {
-			position.z = 147.5;
-		}
 		position.y = startPos.y;
 		playerWASDCollision(hitboxes);
 		playerHitbox.posX = position.x;
@@ -106,18 +94,6 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 	{
 		Vector3 startPos = position;
 		position += right * static_cast<float>(dt) * MOVE_SPEED;
-		if (position.x < -147.5) {
-			position.x = -147.5;
-		}
-		else if (position.x > 147.5) {
-			position.x = 147.5;
-		}
-		if (position.z < -147.5) {
-			position.z = -147.5;
-		}
-		else if (position.z > 147.5) {
-			position.z = 147.5;
-		}
 		position.y = startPos.y;
 		playerWASDCollision(hitboxes);
 		playerHitbox.posX = position.x;
@@ -128,18 +104,6 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 	{
 		Vector3 startPos = position;
 		position += view * static_cast<float>(dt) * MOVE_SPEED;
-		if (position.x < -147.5) {
-			position.x = -147.5;
-		}
-		else if (position.x > 147.5) {
-			position.x = 147.5;
-		}
-		if (position.z < -147.5) {
-			position.z = -147.5;
-		}
-		else if (position.z > 147.5) {
-			position.z = 147.5;
-		}
 		position.y = startPos.y;
 		playerWASDCollision(hitboxes);
 		playerHitbox.posX = position.x;
@@ -150,18 +114,6 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 	{
 		Vector3 startPos = position;
 		position -= view * static_cast<float>(dt) * MOVE_SPEED;
-		if (position.x < -147.5) {
-			position.x = -147.5;
-		}
-		else if (position.x > 147.5) {
-			position.x = 147.5;
-		}
-		if (position.z < -147.5) {
-			position.z = -147.5;
-		}
-		else if (position.z > 147.5) {
-			position.z = 147.5;
-		}
 		position.y = startPos.y;
 		playerWASDCollision(hitboxes);
 		playerHitbox.posX = position.x;

@@ -366,6 +366,13 @@ void SceneGame::Init()
 	reloadAngle = 0;
 
 	//Init non moving hitboxes
+	
+	//walls
+	hitboxes.push_back(Hitbox(0, 6.5, -153, 300, 13, 10));
+	hitboxes.push_back(Hitbox(0, 6.5, 155, 300, 13, 10));
+	hitboxes.push_back(Hitbox(-153, 6.5, 0, 10, 13, 300));
+	hitboxes.push_back(Hitbox(154, 6.5, 0, 10, 13, 300));
+
 	hitboxes.push_back(Hitbox(-60, 29, -60, 24, 58, 24));
 	hitboxes.push_back(Hitbox(0, 9, -70, 32, 18, 20));
 	hitboxes.push_back(Hitbox(-60, 40, 0, 24, 80, 24));
