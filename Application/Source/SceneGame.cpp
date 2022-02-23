@@ -231,7 +231,7 @@ void SceneGame::Init()
 	meshList[GEO_BOMBARROW]->textureID = LoadTGA("Image//bomb-pointer.tga");
 	meshList[GEO_TEXTBOX] = MeshBuilder::GenerateQuad("text box", Color(1, 1, 1), 1.f);
 	meshList[GEO_TEXTBOX]->textureID = LoadTGA("Image//textbox.tga");
-	meshList[GEO_RAIN] = MeshBuilder::GenerateCube("rain", Color(0.2, 1, 1));
+	meshList[GEO_RAIN] = MeshBuilder::GenerateCube("rain", Color(0.2, 0.5, 1));
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//arial.tga");
@@ -596,8 +596,11 @@ void SceneGame::Update(double dt)
 	if (spawnrain == 1)
 	{
 		raintime += dt;
-		if (raintime > 1)
+		if (raintime > 0.3)
+		{
 			spawnrain = 0;
+			raintime =0;
+		}
 	}
 }
 void SceneGame::UpdateEnemyMovement(double dt)
@@ -2210,14 +2213,14 @@ void SceneGame::RenderAmbientEffects()
 {
 	if (spawnrain == 0)
 	{
-		for (int i = -15; i < 15; i++)
+		for (int i = -10; i < 10; i++)
 		{
-			for (int l = -15; l < 15; l++)
+			for (int l = -10; l < 10; l++)
 			{
-				rain.push_back(new Rain(rand()%10+(i * 10), 50, rand() % 10 + (l * 10)));
+				rain.push_back(new Rain(rand()%10+(i * 15), 50, rand() % 10 + (l * 15)));
 			}
 		}
-		spawnrain = 2;
+		spawnrain = 1;
 	}
 	for (int i = 0; i < rain.size(); i++)
 	{
@@ -2226,15 +2229,16 @@ void SceneGame::RenderAmbientEffects()
 		modelStack.Scale(0.1, 0.2, 0.1);
 		RenderMesh(meshList[GEO_RAIN], false);
 		modelStack.PopMatrix();
-		rain[i]->setpos(2, rain[i]->getpos(2) - 0.8);
 	}
-	for (int i = rain.size() - 1; i >= 0; i--) 
+	for (int i =0; i <rain.size(); i++)
 	{ 
 		if (rain[i]->getpos(2) < 0)
 		{
-			delete rain[i];
-			rain.pop_back();
+			rain.erase(rain.begin());
+			i--;
 		}
+		else
+			rain[i]->setpos(2, rain[i]->getpos(2) - 0.8);
 	}
 }
 
