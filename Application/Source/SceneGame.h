@@ -14,6 +14,7 @@
 #include "BasicMelee.h"
 #include "Watcher.h"
 #include "Boss.h"
+#include "ScaredGuy.h"
 #include "Rain.h"
 #include "Vector3.h"
 #include <fstream>
@@ -72,6 +73,8 @@ class SceneGame : public Scene
 		GEO_WALL_CORNER,
 		GEO_LIGHTPOST,
 		GEO_BENCH,
+		GEO_GROUND_GRASS,
+		GEO_TREE,
 		GEO_BOMB,
 		GEO_GUN,
 		GEO_RED,

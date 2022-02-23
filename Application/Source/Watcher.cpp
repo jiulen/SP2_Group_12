@@ -2,7 +2,7 @@
 Watcher::Watcher(float facing, Vector3 pos, Vector3 direction) {
 	maxhealth = 100;
 	currenthealth = maxhealth;
-	damage = 10;
+	damage = 15;
 	entityPos = pos;
 	entityFacing = facing;
 	directionVector = direction;
