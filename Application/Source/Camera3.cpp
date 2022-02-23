@@ -54,7 +54,7 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		{
 			time = 0;
 			resstamina = 0;
-			MOVE_SPEED = 50.f;/* 22.5f;*/
+			MOVE_SPEED = 30.f;/* 22.5f;*/
 			Application::SetStamina(Application::GetStamina() - dt);
 		}
 		else

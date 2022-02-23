@@ -9,7 +9,7 @@ Boss::Boss(float facing, Vector3 pos, Vector3 direction) {
 	chase = false;
 	detectRange = 100;
 	attackRange = 2.f;
-	velocity = 20.f;
+	velocity = 17.5f;
 	type = 'E';
 	name = "Boss";
 	hitbox = Hitbox(entityPos.x, entityPos.y + 2.8, entityPos.z, 2.8, 5.6f, 1.4f);
