@@ -854,6 +854,7 @@ void SceneGame::Render()
 				RenderMesh(meshList[GEO_ENEMY2], false);
 			}
 			else if (entities[i]->getName() == "Boss") {
+				bombPos = entities[i]->getPosition();
 				RenderMesh(meshList[GEO_BOSS], false);
 			}
 			modelStack.PopMatrix();
