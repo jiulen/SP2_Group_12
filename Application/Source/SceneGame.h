@@ -24,6 +24,7 @@ class SceneGame : public Scene
 		//Shapes
 		GEO_CUBE, //for particle
 		GEO_SPHERE, //for bullet
+		GEO_SPHERE2, //for boss bullet
 
 		//HUD
 		GEO_HEALTH,
@@ -52,6 +53,7 @@ class SceneGame : public Scene
 		GEO_ENEMY2,
 		GEO_BOSS,
 		GEO_NPC,
+		GEO_BIRD,
 
 		GEO_SPIKE,
 
@@ -222,8 +224,10 @@ private:
 	Vector3 bombPos;
 
 	std::vector<Hitbox> hitboxes; //floats are pos x, y, z and size x, y, z
+
 	float yaw, pitch;
 	Vector3 rightvector;
+
 	int bulletCount;
 	bool bulletHit;
 	std::vector<Bullet> bulletVector;
@@ -234,6 +238,12 @@ private:
 
 	//bullet effect
 	std::vector<Particle> particles;
+
+	//Reloading and the animation
+	bool reloading;
+	float reloadTime;
+	float reloadRotateTime;
+	float reloadAngle;
 public:
 	SceneGame();
 	~SceneGame();
