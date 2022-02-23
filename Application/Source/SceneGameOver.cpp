@@ -102,8 +102,6 @@ void SceneGameOver::Init()
 
 	meshList[GEO_BACKGROUND] = MeshBuilder::GenerateQuad("greenbackground", Color(1, 1, 1), 1.f, 1.f);
 	meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image//background.tga");
-	meshList[GEO_TITLE] = MeshBuilder::GenerateQuad("titleamogus", Color(1, 1, 1), 1.f, 1.f);
-	meshList[GEO_TITLE]->textureID = LoadTGA("Image//title.tga");
 	meshList[GEO_PLAY] = MeshBuilder::GenerateQuad("start", Color(1, 1, 1), 1.f, 1.f);
 	meshList[GEO_PLAY]->textureID = LoadTGA("Image//playbutton.tga");
 	meshList[GEO_OPTIONS] = MeshBuilder::GenerateQuad("settings", Color(1, 1, 1), 1.f, 1.f);

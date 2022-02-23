@@ -108,8 +108,6 @@ void SceneSettings::Init()
 
 	meshList[GEO_BACKGROUND] = MeshBuilder::GenerateQuad("greenbackground", Color(1, 1, 1), 1.f, 1.f);
 	meshList[GEO_BACKGROUND]->textureID = LoadTGA("Image//background.tga");
-	meshList[GEO_TITLE] = MeshBuilder::GenerateQuad("titleamogus", Color(1, 1, 1), 1.f, 1.f);
-	meshList[GEO_TITLE]->textureID = LoadTGA("Image//title.tga");
 	meshList[GEO_BACKBUTTON] = MeshBuilder::GenerateQuad("backbutton", Color(1, 1, 1), 1.f, 1.f);
 	meshList[GEO_BACKBUTTON]->textureID = LoadTGA("Image//backbutton.tga");
 	meshList[GEO_OPTIONSLIDER] = MeshBuilder::GenerateQuad("slot", Color(1, 1, 1), 1.f, 1.f);

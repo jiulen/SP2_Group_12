@@ -19,7 +19,6 @@ class SceneGameOver : public Scene
 		//TGAs
 		GEO_TEXT,
 		GEO_BACKGROUND,
-		GEO_TITLE,
 		GEO_PLAY,
 		GEO_OPTIONS,
 		GEO_GAMEOVER,

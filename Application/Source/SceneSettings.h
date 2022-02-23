@@ -19,7 +19,6 @@ class SceneSettings : public Scene
 		//TGAs
 		GEO_TEXT,
 		GEO_BACKGROUND,
-		GEO_TITLE,
 		GEO_BACKBUTTON,
 		GEO_OPTIONSLIDER,
 		GEO_OPTIONKNOB,
