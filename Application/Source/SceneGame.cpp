@@ -90,6 +90,10 @@ void SceneGame::Reset()
 	reloadTime = 0;
 	reloadRotateTime = 0;
 	reloadAngle = 0;
+
+	//npc
+	entities.push_back(new ScaredGuy(180, Vector3(30, 0, 57), Vector3(0, 0, 1)));
+	entities.push_back(new ScaredGuy(180, Vector3(60, 0, -75), Vector3(0, 0, 1)));
 }
 
 void SceneGame::Init()
@@ -212,7 +216,9 @@ void SceneGame::Init()
 	meshList[GEO_WALL_CORNER] = MeshBuilder::GenerateOBJMTL("wall", "OBJ//stoneWallCurve.obj", "OBJ//stoneWallCurve.mtl");
 	meshList[GEO_LIGHTPOST] = MeshBuilder::GenerateOBJMTL("light post", "OBJ//lightpostSingle.obj", "OBJ//lightpostSingle.mtl");
 	meshList[GEO_BENCH] = MeshBuilder::GenerateOBJMTL("bench", "OBJ//bench.obj", "OBJ//bench.mtl");
-	
+	meshList[GEO_GROUND_GRASS] = MeshBuilder::GenerateOBJMTL("ground grass", "OBJ//ground_grass.obj", "OBJ//ground_grass.mtl");
+	meshList[GEO_TREE] = MeshBuilder::GenerateOBJMTL("tree", "OBJ//tree_oak.obj", "OBJ//tree_oak.mtl");
+
 	//HUD + UI
 	meshList[GEO_BLUE] = MeshBuilder::GenerateQuad("blue", Color(0, 0.8, 1), 1.f);
 	meshList[GEO_RED] = MeshBuilder::GenerateQuad("red", Color(1, 0, 0), 1.f);
@@ -306,13 +312,13 @@ void SceneGame::Init()
 	reloadAngle = 0;
 
 	//Init non moving hitboxes
-	
 	//walls
 	hitboxes.push_back(Hitbox(0, 6.5, -153, 300, 13, 10));
 	hitboxes.push_back(Hitbox(0, 6.5, 155, 300, 13, 10));
 	hitboxes.push_back(Hitbox(-153, 6.5, 0, 10, 13, 300));
 	hitboxes.push_back(Hitbox(154, 6.5, 0, 10, 13, 300));
 
+	//others
 	hitboxes.push_back(Hitbox(-60, 29, -60, 24, 58, 24));
 	hitboxes.push_back(Hitbox(0, 9, -70, 32, 18, 20));
 	hitboxes.push_back(Hitbox(-60, 40, 0, 24, 80, 24));
@@ -331,14 +337,18 @@ void SceneGame::Init()
 	hitboxes.push_back(Hitbox(10, 4, 70.5, 16, 8, 3));
 	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
 
-	hitboxes.push_back(Hitbox(-45, 0, 10, 5, 20, 5));
-	hitboxes.push_back(Hitbox(-25, 0, -20, 5, 20, 5));
-	hitboxes.push_back(Hitbox(-45, 0, -50, 5, 20, 5));
-	hitboxes.push_back(Hitbox(40, 0, 60, 5, 20, 5));
-	hitboxes.push_back(Hitbox(30, 0, -60, 5, 20, 5));
-	hitboxes.push_back(Hitbox(-25, 0, 60, 5, 20, 5));
+	hitboxes.push_back(Hitbox(-44, 5.5, 10, 3.1, 11, 2));
+	hitboxes.push_back(Hitbox(-26, 5.5, -20, 3.1, 11, 2));
+	hitboxes.push_back(Hitbox(-44, 5.5, -50, 3.1, 11, 2));
+	hitboxes.push_back(Hitbox(40, 5.5, 59, 2, 11, 3.1));
+	hitboxes.push_back(Hitbox(30, 5.5, -59, 2, 11, 3.1));
+	hitboxes.push_back(Hitbox(-25, 5.5, 59, 2, 11, 3.1));
 
-	hitboxes.push_back(Hitbox(30, 10, 60, 10, 20, 5));
+	hitboxes.push_back(Hitbox(30, 2, 60, 7.4, 4, 3.8));
+
+	//npc
+	entities.push_back(new ScaredGuy(180, Vector3(30, 0, 57), Vector3(0, 0, 1)));
+	entities.push_back(new ScaredGuy(180, Vector3(60, 0, -75), Vector3(0, 0, 1)));
 }
 
 void SceneGame::Update(double dt)
@@ -347,7 +357,6 @@ void SceneGame::Update(double dt)
 		camera.setFirstMouse();
 		enterScene = false;
 	}
-
 
 	FPS = 1 / (float)dt;
 	
@@ -406,7 +415,7 @@ void SceneGame::Update(double dt)
 		player.reload(dt, reloading);
 		reloadRotateTime += dt;
 		reloadTime += dt;
-		if (reloadRotateTime > 0.02) {
+		if (reloadRotateTime > 0.01) { //Reload animation angle
 			reloadRotateTime = 0.f;
 			if (reloadTime < 1) {
 				reloadAngle -= 0.5f;
@@ -415,9 +424,7 @@ void SceneGame::Update(double dt)
 				reloadAngle += 0.5f;
 			}
 		}
-	}
-	//Reload animation angle
-	
+	}	
 
 	//Shooting
 	if (Application::IsMousePressed(0))
@@ -426,6 +433,14 @@ void SceneGame::Update(double dt)
 			if (player.attack(dt)) {
 				PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
 				bulletVector.push_back(Bullet(player.damage, 75, 0.75, 0.75, 0.75, viewvector, camera.position, 'P'));
+				for (int i = 0; i < entities.size(); i++) {
+					if (entities[i]->getName() == "ScaredGuy") {
+						float a = DistBetweenPoints(camera.position.x, camera.position.z, entities[i]->getPosition().x, entities[i]->getPosition().z);
+						if (DistBetweenPoints(camera.position.x, camera.position.z, entities[i]->getPosition().x, entities[i]->getPosition().z) <= 20) {
+							entities[i]->setChase(true);
+						}
+					}
+				}
 				if (stage == 3)
 					keyused++;
 			}
@@ -607,10 +622,8 @@ void SceneGame::UpdateEnemyMovement(double dt)
 {
 	//For enemies
 	for (int i = 0; i < entities.size(); i++) {
-		if (entities[i]->getType() == 'E') {
-			entities[i]->alert(entities);
-			entities[i]->move(Vector3(camera.position.x, 0, camera.position.z), dt, hitboxes, entities, camera.getPlayerHitbox());
-		}
+		entities[i]->alert(entities);
+		entities[i]->move(Vector3(camera.position.x, 0, camera.position.z), dt, hitboxes, entities, camera.getPlayerHitbox());
 	}
 }
 void SceneGame::EnemyAttack(double dt)
@@ -853,6 +866,16 @@ void SceneGame::Render()
 			}
 			modelStack.PopMatrix();
 		}
+		else if (entities[i]->getType() == 'F') {
+			if (entities[i]->getName() == "ScaredGuy") {
+				modelStack.PushMatrix();
+				modelStack.Translate(entities[i]->getPosition().x, entities[i]->getPosition().y, entities[i]->getPosition().z);
+				modelStack.Rotate(entities[i]->getFacing(), 0, 1, 0);
+				modelStack.Scale(0.35, 0.35, 0.35);
+				RenderMesh(meshList[GEO_NPC], false);
+				modelStack.PopMatrix();
+			}
+		}
 	}
 
 	modelStack.PushMatrix();
@@ -944,12 +967,14 @@ void SceneGame::Render()
 	modelStack.Scale(300, 20, 20);
 	RenderMesh(meshList[GEO_WALL], true);
 	modelStack.PopMatrix();
+	//Hitbox(0, 6.5, 155, 300, 13, 10);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, -140);
 	modelStack.Scale(300, 20, 20);
 	RenderMesh(meshList[GEO_WALL], true);
 	modelStack.PopMatrix();
+	//Hitbox(0, 6.5, -153, 300, 13, 10)
 
 	modelStack.PushMatrix();
 	modelStack.Translate(159, 0, 1);
@@ -957,6 +982,7 @@ void SceneGame::Render()
 	modelStack.Scale(310, 20, 20);
 	RenderMesh(meshList[GEO_WALL], true);
 	modelStack.PopMatrix();
+	//Hitbox(154, 6.5, 0, 10, 13, 300);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-140, 0, 1);
@@ -964,6 +990,7 @@ void SceneGame::Render()
 	modelStack.Scale(300, 20, 20);
 	RenderMesh(meshList[GEO_WALL], true);
 	modelStack.PopMatrix();
+	//Hitbox(-153, 6.5, 0, 10, 13, 300);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-45, 0, 10);
@@ -971,7 +998,7 @@ void SceneGame::Render()
 	modelStack.Scale(8, 8, 8);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
-	//Hitbox(-45, 0, 10, 5, 20, 5);
+	//Hitbox(-44, 5.5, 10, 3.1, 11, 2);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-25, 0, -20);
@@ -979,7 +1006,7 @@ void SceneGame::Render()
 	modelStack.Scale(8, 8, 8);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
-	//Hitbox(-25, 0, -20, 5, 20, 5);
+	//Hitbox(-26, 5.5, -20, 3.1, 11, 2);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-45, 0, -50);
@@ -987,7 +1014,7 @@ void SceneGame::Render()
 	modelStack.Scale(8, 8, 8);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
-	//Hitbox(-45, 0, -50, 5, 20, 5);
+	//Hitbox(-44, 5.5, -50, 3.1, 11, 2);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(40, 0, 60);
@@ -995,14 +1022,14 @@ void SceneGame::Render()
 	modelStack.Scale(8, 8, 8);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
-	//Hitbox(40, 0, 60, 5, 20, 5);
+	//Hitbox(40, 5.5, 59, 2, 11, 3.1);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(30, 0, -60);
 	modelStack.Scale(8, 8, 8);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
-	//Hitbox(30, 0, -60, 5, 20, 5);
+	//Hitbox(30, 5.5, -59, 2, 11, 3.1);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(-25, 0, 60);
@@ -1010,7 +1037,7 @@ void SceneGame::Render()
 	modelStack.Scale(5, 5, 5);
 	RenderMesh(meshList[GEO_LIGHTPOST], true);
 	modelStack.PopMatrix();
-	//Hitbox(-25, 0, 60), 5, 20, 5);
+	//Hitbox(-25, 5.5, 59, 2, 11, 3.1);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(30, 0, 60);
@@ -1018,7 +1045,7 @@ void SceneGame::Render()
 	modelStack.Scale(12, 12, 12);
 	RenderMesh(meshList[GEO_BENCH], true);
 	modelStack.PopMatrix();
-	//Hitbox(30, 10, 60, 10, 20, 5);
+	//Hitbox(30, 2, 60, 7.4, 4, 3.8);
 
 	if (tutorial == 1 && firstcoinPicked == false) //first coin
 	{
@@ -1892,12 +1919,12 @@ void SceneGame::RenderHUD()
 	
 	RenderImageOnScreen(meshList[GEO_HEALTH], Color(1, 1, 1), 7, 7, 4, 14); //Health
 	if (player.currentHealth > 30)
-		RenderTextOnScreen(meshList[GEO_TEXT], sss.str(), Color(0, 0.6, 0.1), 7, 8, 10);
+		RenderTextOnScreen(meshList[GEO_TEXT], sss.str(), Color(0, 1, 0), 7, 8, 10);
 	else
 		RenderTextOnScreen(meshList[GEO_TEXT], sss.str(), Color(1, 0, 0), 7, 8, 10);
 	RenderImageOnScreen(meshList[GEO_AMMO], Color(1, 1, 1), 2, 8, 4, 5);//Ammo
 	if (player.currentAmmo>player.maxAmmo*0.3)
-		RenderTextOnScreen(meshList[GEO_TEXT], ss1.str(), Color(0, 0.6, 0.1), 7, 8, 0);
+		RenderTextOnScreen(meshList[GEO_TEXT], ss1.str(), Color(0, 1, 0), 7, 8, 0);
 	else
 		RenderTextOnScreen(meshList[GEO_TEXT], ss1.str(), Color(1, 0, 0), 7, 8, 0);
 	if (crosshairenabled == 1) //Crosshair
@@ -1911,9 +1938,9 @@ void SceneGame::RenderHUD()
 	}
 	if (tutorial == 1)
 	{
-		RenderTextOnScreen(meshList[GEO_TEXT], ssss.str(), Color(0, 0.6, 0.1), 3, 67, 57); //Scams
-		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0.6, 0.1), 3, 0, 57); //FPS
-		RenderTextOnScreen(meshList[GEO_TEXT], sssss.str(), Color(0, 0.6, 0.1), 3, 0, 54); //Coins
+		RenderTextOnScreen(meshList[GEO_TEXT], ssss.str(), Color(0, 1, 0), 3, 67, 57); //Scams
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 57); //FPS
+		RenderTextOnScreen(meshList[GEO_TEXT], sssss.str(), Color(0, 1, 0), 3, 0, 54); //Coins
 	}
 
 	if (reloading) {
