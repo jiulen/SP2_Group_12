@@ -96,6 +96,7 @@ class SceneGame : public Scene
 		GEO_RED,
 		GEO_BLACK,
 		GEO_BLUE,
+		GEO_TEXTBOX,
 
 		GEO_COIN,
 
@@ -200,7 +201,7 @@ private:
 	double keyused = 0;
 	double timer2 = 0;
 	int starttimer2 = 0;
-	int stage = -2;
+	int stage = -3;
 	Vector3 currentview;
 
 	//sidequests
@@ -212,7 +213,7 @@ private:
 	bool sixthcoinPicked;
 	bool seventhcoinPicked;
 	bool eighthcoinPicked;
-	int score = 0;
+	int coinscollected;
 
 	//spawn enemies
 	int spawn = 0;

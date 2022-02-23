@@ -35,6 +35,7 @@ void SceneGame::UseScene()
 	
 	//Init player
 	player = Player();
+	Application::SetStamina(5);
 
 	if (Application::GetReset() == 1)
 	{
@@ -73,6 +74,7 @@ void SceneGame::Reset()
 	bossshoot = 0;
 	prevshot = 0;
 	bombPos = Vector3(0, 0, 0);
+	Application::SetStamina(5);
 	for (int i = 0; i < 3; i++)
 		minigamesused[i] = 0;
 }
@@ -268,6 +270,8 @@ void SceneGame::Init()
 	meshList[GEO_BLUECROSSHAIR]->textureID = LoadTGA("Image//bluecrosshair.tga");
 	meshList[GEO_BOMBARROW] = MeshBuilder::GenerateQuad("bomb arrow", Color(1, 1, 1), 1.f);
 	meshList[GEO_BOMBARROW]->textureID = LoadTGA("Image//bomb-pointer.tga");
+	meshList[GEO_TEXTBOX] = MeshBuilder::GenerateQuad("text box", Color(1, 1, 1), 1.f);
+	meshList[GEO_TEXTBOX]->textureID = LoadTGA("Image//textbox.tga");
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//arial.tga");
@@ -1652,7 +1656,7 @@ void SceneGame::RenderHUD()
 		float length = (float(Application::GetStamina()) / 5)*16;
 		RenderMeshOnScreen(meshList[GEO_BLUE], 32+(length/2), 25, length, 1);
 	}
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0.6, 0.1), 3, 0, 57); //FPS
+	
 	RenderImageOnScreen(meshList[GEO_HEALTH], Color(1, 1, 1), 7, 7, 4, 14); //Health
 	if (player.currentHealth > 30)
 		RenderTextOnScreen(meshList[GEO_TEXT], sss.str(), Color(0, 0.6, 0.1), 7, 8, 10);
@@ -1672,8 +1676,11 @@ void SceneGame::RenderHUD()
 		else if (crosshair == 3)
 			RenderImageOnScreen(meshList[GEO_GREENCROSSHAIR], Color(1, 1, 1), 3, 3, 40, 30);
 	}
-	RenderTextOnScreen(meshList[GEO_TEXT], ssss.str(), Color(0, 0.6, 0.1), 3, 67, 57); //Scams
-	
+	if (tutorial == 1)
+	{
+		RenderTextOnScreen(meshList[GEO_TEXT], ssss.str(), Color(0, 0.6, 0.1), 3, 67, 57); //Scams
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0.6, 0.1), 3, 0, 57); //FPS
+	}
 }
 
 void SceneGame::RenderSkybox()
@@ -1783,7 +1790,36 @@ void SceneGame::RenderBoss()
 
 void SceneGame::RenderTutorial()
 {
-	if (stage == -2)
+	if ((stage==1)||(stage==3))
+		RenderImageOnScreen(meshList[GEO_TEXTBOX], Color(1, 1, 1), 80, 11, 40, 53.5, Vector3(0, 0, 1), 0);
+	else if ((stage>-3)&&(stage<5))
+		RenderImageOnScreen(meshList[GEO_TEXTBOX],Color(1,1,1), 80, 9, 40, 54.5, Vector3(0, 0, 1), 0);
+	else if ((stage ==-3) || (stage == 6))
+		RenderImageOnScreen(meshList[GEO_TEXTBOX], Color(1, 1, 1), 80, 13, 40, 52.5, Vector3(0, 0, 1), 0);
+	else 
+		RenderImageOnScreen(meshList[GEO_TEXTBOX], Color(1, 1, 1), 80, 22, 40, 48, Vector3(0, 0, 1), 0);
+	if (stage == -3)
+	{
+		RenderTextOnScreen(meshList[GEO_TEXT], "TUTORIAL", Color(0, 0, 0), 3, 34, 54);
+		RenderTextOnScreen(meshList[GEO_TEXT], "Press E to skip tutorial", Color(1, 1, 1), 3, 26.3, 51);
+		RenderTextOnScreen(meshList[GEO_TEXT], "Press Q to play tutorial", Color(1, 1, 1), 3, 26, 48);
+		if (Application::IsKeyPressed('E'))
+		{
+			stage = 6;
+			tutorial = 1;
+			player.currentAmmo = 7;
+			camera.Init(Vector3(0, 4.5, 5.5), Vector3(0, 4.5, 4.5), Vector3(0, 1, 0));
+			Application::SetStamina(5);
+		}
+		else if (Application::IsKeyPressed('Q'))
+		{
+			stage = 5;
+			keyused = 0;
+			starttimer2 = 0;
+			timer2 = 0;
+		}
+	}
+	else if (stage == -2)
 	{
 		currentview = (camera.target - camera.position).Normalized();
 		stage = -1;
@@ -1792,7 +1828,7 @@ void SceneGame::RenderTutorial()
 	{
 		if (keyused == 0)
 		{
-			RenderTextOnScreen(meshList[GEO_TEXT], "Use mouse to look around", Color(1, 0, 0), 3, 24, 53);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use mouse to look around", Color(1, 1, 1), 3, 24, 53);
 			if (currentview != (camera.target - camera.position).Normalized())
 				keyused = 1;
 		}
@@ -1812,7 +1848,7 @@ void SceneGame::RenderTutorial()
 	else if (stage == 0)
 	{
 		if (keyused < 2)
-			RenderTextOnScreen(meshList[GEO_TEXT], "Use W,A,S,D to move (2 sec)", Color(1, 0, 0), 3, 22, 53);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use W,A,S,D to move (2 sec)", Color(1, 1, 1), 3, 22, 53);
 		else
 		{
 			RenderTextOnScreen(meshList[GEO_TEXT], "Use W,A,S,D to move (2 sec)", Color(0, 0.6, 0.1), 3, 22, 53);
@@ -1829,10 +1865,14 @@ void SceneGame::RenderTutorial()
 	else if (stage == 1)
 	{
 		if (keyused < 2)
-			RenderTextOnScreen(meshList[GEO_TEXT], "Use SHIFT and W,A,S,D to sprint (2 sec)", Color(1, 0, 0), 3, 18, 53);
+		{
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use SHIFT and W,A,S,D to sprint (2 sec)", Color(1, 1, 1), 3, 16, 53.5);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Sprinting consumes stamina", Color(1,1,1), 3, 22, 50.5);
+		}
 		else
 		{
-			RenderTextOnScreen(meshList[GEO_TEXT], "Use SHIFT and W,A,S,D to sprint (2 sec)", Color(0, 0.6, 0.1), 3, 18, 53);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use SHIFT and W,A,S,D to sprint (2 sec)", Color(0, 0.6, 0.1), 3, 16, 53.5);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Sprinting consumes stamina", Color(0, 0.6, 0.1), 3, 22, 50.5);
 			starttimer2 = 1;
 		}
 		if (timer2 > 1.5)
@@ -1847,7 +1887,7 @@ void SceneGame::RenderTutorial()
 	{
 		if (keyused == 0)
 		{
-			RenderTextOnScreen(meshList[GEO_TEXT], "Use SPACE to jump", Color(1, 0, 0), 3, 28, 53);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use SPACE to jump", Color(1, 1, 1), 3, 28, 53);
 			if (Application::IsKeyPressed(VK_SPACE))
 				keyused = 1;
 		}
@@ -1868,11 +1908,13 @@ void SceneGame::RenderTutorial()
 	{
 		if (keyused == 0)
 		{
-			RenderTextOnScreen(meshList[GEO_TEXT], "Use Left Click to shoot", Color(1, 0, 0), 3, 27, 53);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use Left Click to shoot", Color(1, 1, 1), 3, 27, 53.5);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Shooting consumes ammo", Color(1, 1, 1), 3, 25, 50.5);
 		}
 		else
 		{
-			RenderTextOnScreen(meshList[GEO_TEXT], "Use Left Click to shoot", Color(0, 0.6, 0.1), 3, 27, 53);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use Left Click to shoot", Color(0, 0.6, 0.1), 3, 27, 53.5);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Shooting consumes ammo", Color(0, 0.6, 0.1), 3, 25, 50.5);
 			starttimer2 = 1;
 		}
 		if (timer2 > 1.5)
@@ -1887,7 +1929,7 @@ void SceneGame::RenderTutorial()
 	{
 		if (keyused == 0)
 		{
-			RenderTextOnScreen(meshList[GEO_TEXT], "Use R to reload", Color(1, 0, 0), 3, 30, 53);
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use R to reload", Color(1, 1, 1), 3, 30, 53);
 		}
 		else
 		{
@@ -1896,7 +1938,7 @@ void SceneGame::RenderTutorial()
 		}
 		if (timer2 > 1.5)
 		{
-			stage = 5;
+			stage = 6;
 			keyused = 0;
 			starttimer2 = 0;
 			timer2 = 0;
@@ -1904,19 +1946,35 @@ void SceneGame::RenderTutorial()
 	}
 	else if (stage == 5)
 	{
-		RenderTextOnScreen(meshList[GEO_TEXT], "You are now prepared.", Color(0, 0.6, 0.1), 3, 28, 53);
-		RenderTextOnScreen(meshList[GEO_TEXT], "Defeat all the scammers and stop the scams.", Color(0, 0.6, 0.1), 3, 16, 50);
-		RenderTextOnScreen(meshList[GEO_TEXT], "Good luck Officer.", Color(0, 0.6, 0.1), 3, 30, 47);
+		RenderTextOnScreen(meshList[GEO_TEXT], "HUD", Color(0, 0, 0), 3, 38, 53);
+		RenderTextOnScreen(meshList[GEO_TEXT], "Health and Ammo are shown on the bottom left", Color(1, 1, 1), 3, 13, 50);
+		RenderTextOnScreen(meshList[GEO_TEXT], "Stamina is shown under crosshair", Color(1, 1, 1), 3, 22, 47);
+		RenderTextOnScreen(meshList[GEO_TEXT], "Yellow arrow on bottom middle points to scams", Color(1, 1, 1), 3, 13, 44);
+		RenderTextOnScreen(meshList[GEO_TEXT], "Press E to continue", Color(1, 1, 1), 3, 28, 41);
+		if (Application::IsKeyPressed('E'))
+		{
+			stage = -2;
+			keyused = 0;
+			starttimer2 = 0;
+			timer2 = 0;
+		}
+	}
+	else if (stage == 6)
+	{
+		RenderTextOnScreen(meshList[GEO_TEXT], "You are now prepared.", Color(1, 1, 1), 3, 28, 54);
+		RenderTextOnScreen(meshList[GEO_TEXT], "Defeat all the scammers and stop the scams.", Color(1, 1, 1), 3, 16, 51);
+		RenderTextOnScreen(meshList[GEO_TEXT], "Good luck Officer.", Color(1, 1, 1), 3, 30, 48);
 		starttimer2 = 1;
 		if (timer2 > 5)
 		{
-			stage = 6;
+			stage = 7;
 			keyused = 0;
 			starttimer2 = 0;
 			timer2 = 0;
 			tutorial = 1;
 			player.currentAmmo = 7;
 			camera.Init(Vector3(0, 4.5, 5.5), Vector3(0, 4.5, 4.5), Vector3(0, 1, 0));
+			Application::SetStamina(5);
 		}
 	}
 }
