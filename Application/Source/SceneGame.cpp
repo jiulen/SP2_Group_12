@@ -86,6 +86,10 @@ void SceneGame::Reset()
 	seventhcoinPicked = false;
 	eighthcoinPicked = false;
 	coinscollected = 0;
+	reloading = false;
+	reloadTime = 0;
+	reloadRotateTime = 0;
+	reloadAngle = 0;
 }
 
 void SceneGame::Init()
@@ -201,6 +205,7 @@ void SceneGame::Init()
 
 	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", Color(1, 0, 0));
 	meshList[GEO_SPHERE] = MeshBuilder::GenerateSphere("sphere", Color(0, 0, 0));
+	meshList[GEO_SPHERE2] = MeshBuilder::GenerateSphere("sphere", Color(0, 1, 0));
 	meshList[GEO_FRONT] = MeshBuilder::GenerateQuad("front", Color(1, 1, 1), 1.f);
 	meshList[GEO_FRONT]->textureID = LoadTGA("Image//Daylight Box_Front.tga");
 	meshList[GEO_BACK] = MeshBuilder::GenerateQuad("back", Color(1, 1, 1), 1.f);
@@ -355,6 +360,10 @@ void SceneGame::Init()
 	enterScene = true;
 	bulletHit = true;
 
+	reloading = false;
+	reloadTime = 0;
+	reloadRotateTime = 0;
+	reloadAngle = 0;
 
 	//Init non moving hitboxes
 	hitboxes.push_back(Hitbox(-60, 29, -60, 24, 58, 24));
@@ -429,12 +438,13 @@ void SceneGame::Update(double dt)
 
 	//Reloading
 	static bool rOnClick = false;
-	static bool reloading = false;
 	if (!rOnClick && Application::IsKeyPressed('R'))
 	{
 		rOnClick = true;
 		if (!reloading) {
 			reloading = true;
+			reloadTime = 0.f;
+			reloadAngle = 0.f;
 			PlaySound(L"Sound//reload.wav", NULL, SND_FILENAME | SND_ASYNC); //play reloading sound
 			if (stage == 4)
 				keyused = 1;
@@ -447,14 +457,28 @@ void SceneGame::Update(double dt)
 	if (reloading == true)
 	{
 		player.reload(dt, reloading);
+		reloadRotateTime += dt;
+		reloadTime += dt;
+		if (reloadRotateTime > 0.02) {
+			reloadRotateTime = 0.f;
+			if (reloadTime < 1) {
+				reloadAngle -= 0.5f;
+			}
+			else {
+				reloadAngle += 0.5f;
+			}
+		}
 	}
+	//Reload animation angle
+	
+
 	//Shooting
 	if (Application::IsMousePressed(0))
 	{
 		if (!reloading) {
 			if (player.attack(dt)) {
 				PlaySound(L"Sound//single-shot.wav", NULL, SND_FILENAME | SND_ASYNC);
-				bulletVector.push_back(Bullet(player.damage, 75, 1, 1, 1, viewvector, camera.position, 'P'));
+				bulletVector.push_back(Bullet(player.damage, 75, 0.75, 0.75, 0.75, viewvector, camera.position, 'P'));
 				if (stage == 3)
 					keyused++;
 			}
@@ -1299,6 +1323,7 @@ void SceneGame::Render()
 	modelStack.Translate(camera.position.x, camera.position.y, camera.position.z);
 	modelStack.PushMatrix();
 	//revolve around cam
+	modelStack.Rotate(reloadAngle, rightvector.x, rightvector.y, rightvector.z); //rotate for reload
 	modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
 	modelStack.Rotate(yaw, 0, 1, 0);
 	modelStack.Translate(1, -1.25, -4);
@@ -1320,7 +1345,12 @@ void SceneGame::Render()
 		modelStack.PushMatrix();
 		modelStack.Translate(bulletVector[i].bulletHitbox.posX, bulletVector[i].bulletHitbox.posY, bulletVector[i].bulletHitbox.posZ);
 		modelStack.Scale(bulletVector[i].bulletHitbox.sizeX, bulletVector[i].bulletHitbox.sizeY, bulletVector[i].bulletHitbox.sizeZ);
-		RenderMesh(meshList[GEO_SPHERE], false);
+		if (bulletVector[i].bulletType == 'P') {
+			RenderMesh(meshList[GEO_SPHERE], false);
+		}
+		else if (bulletVector[i].bulletType == 'E') {
+			RenderMesh(meshList[GEO_SPHERE2], false);
+		}
 		modelStack.PopMatrix();
 	}
 
@@ -1936,6 +1966,10 @@ void SceneGame::RenderHUD()
 		RenderTextOnScreen(meshList[GEO_TEXT], ssss.str(), Color(0, 0.6, 0.1), 3, 67, 57); //Scams
 		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0.6, 0.1), 3, 0, 57); //FPS
 		RenderTextOnScreen(meshList[GEO_TEXT], sssss.str(), Color(0, 0.6, 0.1), 3, 0, 54); //Coins
+	}
+
+	if (reloading) {
+		RenderTextOnScreen(meshList[GEO_TEXT], "Reloading...", Color(1, 0, 0), 5, 57, 0);
 	}
 }
 
