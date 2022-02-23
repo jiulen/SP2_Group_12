@@ -14,6 +14,7 @@
 #include "BasicMelee.h"
 #include "Watcher.h"
 #include "Boss.h"
+#include "ScaredGuy.h"
 #include "Rain.h"
 #include "Vector3.h"
 #include <fstream>
