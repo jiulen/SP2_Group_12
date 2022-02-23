@@ -90,6 +90,12 @@ void SceneGame::Reset()
 	reloadTime = 0;
 	reloadRotateTime = 0;
 	reloadAngle = 0;
+	paperx = 150;
+	papery = 50;
+	paperz = 20;
+	paperrt = 0;
+	zturn = 0;
+	side = 0;
 }
 
 void SceneGame::Init()
