@@ -1056,91 +1056,98 @@ void SceneGame::Render()
 	if (tutorial == 1 && firstcoinPicked == false) //first coin
 	{
 		modelStack.PushMatrix();
-		//revolve around cam
-		//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
-		modelStack.Rotate(yaw, 0, 1, 0);
+		Vector3 targetVector = Vector3(camera.position.x, 0, camera.position.z) - Vector3(-110, 0, 0);
+		targetVector = targetVector.Normalized();
+		float coinFacing = acosf(Vector3(0, 0, 1).Dot(targetVector));
+		if (targetVector.x > 0) {
+			coinFacing = Math::RadianToDegree(coinFacing);
+		}
+		else {
+			coinFacing = -Math::RadianToDegree(coinFacing);
+		}
 		modelStack.Translate(-110, 2.5f, 0);
+		modelStack.Rotate(coinFacing, 0, 1, 0);
 		modelStack.Scale(2.2f, 2.2f, 2.2f);
 		RenderMesh(meshList[GEO_COIN], false);
 		modelStack.PopMatrix();
 	}
-	if (tutorial == 1 && secondcoinPicked == false) //second coin
-	{
-		modelStack.PushMatrix();
-		//revolve around cam
-		//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
-		modelStack.Rotate(yaw, 0, 1, 0);
-		modelStack.Translate(0, 2.5f, -6);
-		modelStack.Scale(2.2f, 2.2f, 2.2f);
-		RenderMesh(meshList[GEO_COIN], false);
-		modelStack.PopMatrix();
-	}
-	if (tutorial == 1 && thirdcoinPicked == false) //third coin
-	{
-		modelStack.PushMatrix();
-		//revolve around cam
-		//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
-		modelStack.Rotate(yaw, 0, 1, 0);
-		modelStack.Translate(105, 2.5f, -10);
-		modelStack.Scale(2.2f, 2.2f, 2.2f);
-		RenderMesh(meshList[GEO_COIN], false);
-		modelStack.PopMatrix();
-	}
-	if (tutorial == 1 && fourthcoinPicked == false) //fourth coin
-	{
-		modelStack.PushMatrix();
-		//revolve around cam
-		//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
-		modelStack.Rotate(yaw, 0, 1, 0);
-		modelStack.Translate(0, 2.5f, 80);
-		modelStack.Scale(2.2f, 2.2f, 2.2f);
-		RenderMesh(meshList[GEO_COIN], false);
-		modelStack.PopMatrix();
-	}
-	if (tutorial == 1 && fifthcoinPicked == false) //fifth coin
-	{
-		modelStack.PushMatrix();
-		//revolve around cam
-		//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
-		modelStack.Rotate(yaw, 0, 1, 0);
-		modelStack.Translate(-130, 2.5f, 130);
-		modelStack.Scale(2.2f, 2.2f, 2.2f);
-		RenderMesh(meshList[GEO_COIN], false);
-		modelStack.PopMatrix();
-	}
-	if (tutorial == 1 && sixthcoinPicked == false) //sixth coin
-	{
-		modelStack.PushMatrix();
-		//revolve around cam
-		//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
-		modelStack.Rotate(yaw, 0, 1, 0);
-		modelStack.Translate(-130, 2.5f, -130);
-		modelStack.Scale(2.2f, 2.2f, 2.2f);
-		RenderMesh(meshList[GEO_COIN], false);
-		modelStack.PopMatrix();
-	}
-	if (tutorial == 1 && seventhcoinPicked == false) //seventh coin
-	{
-		modelStack.PushMatrix();
-		//revolve around cam
-		//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
-		modelStack.Rotate(yaw, 0, 1, 0);
-		modelStack.Translate(130, 2.5f, 130);
-		modelStack.Scale(2.2f, 2.2f, 2.2f);
-		RenderMesh(meshList[GEO_COIN], false);
-		modelStack.PopMatrix();
-	}
-	if (tutorial == 1 && eighthcoinPicked == false) //eighth coin
-	{
-		modelStack.PushMatrix();
-		//revolve around cam
-		//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
-		modelStack.Rotate(yaw, 0, 1, 0);
-		modelStack.Translate(130, 2.5f, -130);
-		modelStack.Scale(2.2f, 2.2f, 2.2f);
-		RenderMesh(meshList[GEO_COIN], false);
-		modelStack.PopMatrix();
-	}
+	//if (tutorial == 1 && secondcoinPicked == false) //second coin
+	//{
+	//	modelStack.PushMatrix();
+	//	//revolve around cam
+	//	//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
+	//	modelStack.Rotate(yaw, 0, 1, 0);
+	//	modelStack.Translate(0, 2.5f, -6);
+	//	modelStack.Scale(2.2f, 2.2f, 2.2f);
+	//	RenderMesh(meshList[GEO_COIN], false);
+	//	modelStack.PopMatrix();
+	//}
+	//if (tutorial == 1 && thirdcoinPicked == false) //third coin
+	//{
+	//	modelStack.PushMatrix();
+	//	//revolve around cam
+	//	//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
+	//	modelStack.Rotate(yaw, 0, 1, 0);
+	//	modelStack.Translate(105, 2.5f, -10);
+	//	modelStack.Scale(2.2f, 2.2f, 2.2f);
+	//	RenderMesh(meshList[GEO_COIN], false);
+	//	modelStack.PopMatrix();
+	//}
+	//if (tutorial == 1 && fourthcoinPicked == false) //fourth coin
+	//{
+	//	modelStack.PushMatrix();
+	//	//revolve around cam
+	//	//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
+	//	modelStack.Rotate(yaw, 0, 1, 0);
+	//	modelStack.Translate(0, 2.5f, 80);
+	//	modelStack.Scale(2.2f, 2.2f, 2.2f);
+	//	RenderMesh(meshList[GEO_COIN], false);
+	//	modelStack.PopMatrix();
+	//}
+	//if (tutorial == 1 && fifthcoinPicked == false) //fifth coin
+	//{
+	//	modelStack.PushMatrix();
+	//	//revolve around cam
+	//	//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
+	//	modelStack.Rotate(yaw, 0, 1, 0);
+	//	modelStack.Translate(-130, 2.5f, 130);
+	//	modelStack.Scale(2.2f, 2.2f, 2.2f);
+	//	RenderMesh(meshList[GEO_COIN], false);
+	//	modelStack.PopMatrix();
+	//}
+	//if (tutorial == 1 && sixthcoinPicked == false) //sixth coin
+	//{
+	//	modelStack.PushMatrix();
+	//	//revolve around cam
+	//	//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
+	//	modelStack.Rotate(yaw, 0, 1, 0);
+	//	modelStack.Translate(-130, 2.5f, -130);
+	//	modelStack.Scale(2.2f, 2.2f, 2.2f);
+	//	RenderMesh(meshList[GEO_COIN], false);
+	//	modelStack.PopMatrix();
+	//}
+	//if (tutorial == 1 && seventhcoinPicked == false) //seventh coin
+	//{
+	//	modelStack.PushMatrix();
+	//	//revolve around cam
+	//	//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
+	//	modelStack.Rotate(yaw, 0, 1, 0);
+	//	modelStack.Translate(130, 2.5f, 130);
+	//	modelStack.Scale(2.2f, 2.2f, 2.2f);
+	//	RenderMesh(meshList[GEO_COIN], false);
+	//	modelStack.PopMatrix();
+	//}
+	//if (tutorial == 1 && eighthcoinPicked == false) //eighth coin
+	//{
+	//	modelStack.PushMatrix();
+	//	//revolve around cam
+	//	//modelStack.Rotate(pitch, rightvector.x, rightvector.y, rightvector.z);
+	//	modelStack.Rotate(yaw, 0, 1, 0);
+	//	modelStack.Translate(130, 2.5f, -130);
+	//	modelStack.Scale(2.2f, 2.2f, 2.2f);
+	//	RenderMesh(meshList[GEO_COIN], false);
+	//	modelStack.PopMatrix();
+	//}
 
 	if (camera.position.x >= -115 && camera.position.x <= -105 && camera.position.z >= -5 && camera.position.z <= 5 && firstcoinPicked == false)//first coin
 	{
@@ -1151,69 +1158,69 @@ void SceneGame::Render()
 			firstcoinPicked = true;
 		}
 	}
-	if (camera.position.x >= -5 && camera.position.x <= 5 && camera.position.z >= -11 && camera.position.z <= -1 && secondcoinPicked == false)//second coin
-	{
-		RenderTextOnScreen(meshList[GEO_TEXT], "Press E to pick up this red coin.", Color(1, 0, 0), 3, 22, 50);
-		if (Application::IsKeyPressed('E'))
-		{
-			coinscollected = coinscollected + 1;
-			secondcoinPicked = true;
-		}
-	}
-	if (camera.position.x >= 100 && camera.position.x <= 110 && camera.position.z >= -15 && camera.position.z <= -5 && thirdcoinPicked == false)//third coin
-	{
-		RenderTextOnScreen(meshList[GEO_TEXT], "Press E to pick up this red coin.", Color(1, 0, 0), 3, 22, 50);
-		if (Application::IsKeyPressed('E'))
-		{
-			coinscollected = coinscollected + 1;
-			thirdcoinPicked = true;
-		}
-	}
-	if (camera.position.x >= -5 && camera.position.x <= 5 && camera.position.z >= 75 && camera.position.z <= 85 && fourthcoinPicked == false)//fourth coin
-	{
-		RenderTextOnScreen(meshList[GEO_TEXT], "Press E to pick up this red coin.", Color(1, 0, 0), 3, 22, 50);
-		if (Application::IsKeyPressed('E'))
-		{
-			coinscollected = coinscollected + 1;
-			fourthcoinPicked = true;
-		}
-	}
-	if (camera.position.x >= -135 && camera.position.x <= -125 && camera.position.z >= 125 && camera.position.z <= 135 && fifthcoinPicked == false)//fifth coin
-	{
-		RenderTextOnScreen(meshList[GEO_TEXT], "Press E to pick up this red coin.", Color(1, 0, 0), 3, 22, 50);
-		if (Application::IsKeyPressed('E'))
-		{
-			coinscollected = coinscollected + 1;
-			fifthcoinPicked = true;
-		}
-	}
-	if (camera.position.x >= -135 && camera.position.x <= -125 && camera.position.z >= -135 && camera.position.z <= -125 && sixthcoinPicked == false)//sixth coin
-	{
-		RenderTextOnScreen(meshList[GEO_TEXT], "Press E to pick up this red coin.", Color(1, 0, 0), 3, 22, 50);
-		if (Application::IsKeyPressed('E'))
-		{
-			coinscollected = coinscollected + 1;
-			sixthcoinPicked = true;
-		}
-	}
-	if (camera.position.x >= 125 && camera.position.x <= 135 && camera.position.z >= 125 && camera.position.z <= 135 && seventhcoinPicked == false)//seventh coin
-	{
-		RenderTextOnScreen(meshList[GEO_TEXT], "Press E to pick up this red coin.", Color(1, 0, 0), 3, 22, 50);
-		if (Application::IsKeyPressed('E'))
-		{
-			coinscollected = coinscollected + 1;
-			seventhcoinPicked = true;
-		}
-	}
-	if (camera.position.x >= 125 && camera.position.x <= 135 && camera.position.z >= -135 && camera.position.z <= -125 && eighthcoinPicked == false)//eighth coin
-	{
-		RenderTextOnScreen(meshList[GEO_TEXT], "Press E to pick up this red coin.", Color(1, 0, 0), 3, 22, 50);
-		if (Application::IsKeyPressed('E'))
-		{
-			coinscollected = coinscollected + 1;
-			eighthcoinPicked = true;
-		}
-	}
+	//if (camera.position.x >= -5 && camera.position.x <= 5 && camera.position.z >= -11 && camera.position.z <= -1 && secondcoinPicked == false)//second coin
+	//{
+	//	RenderTextOnScreen(meshList[GEO_TEXT], "Press E to pick up this red coin.", Color(1, 0, 0), 3, 22, 50);
+	//	if (Application::IsKeyPressed('E'))
+	//	{
+	//		coinscollected = coinscollected + 1;
+	//		secondcoinPicked = true;
+	//	}
+	//}
+	//if (camera.position.x >= 100 && camera.position.x <= 110 && camera.position.z >= -15 && camera.position.z <= -5 && thirdcoinPicked == false)//third coin
+	//{
+	//	RenderTextOnScreen(meshList[GEO_TEXT], "Press E to pick up this red coin.", Color(1, 0, 0), 3, 22, 50);
+	//	if (Application::IsKeyPressed('E'))
+	//	{
+	//		coinscollected = coinscollected + 1;
+	//		thirdcoinPicked = true;
+	//	}
+	//}
+	//if (camera.position.x >= -5 && camera.position.x <= 5 && camera.position.z >= 75 && camera.position.z <= 85 && fourthcoinPicked == false)//fourth coin
+	//{
+	//	RenderTextOnScreen(meshList[GEO_TEXT], "Press E to pick up this red coin.", Color(1, 0, 0), 3, 22, 50);
+	//	if (Application::IsKeyPressed('E'))
+	//	{
+	//		coinscollected = coinscollected + 1;
+	//		fourthcoinPicked = true;
+	//	}
+	//}
+	//if (camera.position.x >= -135 && camera.position.x <= -125 && camera.position.z >= 125 && camera.position.z <= 135 && fifthcoinPicked == false)//fifth coin
+	//{
+	//	RenderTextOnScreen(meshList[GEO_TEXT], "Press E to pick up this red coin.", Color(1, 0, 0), 3, 22, 50);
+	//	if (Application::IsKeyPressed('E'))
+	//	{
+	//		coinscollected = coinscollected + 1;
+	//		fifthcoinPicked = true;
+	//	}
+	//}
+	//if (camera.position.x >= -135 && camera.position.x <= -125 && camera.position.z >= -135 && camera.position.z <= -125 && sixthcoinPicked == false)//sixth coin
+	//{
+	//	RenderTextOnScreen(meshList[GEO_TEXT], "Press E to pick up this red coin.", Color(1, 0, 0), 3, 22, 50);
+	//	if (Application::IsKeyPressed('E'))
+	//	{
+	//		coinscollected = coinscollected + 1;
+	//		sixthcoinPicked = true;
+	//	}
+	//}
+	//if (camera.position.x >= 125 && camera.position.x <= 135 && camera.position.z >= 125 && camera.position.z <= 135 && seventhcoinPicked == false)//seventh coin
+	//{
+	//	RenderTextOnScreen(meshList[GEO_TEXT], "Press E to pick up this red coin.", Color(1, 0, 0), 3, 22, 50);
+	//	if (Application::IsKeyPressed('E'))
+	//	{
+	//		coinscollected = coinscollected + 1;
+	//		seventhcoinPicked = true;
+	//	}
+	//}
+	//if (camera.position.x >= 125 && camera.position.x <= 135 && camera.position.z >= -135 && camera.position.z <= -125 && eighthcoinPicked == false)//eighth coin
+	//{
+	//	RenderTextOnScreen(meshList[GEO_TEXT], "Press E to pick up this red coin.", Color(1, 0, 0), 3, 22, 50);
+	//	if (Application::IsKeyPressed('E'))
+	//	{
+	//		coinscollected = coinscollected + 1;
+	//		eighthcoinPicked = true;
+	//	}
+	//}
 
 
 	modelStack.PushMatrix();
