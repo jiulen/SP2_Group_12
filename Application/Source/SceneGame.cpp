@@ -825,6 +825,7 @@ void SceneGame::Render()
 
 	RenderSkybox();
 
+
 	modelStack.PushMatrix();
 	modelStack.Rotate(-90, 1, 0, 0);
 	modelStack.Scale(300, 300, 300);
@@ -1055,6 +1056,20 @@ void SceneGame::Render()
 	RenderMesh(meshList[GEO_BENCH], true);
 	modelStack.PopMatrix();
 	//Hitbox(30, 2, 60, 7.4, 4, 3.8);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(100, 0.1, 100);
+	modelStack.Scale(20, 20, 20);
+	RenderMesh(meshList[GEO_GROUND_GRASS], true);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	modelStack.Translate(100, 0.2, 100);
+	modelStack.Scale(20, 20, 20);
+	RenderMesh(meshList[GEO_TREE], true);
+	modelStack.PopMatrix();
+
+
 
 	if (tutorial == 1 && firstcoinPicked == false) //first coin
 	{
