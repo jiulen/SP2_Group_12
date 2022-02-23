@@ -281,6 +281,7 @@ void SceneGame::Init()
 	meshList[GEO_BOMBARROW]->textureID = LoadTGA("Image//bomb-pointer.tga");
 	meshList[GEO_TEXTBOX] = MeshBuilder::GenerateQuad("text box", Color(1, 1, 1), 1.f);
 	meshList[GEO_TEXTBOX]->textureID = LoadTGA("Image//textbox.tga");
+	meshList[GEO_PAPER] = MeshBuilder::GenerateCube("paper", Color(1, 0.9, 0.8));
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//arial.tga");
@@ -1285,6 +1286,7 @@ void SceneGame::Render()
 	modelStack.PopMatrix();
 	modelStack.PopMatrix();
 
+	RenderAmbientEffects();
 
 	if (tutorial == 0)//Render tutorial
 		RenderTutorial();
@@ -2210,6 +2212,30 @@ void SceneGame::RenderTutorial()
 			Application::SetStamina(5);
 		}
 	}
+}
+
+void SceneGame::RenderAmbientEffects()
+{
+	modelStack.PushMatrix();
+	if (paperx > -150)
+		paperx -= 0.5;
+	if (zturn == 0)
+	{
+		paperz += 0.1;
+		if (paperz > 22)
+			zturn = 1;
+	}
+	if (zturn = 1)
+	{
+		paperz - 0.1;
+		if (paperz < 18)
+			zturn = 0;
+	}
+	modelStack.Translate(paperx, papery, paperz);
+	modelStack.Rotate(paperrt, 0, 0, 1);
+	modelStack.Scale(3, 0.01, 2);
+	RenderMesh(meshList[GEO_PAPER], true);
+	modelStack.PopMatrix();
 }
 
 int SceneGame::NextScene()
