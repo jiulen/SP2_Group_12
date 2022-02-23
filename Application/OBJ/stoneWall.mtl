@@ -1,5 +1,7 @@
 # Created by Kenney (www.kenney.nl)
 
 newmtl stone
+Ka 0.313725 0.3901961 0.4098040
 Kd 0.627451 0.7803922 0.8196079
+Ks 0.33 0.33 0.33
 

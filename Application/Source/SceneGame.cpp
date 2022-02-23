@@ -228,6 +228,8 @@ void SceneGame::Init()
 	meshList[GEO_BOSS]->textureID = LoadTGA("Image//skin_robot.tga");
 	meshList[GEO_NPC] = MeshBuilder::GenerateOBJMTL("npc", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
 	meshList[GEO_NPC]->textureID = LoadTGA("Image//skin_manAlternative.tga");
+	meshList[GEO_BIRD] = MeshBuilder::GenerateOBJMTL("bird", "OBJ//bird.obj", "OBJ//bird.mtl");
+	meshList[GEO_BIRD]->textureID = LoadTGA("Image//bird.tga");
 	meshList[GEO_SPIKE] = MeshBuilder::GenerateOBJ("spike", "OBJ//spike.obj");
 	meshList[GEO_BOMB] = MeshBuilder::GenerateOBJMTL("bomb", "OBJ//bomb.obj", "OBJ//bomb.mtl");
 	meshList[GEO_GUN] = MeshBuilder::GenerateOBJMTL("gun", "OBJ//pistol.obj", "OBJ//pistol.mtl");
@@ -1298,6 +1300,25 @@ void SceneGame::Render()
 		}
 	}
 
+	if (tutorial == 1) //bird
+	{
+		modelStack.PushMatrix();
+		/*Vector3 targetVector = Vector3(camera.position.x, 0, camera.position.z) - Vector3(5, 0, -2);
+		targetVector = targetVector.Normalized();
+		float birdFacing = acosf(Vector3(0, 0, 1).Dot(targetVector));
+		if (targetVector.x > 0) {
+			birdFacing = Math::RadianToDegree(birdFacing);
+		}
+		else {
+			birdFacing = -Math::RadianToDegree(birdFacing);
+		}*/
+		modelStack.Translate(-20, 0.25f, -6);
+		/*modelStack.Rotate(birdFacing, 0, 1, 0);*/
+		modelStack.Rotate(-90, 1, 0, 0);
+		modelStack.Scale(0.13f, 0.13f, 0.13f);
+		RenderMesh(meshList[GEO_BIRD], false);
+		modelStack.PopMatrix();
+	}
 
 	modelStack.PushMatrix();
 	modelStack.Translate(camera.position.x, camera.position.y, camera.position.z);
