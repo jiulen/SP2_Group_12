@@ -135,9 +135,29 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		jumpTime += dt;
 		position.y += static_cast<float>(dt) * JUMP_SPEED;
 		bool collide = false;
-		playerCeilingCollision(hitboxes, collide);
+		playerCeilingCollision(hitboxes, collide, true);
 		if (collide) {
 			JUMP_SPEED = -5.f;
+			collide = false;
+		}
+		if (jumpTime > 0.05) {
+			JUMP_SPEED -= 5;
+			jumpTime = 0.f;
+		}
+		if (JUMP_SPEED < 0) {
+			jumping = false;
+			jumpTime = 0.f;
+		}
+		playerHitbox.posY = position.y + 0.5f - playerHeight * 0.5f;
+		target = position + view;
+	}
+	if (JUMP_SPEED < 0) {
+		jumpTime += dt;
+		position.y += static_cast<float>(dt) * JUMP_SPEED;
+		bool collide = false;
+		playerCeilingCollision(hitboxes, collide, false);
+		if (collide) {
+			JUMP_SPEED = -0.001f;
 			collide = false;
 		}
 		if (jumpTime > 0.05) {
@@ -147,11 +167,12 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		if (position.y <= defaultPosition.y)
 		{
 			position.y = defaultPosition.y;
-			jumping = false;
+			JUMP_SPEED = 0;
 		}
 		playerHitbox.posY = position.y + 0.5f - playerHeight * 0.5f;
 		target = position + view;
 	}
+
 	//if (Application::IsKeyPressed('R'))
 	//{
 	//	Reset();
@@ -261,7 +282,7 @@ void Camera3::playerWASDCollision(std::vector<Hitbox> hitboxes) { //for player w
 	return; //no collision
 }
 
-void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes, bool& collide)
+void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes, bool& collide, bool up)
 {
 	collide = false;
 	for (int i = 0; i < hitboxes.size(); i++) {
@@ -275,15 +296,26 @@ void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes, bool& collide
 			float crOverlap = playerRadius - rayToNearest.Length();
 			if (crOverlap > 0) { //collision
 				//collision resolution
-				float endPosY = position.y - playerHeight * 0.5f;
+				float endPosY = position.y + 0.5f - playerHeight * 0.5f;
 				float nearestPointY = Math::Clamp(endPosY, (hitboxes[i]).posY - 0.5f * (hitboxes[i]).sizeY, (hitboxes[i]).posY + 0.5f * (hitboxes[i]).sizeY);
 
-				float overlap = playerHeight * 0.5f - (nearestPointY - endPosY);
-
+				float overlap = 0.f;
+				if (up) {
+					overlap = playerHeight * 0.5f - (nearestPointY - endPosY);
+				}
+				else {
+					overlap = playerHeight * 0.5f - (endPosY - nearestPointY);
+				}
+				
 				if (overlap > 0)
 				{
 					//Statically resolve the collision
-					position.y -= overlap;
+					if (up) {
+						position.y -= overlap;
+					}
+					else {
+						position.y += overlap;
+					}
 					collide = true;
 				}
 			}		
