@@ -213,7 +213,7 @@ private:
 	bool sixthcoinPicked;
 	bool seventhcoinPicked;
 	bool eighthcoinPicked;
-	int score = 0;
+	int coinscollected;
 
 	//spawn enemies
 	int spawn = 0;
