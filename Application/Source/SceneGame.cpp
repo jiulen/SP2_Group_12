@@ -1172,6 +1172,7 @@ void SceneGame::Render()
 		{
 			coinscollected = coinscollected + 1;
 			firstcoinPicked = true;
+			PlaySound(L"Sound//coin.wav", NULL, SND_FILENAME | SND_ASYNC); //play coin sound
 		}
 	}
 	if (camera.position.x >= -5 && camera.position.x <= 5 && camera.position.z >= -11 && camera.position.z <= -1 && secondcoinPicked == false)//second coin
@@ -1181,6 +1182,7 @@ void SceneGame::Render()
 		{
 			coinscollected = coinscollected + 1;
 			secondcoinPicked = true;
+			PlaySound(L"Sound//coin.wav", NULL, SND_FILENAME | SND_ASYNC); //play coin sound
 		}
 	}
 	if (camera.position.x >= 100 && camera.position.x <= 110 && camera.position.z >= -15 && camera.position.z <= -5 && thirdcoinPicked == false)//third coin
@@ -1190,6 +1192,7 @@ void SceneGame::Render()
 		{
 			coinscollected = coinscollected + 1;
 			thirdcoinPicked = true;
+			PlaySound(L"Sound//coin.wav", NULL, SND_FILENAME | SND_ASYNC); //play coin sound
 		}
 	}
 	if (camera.position.x >= -5 && camera.position.x <= 5 && camera.position.z >= 75 && camera.position.z <= 85 && fourthcoinPicked == false)//fourth coin
@@ -1199,6 +1202,7 @@ void SceneGame::Render()
 		{
 			coinscollected = coinscollected + 1;
 			fourthcoinPicked = true;
+			PlaySound(L"Sound//coin.wav", NULL, SND_FILENAME | SND_ASYNC); //play coin sound
 		}
 	}
 	if (camera.position.x >= -135 && camera.position.x <= -125 && camera.position.z >= 125 && camera.position.z <= 135 && fifthcoinPicked == false)//fifth coin
@@ -1208,6 +1212,7 @@ void SceneGame::Render()
 		{
 			coinscollected = coinscollected + 1;
 			fifthcoinPicked = true;
+			PlaySound(L"Sound//coin.wav", NULL, SND_FILENAME | SND_ASYNC); //play coin sound
 		}
 	}
 	if (camera.position.x >= -135 && camera.position.x <= -125 && camera.position.z >= -135 && camera.position.z <= -125 && sixthcoinPicked == false)//sixth coin
@@ -1217,6 +1222,7 @@ void SceneGame::Render()
 		{
 			coinscollected = coinscollected + 1;
 			sixthcoinPicked = true;
+			PlaySound(L"Sound//coin.wav", NULL, SND_FILENAME | SND_ASYNC); //play coin sound
 		}
 	}
 	if (camera.position.x >= 125 && camera.position.x <= 135 && camera.position.z >= 125 && camera.position.z <= 135 && seventhcoinPicked == false)//seventh coin
@@ -1226,6 +1232,7 @@ void SceneGame::Render()
 		{
 			coinscollected = coinscollected + 1;
 			seventhcoinPicked = true;
+			PlaySound(L"Sound//coin.wav", NULL, SND_FILENAME | SND_ASYNC); //play coin sound
 		}
 	}
 	if (camera.position.x >= 125 && camera.position.x <= 135 && camera.position.z >= -135 && camera.position.z <= -125 && eighthcoinPicked == false)//eighth coin
@@ -1235,6 +1242,7 @@ void SceneGame::Render()
 		{
 			coinscollected = coinscollected + 1;
 			eighthcoinPicked = true;
+			PlaySound(L"Sound//coin.wav", NULL, SND_FILENAME | SND_ASYNC); //play coin sound
 		}
 	}
 
