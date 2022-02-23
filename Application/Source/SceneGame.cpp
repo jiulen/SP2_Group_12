@@ -349,9 +349,6 @@ void SceneGame::Init()
 	//npc
 	entities.push_back(new ScaredGuy(180, Vector3(30, 0, 57), Vector3(0, 0, 1)));
 	entities.push_back(new ScaredGuy(180, Vector3(60, 0, -75), Vector3(0, 0, 1)));
-
-	//TEST
-	hitboxes.push_back(Hitbox(10, 1, 10, 10, 2, 10));
 }
 
 void SceneGame::Update(double dt)
@@ -819,12 +816,6 @@ void SceneGame::Render()
 
 	RenderSkybox();
 
-	//TEST
-	modelStack.PushMatrix();
-	modelStack.Translate(10, 1, 10);
-	modelStack.Scale(10, 2, 10);
-	RenderMesh(meshList[GEO_CUBE], true);
-	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
 	modelStack.Rotate(-90, 1, 0, 0);
