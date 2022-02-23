@@ -90,12 +90,6 @@ void SceneGame::Reset()
 	reloadTime = 0;
 	reloadRotateTime = 0;
 	reloadAngle = 0;
-	paperx = 150;
-	papery = 50;
-	paperz = 20;
-	paperrt = 0;
-	zturn = 0;
-	side = 0;
 }
 
 void SceneGame::Init()
@@ -296,7 +290,7 @@ void SceneGame::Init()
 	meshList[GEO_BOMBARROW]->textureID = LoadTGA("Image//bomb-pointer.tga");
 	meshList[GEO_TEXTBOX] = MeshBuilder::GenerateQuad("text box", Color(1, 1, 1), 1.f);
 	meshList[GEO_TEXTBOX]->textureID = LoadTGA("Image//textbox.tga");
-	meshList[GEO_PAPER] = MeshBuilder::GenerateCube("paper", Color(1, 0.9, 0.8));
+	meshList[GEO_RAIN] = MeshBuilder::GenerateCube("rain", Color(0.2, 1, 1));
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//arial.tga");
@@ -652,6 +646,13 @@ void SceneGame::Update(double dt)
 		timer2 += dt;
 	}
 
+	//Rain
+	if (spawnrain == 1)
+	{
+		raintime += dt;
+		if (raintime > 1)
+			spawnrain = 0;
+	}
 }
 void SceneGame::UpdateEnemyMovement(double dt)
 {
@@ -2279,51 +2280,34 @@ void SceneGame::RenderTutorial()
 
 void SceneGame::RenderAmbientEffects()
 {
-	modelStack.PushMatrix();
-	if (paperx > -150)
-		paperx -= 0.5;
-	else
+	if (spawnrain == 0)
 	{
-		paperx = 150;
-		paperz = 20;
-		papery = 50;
-		paperrt = 0;
-		if (side == 0)
-			side = 1;
-		else
-			side = 0;
+		for (int i = -15; i < 15; i++)
+		{
+			for (int l = -15; l < 15; l++)
+			{
+				rain.push_back(new Rain(rand()%10+(i * 10), 50, rand() % 10 + (l * 10)));
+			}
+		}
+		spawnrain = 2;
 	}
-	if (zturn == 0)
+	for (int i = 0; i < rain.size(); i++)
 	{
-		if (paperrt>-5)
-			paperrt -=1;
-		paperz += 0.05;
-		if (paperz > 22)
-			zturn = 1;
+		modelStack.PushMatrix();
+		modelStack.Translate(rain[i]->getpos(1), rain[i]->getpos(2), rain[i]->getpos(3));
+		modelStack.Scale(0.1, 0.2, 0.1);
+		RenderMesh(meshList[GEO_RAIN], false);
+		modelStack.PopMatrix();
+		rain[i]->setpos(2, rain[i]->getpos(2) - 0.8);
 	}
-	if (zturn == 1)
-	{
-		if (paperrt < 5)
-			paperrt += 1;
-		paperz -= 0.05;
-		if (paperz < 18)
-			zturn = 0;
+	for (int i = rain.size() - 1; i >= 0; i--) 
+	{ 
+		if (rain[i]->getpos(2) < 0)
+		{
+			delete rain[i];
+			rain.pop_back();
+		}
 	}
-	if (papery > 5)
-		papery -= 0.05;
-	if (side==0)
-		modelStack.Translate(paperx, papery, paperz);
-	else if (side == 1)
-		modelStack.Translate(paperx, papery, -15-paperz);
-	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Rotate(10, 0, 1, 0);
-	if (side==0)
-		modelStack.Rotate(paperrt, 0, 0, 1);
-	else
-		modelStack.Rotate(-paperrt, 0, 0, 1);
-	modelStack.Scale(3, 0.01, 2);
-	RenderMesh(meshList[GEO_PAPER], true);
-	modelStack.PopMatrix();
 }
 
 int SceneGame::NextScene()

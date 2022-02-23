@@ -160,6 +160,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
+    <ClCompile Include="Source\Rain.cpp" />
     <ClCompile Include="Source\SceneCopyGame.cpp" />
     <ClCompile Include="Source\SceneGame.cpp" />
     <ClCompile Include="Source\SceneGameOver.cpp" />
@@ -173,6 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
+    <ClInclude Include="Rain.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\BasicMelee.h" />
     <ClInclude Include="Source\Camera.h" />

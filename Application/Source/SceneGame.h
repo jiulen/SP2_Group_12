@@ -14,6 +14,7 @@
 #include "BasicMelee.h"
 #include "Watcher.h"
 #include "Boss.h"
+#include "Rain.h"
 #include "Vector3.h"
 #include <fstream>
 
@@ -100,7 +101,7 @@ class SceneGame : public Scene
 		GEO_BLACK,
 		GEO_BLUE,
 		GEO_TEXTBOX,
-		GEO_PAPER,
+		GEO_RAIN,
 		GEO_COIN,
 
 		NUM_GEOMETRY,
@@ -208,12 +209,11 @@ private:
 	Vector3 currentview;
 
 	//Ambient Effetcs
-	float paperx = 150;
-	float papery = 50;
-	float paperz = 20;
-	float paperrt = 0;
-	int zturn = 0;
-	int side = 0;
+	float rainy1 = 50;
+	float rainy2 = 50;
+	std::vector<Rain*> rain;
+	int spawnrain = 0;
+	double raintime = 0;
 	
 	//sidequests
 	bool firstcoinPicked;
