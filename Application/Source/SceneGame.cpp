@@ -90,6 +90,12 @@ void SceneGame::Reset()
 	reloadTime = 0;
 	reloadRotateTime = 0;
 	reloadAngle = 0;
+	paperx = 150;
+	papery = 50;
+	paperz = 20;
+	paperrt = 0;
+	zturn = 0;
+	side = 0;
 }
 
 void SceneGame::Init()
@@ -290,6 +296,7 @@ void SceneGame::Init()
 	meshList[GEO_BOMBARROW]->textureID = LoadTGA("Image//bomb-pointer.tga");
 	meshList[GEO_TEXTBOX] = MeshBuilder::GenerateQuad("text box", Color(1, 1, 1), 1.f);
 	meshList[GEO_TEXTBOX]->textureID = LoadTGA("Image//textbox.tga");
+	meshList[GEO_PAPER] = MeshBuilder::GenerateCube("paper", Color(1, 0.9, 0.8));
 
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//arial.tga");
@@ -1340,6 +1347,7 @@ void SceneGame::Render()
 	modelStack.PopMatrix();
 	modelStack.PopMatrix();
 
+	RenderAmbientEffects();
 
 	if (tutorial == 0)//Render tutorial
 		RenderTutorial();
@@ -2274,6 +2282,55 @@ void SceneGame::RenderTutorial()
 			Application::SetStamina(5);
 		}
 	}
+}
+
+void SceneGame::RenderAmbientEffects()
+{
+	modelStack.PushMatrix();
+	if (paperx > -150)
+		paperx -= 0.5;
+	else
+	{
+		paperx = 150;
+		paperz = 20;
+		papery = 50;
+		paperrt = 0;
+		if (side == 0)
+			side = 1;
+		else
+			side = 0;
+	}
+	if (zturn == 0)
+	{
+		if (paperrt>-5)
+			paperrt -=1;
+		paperz += 0.05;
+		if (paperz > 22)
+			zturn = 1;
+	}
+	if (zturn == 1)
+	{
+		if (paperrt < 5)
+			paperrt += 1;
+		paperz -= 0.05;
+		if (paperz < 18)
+			zturn = 0;
+	}
+	if (papery > 5)
+		papery -= 0.05;
+	if (side==0)
+		modelStack.Translate(paperx, papery, paperz);
+	else if (side == 1)
+		modelStack.Translate(paperx, papery, -15-paperz);
+	modelStack.Rotate(90, 1, 0, 0);
+	modelStack.Rotate(20, 0, 1, 0);
+	if (side==0)
+		modelStack.Rotate(paperrt, 0, 0, 1);
+	else
+		modelStack.Rotate(-paperrt, 0, 0, 1);
+	modelStack.Scale(3, 0.01, 2);
+	RenderMesh(meshList[GEO_PAPER], true);
+	modelStack.PopMatrix();
 }
 
 int SceneGame::NextScene()

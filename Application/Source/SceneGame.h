@@ -100,7 +100,7 @@ class SceneGame : public Scene
 		GEO_BLACK,
 		GEO_BLUE,
 		GEO_TEXTBOX,
-
+		GEO_PAPER,
 		GEO_COIN,
 
 		NUM_GEOMETRY,
@@ -165,7 +165,7 @@ private:
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 	void RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y, Vector3 rotationAxis = Vector3(0, 0, 1), float angle = 0.f);
-	
+	void RenderAmbientEffects();
 
 	float FPS;
 	bool enterScene;
@@ -207,6 +207,14 @@ private:
 	int stage = -3;
 	Vector3 currentview;
 
+	//Ambient Effetcs
+	float paperx = 150;
+	float papery = 50;
+	float paperz = 20;
+	float paperrt = 0;
+	int zturn = 0;
+	int side = 0;
+	
 	//sidequests
 	bool firstcoinPicked;
 	bool secondcoinPicked;
