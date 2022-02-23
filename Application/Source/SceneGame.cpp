@@ -2279,7 +2279,7 @@ void SceneGame::RenderAmbientEffects()
 		{
 			for (int l = -10; l < 10; l++)
 			{
-				rain.push_back(new Rain(rand()%10+(i * 15), 50, rand() % 10 + (l * 15)));
+				rain.push_back(new Rain(rand()%10+(i * 15), rand() % 6 + 45, rand() % 10 + (l * 15)));
 			}
 		}
 		spawnrain = 1;
@@ -2294,7 +2294,7 @@ void SceneGame::RenderAmbientEffects()
 	}
 	for (int i =0; i <rain.size(); i++)
 	{ 
-		if (rain[i]->getpos(2) < 0)
+		if (rain[i]->getpos(2) < -1)
 		{
 			rain.erase(rain.begin());
 			i--;
