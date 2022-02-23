@@ -184,17 +184,27 @@ void SceneMainMenu::Update(double dt)
 		std::cout << "posX:" << posX << " , posY:" << posY << std::endl;
 		if (posX > BUTTON_LEFT_PLAY && posX < BUTTON_RIGHT_PLAY && posY > BUTTON_BOTTOM_PLAY && posY < BUTTON_TOP_PLAY)//
 		{
-			std::cout << "Play!" << std::endl;
-			nextscene = 3;
+			check = 1;
 		}
 		else if (posX > BUTTON_LEFT_MENU && posX < BUTTON_RIGHT_MENU && posY > BUTTON_BOTTOM_MENU && posY < BUTTON_TOP_MENU)
 		{
-			std::cout << "Settings!" << std::endl;
-			nextscene = 2;
+			check = 2;
 		}
 	}
-	else
+	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
+		if (check == 1)
+		{
+			std::cout << "Play!" << std::endl;
+			nextscene = 3;
+			check = 0;
+		}
+		else if (check == 2)
+		{
+			std::cout << "Settings!" << std::endl;
+			nextscene = 2;
+			check = 0;
+		}
 		bLButtonState = false;
 	}
 }

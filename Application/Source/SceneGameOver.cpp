@@ -199,15 +199,20 @@ void SceneGameOver::Update(double dt)
 		std::cout << "posX:" << posX << " , posY:" << posY << std::endl;
 		if (posX > BUTTON_LEFT_MAINMENU && posX < BUTTON_RIGHT_MAINMENU && posY > BUTTON_BOTTOM_MAINMENU && posY < BUTTON_TOP_MAINMENU)//
 		{
-			std::cout << "Back to main menu!" << std::endl;
-			Application::SetWin(0);
-			nextscene = 1;
+			check = 1;
 		}
 	}
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
 		bLButtonState = false;
 		std::cout << "LBUTTON UP" << std::endl;
+		if (check == 1)
+		{
+			std::cout << "Back to main menu!" << std::endl;
+			Application::SetWin(0);
+			nextscene = 1;
+			check = 0;
+		}
 	}
 	static bool bRButtonState = false;
 	if (!bRButtonState && Application::IsMousePressed(1))

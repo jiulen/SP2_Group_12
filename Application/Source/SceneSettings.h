@@ -82,6 +82,7 @@ private:
 	int nextscene = 2;
 	double mouseX = 0;
 	double mouseY = 0;
+	int check = 0;
 public:
 	SceneSettings();
 	~SceneSettings();

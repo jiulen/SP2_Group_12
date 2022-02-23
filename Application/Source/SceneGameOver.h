@@ -74,6 +74,7 @@ private:
 	unsigned textMaxWidth;
 	unsigned textSpacing[256];
 	int nextscene = 0;
+	int check = 0;
 public:
 	SceneGameOver();
 	~SceneGameOver();

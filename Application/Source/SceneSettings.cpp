@@ -231,8 +231,7 @@ void SceneSettings::Update(double dt)
 		std::cout << "posX:" << posX << " , posY:" << posY << std::endl;
 		if (posX > BUTTON_LEFT && posX < BUTTON_RIGHT && posY > BUTTON_BOTTOM && posY < BUTTON_TOP)
 		{
-			std::cout << "Go back!" << std::endl;
-			nextscene = 1;
+			check = 1;
 		}
 		else if (posX > BUTTON_RED_LEFT && posX < BUTTON_RED_RIGHT && posY > BUTTON_RED_BOTTOM && posY < BUTTON_RED_TOP)
 		{
@@ -297,6 +296,12 @@ void SceneSettings::Update(double dt)
 	{
 		bLButtonState = false;
 		std::cout << "LBUTTON UP" << std::endl;
+		if (check == 1)
+		{
+			check = 0;
+			std::cout << "Go back!" << std::endl;
+			nextscene = 1;
+		}
 	}
 	static bool bRButtonState = false;
 	if (!bRButtonState && Application::IsMousePressed(1))

@@ -67,6 +67,7 @@ private:
 	unsigned textMaxWidth;
 	unsigned textSpacing[256];
 	int nextscene = 1;
+	int check = 0;
 public:
 	SceneMainMenu();
 	~SceneMainMenu();
