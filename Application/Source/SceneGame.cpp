@@ -1922,13 +1922,13 @@ void SceneGame::RenderSkybox()
 	modelStack.Translate(OFFSET, 0, 0);
 	modelStack.Rotate(-90, 0, 1, 0);
 	modelStack.Scale(1000, 1000, 1000);
-	RenderMesh(meshList[GEO_BACK], false);
+	RenderMesh(meshList[GEO_FRONT], false);
 	modelStack.PopMatrix();
 	modelStack.PushMatrix();
 	modelStack.Translate(-OFFSET, 0, 0);
 	modelStack.Rotate(90, 0, 1, 0);
 	modelStack.Scale(1000, 1000, 1000);
-	RenderMesh(meshList[GEO_FRONT], false);
+	RenderMesh(meshList[GEO_BACK], false);
 	modelStack.PopMatrix();
 	modelStack.PushMatrix();
 	modelStack.Translate(0, 0, -OFFSET);
@@ -1944,7 +1944,6 @@ void SceneGame::RenderSkybox()
 	modelStack.PushMatrix();
 	modelStack.Translate(0, OFFSET, 0);
 	modelStack.Rotate(90, 1, 0, 0);
-	modelStack.Rotate(-90, 0, 0, 1);
 	modelStack.Scale(1000, 1000, 1000);
 	RenderMesh(meshList[GEO_TOP], false);
 	modelStack.PopMatrix();
