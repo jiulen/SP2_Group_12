@@ -96,6 +96,8 @@ class SceneGame : public Scene
 		GEO_RED,
 		GEO_BLACK,
 
+		GEO_COIN,
+
 		NUM_GEOMETRY,
 	};
 	enum UNIFORM_TYPE
@@ -199,6 +201,17 @@ private:
 	int starttimer2 = 0;
 	int stage = -2;
 	Vector3 currentview;
+
+	//sidequests
+	bool firstcoinPicked;
+	bool secondcoinPicked;
+	bool thirdcoinPicked;
+	bool fourthcoinPicked;
+	bool fifthcoinPicked;
+	bool sixthcoinPicked;
+	bool seventhcoinPicked;
+	bool eighthcoinPicked;
+	int score = 0;
 
 	//spawn enemies
 	int spawn = 0;
