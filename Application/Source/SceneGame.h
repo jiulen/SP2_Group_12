@@ -150,6 +150,7 @@ private:
 	void RenderBomb();
 	void RenderBoss();
 	void RenderHUD();
+	void RenderTutorial();
 	void RenderMesh(Mesh* mesh, bool enableLight);
 	void RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey);
 	void RenderText(Mesh* mesh, std::string text, Color color);
@@ -188,6 +189,13 @@ private:
 	int win = 0;
 	int bossshoot = 0;
 	double prevshot = 0;
+
+	//tutorial
+	int tutorial = 0;
+	double keyused = 0;
+	double timer2 = 0;
+	int starttimer2 = 0;
+	int stage = 0;
 
 	//spawn enemies
 	int spawn = 0;

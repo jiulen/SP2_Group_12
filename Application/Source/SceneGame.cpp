@@ -563,6 +563,19 @@ void SceneGame::Update(double dt)
 		}
 	}
 
+	//Tutorial
+	if (stage == 0)
+	{
+		if ((Application::IsKeyPressed('W'))|| (Application::IsKeyPressed('A')) || (Application::IsKeyPressed('S')) || (Application::IsKeyPressed('D')))
+		{
+			keyused += dt;
+		}
+	}
+	if (starttimer2 == 1)
+	{
+		timer2 += dt;
+	}
+
 }
 void SceneGame::UpdateEnemyMovement(double dt)
 {
@@ -965,8 +978,11 @@ void SceneGame::Render()
 	modelStack.PopMatrix();
 	modelStack.PopMatrix();
 
-	//Render Bomb
-	RenderBomb();
+
+	if (tutorial == 0)//Render tutorial
+		RenderTutorial();
+	else if (tutorial==1)//Render Bomb and enemies
+		RenderBomb();
 
 	//Render Bullet
 	for (int i = 0; i < bulletVector.size(); i++)
@@ -1665,6 +1681,26 @@ void SceneGame::RenderBoss()
 		spikeypos = -1.5;
 		bossshoot = 0;
 		prevshot = 0;
+	}
+}
+
+void SceneGame::RenderTutorial()
+{
+	if (stage == 0)
+	{
+		if (keyused < 3)
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use W,A,S,D to move (3 sec)", Color(1, 1, 1), 3, 22, 53);
+		else
+		{
+			RenderTextOnScreen(meshList[GEO_TEXT], "Use W,A,S,D to move (3 sec)", Color(0, 0.6, 0.1), 3, 22, 53);
+			starttimer2 = 1;
+		}
+		if (timer2 > 1.5)
+		{
+			stage = 1;
+			keyused = 0;
+			starttimer2 = 0;
+		}
 	}
 }
 
