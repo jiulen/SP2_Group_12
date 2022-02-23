@@ -93,6 +93,7 @@ void SceneGame::Reset()
 
 	//npc
 	entities.push_back(new ScaredGuy(180, Vector3(30, 0, 57), Vector3(0, 0, 1)));
+	entities.push_back(new ScaredGuy(180, Vector3(60, 0, -75), Vector3(0, 0, 1)));
 }
 
 void SceneGame::Init()
@@ -345,6 +346,7 @@ void SceneGame::Init()
 
 	//npc
 	entities.push_back(new ScaredGuy(180, Vector3(30, 0, 57), Vector3(0, 0, 1)));
+	entities.push_back(new ScaredGuy(180, Vector3(60, 0, -75), Vector3(0, 0, 1)));
 }
 
 void SceneGame::Update(double dt)
