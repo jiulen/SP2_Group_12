@@ -51,6 +51,7 @@ class SceneGame : public Scene
 		GEO_ENEMY1,
 		GEO_ENEMY2,
 		GEO_BOSS,
+		GEO_NPC,
 
 		GEO_SPIKE,
 

@@ -221,6 +221,8 @@ void SceneGame::Init()
 	meshList[GEO_ENEMY2]->textureID = LoadTGA("Image//skin_adventurer.tga");	
 	meshList[GEO_BOSS] = MeshBuilder::GenerateOBJMTL("boss", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
 	meshList[GEO_BOSS]->textureID = LoadTGA("Image//skin_robot.tga");
+	meshList[GEO_NPC] = MeshBuilder::GenerateOBJMTL("npc", "OBJ//basicCharacter.obj", "OBJ//basicCharacter.obj.mtl");
+	meshList[GEO_NPC]->textureID = LoadTGA("Image//skin_manAlternative.tga");
 	meshList[GEO_SPIKE] = MeshBuilder::GenerateOBJ("spike", "OBJ//spike.obj");
 	meshList[GEO_BOMB] = MeshBuilder::GenerateOBJMTL("bomb", "OBJ//bomb.obj", "OBJ//bomb.mtl");
 	meshList[GEO_GUN] = MeshBuilder::GenerateOBJMTL("gun", "OBJ//pistol.obj", "OBJ//pistol.mtl");
