@@ -26,6 +26,7 @@ unsigned Application::crosshair = 1;
 unsigned Application::sensitivityoption = 1;
 unsigned Application::resetscene = 0;
 unsigned Application::win = 0;
+float Application::stamina = 5;
 
 void resize_callback(GLFWwindow* window, int w, int h)
 {
@@ -261,6 +262,16 @@ int Application::GetWin()
 void Application::SetWin(int a)
 {
 	win = a;
+}
+
+float Application::GetStamina()
+{
+	return stamina;
+}
+
+void Application::SetStamina(float a)
+{
+	stamina = a;
 }
 
 void Application::Exit()

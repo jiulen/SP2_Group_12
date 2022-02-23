@@ -93,6 +93,7 @@ class SceneGame : public Scene
 		GEO_GUN,
 		GEO_RED,
 		GEO_BLACK,
+		GEO_BLUE,
 
 		NUM_GEOMETRY,
 	};
@@ -152,7 +153,7 @@ private:
 	void RenderHUD();
 	void RenderTutorial();
 	void RenderMesh(Mesh* mesh, bool enableLight);
-	void RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey);
+	void RenderMeshOnScreen(Mesh* mesh, float x, float y, float sizex, float sizey);
 	void RenderText(Mesh* mesh, std::string text, Color color);
 	void RenderTextOnScreen(Mesh* mesh, std::string text, Color color, float size, float x, float y);
 	void RenderImageOnScreen(Mesh* mesh, Color color, float sizeX, float sizeY, float x, float y);

@@ -43,6 +43,8 @@ private:
 	float playerRadius, playerHeight;
 	Hitbox playerHitbox;
 	Vector3 returningRightVector;
+	double time = 0;
+	int resstamina = 0;
 
 	float sensitivityoption = 1;
 };

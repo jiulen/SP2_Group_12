@@ -251,6 +251,7 @@ void SceneGame::Init()
 	meshList[GEO_LIGHTPOST] = MeshBuilder::GenerateOBJMTL("light post", "OBJ//lightpostSingle.obj", "OBJ//lightpostSingle.mtl");
 
 	//HUD + UI
+	meshList[GEO_BLUE] = MeshBuilder::GenerateQuad("blue", Color(0, 0.8, 1), 1.f);
 	meshList[GEO_RED] = MeshBuilder::GenerateQuad("red", Color(1, 0, 0), 1.f);
 	meshList[GEO_BLACK] = MeshBuilder::GenerateQuad("black", Color(0, 0, 0), 1.f);
 	meshList[GEO_HEALTH] = MeshBuilder::GenerateQuad("health", Color(1, 1, 1), 1.f);
@@ -655,7 +656,7 @@ void SceneGame::RenderMesh(Mesh* mesh, bool enableLight)
 	}
 }
 
-void SceneGame::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int sizey)
+void SceneGame::RenderMeshOnScreen(Mesh* mesh, float x, float y, float sizex, float sizey)
 {
 	glDisable(GL_DEPTH_TEST);
 	Mtx44 ortho;
@@ -667,7 +668,7 @@ void SceneGame::RenderMeshOnScreen(Mesh* mesh, int x, int y, int sizex, int size
 	modelStack.PushMatrix();
 	modelStack.LoadIdentity();
 	//to do: scale and translate accordingly
-	modelStack.Translate(40, 30, 1);
+	modelStack.Translate(x, y, 1);
 	modelStack.Scale(sizex, sizey, 1);
 	RenderMesh(mesh, false); //UI should not have light
 	projectionStack.PopMatrix();
@@ -1599,6 +1600,12 @@ void SceneGame::RenderHUD()
 	sss << player.currentHealth;
 	ss1 << player.currentAmmo << "/" << player.maxAmmo;
 	ssss << "Scams: " << bombspawn << "/3";
+	if (Application::GetStamina() < 5)
+	{
+		RenderMeshOnScreen(meshList[GEO_BLACK], 40, 25, 16, 1);
+		float length = (float(Application::GetStamina()) / 5)*16;
+		RenderMeshOnScreen(meshList[GEO_BLUE], 32+(length/2), 25, length, 1);
+	}
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0.6, 0.1), 3, 0, 57); //FPS
 	RenderImageOnScreen(meshList[GEO_HEALTH], Color(1, 1, 1), 7, 7, 4, 14); //Health
 	if (player.currentHealth > 30)

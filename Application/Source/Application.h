@@ -25,12 +25,15 @@ public:
 	static void SetWin(int a);
 	static int GetReset();
 	static void SetReset(int a);
+	static float GetStamina();
+	static void SetStamina(float a);
 	static unsigned m_width;
 	static unsigned m_height;
 	static unsigned crosshair;
 	static unsigned sensitivityoption;
 	static unsigned resetscene;
 	static unsigned win;
+	static float stamina;
 
 private:
 

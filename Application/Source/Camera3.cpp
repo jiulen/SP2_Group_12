@@ -48,13 +48,32 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 	float MOVE_SPEED;
 	//looking around
 	LookingAround();
-	if (Application::IsKeyPressed(VK_SHIFT))
+	if (Application::GetStamina() > 0)
 	{
-		MOVE_SPEED = 22.5f;
+		if ((Application::IsKeyPressed(VK_SHIFT))&&((Application::IsKeyPressed('A')) || (Application::IsKeyPressed('W')) || (Application::IsKeyPressed('S')) || (Application::IsKeyPressed('D'))))
+		{
+			time = 0;
+			resstamina = 0;
+			MOVE_SPEED = 50.f;/* 22.5f;*/
+			Application::SetStamina(Application::GetStamina() - dt);
+		}
+		else
+			resstamina = 1;
 	}
 	else
+		resstamina = 1;
+	if (resstamina==1)
 	{
 		MOVE_SPEED = 15.f;
+		if (Application::GetStamina() < 5)
+		{
+			if (time < 2)
+				time += dt;
+			if (time >= 2)
+			{
+				Application::SetStamina(Application::GetStamina() + dt * 2);
+			}
+		}
 	}
 	static float JUMP_SPEED = 25.f;
 	Vector3 view = (target - position).Normalized();
