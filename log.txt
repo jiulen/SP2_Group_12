@@ -1,0 +1,482 @@
+Author : jiulen Commit : removed #include "SceneSettings.h" in SceneGame.cpp
+Author : jiulen Commit : commented out F-keys for main menu, options, game and end screen
+Author : WappleLord Commit : Cheats completed
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Cheat codes
+Author : jiulen Commit : Update SceneGame.cpp
+Author : jiulen Commit : jump fixed (hopefully)
+Author : jiulen Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : jiulen Commit : Update SceneGame.cpp
+Author : WappleLord Commit : Plant trees
+Author : WappleLord Commit : Tree
+Author : WappleLord Commit : Add files via upload
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Tree
+Author : jiulen Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : jiulen Commit : jump on roof fixed
+Author : WappleLord Commit : Tree fix
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : grass code
+Author : jiulen Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : jiulen Commit : Update Camera3.cpp
+Author : abzhikai Commit : Add files via upload
+Author : jiulen Commit : Add files via upload
+Author : jiulen Commit : test
+Author : jiulen Commit : Update tree_oak.mtl
+Author : WappleLord Commit : Improved rain
+Author : jiulen Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : jiulen Commit : bench can be jumped on
+Author : abzhikai Commit : Update ground_grass.mtl
+Author : jiulen Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : jiulen Commit : fix infinite jumps
+Author : WappleLord Commit : Merge
+Author : WappleLord Commit : Bug fixes
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : test tree
+Author : abzhikai Commit : Update ground_grass.mtl
+Author : jiulen Commit : Update SceneGame.cpp
+Author : jiulen Commit : Merge pull request #34 from jiulen/upgrade-collision
+Author : jiulen Commit : jump evolved
+Author : WappleLord Commit : Merge
+Author : WappleLord Commit : Merge
+Author : PANG ZHI KAI Commit : merge
+Author : PANG ZHI KAI Commit : added tree code
+Author : abzhikai Commit : for tree
+Author : jiulen Commit : Merge pull request #33 from jiulen/uitext
+Author : jiulen Commit : new text color
+Author : jiulen Commit : one more scared guy
+Author : jiulen Commit : fixed lampost hitboxes
+Author : jiulen Commit : Merge pull request #32 from jiulen/npc
+Author : jiulen Commit : scared guy pushed
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : New skybox
+Author : TouhouDaMemesSM64 Commit : coin sound
+Author : WappleLord Commit : Rain completed
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Rain
+Author : WappleLord Commit : Changed angle of paper
+Author : jiulen Commit : commented out bird for now
+Author : jiulen Commit : deleted unused objs
+Author : jiulen Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : jiulen Commit : hitbox for walls
+Author : WappleLord Commit : Reset fix
+Author : WappleLord Commit : Paper ambient effect
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Paper
+Author : jiulen Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : jiulen Commit : Update stoneWall.mtl
+Author : TouhouDaMemesSM64 Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : TouhouDaMemesSM64 Commit : a
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Paper flying
+Author : jiulen Commit : Merge pull request #31 from jiulen/reload-animation
+Author : jiulen Commit : reload animation + indicator
+Author : TouhouDaMemesSM64 Commit : Create bird.tga
+Author : TouhouDaMemesSM64 Commit : idk how to turn this into tga since doing the magic wand accidentally selects some of the bird's skin
+Author : TouhouDaMemesSM64 Commit : npc
+Author : jiulen Commit : Merge pull request #30 from jiulen/enemy-weapon
+Author : jiulen Commit : enemies attack animation (short jump)
+Author : WappleLord Commit : Coin fix
+Author : WappleLord Commit : Coin fix
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Button overlap fix
+Author : TouhouDaMemesSM64 Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : TouhouDaMemesSM64 Commit : Update SceneGame.cpp
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : hitbox for lightpost
+Author : TouhouDaMemesSM64 Commit : a
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Improved tutorial
+Author : PANG ZHI KAI Commit : hitbox for bench
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Stamina
+Author : TouhouDaMemesSM64 Commit : a
+Author : jiulen Commit : Add files via upload
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : bench lol
+Author : jiulen Commit : arrow also targets boss
+Author : jiulen Commit : Merge pull request #29 from jiulen/bomb-indicator
+Author : jiulen Commit : bomb indicator complete
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Tutorial complete
+Author : abzhikai Commit : bench
+Author : TouhouDaMemesSM64 Commit : Create redcoin.tga
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Tutorial
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : light posts
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Merge
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : fixed failed wall
+Author : jiulen Commit : Update SceneGame.cpp
+Author : jiulen Commit : Update SceneGame.cpp
+Author : jiulen Commit : Merge pull request #28 from jiulen/bullethit
+Author : jiulen Commit : bullet hit indicator added
+Author : WappleLord Commit : comment
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Health bar
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : commit
+Author : PANG ZHI KAI Commit : merge
+Author : PANG ZHI KAI Commit : lightpost code
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Wiring fix
+Author : abzhikai Commit : lightpost
+Author : jiulen Commit : Merge pull request #27 from jiulen/newenemy
+Author : jiulen Commit : new enemy watcher completed
+Author : PANG ZHI KAI Commit : merge
+Author : PANG ZHI KAI Commit : walls
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Increased wiring user experience
+Author : TouhouDaMemesSM64 Commit : bulletmark
+Author : jiulen Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : jiulen Commit : bullet better trajectory
+Author : WappleLord Commit : Enabled sound
+Author : jiulen Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : jiulen Commit : sound fix
+Author : WappleLord Commit : Increased boss detect range
+Author : WappleLord Commit : Completed boss
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Boss shoot
+Author : jiulen Commit : Merge pull request #26 from jiulen/enemy2
+Author : jiulen Commit : basicMelee now can patrol 2 directions
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Boss spawning
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : walls code
+Author : abzhikai Commit : walls
+Author : jiulen Commit : basicmelee
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Boss spawn
+Author : jiulen Commit : Update SceneGame.cpp
+Author : PANG ZHI KAI Commit : skybox fix
+Author : jiulen Commit : bullet now has type (player or enemy)
+Author : jiulen Commit : Update Camera3.cpp
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : working spike
+Author : jiulen Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : jiulen Commit : jump collision fixed
+Author : PANG ZHI KAI Commit : Revert "Revert "added new skybox(not properly placed)""
+Author : PANG ZHI KAI Commit : Revert "added new skybox(not properly placed)"
+Author : PANG ZHI KAI Commit : added new skybox(not properly placed)
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : .
+Author : abzhikai Commit : reupload of new skybox but tga
+Author : jiulen Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : jiulen Commit : new gun
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : not tga files
+Author : jiulen Commit : Add files via upload
+Author : jiulen Commit : Add files via upload
+Author : jiulen Commit : delete old pistol
+Author : abzhikai Commit : new skybox
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Spawn Spikes
+Author : TouhouDaMemesSM64 Commit : s
+Author : WappleLord Commit : Win screen finished and bug fixed
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Win screen in SceneGameOver
+Author : jiulen Commit : clear bullets at start of each game
+Author : jiulen Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : jiulen Commit : BasicMelee enemies now aggro when hit
+Author : WappleLord Commit : Crosshair fix
+Author : TouhouDaMemesSM64 Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : TouhouDaMemesSM64 Commit : images
+Author : jiulen Commit : fix bullet deleting and increase bullet speed
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : bullet update
+Author : jiulen Commit : Update SceneGame.cpp
+Author : PANG ZHI KAI Commit : check if it pierces or not while enemy is alive
+Author : PANG ZHI KAI Commit : merge
+Author : PANG ZHI KAI Commit : enemies missing
+Author : jiulen Commit : Update SceneGame.cpp
+Author : jiulen Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : jiulen Commit : fixed bullet collision bug
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Merge
+Author : TouhouDaMemesSM64 Commit : done
+Author : TouhouDaMemesSM64 Commit : a
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : gun works but doesnt kill enemy
+Author : TouhouDaMemesSM64 Commit : v
+Author : WappleLord Commit : Uncommented sound
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Finished enemy spawn
+Author : jiulen Commit : problem solved
+Author : WappleLord Commit : Merge
+Author : WappleLord Commit : Spawning enemies
+Author : PANG ZHI KAI Commit : bullet can now travel but in wrong direction
+Author : PANG ZHI KAI Commit : merge
+Author : PANG ZHI KAI Commit : incomplete bullet
+Author : jiulen Commit : removed useless SceneEnemySpawn
+Author : jiulen Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : jiulen Commit : Update SceneGame.cpp
+Author : TouhouDaMemesSM64 Commit : a
+Author : jiulen Commit : added walking and running sounds (not used yet)
+Author : PANG ZHI KAI Commit : bullet pushback
+Author : WappleLord Commit : UI changes
+Author : PANG ZHI KAI Commit : vector of bullet
+Author : jiulen Commit : Merge pull request #25 from jiulen/sound
+Author : jiulen Commit : shoot and reload sound added
+Author : WappleLord Commit : Fixes for reset
+Author : WappleLord Commit : Comment
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Reset
+Author : jiulen Commit : crash fix
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Health icon changed, color for UI changed, failing minigames brings players to GameOver scene, GameOver scene resets SceneGame
+Author : PANG ZHI KAI Commit : added accidental delete
+Author : PANG ZHI KAI Commit : delete camera3 in structs.h
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : init the bullet
+Author : jiulen Commit : fix first death no lose screen, make deleting meshes easier
+Author : jiulen Commit : Merge pull request #24 from jiulen/lighting
+Author : jiulen Commit : added ambient values to buildings used
+Author : WappleLord Commit : Allowed crosshair change and fixed main menu bug
+Author : PANG ZHI KAI Commit : update of bullet
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : added abit to bullet
+Author : TouhouDaMemesSM64 Commit : now
+Author : TouhouDaMemesSM64 Commit : aaaaa
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : incomplete bullet
+Author : jiulen Commit : Update BasicMelee.cpp
+Author : jiulen Commit : Merge pull request #23 from jiulen/lighting
+Author : jiulen Commit : add collision with player for enemies and fixed jump
+Author : jiulen Commit : Merge pull request #22 from jiulen/improvedmovement
+Author : jiulen Commit : ..
+Author : jiulen Commit : Merge pull request #21 from jiulen/improved-movement
+Author : jiulen Commit : jump now nicer, nerfed sprint
+Author : TouhouDaMemesSM64 Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : jiulen Commit : Merge pull request #20 from jiulen/camera+gunRotate-fix
+Author : jiulen Commit : weapon rotates with cam now
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : sturcts update
+Author : jiulen Commit : ...
+Author : TouhouDaMemesSM64 Commit : a
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : removed redifinition in entity.h
+Author : jiulen Commit : Merge pull request #19 from jiulen/enemyatk
+Author : jiulen Commit : enemy atk done
+Author : WappleLord Commit : Merge
+Author : WappleLord Commit : HUD
+Author : jiulen Commit : Merge pull request #18 from jiulen/enemyatk
+Author : jiulen Commit : Merge branch 'main' into enemyatk
+Author : jiulen Commit : atk almost done
+Author : PANG ZHI KAI Commit : reload
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : HUD + bombspawn fix
+Author : jiulen Commit : Merge pull request #17 from jiulen/enemyatk
+Author : jiulen Commit : atk half done
+Author : PANG ZHI KAI Commit : only onesided gun movement
+Author : PANG ZHI KAI Commit : movement of gun abt the xz plane
+Author : jiulen Commit : player struct
+Author : PANG ZHI KAI Commit : merge
+Author : PANG ZHI KAI Commit : .
+Author : jiulen Commit : Merge pull request #16 from jiulen/enemycollision2
+Author : jiulen Commit : entity collision complete, bomb mtl edited
+Author : WappleLord Commit : Reduced time given and change time to attempts for copy game
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : TouhouDaMemesSM64 Commit : clicking play / settings buttons.
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : jiulen Commit : Merge pull request #15 from jiulen/enemycollision
+Author : jiulen Commit : Merge branch 'main' into enemycollision
+Author : jiulen Commit : enemy collision with non moving structures done
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Completed copy game and updated bomb spawning
+Author : PANG ZHI KAI Commit : pistol texture
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : .
+Author : WappleLord Commit : Merge
+Author : WappleLord Commit : Copy game working
+Author : TouhouDaMemesSM64 Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : TouhouDaMemesSM64 Commit : added minor button support
+Author : jiulen Commit : Create README.md
+Author : TouhouDaMemesSM64 Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : TouhouDaMemesSM64 Commit : added improved buttons
+Author : jiulen Commit : Merge pull request #14 from jiulen/enemycollision
+Author : jiulen Commit : scene switching changed, jumping fixed
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Copy game update
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : gun now follows player but doesnt rotate
+Author : jiulen Commit : basic scammers tga
+Author : PANG ZHI KAI Commit : changes
+Author : PANG ZHI KAI Commit : gun render
+Author : jiulen Commit : pistol image
+Author : jiulen Commit : pistol obj
+Author : jiulen Commit : ...
+Author : jiulen Commit : Merge pull request #13 from jiulen/fixcamerarotation
+Author : jiulen Commit : camera pitch limited to +-80 degrees
+Author : jiulen Commit : .
+Author : jiulen Commit : Merge pull request #12 from jiulen/fix-pitch-limit
+Author : jiulen Commit : camera flipping fixed(i think)
+Author : abzhikai Commit : pistol files
+Author : abzhikai Commit : Delete TT_gun.obj
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : idk
+Author : abzhikai Commit : Update TT_gun.obj
+Author : WappleLord Commit : bomb
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : bomb
+Author : jiulen Commit : bom color?
+Author : jiulen Commit : .
+Author : jiulen Commit : replaced bomb
+Author : jiulen Commit : Add files via upload
+Author : jiulen Commit : replacing bomb
+Author : jiulen Commit : Merge pull request #11 from jiulen/entityEnemytest
+Author : jiulen Commit : entity vector implemented
+Author : WappleLord Commit : merge
+Author : WappleLord Commit : enabled cursor for copy game
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : add gun base
+Author : abzhikai Commit : pistol file add
+Author : WappleLord Commit : Edited copy game
+Author : WappleLord Commit : Preparation for copy minigame
+Author : TouhouDaMemesSM64 Commit : update
+Author : jiulen Commit : Merge pull request #10 from jiulen/entity-enemy
+Author : jiulen Commit : entity and enemy class
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : push
+Author : WappleLord Commit : removed mouse position display
+Author : WappleLord Commit : Randomised numbers game
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Ability to defuse bombs
+Author : PANG ZHI KAI Commit : commented stuff that we do not need
+Author : jiulen Commit : enemy now rotate properly
+Author : jiulen Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : jiulen Commit : enemy rotate to face player(not done)
+Author : WappleLord Commit : FPS return
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Bomb spawning + wiring minigame fixes
+Author : jiulen Commit : Update SceneGame.cpp
+Author : TouhouDaMemesSM64 Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : TouhouDaMemesSM64 Commit : included the base images for the settings screen
+Author : jiulen Commit : Merge pull request #9 from jiulen/collision3(y-axisCollision)
+Author : jiulen Commit : Merge branch 'main' into collision3(y-axisCollision)
+Author : jiulen Commit : fixed push back stuff
+Author : PANG ZHI KAI Commit : enemy rotation with problems
+Author : PANG ZHI KAI Commit : update on enemy movement
+Author : PANG ZHI KAI Commit : enemy movement now works but no rotation yet
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : enemy movement(incomplete)
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Enabled mouse on menu and settings
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Completed numbers game
+Author : PANG ZHI KAI Commit : Revert "enemy moment still fail (can only move diagonally)"
+Author : PANG ZHI KAI Commit : enemy moment still fail (can only move diagonally)
+Author : jiulen Commit : Merge pull request #8 from jiulen/collision3(y-axisCollision)
+Author : jiulen Commit : Update Camera3.cpp
+Author : jiulen Commit : Merge pull request #7 from jiulen/collision3(y-axisCollision)
+Author : jiulen Commit : added collision for other arrow keys and jump
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Fixed and added some stuff
+Author : jiulen Commit : Merge pull request #6 from jiulen/collision2
+Author : jiulen Commit : more camera collision
+Author : jiulen Commit : fps drops fixed
+Author : TouhouDaMemesSM64 Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : TouhouDaMemesSM64 Commit : s
+Author : jiulen Commit : Update SceneGame.cpp
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : merge
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : incomplete movement
+Author : jiulen Commit : Update SceneSettings.cpp
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Added base for 2nd defuse game
+Author : jiulen Commit : Merge pull request #5 from jiulen/collision
+Author : jiulen Commit : Merge branch 'main' into collision
+Author : jiulen Commit : camera collision "done"
+Author : WappleLord Commit : NextScene function for scene swapping Wiring Mini-Game
+Author : WappleLord Commit : Added wiring image
+Author : PANG ZHI KAI Commit : more ground mesh to try
+Author : abzhikai Commit : fixed files for color
+Author : PANG ZHI KAI Commit : remove again
+Author : abzhikai Commit : map files reuploaded
+Author : PANG ZHI KAI Commit : delete
+Author : abzhikai Commit : Delete low_buildingJ.obj
+Author : abzhikai Commit : Delete low_buildingJ.mtl
+Author : abzhikai Commit : Delete low_buildingI.obj
+Author : abzhikai Commit : Delete low_buildingI.mtl
+Author : abzhikai Commit : Delete low_buildingH.obj
+Author : abzhikai Commit : Delete low_buildingH.mtl
+Author : abzhikai Commit : Delete low_buildingG.obj
+Author : abzhikai Commit : Delete low_buildingG.mtl
+Author : abzhikai Commit : Delete low_buildingF.obj
+Author : abzhikai Commit : Delete low_buildingF.mtl
+Author : abzhikai Commit : Delete low_buildingE.obj
+Author : abzhikai Commit : Delete low_buildingE.mtl
+Author : abzhikai Commit : Delete low_buildingD.obj
+Author : abzhikai Commit : Delete low_buildingD.mtl
+Author : abzhikai Commit : Delete low_buildingC.obj
+Author : abzhikai Commit : Delete low_buildingC.mtl
+Author : abzhikai Commit : Delete low_buildingB.obj
+Author : abzhikai Commit : Delete low_buildingB.mtl
+Author : abzhikai Commit : Delete low_buildingA.obj
+Author : abzhikai Commit : Delete skyscraperE.obj
+Author : abzhikai Commit : Delete low_buildingA.mtl
+Author : abzhikai Commit : Delete skyscraperF.obj
+Author : abzhikai Commit : Delete skyscraperF.mtl
+Author : TouhouDaMemesSM64 Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : abzhikai Commit : Delete skyscraperE.mtl
+Author : TouhouDaMemesSM64 Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : TouhouDaMemesSM64 Commit : settings base
+Author : abzhikai Commit : Delete skyscraperD.obj
+Author : abzhikai Commit : Delete skyscraperD.mtl
+Author : abzhikai Commit : Delete skyscraperC.obj
+Author : abzhikai Commit : Delete skyscraperC.mtl
+Author : abzhikai Commit : Delete skyscraperB.obj
+Author : abzhikai Commit : Delete skyscraperB.mtl
+Author : abzhikai Commit : Delete skyscraperA.mtl
+Author : abzhikai Commit : Add files via upload
+Author : abzhikai Commit : Delete skyscraperA.obj
+Author : PANG ZHI KAI Commit : place back files
+Author : PANG ZHI KAI Commit : removal
+Author : PANG ZHI KAI Commit : remove again
+Author : PANG ZHI KAI Commit : idk
+Author : PANG ZHI KAI Commit : typo
+Author : PANG ZHI KAI Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : PANG ZHI KAI Commit : removed dupe files
+Author : TouhouDaMemesSM64 Commit : a
+Author : jiulen Commit : Merge pull request #4 from jiulen/revert-3-revert-2-camera
+Author : TouhouDaMemesSM64 Commit : mainmenuscreen
+Author : jiulen Commit : Revert "Revert "camera rotation completed""
+Author : jiulen Commit : Merge pull request #3 from jiulen/revert-2-camera
+Author : jiulen Commit : Revert "camera rotation completed"
+Author : jiulen Commit : Merge pull request #2 from jiulen/camera
+Author : jiulen Commit : Merge branch 'main' into camera
+Author : jiulen Commit : camera rotation completed
+Author : TouhouDaMemesSM64 Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : TouhouDaMemesSM64 Commit : mainmenu code?
+Author : jiulen Commit : Merge pull request #1 from jiulen/MapGame
+Author : PANG ZHI KAI Commit : MAP
+Author : TouhouDaMemesSM64 Commit : title screen images separated
+Author : WappleLord Commit : Entity
+Author : WappleLord Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12 into main
+Author : WappleLord Commit : Entity pushed
+Author : WappleLord Commit : Delete Entity.h
+Author : WappleLord Commit : Delete Entity.cpp
+Author : WappleLord Commit : Entity pushed
+Author : WappleLord Commit : camera3 Scenegame
+Author : WappleLord Commit : Add files via upload
+Author : jiulen Commit : added enemy obj
+Author : jiulen Commit : Create mesh.tga
+Author : TouhouDaMemesSM64 Commit : Merge branch 'main' of https://github.com/jiulen/SP2_Group_12
+Author : TouhouDaMemesSM64 Commit : Create mesh.png
+Author : WappleLord Commit : Add files via upload
+Author : WappleLord Commit : Add files via upload
+Author : WappleLord Commit : Add files via upload
+Author : PANG ZHI KAI Commit : Added skybox img
+Author : jiulen Commit : clean up
+Author : jiulen Commit : Update Camera3.cpp
+Author : jiulen Commit : Update .gitignore
+Author : jiulen Commit : Update .gitignore
+Author : jiulen Commit : clean up again
+Author : jiulen Commit : clean up
+Author : jiulen Commit : first commit
+Author : mrtangws Commit : Library files
+Author : mrtangws Commit : Updating gitignore and adding glew32.dll
+Author : mrtangws Commit : COMG Framework starter
+Author : mrtangws Commit : Initial commit
