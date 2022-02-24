@@ -217,6 +217,7 @@ void SceneGame::Init()
 	meshList[GEO_LIGHTPOST] = MeshBuilder::GenerateOBJMTL("light post", "OBJ//lightpostSingle.obj", "OBJ//lightpostSingle.mtl");
 	meshList[GEO_BENCH] = MeshBuilder::GenerateOBJMTL("bench", "OBJ//bench.obj", "OBJ//bench.mtl");
 	meshList[GEO_GROUND_GRASS] = MeshBuilder::GenerateOBJMTL("ground grass", "OBJ//ground_grass.obj", "OBJ//ground_grass.mtl");
+	meshList[GEO_GROUND_GRASS]->textureID = LoadTGA("Image//grass.tga");
 	meshList[GEO_TREE] = MeshBuilder::GenerateOBJMTL("tree", "OBJ//tree_oak.obj", "OBJ//tree_oak.mtl");
 
 	//HUD + UI
