@@ -662,23 +662,24 @@ void SceneGame::Update(double dt)
 	{
 		if (Application::IsKeyPressed('O'))
 		{
-			cheat = 1;
+			if (win!=1)
+				cheat = 1;
 		}
 		if (Application::IsKeyPressed('P'))
 		{
-			cheat = 2;
+			if (bombspawn!=3)
+				cheat = 2;
 		}
 		if (cheat == 2)
 		{
 			bombspawn = 3;
 			for (int i = entities.size() - 1; i >= 0; i--)
 			{
-				std::cout << entities.size() << std::endl;
-				if ((entities[i]->getName() != "Boss") || (entities[i]->getName() != "ScaredGuy"))
+				std::cout << i << std::endl;
+				if ((entities[i]->getName() != "Boss") && (entities[i]->getName() != "ScaredGuy"))
 				{
 					delete entities[i];
 					entities.pop_back();
-					/*i--;*/
 				}
 			}
 			cheat = 0;
@@ -690,6 +691,7 @@ void SceneGame::Update(double dt)
 				if (entities[i]->getName() == "Boss")
 				{
 					delete entities[i];
+					entities.pop_back();
 					win = 1;
 				}
 			}
