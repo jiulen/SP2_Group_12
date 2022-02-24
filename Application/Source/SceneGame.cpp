@@ -338,7 +338,7 @@ void SceneGame::Init()
 	hitboxes.push_back(Hitbox(10, 4, 70.5, 16, 8, 3));
 	hitboxes.push_back(Hitbox(60, 25, 60, 24, 50, 24));
 
-	//lamposts (no lights)
+	//lamposts
 	hitboxes.push_back(Hitbox(-44, 5.5, 10, 3.1, 11, 2));
 	hitboxes.push_back(Hitbox(-26, 5.5, -20, 3.1, 11, 2));
 	hitboxes.push_back(Hitbox(-44, 5.5, -50, 3.1, 11, 2));
@@ -348,7 +348,7 @@ void SceneGame::Init()
 
 	//bench
 	hitboxes.push_back(Hitbox(30, 2, 61.3, 7.4, 4, 1.2));
-	hitboxes.push_back(Hitbox(30, 0.9, 60, 7.4, 1.8, 3.8));
+	hitboxes.push_back(Hitbox(30, 0.9, 59.5, 7.4, 1.8, 2.8));
 
 	//npc
 	entities.push_back(new ScaredGuy(180, Vector3(30, 0, 57), Vector3(0, 0, 1)));
@@ -1060,7 +1060,7 @@ void SceneGame::Render()
 	RenderMesh(meshList[GEO_BENCH], true);
 	modelStack.PopMatrix();
 	//Hitbox(30, 2, 61.3, 7.4, 4, 1.2);
-	//Hitbox(30, 0.9, 60, 7.4, 1.8, 3.8);
+	//Hitbox(30, 0.9, 59.4, 7.4, 1.8, 2.6);
 
 	modelStack.PushMatrix();
 	modelStack.Translate(100, 0.1, 100);
