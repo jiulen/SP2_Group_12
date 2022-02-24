@@ -138,7 +138,6 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		playerCeilingCollision(hitboxes, collide, true);
 		if (collide) {
 			JUMP_SPEED = -5.f;
-			collide = false;
 		}
 		if (jumpTime > 0.05) {
 			JUMP_SPEED -= 5;
@@ -157,7 +156,6 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		playerCeilingCollision(hitboxes, collide, false);
 		if (collide) {
 			JUMP_SPEED = -0.001f; //may still fall down so negative for falling
-			collide = false;
 			jumping = false;
 		}
 		if (jumpTime > 0.05) {
@@ -293,13 +291,24 @@ void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes, bool& collide
 			nearestPoint.x = Math::Clamp(position.x, (hitboxes[i]).posX - 0.5f * (hitboxes[i]).sizeX, (hitboxes[i]).posX + 0.5f * (hitboxes[i]).sizeX);
 			nearestPoint.y = 0;
 			nearestPoint.z = Math::Clamp(position.z, (hitboxes[i]).posZ - 0.5f * (hitboxes[i]).sizeZ, (hitboxes[i]).posZ + 0.5f * (hitboxes[i]).sizeZ);
-			Vector3 rayToNearest = nearestPoint - Vector3(position.x, 0, position.z);;
+			Vector3 rayToNearest = nearestPoint - Vector3(position.x, 0, position.z);
 			float crOverlap = playerRadius - rayToNearest.Length();
-			if (crOverlap > 0) { //collision
+			if (crOverlap > Math::EPSILON) { //collision
 				//collision resolution
 				float endPosY = position.y + 0.5f - playerHeight * 0.5f;
+				/*float nearestPointY;
+				if (endPosY > (hitboxes[i]).posY - 0.5f * (hitboxes[i]).sizeY && endPosY < (hitboxes[i]).posY + 0.5f * (hitboxes[i]).sizeY) {
+					nearestPointY = endPosY;
+				}
+				else {
+					if (up) {
+						nearestPointY = (hitboxes[i]).posY - 0.5f * (hitboxes[i]).sizeY;
+					}
+					else {
+						nearestPointY = (hitboxes[i]).posY + 0.5f * (hitboxes[i]).sizeY;
+					}
+				}*/
 				float nearestPointY = Math::Clamp(endPosY, (hitboxes[i]).posY - 0.5f * (hitboxes[i]).sizeY, (hitboxes[i]).posY + 0.5f * (hitboxes[i]).sizeY);
-
 				float overlap = 0.f;
 				if (up) {
 					overlap = playerHeight * 0.5f - (nearestPointY - endPosY);
@@ -308,7 +317,7 @@ void Camera3::playerCeilingCollision(std::vector<Hitbox> hitboxes, bool& collide
 					overlap = playerHeight * 0.5f - (endPosY - nearestPointY);
 				}
 				
-				if (overlap > 0)
+				if (overlap > Math::EPSILON)
 				{
 					//Statically resolve the collision
 					if (up) {
