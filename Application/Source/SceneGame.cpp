@@ -1,5 +1,4 @@
 #include "SceneGame.h" 
-#include "SceneSettings.h"
 #include "GL\glew.h"
 #include "Mtx44.h"
 #include "MyMath.h"
