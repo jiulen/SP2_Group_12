@@ -150,7 +150,7 @@ void Camera3::Update(double dt, std::vector<Hitbox> hitboxes)
 		playerHitbox.posY = position.y + 0.5f - playerHeight * 0.5f;
 		target = position + view;
 	}
-	if (JUMP_SPEED < 0) {
+	else if (JUMP_SPEED < 0) {
 		jumpTime += dt;
 		position.y += static_cast<float>(dt) * JUMP_SPEED;
 		bool collide = false;
