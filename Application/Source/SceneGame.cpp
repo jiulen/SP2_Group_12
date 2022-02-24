@@ -350,6 +350,32 @@ void SceneGame::Init()
 	hitboxes.push_back(Hitbox(30, 2, 61.3, 7.4, 4, 1.2));
 	hitboxes.push_back(Hitbox(30, 0.9, 59.5, 7.4, 1.8, 2.8));
 
+	//trees
+	hitboxes.push_back(Hitbox(100, 10, 100, 3, 20, 3));
+	hitboxes.push_back(Hitbox(100, 17.8, 100, 12, 12, 12));
+	hitboxes.push_back(Hitbox(-100, 10, -100, 3, 20, 3));
+	hitboxes.push_back(Hitbox(-100, 17.8, -100, 12, 12, 12));
+	hitboxes.push_back(Hitbox(100, 10, -100, 3, 20, 3));
+	hitboxes.push_back(Hitbox(100, 17.8, -100, 12, 12, 12));
+	hitboxes.push_back(Hitbox(-100, 10, 100, 3, 20, 3));
+	hitboxes.push_back(Hitbox(-100, 17.8, 100, 12, 12, 12));
+	hitboxes.push_back(Hitbox(-100, 10, -27, 3, 20, 3));
+	hitboxes.push_back(Hitbox(-100, 17.8, -27, 12, 12, 12));
+	hitboxes.push_back(Hitbox(-100, 10, 32, 3, 20, 3));
+	hitboxes.push_back(Hitbox(-100, 17.8, 32, 12, 12, 12));
+	hitboxes.push_back(Hitbox(-25, 10, 100, 3, 20, 3));
+	hitboxes.push_back(Hitbox(-25, 17.8, 100, 12, 12, 12));
+	hitboxes.push_back(Hitbox(30, 10, 100, 3, 20, 3));
+	hitboxes.push_back(Hitbox(30, 17.8, 100, 12, 12, 12));
+	hitboxes.push_back(Hitbox(100, 10, 25, 3, 20, 3));
+	hitboxes.push_back(Hitbox(100, 17.8, 25, 12, 12, 12));
+	hitboxes.push_back(Hitbox(100, 10, -45, 3, 20, 3));
+	hitboxes.push_back(Hitbox(100, 17.8, -45, 12, 12, 12));
+	hitboxes.push_back(Hitbox(30, 10, -100, 3, 20, 3));
+	hitboxes.push_back(Hitbox(30, 17.8, -100, 12, 12, 12));
+	hitboxes.push_back(Hitbox(-32, 10, -100, 3, 20, 3));
+	hitboxes.push_back(Hitbox(-32, 17.8, -100, 12, 12, 12));
+
 	//npc
 	entities.push_back(new ScaredGuy(180, Vector3(30, 0, 57), Vector3(0, 0, 1)));
 	entities.push_back(new ScaredGuy(180, Vector3(60, 0, -75), Vector3(0, 0, 1)));
@@ -1108,72 +1134,96 @@ void SceneGame::Render()
 	RenderMesh(meshList[GEO_GROUND_GRASS], true);
 	RenderMesh(meshList[GEO_TREE], true);
 	modelStack.PopMatrix();
+	//Hitbox(100, 10, 100, 3, 20, 3);
+	//Hitbox(100, 17.8, 100, 12, 12, 12);
 	modelStack.PushMatrix();
 	modelStack.Translate(-100, 0.1, -100);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_GROUND_GRASS], true);
 	RenderMesh(meshList[GEO_TREE], true);
 	modelStack.PopMatrix();
+	//Hitbox-(100, 10, -100, 3, 20, 3);
+	//Hitbox(-100, 17.8, -100, 12, 12, 12);
 	modelStack.PushMatrix();
 	modelStack.Translate(100, 0.1, -100);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_GROUND_GRASS], true);
 	RenderMesh(meshList[GEO_TREE], true);
 	modelStack.PopMatrix();
+	//Hitbox(100, 10, -100, 3, 20, 3);
+	//Hitbox(100, 17.8, -100, 12, 12, 12);
 	modelStack.PushMatrix();
 	modelStack.Translate(-100, 0.1, 100);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_GROUND_GRASS], true);
 	RenderMesh(meshList[GEO_TREE], true);
 	modelStack.PopMatrix();
+	//Hitbox(-100, 10, 100, 3, 20, 3);
+	//Hitbox(-100, 17.8, 100, 12, 12, 12);
 	modelStack.PushMatrix();
 	modelStack.Translate(-100, 0.1, -27);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_GROUND_GRASS], true);
 	RenderMesh(meshList[GEO_TREE], true);
 	modelStack.PopMatrix();
+	//Hitbox(-100, 10, -27, 3, 20, 3);
+	//Hitbox(-100, 17.8, -27, 12, 12, 12);
 	modelStack.PushMatrix();
 	modelStack.Translate(-100, 0.1, 32);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_GROUND_GRASS], true);
 	RenderMesh(meshList[GEO_TREE], true);
 	modelStack.PopMatrix();
+	//Hitbox(-100, 10, 32, 3, 20, 3);
+	//Hitbox(-100, 17.8, 32, 12, 12, 12);
 	modelStack.PushMatrix();
 	modelStack.Translate(-25, 0.1, 100);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_GROUND_GRASS], true);
 	RenderMesh(meshList[GEO_TREE], true);
 	modelStack.PopMatrix();
+	//Hitbox(-25, 10, 100, 3, 20, 3);
+	//Hitbox(-25, 17.8, 100, 12, 12, 12);
 	modelStack.PushMatrix();
 	modelStack.Translate(30, 0.1, 100);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_GROUND_GRASS], true);
 	RenderMesh(meshList[GEO_TREE], true);
 	modelStack.PopMatrix();
+	//Hitbox(30, 10, 100, 3, 20, 3);
+	//Hitbox(30, 17.8, 100, 12, 12, 12);
 	modelStack.PushMatrix();
 	modelStack.Translate(100, 0.1, 25);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_GROUND_GRASS], true);
 	RenderMesh(meshList[GEO_TREE], true);
 	modelStack.PopMatrix();
+	//Hitbox(100, 10, 25, 3, 20, 3);
+	//Hitbox(100, 17.8, 25, 12, 12, 12);
 	modelStack.PushMatrix();
 	modelStack.Translate(100, 0.1, -45);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_GROUND_GRASS], true);
 	RenderMesh(meshList[GEO_TREE], true);
 	modelStack.PopMatrix();
+	//Hitbox(100, 10, -45, 3, 20, 3);
+	//Hitbox(100, 17.8, -45, 12, 12, 12);
 	modelStack.PushMatrix();
 	modelStack.Translate(30, 0.1, -100);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_GROUND_GRASS], true);
 	RenderMesh(meshList[GEO_TREE], true);
 	modelStack.PopMatrix();
+	//Hitbox(30, 10, -100, 3, 20, 3);
+	//Hitbox(30, 17.8, -100, 12, 12, 12);
 	modelStack.PushMatrix();
 	modelStack.Translate(-32, 0.1, -100);
 	modelStack.Scale(20, 20, 20);
 	RenderMesh(meshList[GEO_GROUND_GRASS], true);
 	RenderMesh(meshList[GEO_TREE], true);
 	modelStack.PopMatrix();
+	//Hitbox(-32, 10, -100, 3, 20, 3);
+	//Hitbox(-32, 17.8, -100, 12, 12, 12);
 
 
 
@@ -1439,11 +1489,6 @@ void SceneGame::Render()
 
 	RenderAmbientEffects();
 
-	if (tutorial == 0)//Render tutorial
-		RenderTutorial();
-	else if (tutorial==1)//Render Bomb and enemies
-		RenderBomb();
-
 	//Render Bullet
 	for (int i = 0; i < bulletVector.size(); i++)
 	{
@@ -1459,12 +1504,6 @@ void SceneGame::Render()
 		modelStack.PopMatrix();
 	}
 
-	//RenderHUD
-	RenderHUD();
-
-	if ((bombspawn==3)&&(win==0))
-		RenderBoss();
-
 	//render particle (bullet hit indicator)
 	for (int i = 0; i < particles.size(); i++) {
 		modelStack.PushMatrix();
@@ -1473,6 +1512,17 @@ void SceneGame::Render()
 		RenderMesh(meshList[GEO_CUBE], false);
 		modelStack.PopMatrix();
 	}
+
+	if ((bombspawn == 3) && (win == 0))
+		RenderBoss();
+
+	if (tutorial == 0)//Render tutorial
+		RenderTutorial();
+	else if (tutorial == 1)//Render Bomb and enemies
+		RenderBomb();
+
+	//RenderHUD
+	RenderHUD();
 
 	//Render bomb indicator
 	Vector3 viewTarget = (camera.target - camera.position).Normalized();
