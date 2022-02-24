@@ -197,6 +197,9 @@ private:
 
 	//spawn enemies
 	int spawn = 0;
+	
+	//Cheats
+	int cheat = 0;
 
 	Vector3 bombPos;
 

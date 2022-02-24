@@ -630,6 +630,46 @@ void SceneGame::Update(double dt)
 			raintime =0;
 		}
 	}
+
+	//Cheats
+	if (tutorial == 1)
+	{
+		if (Application::IsKeyPressed('O'))
+		{
+			cheat = 1;
+		}
+		if (Application::IsKeyPressed('P'))
+		{
+			cheat = 2;
+		}
+		if (cheat == 2)
+		{
+			bombspawn = 3;
+			for (int i = entities.size() - 1; i >= 0; i--)
+			{
+				std::cout << entities.size() << std::endl;
+				if ((entities[i]->getName() != "Boss") || (entities[i]->getName() != "ScaredGuy"))
+				{
+					delete entities[i];
+					entities.pop_back();
+					/*i--;*/
+				}
+			}
+			cheat = 0;
+		}
+		if (cheat == 1)
+		{
+			for (int i = entities.size() - 1; i >= 0; i--)
+			{
+				if (entities[i]->getName() == "Boss")
+				{
+					delete entities[i];
+					win = 1;
+				}
+			}
+			cheat = 0;
+		}
+	}
 }
 void SceneGame::UpdateEnemyMovement(double dt)
 {
